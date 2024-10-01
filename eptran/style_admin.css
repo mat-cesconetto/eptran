@@ -1,0 +1,473 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Poppins", sans-serif;
+}
+
+
+
+
+.conteiner {
+    display: flex;
+}
+
+
+body {
+    margin-top: 100px;
+    background: rgb(230, 230, 227);
+}
+
+
+/* Header */
+header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    padding: 20px, 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 99;
+    background-color: #F2F2F2;
+}
+
+.logo {
+    font-size: 2em;
+    color: black;
+    user-select: none;
+    margin-left: 60px;
+}
+
+.esquerda {
+    display: flex;
+    align-items: center;
+}
+
+.esquerda img {
+    max-height: 90px;/* Ajuste a altura conforme necessário */
+    width: 180px; 
+    margin-left: 30px;
+}
+
+.navigation .diferente {
+    position: relative;
+    font-size: 1.1em;
+    color: black;
+    text-decoration: none;
+    font-weight: 500;
+    margin-left: 40px;
+}
+
+.navigation .diferente::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 100%;
+    height: 3px;
+    background: black;
+    border-radius: 5px;
+    transform-origin: right;
+    transform: scaleX(0);
+    transition: transform .5s;
+}
+
+
+.navigation .diferente:hover::after {
+    transform-origin: left;
+    transform: scaleX(1);
+}
+
+.navigation .btnLogin-popup {
+    margin: 30px;
+    width: 130px;
+    height: 50px;
+    background: transparent;
+    border: 2px solid #fff;
+    outline: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.1em;
+    color: #fff;
+    font-weight: 500;
+    margin-left: 40px;
+    transition: .5s;
+}
+
+
+.navigation {
+    color: #162938;
+
+}
+
+.navigation .btnLogin-popup {
+    margin: 30px;
+    width: 130px;
+    height: 50px;
+    background: transparent;
+    border: 2px solid rgb(0, 0, 0);
+    outline: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.1em;
+    color: black;
+    font-weight: 500;
+    margin-left: 40px;
+    transition: .5s;
+}
+
+
+.navigation .btnLogin-popup:hover {
+    background: rgb(37, 36, 36);
+    color: #fff;
+}
+
+/* Footer */
+
+
+
+
+footer {
+    position: absolute;
+    bottom: 0%;
+    background-color: #023859;
+    width: 100%;
+    height: 10vh;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+
+
+.azul p {
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    padding-top: 40px;
+}
+
+
+/* coisa do gordo */
+.azul {
+    position: relative;
+    width: 20%;
+    height: 100%;
+    background: rgb(26, 71, 137);
+    padding: 14px;
+}
+
+
+
+
+.h2 {
+    
+    margin-left: -150px;
+    width: 100px;
+    margin-bottom: 100px;
+    color: rgb(255, 255, 255);
+    position: relative;
+    top: 40px;
+    left: 170px;
+}
+
+
+
+
+.h3 {
+    margin-left: 40px;
+    margin-top: 30px;
+    color: #fff;
+}
+
+
+
+
+.p2 {
+    margin-left: 60px;
+    color: #fff;
+}
+
+
+
+
+.icon {
+    margin-left: 54px;
+    font-size: 1.2em;
+    color: #fff;
+    vertical-align: middle;
+}
+
+
+
+
+.icon2 {
+    margin-left: 60px;
+    font-size: 1.2em;
+    color: #fff;
+    vertical-align: middle;
+}
+
+
+
+
+.icon3 {
+    margin-left: 38px;
+    font-size: 1.2em;
+    color: #fff;
+    vertical-align: middle;
+}
+
+
+
+
+.icon4 {
+    margin-left: 67px;
+    font-size: 1.2em;
+    color: #fff;
+    vertical-align: middle;
+}
+
+
+
+
+.icon5 {
+    margin-left: 44px;
+    font-size: 1.2em;
+    color: #fff;
+    vertical-align: middle;
+}
+
+
+
+
+/* Admin */
+
+
+.cadastro {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    width: 100%;
+    height: 758px;
+    color: black;
+    display: flex;
+}
+
+
+.h1_grafico {
+    padding: 30px;
+    width: 600px;
+    height: 20px;
+    margin: 0px;
+    position: relative;
+    top: -10px;
+ }
+
+ .grafico2 {
+    width: 70%;
+    height: 100%;
+    display: flex;
+    position: relative;
+    top: 40px;
+    flex-wrap: wrap;
+ }
+
+.graf {
+    margin-top: -50px;
+    margin-bottom: 200px;
+    margin-left: 500px;
+}
+
+ .grafico2 p {
+    margin-top: 20%;
+    font-size: 20px;
+ }
+
+
+ .imgrafico{
+    width: 500px;
+    height: 200px;
+ }
+
+ .h2_1 {
+    padding: 60px;
+    position: relative;
+    top: -60px;
+    width: 200px;
+    height: 200px;
+    color: black;
+ }
+
+
+ .quadrado {
+    margin-left: 20px;
+    margin-bottom: 20px;
+    color: white;
+    text-align: center;
+    border-radius: 10px;
+    width: 150px;
+    
+    height: 80px;
+    background-color: rgb(26,71,137);
+    margin-top: -150px;
+ }
+
+
+ .cadastro2 {
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 80%;
+    height: 100%;
+    display: flex;
+    position: relative;
+    top: 40px;
+ }
+
+
+ main {
+    display: flex;
+ }
+
+
+ .tabela {
+    display: flex;
+    flex-wrap: wrap;
+    height: 600px;
+    width: 530px;
+    margin-top: 100px;
+ }
+
+ i {
+    margin-top: -50px;
+
+ }
+
+ .titulo2 {
+    text-align: left;
+    margin-left: 20px;
+    width: 100%;
+ }
+
+ .titulo2 h2 {
+    margin-top: 30px;
+ }
+
+ .quadrado2 {
+    margin-left: 20px;
+    margin-bottom: 20px;
+    color: black;
+    text-align: center;
+    border-radius: 10px;
+    width: 150px;
+    height: 80px;
+    background-color: rgb(205,214,255);
+    margin-top: -150px;
+
+
+ }
+
+
+ .quadrado3 {
+    margin-left: 20px;
+    margin-bottom: 20px;
+    color: black;
+    text-align: center;
+    border-radius: 10px;
+    width: 150px;
+    height: 80px;
+    background-color: rgb(227,232,255);
+    margin-top: -150px;
+
+
+ }
+
+
+ .tabela p {
+    margin-top: 20%;
+    font-size: 20px;
+ }
+
+
+ .titulo {
+    text-align: left;
+    margin-left: 20px;
+    margin-top: 20px;
+    width: 100%;
+ }
+
+ .titulo h2 {
+    margin-top: 30px;
+ }
+
+ .user {
+    width: 80%;
+    height: 100%;
+    flex-wrap: wrap;
+    display: flex;
+ }
+
+ .chamada {
+    display: block;
+    height: 250px;
+    margin-left: 20px;
+    width: 25%;
+ }
+
+ .vazio {
+    width: 70%;
+ }
+
+ .chamada2 {
+    background-color: rgb(255,248,241);
+    height: 150px;
+    width: 300px;
+    margin-top: 10px ;
+    margin-bottom: 10px;
+    border-radius: 20px;
+    text-align: center;
+
+ }
+
+ .chamada2 p {
+    position: relative;
+    top: 40%;
+    font-size: 20px;
+ }
+
+.teste {
+    width: 100%;
+    margin-left: 20px;
+    font-size: 20px;
+    margin-top: 20px;
+}
+
+
+
+/* Admin Conteúdo */
+.titulosCont{
+    position: absolute;
+   margin-bottom: 620px;
+   line-height: 1.9;
+}
+.h1Cont{
+    font-size: 40px;
+}
+
+
+.imgMat1{
+ margin-left: 250px;
+ margin-top: 60px;
+}
+
+.imgMat2{
+ margin-left: 100px;
+ margin-top: 60px;
+}
+
+
+
+
+

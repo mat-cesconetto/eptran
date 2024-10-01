@@ -1,0 +1,839 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    flex-wrap: wrap;
+    height: 100%;
+    font-family: "Poppins", sans-serif;
+
+}
+
+
+/* Header */
+/* Header */
+header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    padding: 20px, 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 99;
+    background-color: #F2F2F2;
+}
+
+.logo {
+    font-size: 2em;
+    color: black;
+    user-select: none;
+    margin-left: 60px;
+}
+
+.esquerda {
+    display: flex;
+    align-items: center;
+}
+
+.esquerda img {
+    max-height: 90px;/* Ajuste a altura conforme necessário */
+    width: 180px; 
+    margin-left: 30px;
+}
+
+.navigation .diferente {
+    position: relative;
+    font-size: 1.1em;
+    color: black;
+    text-decoration: none;
+    font-weight: 500;
+    margin-left: 40px;
+}
+
+.navigation .diferente::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 100%;
+    height: 3px;
+    background: black;
+    border-radius: 5px;
+    transform-origin: right;
+    transform: scaleX(0);
+    transition: transform .5s;
+}
+
+
+.navigation .diferente:hover::after {
+    transform-origin: left;
+    transform: scaleX(1);
+}
+
+.navigation .btnLogin-popup {
+    margin: 30px;
+    width: 130px;
+    height: 50px;
+    background: transparent;
+    border: 2px solid #fff;
+    outline: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.1em;
+    color: #fff;
+    font-weight: 500;
+    margin-left: 40px;
+    transition: .5s;
+}
+
+
+.navigation {
+    color: #162938;
+
+}
+
+.navigation .btnLogin-popup {
+    margin: 30px;
+    width: 130px;
+    height: 50px;
+    background: transparent;
+    border: 2px solid rgb(0, 0, 0);
+    outline: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.1em;
+    color: black;
+    font-weight: 500;
+    margin-left: 40px;
+    transition: .5s;
+}
+
+
+.navigation .btnLogin-popup:hover {
+    background: rgb(37, 36, 36);
+    color: #fff;
+}
+/* Footer */
+
+
+footer {
+    position: absolute;
+    bottom: 0%;
+    background-color: #023859;
+    width: 100%;
+    height: 10vh;
+    display: flex;
+    flex-shrink: 0;
+    justify-content: space-between;
+}
+
+
+/* Pagina Inicial */
+
+.body1 {
+    background-image: url(/imagens/teste.jpg);
+    background-position-y: 25%;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+/* REGISTRO */
+section {
+    background-image: url(/imagens/teste1.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-x: 330px;
+}
+
+.caixa {
+    position: relative;
+    width: 50%;
+    background-color: #39586D;
+    color: #ffffff;
+    padding: 40px 35px 55px;
+    height: 776px;
+    margin-top: 5%;
+}
+
+.caixa h1 {
+    font-size: 36px;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #FFF;
+    margin-top: 2%;
+}
+
+.caixa .linha {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.linha .inputada {
+    position: relative;
+    width: 50%;
+    margin: 13px 0;
+    color: #FFF;
+}
+
+.linha .inputada input,
+.linha .inputada select {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, .2);
+    outline: none;
+    font-size: 16px;
+    color: #FFF;
+    border-radius: 6px;
+    padding: 15px 15px 15px 40px;
+}
+
+.linha select option {
+    color: black;
+}
+
+.linha select optgroup {
+    color: black;
+}
+
+
+.linha .inputada input::placeholder {
+    color: #FFF;
+}
+
+.linha .inputada i {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 15px;
+    font-size: 20px;
+}
+
+.caixa label {
+    display: inline-block;
+    font-size: 14.5px;
+    margin: 10px 0 23px;
+}
+
+.caixa label input {
+    accent-color: #FFF;
+    margin-right: 5px;
+}
+
+.caixa .btn {
+    width: 100%;
+    height: 45px;
+    background-color: #FFF;
+    border: none;
+    outline: none;
+    border-radius: 6px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+    cursor: pointer;
+    font-size: 16px;
+    color: #333;
+    font-weight: 600;
+}
+
+/* Login */
+
+.body2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 950px;
+    background: url(imagens/teste4.jpg) no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.body2 footer {
+    position: relative;
+    bottom: -30px;
+}
+
+.p2 {
+    color: black;
+}
+
+
+.wrapper {
+    position: relative;
+    width: 600px;
+    height: 580px;
+    background: #ebe2e2;
+    border: 2px solid rgba(255, 255, 255, .5);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 30px rgba(0, 0, 0, .5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    margin-top: 180px;
+    margin-bottom: 106px;
+}
+
+
+.wrapper .form-box {
+    width: 100%;
+    padding: 40px;
+}
+
+.form-box {
+    font-size: 2em;
+    color: #162938;
+    text-align: center;
+}
+
+.input-box {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    border-bottom: 2px solid #162938;
+    margin: 30px 0;
+}
+
+.input-box label {
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    transform: translateY(-50%);
+    font-size: 20px;
+    color: #162938;
+    font-weight: 500;
+    pointer-events: none;
+    transition: .5s;
+}
+
+
+.input-box input:focus~label,
+.input-box input:valid~label {
+    top: -5px;
+}
+
+
+.input-box input {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 1em;
+    color: #162938;
+    font-weight: 600;
+    padding: 0 35px 0 5px;
+}
+
+
+.input-box .icon {
+    position: absolute;
+    right: 8px;
+    font-size: 0.8em;
+    color: #162938;
+    line-height: 57px;
+}
+
+
+.remember-forgot {
+    font-size: .4cm;
+    color: #162938;
+    font-weight: 500;
+    margin: -15px 0 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.remember-forgot label input {
+    accent-color: #162938;
+    margin-right: 3px;
+}
+
+
+.remember-forgot a {
+    color: #162938;
+    text-decoration: none;
+}
+
+
+.remember-forgot a:hover {
+    text-decoration: underline;
+}
+
+
+.bnt5 {
+    width: 100%;
+    height: 45px;
+    font-size: 25px;
+    background: #162938;
+    border: none;
+    outline: none;
+    border-radius: 6px;
+    cursor: pointer;
+    color: #fff;
+    font-weight: 500;
+}
+
+
+.login-register {
+    font-size: 15px;
+    color: #162938;
+    text-align: center;
+    font-weight: 500;
+    margin: 35px 0 10px;
+}
+
+
+.login-register p a {
+    color: #162938;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+
+.login-register p a:hover {
+    text-decoration: underline;
+}
+
+main {
+
+    width: 100%;
+    height: 868px;
+    margin-top: 0px;
+}
+
+.main2 {
+    background-image: url(imagens/fundo.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    width: 100%;
+    margin-right: 20vh;
+    justify-content: space-around;
+
+}
+
+
+main div {
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
+main img {
+    margin-top: 14%;
+    width: 25%;
+    height: 30%;
+}
+
+.btn {
+    margin-top: -60px;
+    margin-bottom: -15px;
+}
+
+.btn button {
+    padding: 30px;
+    font-size: 30px;
+    color: #FFFFFF;
+    overflow: visible;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-bottom: 150px;
+    background-color: #113dac;
+    border: 1px solid #1652F0;
+    cursor: pointer;
+}
+
+.btn2 button {
+    width: 350px;
+    height: 350px;
+    font-size: 30px;
+    border-radius: 50%;
+    margin-bottom: 150px;
+    background-color: rgb(255, 0, 0);
+    position: relative;
+    top: 18vh;
+    cursor: pointer;
+}
+
+
+.btn3 button {
+    width: 350px;
+    height: 350px;
+    font-size: 30px;
+    border-radius: 50%;
+    margin-bottom: 150px;
+    background-color: rgb(255, 166, 31);
+    position: relative;
+    top: 18vh;
+    cursor: pointer;
+}
+
+
+.btn4 button {
+    width: 350px;
+    height: 350px;
+    font-size: 30px;
+    border-radius: 50%;
+    margin-bottom: 150px;
+    background-color: rgb(21, 125, 75);
+    position: relative;
+    top: 18vh;
+    cursor: pointer;
+}
+
+.btn button:hover {
+    background-color: #0A46E4;
+    border-color: #0A46E4;
+}
+
+
+.img {
+    right: 50px;
+    margin-right: 30px;
+}
+
+.p1 {
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    margin-left: 800px;
+
+}
+
+.conteudo {
+    display: flex;
+    margin-top: 90px;
+}
+
+.titulos {
+    margin: auto;
+    margin-left: 135px;
+}
+
+h1 {
+    margin-left: 45px;
+}
+
+/* FALE CONOSCO */
+
+.body3 {
+    background-color: #39586D;
+    background-image: none;
+}
+
+.fale {
+    position: relative;
+    width: 50%;
+    justify-content: center;
+    text-align: center;
+    background-color: #39586D;
+    color: #ffffff;
+    padding: 40px 35px 55px;
+    height: 776px;
+    margin-top: 5%;
+    margin-left: 25%;
+}
+
+.fale h1 {
+    font-size: 36px;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #FFF;
+    margin-top: 12%;
+}
+
+.fale label {
+    display: inline-block;
+    font-size: 14.5px;
+    margin: 10px 0 23px;
+}
+
+.fale label input {
+    accent-color: #FFF;
+    margin-right: 5px;
+}
+
+.fale .btn {
+    width: 100%;
+    height: 45px;
+    background-color: #FFF;
+    border: none;
+    outline: none;
+    border-radius: 6px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+    cursor: pointer;
+    font-size: 16px;
+    color: #333;
+    font-weight: 600;
+}
+
+.treco .inputada input {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, .2);
+    outline: none;
+    font-size: 16px;
+    color: #FFF;
+    border-radius: 6px;
+    padding: 10px 10px 10px 30px;
+}
+
+.treco .inputada {
+    position: relative;
+    width: 100%;
+    margin: 13px 0;
+    color: #FFF;
+}
+
+.treco .inputada input::placeholder {
+    color: #FFF;
+}
+
+.treco .inputada textarea {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, .2);
+    outline: none;
+    font-size: 16px;
+    color: #FFF;
+    border-radius: 6px;
+    padding: 10px 10px 10px 30px;
+    resize: none;
+    margin-bottom: 50px;
+}
+
+.treco .inputada textarea::placeholder {
+    color: #FFF;
+}
+
+/* Sobrenos */
+
+.body4 {
+    background-color: #fff;
+    background-image: url(imagens/branco.png) no-repeat;
+    background-size: cover;
+}
+
+.body4 footer {
+    position: relative;
+    top: 400px;
+}
+
+.body4 main .title {
+    margin: 0;
+    margin-top: 100px;
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    flex: 1 0 auto;
+}
+
+.body4 h1 {
+    position: relative;
+    top: -250px;
+    text-align: center;
+    color: #e9e9e9;
+    margin: auto;
+    font-size: 80px;
+}
+
+
+.body4 p {
+    margin: auto;
+    color: black;
+    text-align: center;
+    width: 30%;
+    margin-top: -70px;
+    font-size: 20px;
+    margin-bottom: 30px;
+}
+
+.body4 .time {
+    display: flex;
+    margin: auto;
+}
+
+.body4 .time img {
+    width: 15%;
+    margin: 50px;
+}
+
+.body4 h2 {
+    text-align: center;
+    margin-top: 50px;
+    font-size: 30px;
+}
+
+.content {
+    display: flexbox;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/*Videos*/
+.seriesIniciais {
+    display: flex;
+    margin-top: 100px;
+    margin-left: 350px;
+}
+
+.conteudos {
+    display: flex;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.ti {
+    background-color: rgb(233,233,233);
+    margin-top: 110px;
+    margin-right: 100px;
+    width: 400px;
+    height: 70px;
+    text-align: center;
+}
+
+
+.ti h1 {
+    align-items: center;
+    font-size: 40px;
+}
+
+.h1 {
+    margin-left: 200px;
+}
+
+.img1 {
+    background-color: rgb(0, 0, 0);
+    margin-left: 200px;
+    border-radius: 20px;
+    width: 700px;
+    height: 450px;
+    text-align: center;
+    color: white;
+}
+
+.pilar {
+    width: 940px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.pilar p {
+    margin-left: 30px;
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+.img2 {
+    background-color: rgb(0, 0, 0);
+    margin-left: 200px;
+    margin-bottom: 50px;
+    border-radius: 20px;
+    width: 300px;
+    height: 180px;
+}
+
+
+.icone {
+    margin-left: 100px;
+    margin-right: 0px;
+    border-radius: 20px;
+    width: 300px;
+    height: 70px;
+    text-align: center;
+}
+
+.conteiner {
+    display: flex;
+}
+
+
+/*Jogos*/
+
+.jogos{
+    display: flex;
+    margin-top: 150px;
+}
+
+
+.titulo{
+    margin-top: 130px;
+    width: 400px;
+    background-color: rgb(206, 203, 203);
+}
+
+.memo{
+    background-color: green;
+    width: 250px;
+    height: 250px;
+    text-align: center;
+    border-radius: 20px;
+    margin-left: 350px;
+}
+
+.corrida{
+background-color: yellow;
+width: 260px;
+height: 252px;
+text-align: center;
+border-radius: 20px;
+margin-left: 200px;
+}
+
+.quiz{
+background-color: red;
+width: 250px;
+height: 250px;
+text-align: center;
+border-radius: 20px;
+margin-left: 200px;
+}
+
+.jogos p{
+    font-size: 25px;
+}
+
+/*Material*/
+.mat_h1{
+    font-size: 40px;
+}
+
+
+.fundo {
+    background-image: url('imagens/fundoMaterial.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+
+.conteiner_mat{
+    display: flex;
+    margin-top: 100px;
+}
+
+.opac_mat1{
+    margin-left: 350px;
+    position: relative;
+    width: 400px;
+    background-color: rgba(206, 203, 203, 0.445);
+}
+
+
+.opac_mat2{
+    margin-left: 150px;
+    width: 630px;
+    position: relative;
+    background-color: rgba(206, 203, 203, 0.445);
+}

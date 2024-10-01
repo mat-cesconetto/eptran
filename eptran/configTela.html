@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuração_Acessibilidade_Tela</title>
+    <link rel="stylesheet" href="style_configTela.css">
+</head>
+<!-- Pagina de configuração da tela -->
+
+<body>
+    <header>
+        <div class="esquerda">
+            <a href="../paginaInicial.html">
+                <img src="imagens/logo-eptran.png" alt="Logo">
+            </a>
+        </div>
+        <nav class="navigation">
+            <a href="ensino.html" class="diferente">Atividade</a>
+            <a href="sobrenos.html" class="diferente">Sobre Nós</a>
+            <a href="faleConosco.html" class="diferente">Fale Conosco</a>
+            <a href="login.html"><button class="btnLogin-popup">Login/Cadastro</button></a>
+        </nav>
+    </header>
+    <main class="conteiner">
+        <div class="azul">
+            <h2 class="h2">Configuração</h2>
+
+
+            <h3 class="h3">Acessibilidade</h3>
+
+
+            <a href="configTela.html" class="p2">Tela <ion-icon name="chevron-forward-outline" class="icon"></ion-icon></a>
+            <a href="Som.html" class="p2">Som <ion-icon name="chevron-forward-outline" class="icon2"></ion-icon></a>
+            <a href="controles.html" class="p2">Controles <ion-icon name="chevron-forward-outline" class="icon3"></ion-icon></a>
+
+
+            <h3 class="h3">Dados de Usuario</h3>
+
+
+            <a href="configConta.html" class="p2">Conta <ion-icon name="chevron-forward-outline" class="icon4"></ion-icon></a>
+            <a href="conquistas.html" class="p2">Conquistas <ion-icon name="chevron-forward-outline" class="icon5"></ion-icon></a>
+        </div>
+
+
+
+        <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+        <div class="configTela">
+            <h1>Acessibilidade</h1>
+            <h2>Configurações de Tela:</h2>
+
+            <div class="config">
+                <label for="brilho">Brilho:</label>
+                <input type="range" id="brilho" min="0" max="100" value="50">
+            </div>
+
+            <div class="config">
+                <label id="fonte" for="fonte">Tamanho da Fonte:</label>
+                <button class="botaoPequeno">Aa</button>
+                <button class="botaoMedio">Aa</button>
+                <button class="botaoGrande">Aa</button>
+            </div>
+
+            <div class="config">
+                <label for="tema">Tema da Tela:</label>
+                <select id="tema">
+                    <option value="claro">Claro</option>
+                    <option value="escuro">Escuro</option>
+                </select>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <img src="imagens/Prefeitura.png" alt="0">
+
+        <img class="img" src="imagens/logof.png" alt="">
+    </footer>
+</body>
+
+</html>

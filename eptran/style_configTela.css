@@ -1,0 +1,560 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+
+
+body {
+    margin-top: 100px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+.conteiner {
+    display: flex;
+}
+
+.body{
+    margin-top: 100px;
+    background: rgb(230, 230, 227);
+}
+
+/* Header */
+header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    padding: 20px, 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 99;
+    background-color: #F2F2F2;
+}
+
+.logo {
+    font-size: 2em;
+    color: black;
+    user-select: none;
+    margin-left: 60px;
+}
+
+.esquerda {
+    display: flex;
+    align-items: center;
+}
+
+.esquerda img {
+    max-height: 90px;/* Ajuste a altura conforme necessário */
+    width: 180px; 
+    margin-left: 30px;
+}
+
+.navigation .diferente {
+    position: relative;
+    font-size: 1.1em;
+    color: black;
+    text-decoration: none;
+    font-weight: 500;
+    margin-left: 40px;
+}
+
+.navigation .diferente::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 100%;
+    height: 3px;
+    background: black;
+    border-radius: 5px;
+    transform-origin: right;
+    transform: scaleX(0);
+    transition: transform .5s;
+}
+
+
+.navigation .diferente:hover::after {
+    transform-origin: left;
+    transform: scaleX(1);
+}
+
+.navigation .btnLogin-popup {
+    margin: 30px;
+    width: 130px;
+    height: 50px;
+    background: transparent;
+    border: 2px solid #fff;
+    outline: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.1em;
+    color: #fff;
+    font-weight: 500;
+    margin-left: 40px;
+    transition: .5s;
+}
+
+
+.navigation {
+    color: #162938;
+
+}
+
+.navigation .btnLogin-popup {
+    margin: 30px;
+    width: 130px;
+    height: 50px;
+    background: transparent;
+    border: 2px solid rgb(0, 0, 0);
+    outline: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.1em;
+    color: black;
+    font-weight: 500;
+    margin-left: 40px;
+    transition: .5s;
+}
+
+
+.navigation .btnLogin-popup:hover {
+    background: rgb(37, 36, 36);
+    color: #fff;
+}
+/* Footer */
+
+
+footer {
+    position: relative;
+    bottom: 0%;
+    background-color: #023859;
+    width: 100%;
+    height: 10vh;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+p {
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    padding-top: 40px;
+}
+
+/* coisa do gordo */
+.azul {
+    position: relative;
+    top: 0px;
+    width: 12%;
+    height: 741px;
+    background: rgb(26, 71, 137);
+    padding: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+.h2 {
+    margin-left: 40px;
+    margin-top: 40px;
+    color: #fff;
+}
+
+
+.h3 {
+    margin-left: 40px;
+    margin-top: 30px;
+    color: #fff;
+}
+
+
+.azul a {
+    position: relative;
+    font-size: 15px;
+    color: rgb(255, 255, 255);
+    line-height: 4.5;
+    text-decoration: none;
+    font-weight: 200;
+    margin-left: 60px;
+}
+
+.icon {
+    margin-left: 62px;
+    font-size: 1.2em;
+    color: #fff;
+    vertical-align: middle;
+}
+
+
+.icon2 {
+    margin-left: 60px;
+    font-size: 1.2em;
+    color: #fff;
+    vertical-align: middle;
+}
+
+
+.icon3 {
+    margin-left: 24px;
+    font-size: 1.2em;
+    color: #fff;
+    vertical-align: middle;
+}
+
+
+.icon4 {
+    margin-left: 52px;
+    font-size: 1.2em;
+    color: #fff;
+    vertical-align: middle;
+}
+
+
+.icon5 {
+    margin-left: 14px;
+    font-size: 1.2em;
+    color: #fff;
+    vertical-align: middle;
+}
+
+/* config */
+.configTela {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.config {
+    padding-top: 50px;
+    margin-bottom: 100px;
+    padding-right: 3px;
+    display: flex;
+}
+
+.configTela label {
+    font-size: 20px;
+    margin: 20px;
+    width: 200px;
+}
+
+
+input {
+    width: 300px;
+}
+
+select {
+    appearance: none;
+    /* Remove estilos padrão do sistema */
+    -webkit-appearance: none;
+    /* Para navegadores baseados em WebKit */
+    -moz-appearance: none;
+    /* Para navegadores baseados em Mozilla */
+    background-color: #f1f1f1;
+    /* Cor de fundo */
+    border: 1px solid #ccc;
+    /* Borda */
+    padding: 8px 12px;
+    /* Espaçamento interno */
+    font-size: 16px;
+    /* Tamanho da fonte */
+    cursor: pointer;
+    /* Cursor do mouse */
+    border-radius: 10px;
+    /* Borda arredondada */
+    width: 200px;
+    text-align: center;
+}
+
+/* Estilos quando o cursor está em cima do seletor */
+select:hover {
+    border-color: #aaa;
+    /* Mudança de cor da borda */
+}
+
+/* Estilos quando o seletor é focado */
+select:focus {
+    outline: none;
+    /* Remove o contorno ao focar */
+    border-color: #1b5fdd;
+    /* Mudança de cor da borda */
+}
+
+.botaoPequeno {
+    font-size: 10px;
+    background-color: #1b5fdd;
+    /* Cor de fundo */
+    border: none;
+    /* Sem borda */
+    color: white;
+    /* Cor do texto */
+    padding: 15px 32px;
+    /* Espaçamento interno */
+    text-align: center;
+    /* Alinhamento do texto */
+    text-decoration: none;
+    /* Sem decoração de texto */
+    display: inline-block;
+    /* Exibir como elemento em linha */
+    
+    /* Tamanho da fonte */
+    margin: 4px 2px;
+    /* Margem */
+    cursor: pointer;
+    /* Cursor do mouse */
+    border-radius: 10px;
+}
+
+.botaoMedio {
+    font-size: 15px;
+    background-color: #1b5fdd;
+    /* Cor de fundo */
+    border: none;
+    /* Sem borda */
+    color: white;
+    /* Cor do texto */
+    padding: 15px 32px;
+    /* Espaçamento interno */
+    text-align: center;
+    /* Alinhamento do texto */
+    text-decoration: none;
+    /* Sem decoração de texto */
+    display: inline-block;
+    /* Exibir como elemento em linha */
+    
+    /* Tamanho da fonte */
+    margin: 4px 2px;
+    /* Margem */
+    cursor: pointer;
+    /* Cursor do mouse */
+    border-radius: 10px;
+}
+
+.botaoGrande {
+    font-size: 20px;
+    background-color: #1b5fdd;
+    /* Cor de fundo */
+    border: none;
+    /* Sem borda */
+    color: white;
+    /* Cor do texto */
+    padding: 15px 32px;
+    /* Espaçamento interno */
+    text-align: center;
+    /* Alinhamento do texto */
+    text-decoration: none;
+    /* Sem decoração de texto */
+    display: inline-block;
+    /* Exibir como elemento em linha */
+    
+    /* Tamanho da fonte */
+    margin: 4px 2px;
+    /* Margem */
+    cursor: pointer;
+    /* Cursor do mouse */
+    border-radius: 10px;
+}
+
+
+/*Som*/
+.direita {
+    margin-left: 50px;
+}
+
+h3 {
+    line-height: 4.5;
+}
+
+.direita h3 {
+    line-height: 7.5;
+    font-size: 20px;
+}
+
+.direita button {
+    width: 120px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 5px 10px;
+    border: none;
+    background-color: #007BFF;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+
+.som {
+    display: flex;
+}
+
+.lado {
+    margin-left: 20px;
+}
+
+select {
+    width: 130px;
+    height: 50px;
+    padding: 5px 10px;
+    border: 1px solid #007BFF;
+    border-radius: 5px;
+    background-color: #ffffff;
+    color: #007BFF;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+
+.h1{
+   padding: 30px; 
+   width: 200px;
+   margin: 0px;
+}
+
+.divimg{
+    width: 1600px;
+    display: flex;
+    position: relative;
+    top: 30px;
+    justify-content: space-evenly;
+    right: 10px;
+}
+
+.divimg img{
+    width: 200px;
+    height: 200px;
+    position: relative;
+    top: 20px;
+    justify-content: center;
+}
+
+
+.divimg1{
+    width: 100%;
+    position: relative;
+    top: -60px;
+} 
+
+
+.content {
+    display: flex;
+    align-items: center;
+    background-color: rgb(255, 255, 255);
+    text-align: center;
+    position: relative;
+    top: 80px;
+    justify-content: center;
+    border: none;
+    border-radius: 10px;
+    -webkit-box-shadow: -3px -2px 65px -1px rgba(0,0,0,0.75);
+    -moz-box-shadow: -3px -2px 65px -1px rgba(0,0,0,0.75);
+    box-shadow: -3px -2px 65px -1px rgba(0,0,0,0.75);    height: 330px;
+    width: 260px;
+    flex-direction: column;
+}
+.message {
+    font-size: 20px;
+    color: #333;
+    border: none;
+    text-align: center;
+    justify-content: center;
+    position: relative;
+    top: 20px;
+    width: 220px;
+    height: 40px;
+}
+
+
+/*Controles*/
+.botao-teclado {
+    width: 60px;
+    height: 60px;
+    margin: 5px;
+    font-size: 20px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #000;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #f0f0f0;
+}
+.setas, .wasd {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 300px;
+    height: 300px;
+}
+.wasd {
+    margin-top: 300px;
+    margin-left: 350px;
+    height: 100px;
+
+}
+.setas div, .wasd div {
+    display: flex;
+}
+
+
+.titulos{
+    margin-left: 50px;
+    height: 300px;
+}
+.op{
+    margin-top: 50px;
+    margin-left: 50px;
+    font-size: 25px;
+}
+
+.imagen{
+    position: relative;
+    margin-top: 600px;
+    right: 720px;
+    width: 800px;
+
+}
+
+
+/* Config de tela */
+
+.configConta {
+    padding: 20px;
+}
+
+.dadosPessoais, .Endereco, .Foto {
+    margin-left: 50px;
+}
+
+.cima {
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.titulo {
+    margin-bottom: -30px;
+}
+
+.dadosUsuario {
+    display: flex;
+    margin-top: 10px;
+}
+
+.dados input {
+    padding: 5px;
+    
+}
+
+.configConta label {
+    margin: none;
+}
