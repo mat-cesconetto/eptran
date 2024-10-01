@@ -1,15 +1,19 @@
 import fastify from 'fastify'
+import cors from '@fastify/cors'
+import { routes } from './routes'
 
-const server = fastify()
 
-server.get('/ping', async (request, reply) => {
-  return 'pong\n'
-})
+const app = fastify({ logger: true })
 
-server.listen({ port: 8080 }, (err, address) => {
-  if (err) {
-    console.error(err)
-    process.exit(1)
-  }
-  console.log(`Server listening at ${address}`)
-})
+const start = async () => {
+
+    await app.register(routes)
+
+    try {
+        await app.listen({ port: 3333 })
+    } catch {
+        process.exit()
+    }
+}
+
+start()
