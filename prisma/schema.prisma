@@ -7,21 +7,21 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model Cadastro {
-  id_usuario             Int         @id @default(autoincrement())
-  nome_usuario           String      @db.VarChar(99)
-  email_usuario          String      @db.VarChar(99)
-  senha_usuario          String      @db.VarChar(99)
-  cep_usuario            String      @db.VarChar(99)
-  rua_usuario            String      @db.VarChar(99)
-  cidade_usuario         String      @db.VarChar(99)
-  estado_usuario         EstadoEnum
-  escola_usuario         String      @db.VarChar(100)
-  data_nascimento_usuario DateTime
-  escolaridade_usuario   EscolaridadeEnum
-  sexo_usuario           SexoEnum
-  adm                    Boolean?     @default(false) // Valor padrão "false"
-  conquistas             Conquistas?
+model Usuario {
+  id           Int              @id @default(autoincrement())
+  nome         String           @db.VarChar(99)
+  email        String           @db.VarChar(99) @unique
+  senha        String           @db.VarChar(99)
+  cep          String           @db.VarChar(99)
+  rua          String           @db.VarChar(99)
+  cidade       String           @db.VarChar(99)
+  estado       EstadoEnum
+  escola       String           @db.VarChar(100)
+  data_nasc    DateTime
+  escolaridade EscolaridadeEnum
+  sexo         SexoEnum
+  adm          Boolean?         @default(false) // Valor padrão "false"
+  conquistas   Conquistas?
 }
 
 model Conquistas {
@@ -29,15 +29,15 @@ model Conquistas {
   conquista_1   Boolean
   conquista_2   Boolean
   conquista_3   Boolean
-  usuario       Cadastro @relation(fields: [fk_id_usuario], references: [id_usuario])
+  usuario       Usuario @relation(fields: [fk_id_usuario], references: [id])
 }
 
 model FaleConosco {
-  id                  Int    @id @default(autoincrement())
-  nome_reclamacao     String @db.VarChar(99)
-  email_reclamacao    String @db.VarChar(99)
-  assunto_reclamacao  String @db.VarChar(99)
-  mensagem_reclamacao String @db.Text
+  id       Int    @id @default(autoincrement())
+  nome     String @db.VarChar(99)
+  email    String @db.VarChar(99)
+  assunto  String @db.VarChar(99)
+  mensagem String @db.Text
 }
 
 model Videos {
@@ -46,8 +46,8 @@ model Videos {
 }
 
 model Livros {
-  id          Int     @id @default(autoincrement())
-  livro_link  String? @db.Text
+  id         Int     @id @default(autoincrement())
+  livro_link String? @db.Text
 }
 
 enum EstadoEnum {
