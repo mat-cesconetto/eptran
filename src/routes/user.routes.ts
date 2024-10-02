@@ -34,15 +34,10 @@ export async function userRoutes(fastify: FastifyInstance) {
     fastify.post<{ Body: { email: string; senha: string } }>("/login", async (request: FastifyRequest, reply: FastifyReply) => {
         const { email, senha } = request.body as LoginUser;
         try {
-            const result = await userUseCase.login(email, senha); // Chamando a função de login
-            reply.send(result); // Retornando o token JWT
+            const result = await userUseCase.login(email, senha, reply); // Passando o reply
+            reply.send(result);
         } catch (error: any) {
-            reply.status(400).send({ error: error.message }); // Retornando erro caso falhe
+            reply.status(400).send({ error: error.message });
         }
     });
-
-    // // Rota de exemplo (protegida)
-    // fastify.get("/protected", { preHandler: [fastify.authenticate] }, async (request: FastifyRequest, reply: FastifyReply) => {
-    //     reply.send({ message: 'Você acessou uma rota protegida!' });
-    // });
 }

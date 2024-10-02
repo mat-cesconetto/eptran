@@ -1,27 +1,27 @@
-import fastify from 'fastify';
-import cors from '@fastify/cors';
-import fastifyJWT from '@fastify/jwt'; // Importando JWT
+import fastify, { FastifyReply, FastifyRequest } from 'fastify';
 import { userRoutes } from './routes/user.routes';
+import fastifyJwt from 'fastify-jwt';
+import fastifyCookie from '@fastify/cookie';
 
-const app = fastify({ logger: true });
+const app = fastify();
 
-app.register(cors, {
-  origin: '*', // Configurando CORS se necessário
+// Registra o plugin JWT
+app.register(fastifyJwt, {
+    secret: 'seu-segredo', // Altere para um segredo mais seguro em produção
 });
 
-// Configurando o JWT com uma chave secreta
-app.register(fastifyJWT, {
-  secret: 'your-secret-key', // Substitua por uma chave segura
+// Registra o plugin de cookies
+app.register(fastifyCookie);
+
+// Middleware para autenticação
+app.decorate('authenticate', async (request: FastifyRequest, reply: FastifyReply) => {
+    try {
+        await request.jwtVerify();
+    } catch (err) {
+        reply.send(err);
+    }
 });
 
-// Decorando o Fastify com a função de autenticação
-app.decorate('authenticate', async function (request: any, reply: any) {
-  try {
-    await request.jwtVerify();
-  } catch (err) {
-    reply.send(err);
-  }
-});
 
 // Registrando as rotas de usuário
 app.register(userRoutes, {
