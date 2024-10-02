@@ -1,19 +1,41 @@
-import fastify from 'fastify'
-import cors from '@fastify/cors'
-import { routes } from './routes'
+import fastify, { FastifyReply, FastifyRequest } from 'fastify';
+import { userRoutes } from './routes/user.routes';
+import fastifyJwt from 'fastify-jwt';
+import fastifyCookie from '@fastify/cookie';
+
+const app = fastify();
+
+// Registra o plugin JWT
+app.register(fastifyJwt, {
+    secret: 'seu-segredo', // Altere para um segredo mais seguro em produção
+});
+
+// Registra o plugin de cookies
+app.register(fastifyCookie);
+
+// Middleware para autenticação
+app.decorate('authenticate', async (request: FastifyRequest, reply: FastifyReply) => {
+    try {
+        await request.jwtVerify();
+    } catch (err) {
+        reply.send(err);
+    }
+});
 
 
-const app = fastify({ logger: true })
+// Registrando as rotas de usuário
+app.register(userRoutes, {
+  prefix: '/users',
+});
 
 const start = async () => {
+  try {
+    await app.listen({ port: 3333 });
+    console.log('Server is running on port 3333');
+  } catch (err) {
+    console.error(err);
+    process.exit(1);
+  }
+};
 
-    await app.register(routes)
-
-    try {
-        await app.listen({ port: 3333 })
-    } catch {
-        process.exit()
-    }
-}
-
-start()
+start();

@@ -1,5 +1,5 @@
 
-  export interface CadastroProps {
+  export interface Usuario {
 
     nome_usuario: string;
     email_usuario: string;
@@ -13,6 +13,7 @@
     escolaridade_usuario: EscolaridadeEnum;
     sexo_usuario: SexoEnum;
     adm: boolean;
+    conquistas:
   }
   
   export enum EstadoEnum {
@@ -64,27 +65,3 @@
     conquistas?: Conquistas;
   }
   
-  export interface Conquistas {
-    fk_id_usuario: number;
-    conquista_1: boolean;
-    conquista_2: boolean;
-    conquista_3: boolean;
-  }
-  
-  export interface FaleConosco {
-    id: number;
-    nome_reclamacao: string;
-    email_reclamacao: string;
-    assunto_reclamacao: string;
-    mensagem_reclamacao: string;
-  }
-  
-  export interface Videos {
-    id: number;
-    video_link: string | null;
-  }
-  
-  export interface Livros {
-    id: number;
-    livro_link: string | null;
-  }
