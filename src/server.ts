@@ -1,5 +1,5 @@
 import fastify, { FastifyReply, FastifyRequest } from 'fastify';
-import { userRoutes } from './routes/user.routes';
+import { userRoutes } from './routes/userRoutes';
 import fastifyJwt from 'fastify-jwt';
 import fastifyCookie from '@fastify/cookie';
 import { registerErrorHandler } from './middlewares/error';
