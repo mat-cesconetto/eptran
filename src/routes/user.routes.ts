@@ -1,13 +1,13 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
-import { UserUseCase } from "../usecases/user.usecase";
+import { UserController } from "../controller/userController";
 import { LoginUser, User } from "../../types/User";
 
 
 export async function userRoutes(fastify: FastifyInstance) {
-    const userUseCase = new UserUseCase(fastify); // Passando a instância do Fastify
+    const userUseCase = new UserController(fastify); // Passando a instância do Fastify
 
     // Rota de registro de usuário
-    fastify.post<{ Body: User }>("/", async (request: FastifyRequest, reply: FastifyReply) => {
+    fastify.post<{ Body: User }>("/register", async (request: FastifyRequest, reply: FastifyReply) => {
         const { nome, email, senha, cep, rua, cidade, estado, escola, data_nasc, escolaridade, sexo, adm } = request.body as User;
         try {
             const data = await userUseCase.register({

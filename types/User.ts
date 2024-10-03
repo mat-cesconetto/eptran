@@ -38,7 +38,11 @@ export interface LoginUser {
 
 
 
-export interface UserRepository {
+export interface UserRepositoryType {
     create(data: RegisterUser): Promise<User>
-    findByEmail(email: string): Promise<User | null>
+  }
+  
+  export interface AuthRepositoryType {
+  findByEmail(email: string): Promise<User | null>
+
 }

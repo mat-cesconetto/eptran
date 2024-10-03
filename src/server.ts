@@ -2,6 +2,7 @@ import fastify, { FastifyReply, FastifyRequest } from 'fastify';
 import { userRoutes } from './routes/user.routes';
 import fastifyJwt from 'fastify-jwt';
 import fastifyCookie from '@fastify/cookie';
+import { registerErrorHandler } from './middlewares/error';
 
 const app = fastify();
 
@@ -12,6 +13,8 @@ app.register(fastifyJwt, {
 
 // Registra o plugin de cookies
 app.register(fastifyCookie);
+registerErrorHandler(app)
+
 
 // Middleware para autenticação
 app.decorate('authenticate', async (request: FastifyRequest, reply: FastifyReply) => {
