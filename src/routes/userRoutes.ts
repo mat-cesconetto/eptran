@@ -1,11 +1,7 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
-import { UserController } from "../controller/userController";
-import { RefreshTokenRepository } from "../repositories/refreshTokenRepository"; // Importa o repositório de tokens
 import { authMiddleware } from '../middlewares/authMiddleware'; // Ajuste o caminho conforme sua estrutura de diretórios
 
 export async function userRoutes(fastify: FastifyInstance) {
-    const userController = new UserController(fastify); // Instância da classe UserController
-    const refreshTokenRepository = new RefreshTokenRepository(); // Instância do repositório
 
     // Rota para obter informações do usuário
     fastify.get('/info', { onRequest: [authMiddleware] }, async (request: FastifyRequest, reply: FastifyReply) => {

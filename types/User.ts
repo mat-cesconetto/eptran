@@ -31,3 +31,7 @@ declare module 'fastify' {
       user: User; // Adicionando a propriedade user
   }
 }
+export interface UserStats {
+  id: number;
+  escolaridade: 'ENSINO_FUNDAMENTAL_I' | 'ENSINO_FUNDAMENTAL_II' | 'ENSINO_MEDIO' | 'OUTROS';
+}

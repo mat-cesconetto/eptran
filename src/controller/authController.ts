@@ -6,12 +6,14 @@ import { AuthRepository } from '../repositories/authRepository';
 import { BadRequestError, NotFoundError, UnauthorizedError } from '../helpers/apiErrors';
 import { RefreshTokenRepository } from '../repositories/refreshTokenRepository';
 import { BlacklistTokenRepository } from '../repositories/blackListedTokenRepository';
+import { AccessRepository } from '../repositories/accessRepository'; // Importando AccessRepository
 
 class AuthController {
     private blacklistedTokenRepository: BlacklistTokenRepository;
     private refreshTokenRepository: RefreshTokenRepository;
     private authRepository: AuthRepository;
     private userRepository: UserRepository;
+    private accessRepository: AccessRepository; // Adicionando AccessRepository
     private fastify: FastifyInstance; // Instância do Fastify para usar o JWT
 
     constructor(fastify: FastifyInstance) {
@@ -19,6 +21,7 @@ class AuthController {
         this.refreshTokenRepository = new RefreshTokenRepository();
         this.userRepository = new UserRepository();
         this.authRepository = new AuthRepository();
+        this.accessRepository = new AccessRepository(); // Instanciando AccessRepository
         this.fastify = fastify; // Injetando a instância do Fastify
     }
 
@@ -27,7 +30,7 @@ class AuthController {
         try {
             const verifyIfUserExists = await this.authRepository.findByEmail(email);
             if (verifyIfUserExists) {
-                throw new BadRequestError("Usuário já existe"); // Alterado para BadRequestError
+                throw new BadRequestError("Usuário já existe");
             }
             const hashedPassword = await bcrypt.hash(senha, 10);
             const result = await this.userRepository.create({
@@ -48,14 +51,14 @@ class AuthController {
         } catch (error) {
             console.error("Erro ao registrar usuário:", error);
             if (error instanceof BadRequestError) {
-                throw error; // Lança o erro se for um BadRequestError
+                throw error;
             }
-            throw new BadRequestError("Falha ao registrar usuário"); // Lança um erro genérico
+            throw new BadRequestError("Falha ao registrar usuário");
         }
     }
 
     // Função de login do usuário
-    async login(email: string, senha: string, reply: FastifyReply) { // Adicione o FastifyReply como parâmetro
+    async login(email: string, senha: string, reply: FastifyReply) {
         try {
             const user = await this.authRepository.findByEmail(email);
 
@@ -67,6 +70,9 @@ class AuthController {
             if (!isPasswordValid) {
                 throw new UnauthorizedError('Senha incorreta');
             }
+
+            // Registro do acesso
+            await this.accessRepository.logAccess(user.id); // Loga o acesso do usuário
 
             const accessToken = this.fastify.jwt.sign(
                 { id: user.id, email: user.email, nome: user.nome },
@@ -91,10 +97,10 @@ class AuthController {
                     createdAt: user.createdAt,
                     updatedAt: user.updatedAt,
                 },
-                { expiresIn: '30d' } // Define a expiração do refresh token
+                { expiresIn: '30d' }
             );
 
-            // Use reply.setCookie para definir o cookie
+            // Usando reply.setCookie para definir o cookie
             reply.setCookie('refreshToken', refreshToken, {
                 httpOnly: true,
                 secure: true,
@@ -117,9 +123,9 @@ class AuthController {
         } catch (error) {
             console.error("Houve uma falha ao fazer login:", error);
             if (error instanceof UnauthorizedError) {
-                throw error; // Lança o erro se for um UnauthorizedError
+                throw error;
             }
-            throw new UnauthorizedError("Houve uma falha ao fazer login"); // Lança um erro genérico
+            throw new UnauthorizedError("Houve uma falha ao fazer login");
         }
     }
 
@@ -129,7 +135,7 @@ class AuthController {
             const refreshToken = request.cookies.refreshToken;
 
             if (!refreshToken) {
-                throw new BadRequestError("Refresh token não encontrado"); // Alterado para BadRequestError
+                throw new BadRequestError("Refresh token não encontrado");
             }
 
             // Adiciona o refresh token à blacklist
@@ -143,7 +149,7 @@ class AuthController {
                 sameSite: 'strict',
             });
 
-            reply.clearCookie('accessToken', { // Limpa também o cookie do access token
+            reply.clearCookie('accessToken', {
                 httpOnly: true,
                 secure: true,
                 path: '/',
@@ -153,7 +159,7 @@ class AuthController {
             return reply.send({ message: "Logout realizado com sucesso" });
         } catch (error) {
             console.error("Houve uma falha ao fazer logout:", error);
-            throw new BadRequestError("Houve uma falha ao fazer logout"); // Alterado para BadRequestError
+            throw new BadRequestError("Houve uma falha ao fazer logout");
         }
     }
 }

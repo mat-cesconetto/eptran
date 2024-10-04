@@ -5,6 +5,7 @@ import fastifyCookie from '@fastify/cookie';
 import { registerErrorHandler } from './middlewares/error';
 import { userRoutes } from './routes/userRoutes';
 import { authMiddleware } from './middlewares/authMiddleware'; // Importa o middleware de autenticação
+import { statsRoutes } from './routes/statsRoutes';
 
 const app = fastify();
 
@@ -32,6 +33,9 @@ app.register(authRoutes, {
 app.register(userRoutes, {
     prefix: '/user',
     preHandler: authMiddleware, // Adiciona o middleware de autenticação
+});
+app.register(statsRoutes, {
+    prefix: '/stats',
 });
 
 // Inicia o servidor

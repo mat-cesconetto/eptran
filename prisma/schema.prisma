@@ -26,6 +26,7 @@ model Usuario {
   createdAt     DateTime       @default(now()) // Data de criação do usuário
   updatedAt     DateTime       @updatedAt // Data de última atualização do usuário
   refreshTokens RefreshToken[] @relation("UserRefreshTokens") // Relação com tokens de refresh
+  accesses      Access[] // Relação com Access
 }
 
 model RefreshToken {
@@ -41,12 +42,19 @@ model RefreshToken {
   @@unique([userId, token]) // Define uma chave única composta
 }
 
-
 model BlacklistedToken {
   id        Int      @id @default(autoincrement())
   token     String   @db.Text
   createdAt DateTime @default(now())
   expiresAt DateTime
+}
+
+model Access {
+  id     Int      @id @default(autoincrement())
+  userId Int
+  date   DateTime
+  user   Usuario  @relation(fields: [userId], references: [id]) // Supondo que haja um modelo User
+  createdAt DateTime @default(now()) // Armazena a data e hora do acesso
 }
 
 model Conquistas {
