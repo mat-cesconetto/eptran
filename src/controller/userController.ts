@@ -1,94 +1,44 @@
-import bcrypt from 'bcrypt'; // Importando bcrypt para criptografar a senha
-import { FastifyInstance, FastifyReply } from 'fastify'; // Importando FastifyInstance para o uso do JWT
-import { AuthRepositoryType, User, UserRepositoryType } from "../../types/User";
-import { UserRepository } from "../repositories/userRepository";
-import { AuthRepository } from '../repositories/authRepository'
-import { BadRequestError, NotFoundError, UnauthorizedError } from '../helpers/apiErrors';
+import fastify, { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
+import { AuthRepository } from "../repositories/authRepository";
+import { NotFoundError } from '../helpers/apiErrors';
 
-class UserController {
+export class UserController {
     private authRepository: AuthRepository;
-    private userRepository: UserRepository;
-    private fastify: FastifyInstance; // Instância do Fastify para usar o JWT
+    private fastify: FastifyInstance;
 
     constructor(fastify: FastifyInstance) {
-        this.userRepository = new UserRepository();
-        this.authRepository = new AuthRepository();
-        this.fastify = fastify; // Injetando a instância do Fastify
+        this.authRepository = new AuthRepository(); // Inicia o repositório de autenticação
+        this.fastify = fastify;
     }
 
-    // Função de registro do usuário
-    async register({ nome, email, senha, cep, rua, cidade, estado, escola, data_nasc, escolaridade, sexo }: User): Promise<User> {
+    // Método para obter informações do usuário
+    async getUserInfo(request: FastifyRequest, reply: FastifyReply) {
         try {
-            const verifyIfUserExists = await this.authRepository.findByEmail(email);
-            if (verifyIfUserExists) {
-                throw new NotFoundError("Usuário já existe");
-            }
-            const hashedPassword = await bcrypt.hash(senha, 10);
-            const result = await this.userRepository.create({
-                nome,
-                email,
-                senha: hashedPassword,
-                cep,
-                rua,
-                cidade,
-                estado,
-                escola,
-                data_nasc,
-                escolaridade,
-                sexo
-            });
-            return result;
-        } catch (error) {
-            console.error("Erro ao registrar usuário:", error);
-            throw new BadRequestError("Falha ao registrar usuário");
-        }
-    }
+            // O ID do usuário já está disponível em request.user
+            const userId = request.user.id;
 
-    // Função de login do usuário
-    async login(email: string, senha: string, reply: FastifyReply) { // Adicione o FastifyReply como parâmetro
-        try {
-            const user = await this.authRepository.findByEmail(email);
+            // Busca as informações do usuário
+            const userInfo = await this.authRepository.getUserById(userId);
 
-            if (!user) {
-                throw new NotFoundError('Usuário não encontrado');
+            if (!userInfo) {
+                throw new NotFoundError("Usuário não encontrado");
             }
 
-
-            const isPasswordValid = await bcrypt.compare(senha, user.senha);
-            if (!isPasswordValid) {
-                throw new UnauthorizedError('Senha incorreta');
+            // Retorna as informações do usuário
+            return reply.send({
+                email: userInfo.email,
+                nome: userInfo.nome,
+                escolaridade: userInfo.escolaridade,
+                isAdmin: userInfo.adm, // Exemplo de campo indicando se é admin
+                // Adicione mais campos conforme necessário
+            });
+        } catch (error: any) {
+            if (error instanceof NotFoundError) {
+                return reply.status(error.statusCode).send({ error: error.message });
             }
 
-            const accessToken = this.fastify.jwt.sign(
-                { id: user.id, email: user.email, nome: user.nome },
-                { expiresIn: '15m' }
-            );
-
-            const refreshToken = this.fastify.jwt.sign(
-                { id: user.id },
-                { expiresIn: '30d' }
-            );
-
-            // Use reply.setCookie para definir o cookie
-            reply.setCookie('refreshToken', refreshToken, {
-                httpOnly: true,
-                secure: true,
-                path: '/',
-                sameSite: 'strict',
-            });
-            reply.setCookie('accessToken', accessToken, {
-                httpOnly: true,
-                secure: true,
-                path: '/',
-                sameSite: 'strict',
-            });
-
-            return { accessToken };
-        } catch (error) {
-            console.error("Houve uma falha ao fazer login:", error);
-            throw new UnauthorizedError("Houve uma falha ao fazer login");
+            // Retorna uma mensagem de erro adequada para outros erros
+            return reply.status(500).send({ error: "Erro ao buscar informações do usuário", details: error.message });
         }
     }
 }
-
-export { UserController };

@@ -1,48 +1,39 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import { UserController } from "../controller/userController";
-import { LoginUser, RegisterUser, User } from "../../types/User";
-import { AuthRepository } from "../repositories/authRepository";
-
+import { RefreshTokenRepository } from "../repositories/refreshTokenRepository"; // Importa o repositório de tokens
+import { authMiddleware } from '../middlewares/authMiddleware'; // Ajuste o caminho conforme sua estrutura de diretórios
 
 export async function userRoutes(fastify: FastifyInstance) {
-    const userController = new UserController(fastify); // Passando a instância do Fastify
+    const userController = new UserController(fastify); // Instância da classe UserController
+    const refreshTokenRepository = new RefreshTokenRepository(); // Instância do repositório
 
-    // Rota de registro de usuário
-    fastify.post<{ Body: User }>("/register", async (request: FastifyRequest, reply: FastifyReply) => {
-        const { id, nome, email, senha, cep, rua, cidade, estado, escola, data_nasc, escolaridade, sexo, createdAt, updatedAt } = request.body as User;
+    // Rota para obter informações do usuário
+    fastify.get('/info', { onRequest: [authMiddleware] }, async (request: FastifyRequest, reply: FastifyReply) => {
         try {
-            const data = await userController.register({
-                id,
-                nome,
-                email,
-                senha,
-                cep,
-                rua,
-                cidade,
-                estado,
-                escola,
-                data_nasc,
-                escolaridade,
-                sexo,
-                createdAt,
-                updatedAt
-            });
-            return reply.send(data);
-        } catch (error) {
-            return reply.status(500).send({ error: "Registration failed", details: error });
-        }
-    });
+            // Acesso às informações do usuário
+            const user = request.user; // Acesso ao usuário autenticado
 
-    // Rota de login
-    fastify.post<{ Body: { email: string; senha: string } }>("/login", async (request: FastifyRequest, reply: FastifyReply) => {
-        const { email, senha } = request.body as LoginUser;
-        try {
-            const result = await userController.login(email, senha, reply); // Passando o reply
-            reply.send(result);
+            // Organizando os dados do usuário
+            const data = {
+                id: user.id,
+                nome: user.nome,
+                email: user.email,
+                cep: user.cep,
+                rua: user.rua,
+                cidade: user.cidade,
+                estado: user.estado,
+                escola: user.escola,
+                data_nasc: user.data_nasc,
+                escolaridade: user.escolaridade,
+                sexo: user.sexo,
+                adm: user.adm,
+                createdAt: user.createdAt,
+                updatedAt: user.updatedAt,
+            };
+            
+            return reply.send({ message: 'Informações do usuário', data }); // Retorna as informações do usuário
         } catch (error: any) {
-            reply.status(400).send({ error: error.message });
+            return reply.status(500).send({ error: "Erro ao obter informações do usuário", details: error.message });
         }
     });
-
-    fastify.post
 }

@@ -36,8 +36,11 @@ model RefreshToken {
   updatedAt DateTime @updatedAt
   expiresAt DateTime
 
-  user Usuario @relation("UserRefreshTokens", fields: [userId], references: [id]) // Nome da relação especificado
+  user Usuario @relation("UserRefreshTokens", fields: [userId], references: [id])
+
+  @@unique([userId, token]) // Define uma chave única composta
 }
+
 
 model BlacklistedToken {
   id        Int      @id @default(autoincrement())
