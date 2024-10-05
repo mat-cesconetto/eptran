@@ -50,7 +50,7 @@ const NavBar: React.FC = () => {
             </div>
             {isMenuOpen && (
                 <div className="absolute top-32 left-0 right-0 bg-neutral-100 h-full md:hidden">
-                    <div className="flex flex-col items-center py-4">
+                    <div className="flex flex-col items-center py-4 text-blue-950">
                         <NavLink href="/atividade" mobile>Atividades</NavLink>
                         <NavLink href="/conquistas" mobile>Conquistas</NavLink>
                         <NavLink href="/sobre" mobile>Sobre nós</NavLink>
