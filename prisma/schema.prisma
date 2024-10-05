@@ -22,7 +22,7 @@ model Usuario {
   sexo         SexoEnum
   adm          Boolean?         @default(false) // Valor padrão "false"
   conquistas   Conquistas?
-
+  profilePicture String?
   createdAt     DateTime       @default(now()) // Data de criação do usuário
   updatedAt     DateTime       @updatedAt // Data de última atualização do usuário
   refreshTokens RefreshToken[] @relation("UserRefreshTokens") // Relação com tokens de refresh

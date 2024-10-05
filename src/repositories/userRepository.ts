@@ -1,4 +1,4 @@
-import { User, RegisterUser } from '../../types/User';
+import { User, RegisterUser, ListUsers } from '../../types/User';
 import prismaClient from '../prisma';
 
 class UserRepository {
@@ -27,6 +27,34 @@ class UserRepository {
             throw new Error("Erro ao criar usuário."); // Lança um erro genérico
         }
     }
+
+    async listUsers(page: number, limit: number): Promise<ListUsers> {
+        const [users, totalUsers] = await prismaClient.$transaction([
+            prismaClient.usuario.findMany({
+                skip: (page - 1) * limit,
+                take: limit,
+            }),
+            prismaClient.usuario.count(), // Conta o total de usuários
+        ]);
+    
+        return {
+            users,
+            totalUsers, // Total de usuários na base
+            totalPages: Math.ceil(totalUsers / limit), // Total de páginas
+        };
+    }
+
+    async updateUserProfilePicture(userId: number, fileName: string): Promise<void> {
+        await prismaClient.usuario.update({
+            where: { id: userId },
+            data: {
+                profilePicture: fileName, // Supondo que o campo se chama `fotoPerfil`
+            },
+        });
+    }
+
+    
+    
 }
 
 export { UserRepository };

@@ -1,10 +1,15 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import { authMiddleware } from '../middlewares/authMiddleware'; // Ajuste o caminho conforme sua estrutura de diretórios
+import { adminMiddleware } from "../middlewares/adminMiddleware";
+import { request } from "http";
+import { UserController } from "../controller/userController";
 
 export async function userRoutes(fastify: FastifyInstance) {
+    const userController = new UserController(fastify);
+
 
     // Rota para obter informações do usuário
-    fastify.get('/info', { onRequest: [authMiddleware] }, async (request: FastifyRequest, reply: FastifyReply) => {
+    fastify.get('/info', { preHandler: [authMiddleware, adminMiddleware] }, async (request: FastifyRequest, reply: FastifyReply) => {
         try {
             // Acesso às informações do usuário
             const user = request.user; // Acesso ao usuário autenticado
@@ -32,4 +37,24 @@ export async function userRoutes(fastify: FastifyInstance) {
             return reply.status(500).send({ error: "Erro ao obter informações do usuário", details: error.message });
         }
     });
+    fastify.get('/list', {preHandler: [authMiddleware, adminMiddleware]}, userController.getAllUsers.bind(userController));
+
+    fastify.post('/upload-profile-picture', 
+        { 
+            preHandler: [authMiddleware],
+            // Add multipart handler options
+            config: {
+                multipart: {
+                    limits: {
+                        fileSize: 5 * 1024 * 1024 // 5MB
+                    }
+                }
+            }
+        }, 
+        async (request: FastifyRequest, reply: FastifyReply) => {
+            return userController.uploadProfilePicture(request, reply);
+        }
+    );
+    
+
 }

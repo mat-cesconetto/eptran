@@ -14,6 +14,7 @@ export type User = {
   data_nasc: Date;
   escolaridade: EscolaridadeEnum;
   sexo: SexoEnum;
+  profilePicture?: string | null
   adm: boolean | null; // Mantenha o null se você realmente precisar
   createdAt: Date;
   updatedAt: Date;
@@ -31,7 +32,30 @@ declare module 'fastify' {
       user: User; // Adicionando a propriedade user
   }
 }
+
+import 'fastify';
+
+declare module 'fastify' {
+  interface FastifyRequest {
+    file: () => Promise<{
+      fieldname: string;
+      filename: string;
+      encoding: string;
+      mimetype: string;
+      file: NodeJS.ReadableStream;
+      toBuffer: () => Promise<Buffer>;
+    }>;
+  }
+}
+
+
 export interface UserStats {
   id: number;
   escolaridade: 'ENSINO_FUNDAMENTAL_I' | 'ENSINO_FUNDAMENTAL_II' | 'ENSINO_MEDIO' | 'OUTROS';
+}
+
+export interface ListUsers {
+  users: User[],
+  totalUsers: number,
+  totalPages: number,
 }
