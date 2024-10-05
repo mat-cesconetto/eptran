@@ -4,6 +4,7 @@ import { NotFoundError } from '../helpers/apiErrors';
 import { UserRepository } from "../repositories/userRepository";
 import { promises as fs } from 'fs'; // Para salvar a imagem localmente
 import path from 'path';
+import { SearchQuery } from "../../types/Search";
 
 export class UserController {
     private userRepository: UserRepository;
@@ -103,5 +104,16 @@ export class UserController {
             return reply.status(500).send({ error: 'Erro ao fazer upload da foto de perfil', details: error.message });
         }
     }
+
+    async searchUsers (request: FastifyRequest<{ Querystring: SearchQuery }>, reply: FastifyReply){
+        const { searchTerm } = request.query;
+        if (!searchTerm) {
+            return reply.status(400).send({ error: 'searchTerm is required' });
+        }
+    
+        // Aqui você pode chamar seu repositório de usuários e fazer a pesquisa
+        const users = await this.userRepository.searchUsers(searchTerm);
+        return reply.send(users);
+      }
     
 }

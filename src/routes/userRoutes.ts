@@ -55,6 +55,10 @@ export async function userRoutes(fastify: FastifyInstance) {
             return userController.uploadProfilePicture(request, reply);
         }
     );
+
+    fastify.get("/search", {
+        handler: userController.searchUsers.bind(userController),
+    });
     
 
 }

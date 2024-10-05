@@ -22,8 +22,12 @@ export type User = {
 
 
 export interface UserRepositoryType {
-  create(data: RegisterUser): Promise<User>;
+  create(data: RegisterUser): Promise<User>;  // Método para criar um novo usuário
+  listUsers(page: number, limit: number): Promise<ListUsers>; // Método para listar usuários com paginação
+  updateUserProfilePicture(userId: number, fileName: string): Promise<void>; // Método para atualizar a foto de perfil
+  searchUsers(term: string): Promise<User[]>; // Método para pesquisar usuários
 }
+
 export { RegisterUser };
 
 
