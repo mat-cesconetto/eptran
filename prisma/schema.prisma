@@ -8,59 +8,88 @@ generator client {
 }
 
 model Usuario {
-  id           Int              @id @default(autoincrement())
-  nome         String           @db.VarChar(99)
-  email        String           @unique @db.VarChar(99)
-  senha        String           @db.VarChar(99)
-  cep          String           @db.VarChar(99)
-  rua          String           @db.VarChar(99)
-  cidade       String           @db.VarChar(99)
-  estado       EstadoEnum
-  escola       String           @db.VarChar(100)
-  data_nasc    DateTime
-  escolaridade EscolaridadeEnum
-  sexo         SexoEnum
-  adm          Boolean?         @default(false) // Valor padrão "false"
-  conquistas   Conquistas?
-  profilePicture String?
-  createdAt     DateTime       @default(now()) // Data de criação do usuário
-  updatedAt     DateTime       @updatedAt // Data de última atualização do usuário
-  refreshTokens RefreshToken[] @relation("UserRefreshTokens") // Relação com tokens de refresh
-  ticketusuario  TicketUsuario[]
-  accesses      Access[] // Relação com Access
+  id                      Int                      @id @default(autoincrement())
+  nome                    String                   @db.VarChar(99)
+  email                   String                   @unique @db.VarChar(99)
+  senha                   String                   @db.VarChar(99)
+  cep                     String                   @db.VarChar(99)
+  rua                     String                   @db.VarChar(99)
+  cidade                  String                   @db.VarChar(99)
+  estado                  EstadoEnum
+  escola                  String                   @db.VarChar(100)
+  data_nasc               DateTime
+  escolaridade            EscolaridadeEnum
+  sexo                    SexoEnum
+  adm                     Boolean?                 @default(false) // Valor padrão "false"
+  conquistas              Conquistas?
+  profilePicture          String?
+  createdAt               DateTime                 @default(now()) // Data de criação do usuário
+  updatedAt               DateTime                 @updatedAt // Data de última atualização do usuário
+  refreshTokens           RefreshToken[]           @relation("UserRefreshTokens") // Relação com tokens de refresh
+
+  // Relações com tickets e suas atualizações
+  ticketsCriados          TicketUsuario[]           @relation("CriadorTicket")
+  ticketsAtualizados      TicketUsuario[]           @relation("AtualizadorTicket")
+  ticketsFechados         TicketUsuario[]           @relation("FechadorTicket")
+  
+  // Relação com respostas e histórico de status
+  respostasTickets        RepostaTicketUsuario[]
+  ticketStatusHistory     TicketStatusHistory[]     @relation("UsuarioStatusChange")
+
+  Access Access[]
 }
 
-enum Status {
+
+enum StatusEnum {
   EM_ABERTO
   EM_ANDAMENTO
   RESOLVIDO
   CANCELADO
-
 }
 
 model TicketUsuario {
-  id          Int       @id @default(autoincrement())
-  userId      Int
-  assunto     String
-  descricao   String
-  anexo       String?   // Opcional
-  status      Status     // Status do ticket (ex: "aberto", "em andamento", "resolvido")
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  id                      Int                      @id @default(autoincrement())
+  userId                  Int
+  assunto                 String
+  descricao               String
+  anexo                   String?                  // Opcional
+  status                  StatusEnum               // Status do ticket
+  createdAt               DateTime                 @default(now())
+  updatedAt               DateTime                 @updatedAt
+  updatedById             Int?                     // Usuário que atualizou o ticket
+  closedById              Int?                     // Usuário que fechou o ticket
 
-  usuario     Usuario   @relation(fields: [userId], references: [id])
-  respostas   RepostaTicketUsuario[] // Um ticket pode ter várias respostas
+  usuario                 Usuario                  @relation("CriadorTicket", fields: [userId], references: [id])
+  updatedBy               Usuario?                 @relation("AtualizadorTicket", fields: [updatedById], references: [id])
+  closedBy                Usuario?                 @relation("FechadorTicket", fields: [closedById], references: [id])
+  
+  respostas               RepostaTicketUsuario[]   // Um ticket pode ter várias respostas
+  statusHistory           TicketStatusHistory[]    @relation("TicketStatusChange")
 }
 
 model RepostaTicketUsuario {
-  id          Int       @id @default(autoincrement())
-  ticketId    Int
-  resposta    String
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  id                      Int                      @id @default(autoincrement())
+  ticketId                Int
+  userId                  Int
+  resposta                String
+  createdAt               DateTime                 @default(now())
+  updatedAt               DateTime                 @updatedAt
 
-  ticket      TicketUsuario @relation(fields: [ticketId], references: [id])
+  usuario                 Usuario                  @relation(fields: [userId], references: [id])
+  ticket                  TicketUsuario            @relation(fields: [ticketId], references: [id])
 }
+
+model TicketStatusHistory {
+  id                      Int                      @id @default(autoincrement())
+  ticketId                Int
+  status                  StatusEnum
+  changedById             Int                      // Quem alterou o status
+  createdAt               DateTime                 @default(now())
+
+  ticket                  TicketUsuario            @relation("TicketStatusChange", fields: [ticketId], references: [id])
+  changedBy               Usuario                  @relation("UsuarioStatusChange", fields: [changedById], references: [id])
+}
+
 
 
 model RefreshToken {

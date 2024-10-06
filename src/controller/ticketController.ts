@@ -98,16 +98,16 @@ class TicketController {
         }
     }
 
-    async addResposta(req: FastifyRequest, reply: FastifyReply) {
-        try {
-            const { ticketId, resposta } = req.body as { ticketId: number, resposta: string };
-            const respostaAdded = await this.ticketRepository.addResposta(ticketId, resposta);
-            reply.send(respostaAdded);
-        } catch (error) {
-            console.error("Erro no addResposta:", error); // Log do erro
-            reply.status(500).send({ message: 'Internal Server Error' });
-        }
-    }
+    // async addResposta(req: FastifyRequest, reply: FastifyReply) {
+    //     try {
+    //         const { ticketId, resposta } = req.body as { ticketId: number, resposta: string };
+    //         const respostaAdded = await this.ticketRepository.addResposta(ticketId, resposta);
+    //         reply.send(respostaAdded);
+    //     } catch (error) {
+    //         console.error("Erro no addResposta:", error); // Log do erro
+    //         reply.status(500).send({ message: 'Internal Server Error' });
+    //     }
+    // }
 
     async getTicketsByUserId(req: FastifyRequest, reply: FastifyReply) {
         try {
@@ -117,6 +117,31 @@ class TicketController {
         } catch (error) {
             console.error("Erro no getTicketsByUserId:", error); // Log do erro
             reply.status(500).send({ message: 'Internal Server Error' });
+        }
+    }
+
+    async getAllTickets(request: FastifyRequest, reply: FastifyReply) {
+        try {
+            // Extrai os parâmetros `page` e `limit` da query string, com valores padrão
+            const { page = '1', limit = '10' } = request.query as { page?: string, limit?: string };
+    
+            // Converte `page` e `limit` para números
+            const pageNumber = parseInt(page, 10);
+            const limitNumber = parseInt(limit, 10);
+    
+            // Chama a função que lista os usuários com paginação
+            const { tickets, totalTickets, totalPages } = await this.ticketRepository.getAllTickets(pageNumber, limitNumber);
+    
+            // Responde com os dados paginados
+            return reply.send({
+                tickets,
+                totalTickets,
+                totalPages,
+                currentPage: pageNumber,
+            });
+        } catch (error) {
+            // Trata qualquer erro e responde com status 500
+            return reply.status(500).send({ error: 'Erro ao buscar usuários' });
         }
     }
 }
