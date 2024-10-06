@@ -1,11 +1,9 @@
-import fastify, { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
-import { AuthRepository } from "../repositories/authRepository";
-import { NotFoundError } from '../helpers/apiErrors';
+import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import { UserRepository } from "../repositories/userRepository";
 import { promises as fs } from 'fs'; // Para salvar a imagem localmente
-import path from 'path';
 import { SearchQuery } from "../../types/Search";
 import { UserUpdate } from "../../types/User";
+import path from 'path';
 
 export class UserController {
     private userRepository: UserRepository;
@@ -82,7 +80,6 @@ export class UserController {
         const users = await this.userRepository.searchUsers(searchTerm);
         return reply.send(users);
       }
-
       // Método para atualizar informações do usuário
 async updateUserInfo(request: FastifyRequest, reply: FastifyReply) {
     try {

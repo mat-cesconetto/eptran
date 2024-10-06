@@ -7,6 +7,9 @@ import { registerErrorHandler } from './middlewares/error';
 import { userRoutes } from './routes/userRoutes';
 import { authMiddleware } from './middlewares/authMiddleware';
 import { statsRoutes } from './routes/statsRoutes';
+import ticketRoutes from './routes/ticketRoutes';
+import fastifyStatic from '@fastify/static';
+import * as path from 'path';
 
 const app = fastify();
 
@@ -29,15 +32,23 @@ app.register(fastifyJwt, {
   },
 });
 
+// Registra o plugin static
+app.register(fastifyStatic, {
+  root: path.join(__dirname, '../uploads/tickets'),
+  prefix: '/anexos/',
+});
+
 // Registra o manipulador de erros
 registerErrorHandler(app);
-
-// Registrando as rotas de autenticação
-app.register(authRoutes, { prefix: '/auth' });
 
 // Registrando as rotas de usuário com o middleware de autenticação
 app.register(userRoutes, {
   prefix: '/user',
+  preHandler: authMiddleware, // Adiciona o middleware de autenticação
+});
+
+app.register(ticketRoutes, {
+  prefix: '/ticket',
   preHandler: authMiddleware, // Adiciona o middleware de autenticação
 });
 

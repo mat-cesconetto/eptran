@@ -7,6 +7,7 @@ export const authMiddleware = async (request: FastifyRequest, reply: FastifyRepl
     try {
         // Pega o token do cookie
         const token = request.cookies.refreshToken;
+        const user = request.user
 
         // Se não houver token, rejeita a requisição
         if (!token) {

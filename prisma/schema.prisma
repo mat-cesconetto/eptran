@@ -31,10 +31,10 @@ model Usuario {
 }
 
 enum Status {
-  Em_Aberto
-  Em_Andamento
-  Resolvido
-  Cancelado
+  EM_ABERTO
+  EM_ANDAMENTO
+  RESOLVIDO
+  CANCELADO
 
 }
 
