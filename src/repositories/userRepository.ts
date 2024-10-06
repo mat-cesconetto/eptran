@@ -68,6 +68,26 @@ class UserRepository {
       },
     });
   }
+
+  async updateUser(userId: number, data: Partial<User>): Promise<User> {
+    try {
+        const updatedUser = await prismaClient.usuario.update({
+            where: { id: userId },
+            data: {
+                // Passa apenas os campos que foram enviados no corpo da requisição
+                ...data,
+                updatedAt: new Date() // Atualiza o campo de data de modificação
+            }
+        });
+
+        return updatedUser;
+    } catch (error) {
+        console.error("Erro ao atualizar usuário:", error);
+        throw new Error("Erro ao atualizar informações do usuário.");
+    }
+}
+
+
 }
 
 export { UserRepository };

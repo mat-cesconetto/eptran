@@ -16,7 +16,6 @@ export async function userRoutes(fastify: FastifyInstance) {
 
             // Organizando os dados do usuário
             const data = {
-                id: user.id,
                 nome: user.nome,
                 email: user.email,
                 cep: user.cep,
@@ -28,8 +27,6 @@ export async function userRoutes(fastify: FastifyInstance) {
                 escolaridade: user.escolaridade,
                 sexo: user.sexo,
                 adm: user.adm,
-                createdAt: user.createdAt,
-                updatedAt: user.updatedAt,
             };
             
             return reply.send({ message: 'Informações do usuário', data }); // Retorna as informações do usuário
@@ -37,11 +34,11 @@ export async function userRoutes(fastify: FastifyInstance) {
             return reply.status(500).send({ error: "Erro ao obter informações do usuário", details: error.message });
         }
     });
-    fastify.get('/list', {preHandler: [authMiddleware, adminMiddleware]}, userController.getAllUsers.bind(userController));
+
+    fastify.get('/list', {preHandler: adminMiddleware}, userController.getAllUsers.bind(userController));
 
     fastify.post('/upload-profile-picture', 
-        { 
-            preHandler: [authMiddleware],
+        {
             // Add multipart handler options
             config: {
                 multipart: {
@@ -57,8 +54,11 @@ export async function userRoutes(fastify: FastifyInstance) {
     );
 
     fastify.get("/search", {
-        handler: userController.searchUsers.bind(userController),
+        handler: userController.searchUsers.bind(userController), preHandler: [authMiddleware, adminMiddleware],
     });
-    
+
+    fastify.patch('/update-info', { preHandler: [authMiddleware] }, async (request: FastifyRequest, reply: FastifyReply) => {
+        return userController.updateUserInfo(request, reply);
+    });
 
 }

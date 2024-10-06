@@ -20,6 +20,23 @@ export type User = {
   updatedAt: Date;
 };
 
+export type UserUpdate = {
+ 
+  nome: string;
+  email: string;
+  senha: string;
+  cep: string;
+  rua: string;
+  cidade: string;
+  estado: EstadoEnum;
+  escola: string;
+  data_nasc: Date;
+  escolaridade: EscolaridadeEnum;
+  sexo: SexoEnum;
+  profilePicture?: string | null
+
+};
+
 
 export interface UserRepositoryType {
   create(data: RegisterUser): Promise<User>;  // Método para criar um novo usuário

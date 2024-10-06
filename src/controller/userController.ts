@@ -5,47 +5,14 @@ import { UserRepository } from "../repositories/userRepository";
 import { promises as fs } from 'fs'; // Para salvar a imagem localmente
 import path from 'path';
 import { SearchQuery } from "../../types/Search";
+import { UserUpdate } from "../../types/User";
 
 export class UserController {
     private userRepository: UserRepository;
-    private authRepository: AuthRepository;
-    private fastify: FastifyInstance;
 
     constructor(fastify: FastifyInstance) {
         this.userRepository = new UserRepository(); // Inicia o repositório de autenticação
-        this.authRepository = new AuthRepository(); // Inicia o repositório de autenticação
-        this.fastify = fastify;
-    }
 
-    // Método para obter informações do usuário
-    async getUserInfo(request: FastifyRequest, reply: FastifyReply) {
-        try {
-            // O ID do usuário já está disponível em request.user
-            const userId = request.user.id;
-
-            // Busca as informações do usuário
-            const userInfo = await this.authRepository.getUserById(userId);
-
-            if (!userInfo) {
-                throw new NotFoundError("Usuário não encontrado");
-            }
-
-            // Retorna as informações do usuário
-            return reply.send({
-                email: userInfo.email,
-                nome: userInfo.nome,
-                escolaridade: userInfo.escolaridade,
-                isAdmin: userInfo.adm, // Exemplo de campo indicando se é admin
-                // Adicione mais campos conforme necessário
-            });
-        } catch (error: any) {
-            if (error instanceof NotFoundError) {
-                return reply.status(error.statusCode).send({ error: error.message });
-            }
-
-            // Retorna uma mensagem de erro adequada para outros erros
-            return reply.status(500).send({ error: "Erro ao buscar informações do usuário", details: error.message });
-        }
     }
 
     async getAllUsers(request: FastifyRequest, reply: FastifyReply) {
@@ -115,5 +82,27 @@ export class UserController {
         const users = await this.userRepository.searchUsers(searchTerm);
         return reply.send(users);
       }
+
+      // Método para atualizar informações do usuário
+async updateUserInfo(request: FastifyRequest, reply: FastifyReply) {
+    try {
+        const userId = request.user.id; // Obtém o ID do usuário autenticado
+        const updateData = request.body as Partial<UserUpdate>; // Recebe apenas os campos que serão atualizados
+        
+        // Valida se há algum dado para atualizar
+        if (!Object.keys(updateData).length) {
+            return reply.status(400).send({ error: 'Nenhuma informação fornecida para atualização.' });
+        }
+
+        // Atualiza as informações do usuário no repositório
+        const updatedUser = await this.userRepository.updateUser(userId, updateData);
+
+        // Retorna o usuário atualizado
+        return reply.send({ message: 'Informações atualizadas com sucesso' });
+    } catch (error: any) {
+        return reply.status(500).send({ error: 'Erro ao atualizar informações do usuário', details: error.message });
+    }
+}
+
     
 }

@@ -26,8 +26,42 @@ model Usuario {
   createdAt     DateTime       @default(now()) // Data de criação do usuário
   updatedAt     DateTime       @updatedAt // Data de última atualização do usuário
   refreshTokens RefreshToken[] @relation("UserRefreshTokens") // Relação com tokens de refresh
+  ticketusuario  TicketUsuario[]
   accesses      Access[] // Relação com Access
 }
+
+enum Status {
+  Em_Aberto
+  Em_Andamento
+  Resolvido
+  Cancelado
+
+}
+
+model TicketUsuario {
+  id          Int       @id @default(autoincrement())
+  userId      Int
+  assunto     String
+  descricao   String
+  anexo       String?   // Opcional
+  status      Status     // Status do ticket (ex: "aberto", "em andamento", "resolvido")
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  usuario     Usuario   @relation(fields: [userId], references: [id])
+  respostas   RepostaTicketUsuario[] // Um ticket pode ter várias respostas
+}
+
+model RepostaTicketUsuario {
+  id          Int       @id @default(autoincrement())
+  ticketId    Int
+  resposta    String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  ticket      TicketUsuario @relation(fields: [ticketId], references: [id])
+}
+
 
 model RefreshToken {
   id        Int      @id @default(autoincrement())
