@@ -48,24 +48,25 @@ enum StatusEnum {
 }
 
 model TicketUsuario {
-  id                      Int                      @id @default(autoincrement())
-  userId                  Int
-  assunto                 String
-  descricao               String
-  anexo                   String?                  // Opcional
-  status                  StatusEnum               // Status do ticket
-  createdAt               DateTime                 @default(now())
-  updatedAt               DateTime                 @updatedAt
-  updatedById             Int?                     // Usuário que atualizou o ticket
-  closedById              Int?                     // Usuário que fechou o ticket
-
-  usuario                 Usuario                  @relation("CriadorTicket", fields: [userId], references: [id])
-  updatedBy               Usuario?                 @relation("AtualizadorTicket", fields: [updatedById], references: [id])
-  closedBy                Usuario?                 @relation("FechadorTicket", fields: [closedById], references: [id])
+  id        Int        @id @default(autoincrement())
+  userId    Int
+  assunto   String
+  descricao String
+  anexo     String?
+  status    StatusEnum // Isso já está correto
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  updatedById Int?
+  closedById Int?
   
-  respostas               RepostaTicketUsuario[]   // Um ticket pode ter várias respostas
-  statusHistory           TicketStatusHistory[]    @relation("TicketStatusChange")
+  usuario   Usuario    @relation("CriadorTicket", fields: [userId], references: [id])
+  updatedBy Usuario?   @relation("AtualizadorTicket", fields: [updatedById], references: [id])
+  closedBy  Usuario?   @relation("FechadorTicket", fields: [closedById], references: [id])
+
+  respostas RepostaTicketUsuario[]
+  statusHistory TicketStatusHistory[] @relation("TicketStatusChange")
 }
+
 
 model RepostaTicketUsuario {
   id                      Int                      @id @default(autoincrement())

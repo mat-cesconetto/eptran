@@ -52,6 +52,10 @@ app.register(ticketRoutes, {
   preHandler: authMiddleware, // Adiciona o middleware de autenticação
 });
 
+app.register(authRoutes, {
+  prefix: '/auth',
+});
+
 app.register(statsRoutes, { prefix: '/stats' });
 
 // Inicia o servidor

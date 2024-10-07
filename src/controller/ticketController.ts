@@ -1,6 +1,7 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { TicketRepository } from '../repositories/ticketRepository';
 import { CreateTicket, Status } from '../../types/Ticket';
+import { emailService } from '../../services/emailService';
 import * as fs from 'fs';
 import * as path from 'path';
 import { MultipartFile } from '@fastify/multipart';
@@ -98,16 +99,38 @@ class TicketController {
         }
     }
 
-    // async addResposta(req: FastifyRequest, reply: FastifyReply) {
-    //     try {
-    //         const { ticketId, resposta } = req.body as { ticketId: number, resposta: string };
-    //         const respostaAdded = await this.ticketRepository.addResposta(ticketId, resposta);
-    //         reply.send(respostaAdded);
-    //     } catch (error) {
-    //         console.error("Erro no addResposta:", error); // Log do erro
-    //         reply.status(500).send({ message: 'Internal Server Error' });
-    //     }
-    // }
+    async addResposta(req: FastifyRequest, reply: FastifyReply) {
+        try {
+            const { ticketId } = req.params as { ticketId: string }; // Ainda vem como string da rota
+            const { resposta } = req.body as { resposta: string };
+            const userId = req.user.id;
+    
+            // Converte ticketId para número
+            const ticketIdNumber = parseInt(ticketId, 10); // Garante que o ticketId seja um número
+    
+            // Chama o repositório passando o ticketId como número
+            const respostaAdded = await this.ticketRepository.addResposta(ticketIdNumber, resposta, userId);
+    
+            // Buscar o ticket para obter as informações do usuário
+            const ticket = await this.ticketRepository.getTicketById(ticketIdNumber);
+    
+            if (ticket && ticket.usuario) {
+                // Enviar email para o usuário
+                await emailService.sendEmail(
+                    ticket.usuario.email,
+                    `Resposta ao seu ticket #${ticketId}`,
+                    resposta,
+                    `<h1>Nova resposta ao seu ticket #${ticketId}</h1><p>${resposta}</p>`
+                );
+            }
+    
+            reply.send(respostaAdded);
+        } catch (error) {
+            console.error("Erro no addResposta:", error);
+            reply.status(500).send({ message: 'Internal Server Error' });
+        }
+    }
+    
 
     async getTicketsByUserId(req: FastifyRequest, reply: FastifyReply) {
         try {

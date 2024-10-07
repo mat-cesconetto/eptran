@@ -4,6 +4,18 @@ import prismaClient from "../prisma";
 class TicketRepository {
     async create(data: CreateTicket): Promise<TicketUsuario> {
         try {
+            // Log para verificar o userId recebido
+            console.log("userId recebido:", data.userId);
+    
+            const usuario = await prismaClient.usuario.findUnique({
+                where: { id: data.userId }
+            });
+            
+            if (!usuario) {
+                throw new Error("Usuário não encontrado.");
+            }
+    
+            // Criação do ticket
             const result = await prismaClient.ticketUsuario.create({
                 data: {
                     assunto: data.assunto,
@@ -13,30 +25,31 @@ class TicketRepository {
                     userId: data.userId,
                 },
                 include: {
-                    usuario: true, // Inclui as informações do usuário associado ao ticket
+                    usuario: true,
                     respostas: {
                         include: {
-                            usuario: true, // Inclui o usuário em cada resposta
+                            usuario: true,
                         },
                     },
                 },
             });
-
+    
             const ticketUsuario: TicketUsuario = {
                 ...result,
                 usuario: result.usuario,
                 respostas: result.respostas.map(resposta => ({
                     ...resposta,
-                    usuario: resposta.usuario, // Inclui as informações do usuário na resposta
+                    usuario: resposta.usuario,
                 })),
             };
-
+    
             return ticketUsuario;
         } catch (error) {
             console.error("Erro ao criar ticket:", error);
             throw new Error("Erro ao criar ticket.");
         }
     }
+    
 
     async getTicketById(id: number): Promise<TicketUsuario | null> {
         return await prismaClient.ticketUsuario.findUnique({
@@ -93,14 +106,18 @@ class TicketRepository {
 
     async addResposta(ticketId: number, resposta: string, userId: number): Promise<RepostaTicketUsuario> {
         const result = await prismaClient.repostaTicketUsuario.create({
-            data: { ticketId, resposta, userId }, // Adiciona userId aqui
-            include: {
-                usuario: true, // Inclui o usuário associado à resposta
+            data: {
+                ticketId: ticketId,  // now this will be an integer
+                resposta: resposta,
+                userId: userId
             },
+            include: {
+                usuario: true
+            }
         });
-    
         return result;
     }
+    
     
 
     async getTicketsByUserId(userId: number): Promise<TicketUsuario[]> {
