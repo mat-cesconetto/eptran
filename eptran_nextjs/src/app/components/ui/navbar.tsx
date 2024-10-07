@@ -10,7 +10,7 @@ const NavBar: React.FC = () => {
     return (
         <div className="h-32 w-full bg-neutral-100 flex items-center justify-between shadow-2xl px-4 sm:px-10">
             <Image
-                src='/logo-eptran.png'
+                src='/logo-eptran.svg'
                 width={100}
                 height={100}
                 alt="imagem logo"
