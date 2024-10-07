@@ -24,10 +24,25 @@ export class UserController {
     
             // Chama a função que lista os usuários com paginação
             const { users, totalUsers, totalPages } = await this.userRepository.listUsers(pageNumber, limitNumber);
+
+            const userInfo = users.map(user => ({
+                id: user.id,
+                nome: user.nome,
+                email: user.email,
+                cep: user.cep,
+                rua: user.rua,
+                cidade: user.cidade,
+                estado: user.estado,
+                escola: user.escola,
+                data_nasc: user.data_nasc,
+                escolaridade: user.escolaridade,
+                sexo: user.sexo,
+                profilePicture: user.profilePicture,
+            }));
     
             // Responde com os dados paginados
             return reply.send({
-                users,
+                userInfo,
                 totalUsers,
                 totalPages,
                 currentPage: pageNumber,

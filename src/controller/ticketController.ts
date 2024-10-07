@@ -78,11 +78,24 @@ class TicketController {
 
     async getTicketById(req: FastifyRequest, reply: FastifyReply) {
         try {
-            const { id } = req.params as { id: number };
-            const ticket = await this.ticketRepository.getTicketById(id);
+            const { id } = req.params as { id: string };
+            const ticketId = parseInt(id, 10);
+    
+            if (isNaN(ticketId)) {
+                reply.status(400).send({ message: 'Invalid ticket ID' });
+                return;
+            }
+    
+            const ticket = await this.ticketRepository.getTicketById(ticketId);
+    
+            if (!ticket) {
+                reply.status(404).send({ message: 'Ticket not found' });
+                return;
+            }
+    
             reply.send(ticket);
         } catch (error) {
-            console.error("Erro no getTicketById:", error); // Log do erro
+            console.error("Error in getTicketById:", error);
             reply.status(500).send({ message: 'Internal Server Error' });
         }
     }

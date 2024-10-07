@@ -38,7 +38,7 @@ export async function userRoutes(fastify: FastifyInstance) {
 
   fastify.get(
     "/list",
-    { preHandler: adminMiddleware },
+    { preHandler: [authMiddleware, adminMiddleware] },
     userController.getAllUsers.bind(userController)
   );
 

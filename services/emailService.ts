@@ -10,7 +10,7 @@ class EmailService {
       secure: false, // Use TLS
       auth: {
         user: process.env.USER,
-        pass: process.env.APP_USER
+        pass: process.env.APP_PASSWORD
       }
     });
   }

@@ -105,18 +105,40 @@ class TicketRepository {
     }
 
     async addResposta(ticketId: number, resposta: string, userId: number): Promise<RepostaTicketUsuario> {
+        // Verifica se o ticket existe
+        const ticketExists = await prismaClient.ticketUsuario.findUnique({
+            where: { id: ticketId },
+        });
+    
+        if (!ticketExists) {
+            throw new Error(`Ticket com id ${ticketId} não encontrado.`);
+        }
+    
+        // Verifica se o usuário existe
+        const userExists = await prismaClient.usuario.findUnique({
+            where: { id: userId },
+        });
+    
+        if (!userExists) {
+            throw new Error(`Usuário com id ${userId} não encontrado.`);
+        }
+    
+        // Se o ticket e o usuário existirem, cria a resposta
         const result = await prismaClient.repostaTicketUsuario.create({
             data: {
-                ticketId: ticketId,  // now this will be an integer
+                ticketId: ticketId,
                 resposta: resposta,
-                userId: userId
+                userId: userId,
             },
             include: {
-                usuario: true
-            }
+                usuario: true,
+            },
         });
+    
         return result;
     }
+    
+    
     
     
 
