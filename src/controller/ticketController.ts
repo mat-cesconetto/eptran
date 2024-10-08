@@ -5,6 +5,7 @@ import { emailService } from '../../services/emailService';
 import * as fs from 'fs';
 import * as path from 'path';
 import { MultipartFile } from '@fastify/multipart';
+import { StatusEnum } from '@prisma/client';
 
 class TicketController {
     private ticketRepository: TicketRepository;
@@ -100,17 +101,29 @@ class TicketController {
         }
     }
 
-    async updateTicketStatus(req: FastifyRequest, reply: FastifyReply) {
+// No controlador do seu Ticket
+    async finalizarTicket(req: FastifyRequest, reply: FastifyReply) {
         try {
+            // Pegar o ID do ticket a partir dos parâmetros da URL
             const { id } = req.params as { id: number };
-            const { status } = req.body as { status: Status };
-            const ticket = await this.ticketRepository.updateTicketStatus(id, status);
-            reply.send(ticket);
+            
+            // Buscar o ticket para garantir que existe (opcional)
+            const ticket = await this.ticketRepository.getTicketById(id);
+            if (!ticket) {
+                return reply.status(404).send({ message: 'Ticket não encontrado' });
+            }
+
+            // Atualizar o status do ticket para "CONCLUIDO"
+            const ticketAtualizado = await this.ticketRepository.updateTicketStatus(id, StatusEnum.RESOLVIDO)
+
+            // Retornar o ticket atualizado
+            return reply.status(200).send(ticketAtualizado);
         } catch (error) {
-            console.error("Erro no updateTicketStatus:", error); // Log do erro
-            reply.status(500).send({ message: 'Internal Server Error' });
+            console.error("Erro ao finalizar o ticket:", error);
+            return reply.status(500).send({ message: 'Erro interno do servidor' });
         }
     }
+
 
     async addResposta(req: FastifyRequest, reply: FastifyReply) {
         try {
@@ -143,6 +156,7 @@ class TicketController {
             reply.status(500).send({ message: 'Internal Server Error' });
         }
     }
+    
     
 
     async getTicketsByUserId(req: FastifyRequest, reply: FastifyReply) {

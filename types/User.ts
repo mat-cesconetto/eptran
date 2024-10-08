@@ -20,6 +20,21 @@ export type User = {
   updatedAt: Date;
 };
 
+export type UserInfo = {
+  id: number,
+  nome: string,
+  email: string,
+  cep: string,
+  rua: string,
+  cidade: string,
+  estado: EstadoEnum,
+  escola: string,
+  data_nasc: Date,
+  escolaridade: EscolaridadeEnum,
+  sexo: SexoEnum,
+  profilePicture: string,
+}
+
 export type UserUpdate = {
  
   nome: string;

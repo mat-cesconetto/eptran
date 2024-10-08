@@ -1,4 +1,6 @@
-import { CreateTicket, TicketUsuario, Status, RepostaTicketUsuario, PaginatedTickets } from "../../types/Ticket";
+import { StatusEnum } from "@prisma/client";
+import { PrioridadeEnum } from "../../types/PrioridadeEnum";
+import { CreateTicket, TicketUsuario, TicketResumido, Status, RepostaTicketUsuario, PaginatedTickets, TicketInfo } from "../../types/Ticket";
 import prismaClient from "../prisma";
 
 class TicketRepository {
@@ -51,19 +53,66 @@ class TicketRepository {
     }
     
 
-    async getTicketById(id: number): Promise<TicketUsuario | null> {
-        return await prismaClient.ticketUsuario.findUnique({
-            where: { id },
-            include: {
-                usuario: true, // Inclui as informações do usuário do ticket
-                respostas: {
-                    include: {
-                        usuario: true, // Inclui o usuário associado a cada resposta
-                    },
-                },
+    async getTicketById(id: number): Promise<TicketResumido | null> {
+      const ticket = await prismaClient.ticketUsuario.findUnique({
+        where: { id },
+        include: {
+          usuario: {
+            select: {
+              id: true,
+              nome: true,
+              email: true,
             },
-        });
+          },
+          respostas: {
+            include: {
+              usuario: {
+                select: {
+                  id: true,
+                  nome: true,
+                },
+              },
+            },
+          },
+        },
+      });
+    
+      // Verifica se o ticket existe, caso contrário retorna null
+      if (!ticket) {
+        return null;
+      }
+    
+      // O retorno agora está tipado corretamente como TicketResumido
+      const ticketResumido: TicketResumido = {
+        id: ticket.id,
+        status: ticket.status,
+        prioridade: ticket.prioridade,
+        assunto: ticket.assunto, // Certifique-se de que o campo 'titulo' existe no modelo
+        descricao: ticket.descricao,
+        usuario: {
+          id: ticket.usuario.id,
+          nome: ticket.usuario.nome,
+          email: ticket.usuario.email,
+        },
+        respostas: ticket.respostas.map(resposta => ({
+          id: resposta.id,
+          createdAt: resposta.createdAt,
+          updatedAt: resposta.updatedAt,
+          userId: resposta.userId,
+          ticketId: resposta.ticketId,
+          resposta: resposta.resposta,
+          usuario: {
+            id: resposta.usuario.id,
+            nome: resposta.usuario.nome,
+            email: ticket.usuario.email, // Certifique-se de que o e-mail é preenchido adequadamente
+          },
+        })),
+      };
+    
+      return ticketResumido;
     }
+    
+
 
     async getAllTickets(page: number, limit: number): Promise<PaginatedTickets> {
         const [tickets, totalTickets] = await prismaClient.$transaction([
@@ -71,36 +120,46 @@ class TicketRepository {
                 skip: (page - 1) * limit,
                 take: limit,
                 include: {
-                    usuario: true, // Inclui informações do usuário associado ao ticket
-                    respostas: {
-                        include: {
-                            usuario: true, // Inclui o usuário associado a cada resposta
+                    usuario: {
+                        select: {
+                            id: true,              // ID do usuário
+                            nome: true,            // Nome do usuário
+                            profilePicture: true,      // Foto de perfil
                         },
                     },
                 },
             }),
             prismaClient.ticketUsuario.count(),
         ]);
-
+    
+        // Mapeando os tickets para retornar as informações desejadas
+        const formattedTickets: TicketInfo[] = tickets.map(ticket => ({
+            usuarioId: ticket.usuario.id,                  // ID do usuário
+            usuarioNome: ticket.usuario.nome,              // Nome do usuário
+            usuarioFotoPerfil: ticket.usuario.profilePicture,  // Foto de perfil
+            assunto: ticket.assunto,                       // Assunto do ticket
+            status: ticket.status,                         // Status do ticket
+            prioridade: ticket.prioridade as unknown as PrioridadeEnum, // Convertendo para PrioridadeEnum
+            createdAt: ticket.createdAt                    // Data de criação
+        }));
+    
         return {
-            tickets,
+            tickets: formattedTickets,
             totalTickets,
             totalPages: Math.ceil(totalTickets / limit),
         };
     }
+    
+    
+    
 
-    async updateTicketStatus(id: number, status: Status): Promise<TicketUsuario> {
+
+    
+
+    async updateTicketStatus(id: number, status: Status) {
         return await prismaClient.ticketUsuario.update({
             where: { id },
             data: { status },
-            include: {
-                usuario: true, // Inclui as informações do usuário associado ao ticket
-                respostas: {
-                    include: {
-                        usuario: true, // Inclui o usuário associado a cada resposta
-                    },
-                },
-            },
         });
     }
 
@@ -135,8 +194,15 @@ class TicketRepository {
             },
         });
     
+        // Atualiza o status do ticket para "EM ANDAMENTO"
+        await prismaClient.ticketUsuario.update({
+            where: { id: ticketId },
+            data: { status: 'EM_ANDAMENTO' }, // Altere 'EM_ANDAMENTO' conforme necessário
+        });
+    
         return result;
     }
+    
     
     
     
