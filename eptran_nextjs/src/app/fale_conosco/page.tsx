@@ -31,8 +31,7 @@ const sections = [
 export default function Home() {
   return (
     <>
-      <body className="bg-neutral-100">
-        <NavBar />
+      <div className="bg-neutral-100">
         <div className="flex items-center justify-center px-4 sm:px-6 lg:px-8">
           <div className="w-full max-w-7xl bg-[#023859] mt-10 p-4 sm:p-6 lg:p-10">
             <h1 className="text-white text-2xl sm:text-3xl font-black">
@@ -65,7 +64,7 @@ export default function Home() {
         <Solicitacao />
 
         <Footer />
-      </body>
+      </div>
     </>
   );
 }
