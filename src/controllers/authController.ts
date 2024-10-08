@@ -60,17 +60,24 @@ class AuthController {
     // Função de login do usuário
     async login(email: string, senha: string, reply: FastifyReply) {
         try {
-            const user = await this.authRepository.findByEmail(email);
+            console.log("Iniciando login para o email:", email);
 
+            const user = await this.authRepository.findByEmail(email);
             if (!user) {
+                console.log("Usuário não encontrado");
                 throw new NotFoundError('Usuário não encontrado');
             }
 
+            // Verificar se a senha está correta
+            console.log("Usuário encontrado. Verificando senha...");
             const isPasswordValid = await bcrypt.compare(senha, user.senha);
+            
             if (!isPasswordValid) {
+                console.log("Senha incorreta");
                 throw new UnauthorizedError('Senha incorreta');
             }
 
+            console.log("Senha válida. Registrando acesso...");
             // Registro do acesso
             await this.accessRepository.logAccess(user.id); // Loga o acesso do usuário
 
@@ -119,6 +126,8 @@ class AuthController {
                 token: refreshToken,
             });
 
+            console.log("Login realizado com sucesso. Tokens criados.");
+
             return { accessToken };
         } catch (error) {
             console.error("Houve uma falha ao fazer login:", error);
@@ -129,6 +138,7 @@ class AuthController {
         }
     }
 
+    // Função de logout
     async logout(request: FastifyRequest, reply: FastifyReply) {
         try {
             // Acessa o refresh token diretamente dos cookies
@@ -139,6 +149,7 @@ class AuthController {
             }
 
             // Adiciona o refresh token à blacklist
+            console.log("Adicionando refresh token à blacklist...");
             await this.blacklistedTokenRepository.addToBlacklist(refreshToken);
 
             // Limpa os cookies
@@ -155,6 +166,8 @@ class AuthController {
                 path: '/',
                 sameSite: 'strict',
             });
+
+            console.log("Logout realizado com sucesso.");
 
             return reply.send({ message: "Logout realizado com sucesso" });
         } catch (error) {

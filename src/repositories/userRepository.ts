@@ -1,10 +1,10 @@
 import { User, RegisterUser, ListUsers } from "../../types/User";
 import prismaClient from "../prisma";
+import bcrypt from "bcrypt" ;  // Importando bcrypt para fazer o hash da senha
 
 class UserRepository {
   async create(data: RegisterUser): Promise<User> {
     try {
-      // Cria o usuário no banco de dados usando a senha criptografada
       const result = await prismaClient.usuario.create({
         data: {
           nome: data.nome,
@@ -24,9 +24,22 @@ class UserRepository {
       return result as User;
     } catch (error) {
       console.error("Erro ao criar usuário:", error);
-      throw new Error("Erro ao criar usuário."); // Lança um erro genérico
+      throw new Error("Erro ao criar usuário.");
     }
   }
+
+  async findByEmail(email: string): Promise<User | null> {
+    try {
+      const user = await prismaClient.usuario.findUnique({
+        where: { email: email },
+      });
+      return user;
+    } catch (error) {
+      console.error("Erro ao buscar usuário:", error);
+      throw new Error("Erro ao buscar usuário.");
+    }
+  }
+  
 
   async listUsers(page: number, limit: number): Promise<ListUsers> {
     const [users, totalUsers] = await prismaClient.$transaction([
@@ -39,8 +52,8 @@ class UserRepository {
 
     return {
       users,
-      totalUsers, // Total de usuários na base
-      totalPages: Math.ceil(totalUsers / limit), // Total de páginas
+      totalUsers,
+      totalPages: Math.ceil(totalUsers / limit),
     };
   }
 
@@ -51,7 +64,7 @@ class UserRepository {
     await prismaClient.usuario.update({
       where: { id: userId },
       data: {
-        profilePicture: fileName, // Supondo que o campo se chama `fotoPerfil`
+        profilePicture: fileName,
       },
     });
   }
@@ -60,10 +73,10 @@ class UserRepository {
     return prismaClient.usuario.findMany({
       where: {
         OR: [
-          { nome: { contains: term, mode: "insensitive" } }, // Pesquisa pelo nome
-          { email: { contains: term, mode: "insensitive" } }, // Pesquisa pelo email
-          { escola: { contains: term, mode: "insensitive" } }, // Pesquisa pela escola
-          { id: Number(term) || undefined }, // Pesquisa pelo ID
+          { nome: { contains: term, mode: "insensitive" } },
+          { email: { contains: term, mode: "insensitive" } },
+          { escola: { contains: term, mode: "insensitive" } },
+          { id: Number(term) || undefined },
         ],
       },
     });
@@ -71,23 +84,41 @@ class UserRepository {
 
   async updateUser(userId: number, data: Partial<User>): Promise<User> {
     try {
-        const updatedUser = await prismaClient.usuario.update({
-            where: { id: userId },
-            data: {
-                // Passa apenas os campos que foram enviados no corpo da requisição
-                ...data,
-                updatedAt: new Date() // Atualiza o campo de data de modificação
-            }
-        });
+      const updatedUser = await prismaClient.usuario.update({
+        where: { id: userId },
+        data: {
+          ...data,
+          updatedAt: new Date(),
+        },
+      });
 
-        return updatedUser;
+      return updatedUser;
     } catch (error) {
-        console.error("Erro ao atualizar usuário:", error);
-        throw new Error("Erro ao atualizar informações do usuário.");
+      console.error("Erro ao atualizar usuário:", error);
+      throw new Error("Erro ao atualizar informações do usuário.");
     }
-}
+  }
 
+  // Novo método para atualizar a senha do usuário usando o email
+  async updatePasswordByEmail(email: string, newPassword: string): Promise<void> {
+    try {
+      // Atualiza a senha no banco de dados
+      await prismaClient.usuario.update({
+        where: { email },
+        data: {
+          senha: newPassword,
+          updatedAt: new Date(),
+        },
+      });
 
+      console.log(`Senha atualizada para o usuário com email: ${email}`);
+    } catch (error) {
+      console.error("Erro ao atualizar senha:", error);
+      throw new Error("Erro ao atualizar a senha.");
+    }
+  }
+
+  
 }
 
 export { UserRepository };

@@ -1,7 +1,10 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
+import { emailService } from "../services/emailService"; // Importando o serviço de envio de email
 import { UserRepository } from "../repositories/userRepository";
 import { promises as fs } from 'fs'; // Para salvar a imagem localmente
 import { SearchQuery } from "../../types/Search";
+import { RequestPasswordResetBody, ResetPasswordBody } from "../../types/Auth"; // Importando as interfaces
+
 import { UserUpdate } from "../../types/User";
 import path from 'path';
 
@@ -96,7 +99,7 @@ export class UserController {
         return reply.send(users);
       }
       // Método para atualizar informações do usuário
-async updateUserInfo(request: FastifyRequest, reply: FastifyReply) {
+    async updateUserInfo(request: FastifyRequest, reply: FastifyReply) {
     try {
         const userId = request.user.id; // Obtém o ID do usuário autenticado
         const updateData = request.body as Partial<UserUpdate>; // Recebe apenas os campos que serão atualizados
@@ -115,6 +118,7 @@ async updateUserInfo(request: FastifyRequest, reply: FastifyReply) {
         return reply.status(500).send({ error: 'Erro ao atualizar informações do usuário', details: error.message });
     }
 }
+    
 
     
 }

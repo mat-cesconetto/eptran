@@ -1,7 +1,7 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { TicketRepository } from '../repositories/ticketRepository';
 import { CreateTicket, Status } from '../../types/Ticket';
-import { emailService } from '../../services/emailService';
+import { emailService } from '../services/emailService';
 import * as fs from 'fs';
 import * as path from 'path';
 import { MultipartFile } from '@fastify/multipart';

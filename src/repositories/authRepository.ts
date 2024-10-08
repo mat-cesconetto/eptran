@@ -34,6 +34,18 @@ class AuthRepository {
             throw new NotFoundError('Erro ao buscar usuário por ID');
         }
     }
+
+    async updatePassword(userId: number, hashedPassword: string): Promise<void> {
+        try {
+          await prismaClient.usuario.update({
+            where: { id: userId },
+            data: { senha: hashedPassword },
+          });
+        } catch (error) {
+          console.error("Erro ao atualizar a senha:", error);
+          throw new Error('Erro ao atualizar a senha');
+        }
+      }
 }
 
 export { AuthRepository };

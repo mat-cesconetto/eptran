@@ -25,8 +25,15 @@ export interface RegisterUser {
   }
   
 
-  
   export interface AuthRepositoryType {
     findByEmail(email: string): Promise<User | null>;
   }
   
+  export interface RequestPasswordResetBody {
+    email: string;
+  }
+  
+  export interface ResetPasswordBody {
+    email: string;
+    newPassword: string;
+  }

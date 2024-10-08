@@ -10,6 +10,7 @@ import { statsRoutes } from './routes/statsRoutes';
 import ticketRoutes from './routes/ticketRoutes';
 import fastifyStatic from '@fastify/static';
 import * as path from 'path';
+import { resetRoutes } from './routes/resetRoutes';
 
 const app = fastify();
 
@@ -25,7 +26,7 @@ app.register(multipart, {
 
 // Registra o plugin JWT
 app.register(fastifyJwt, {
-  secret: 'seu-segredo', // Altere para um segredo mais seguro em produção
+  secret: 'EPTRAN-SECRETO', // Altere para um segredo mais seguro em produção
   cookie: {
     cookieName: 'refreshToken', // Nome do cookie onde o token está armazenado
     signed: false, // Altere para true se você estiver usando cookies assinados
@@ -54,6 +55,10 @@ app.register(ticketRoutes, {
 
 app.register(authRoutes, {
   prefix: '/auth',
+});
+
+app.register(resetRoutes, {
+  prefix: '/reset',
 });
 
 app.register(statsRoutes, { prefix: '/stats' });

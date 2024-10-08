@@ -1,10 +1,13 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
-import { AuthController } from "../controller/authController";
+import { AuthController } from "../controllers/authController";
 import { User } from "../../types/User";
 import { LoginUser } from "../../types/Auth";
+import { UserController } from "../controllers/userController";
+import PasswordResetController from "../controllers/passwordResetController";
 
 export async function authRoutes(fastify: FastifyInstance) {
   const authController = new AuthController(fastify);
+  const userController = new UserController(fastify);
 
   // Rota de registro de usuário
   fastify.post<{ Body: User }>(
@@ -102,4 +105,8 @@ export async function authRoutes(fastify: FastifyInstance) {
       }
     }
   );
+
+  // authRoutes.ts
+
+
 }
