@@ -98,6 +98,7 @@ export type TicketInfo = {
   usuarioId: number;
   usuarioNome: string;
   usuarioFotoPerfil: string | null;
+  email: string;
   assunto: string;
   status: PrismaStatus;
   prioridade: PrioridadeEnum;

@@ -8,36 +8,35 @@ generator client {
 }
 
 model Usuario {
-  id                      Int                      @id @default(autoincrement())
-  nome                    String                   @db.VarChar(99)
-  email                   String                   @unique @db.VarChar(99)
-  senha                   String                   @db.VarChar(99)
-  cep                     String                   @db.VarChar(99)
-  rua                     String                   @db.VarChar(99)
-  cidade                  String                   @db.VarChar(99)
-  estado                  EstadoEnum
-  escola                  String                   @db.VarChar(100)
-  data_nasc               DateTime
-  escolaridade            EscolaridadeEnum
-  sexo                    SexoEnum
-  adm                     Boolean?                 @default(false) // Valor padrão "false"
-  conquistas              Conquistas?
-  profilePicture          String?
-  createdAt               DateTime                 @default(now()) // Data de criação do usuário
-  updatedAt               DateTime                 @updatedAt // Data de última atualização do usuário
-  refreshTokens           RefreshToken[]           @relation("UserRefreshTokens") // Relação com tokens de refresh
+  id             Int              @id @default(autoincrement())
+  nome           String           @db.VarChar(99)
+  email          String           @unique @db.VarChar(99)
+  senha          String           @db.VarChar(99)
+  cep            String           @db.VarChar(99)
+  rua            String           @db.VarChar(99)
+  cidade         String           @db.VarChar(99)
+  estado         EstadoEnum
+  escola         String           @db.VarChar(100)
+  data_nasc      DateTime
+  escolaridade   EscolaridadeEnum
+  sexo           SexoEnum
+  adm            Boolean?         @default(false) // Valor padrão "false"
+  conquistas     Conquistas?
+  profilePicture String?
+  createdAt      DateTime         @default(now()) // Data de criação do usuário
+  updatedAt      DateTime         @updatedAt // Data de última atualização do usuário
+  refreshTokens  RefreshToken[]   @relation("UserRefreshTokens") // Relação com tokens de refresh
 
   // Relações com tickets e suas atualizações
-  ticketsCriados          TicketUsuario[]           @relation("CriadorTicket")
-  ticketsAtualizados      TicketUsuario[]           @relation("AtualizadorTicket")
-  ticketsFechados         TicketUsuario[]           @relation("FechadorTicket")
-  
+  ticketsCriados     TicketUsuario[] @relation("CriadorTicket")
+  ticketsAtualizados TicketUsuario[] @relation("AtualizadorTicket")
+  ticketsFechados    TicketUsuario[] @relation("FechadorTicket")
+
   // Relação com respostas e histórico de status
-  respostasTickets        RepostaTicketUsuario[]
+  respostasTickets RepostaTicketUsuario[]
 
   Access Access[]
 }
-
 
 enum StatusEnum {
   EM_ABERTO
@@ -54,42 +53,39 @@ enum PrioridadeEnum {
 }
 
 model TicketUsuario {
-  id        Int        @id @default(autoincrement())
-  userId    Int
-  assunto   String
-  descricao String
-  anexo     String?
-  status    StatusEnum @default(EM_ABERTO)
-  prioridade PrioridadeEnum @default(NENHUMA)
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
+  id          Int            @id @default(autoincrement())
+  userId      Int
+  assunto     String
+  descricao   String
+  anexo       String?
+  status      StatusEnum     @default(EM_ABERTO) // Status como enum
+  prioridade  PrioridadeEnum @default(NENHUMA)
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
   updatedById Int?
-  closedById Int?
-  
-  usuario   Usuario    @relation("CriadorTicket", fields: [userId], references: [id])
-  updatedBy Usuario?   @relation("AtualizadorTicket", fields: [updatedById], references: [id])
-  closedBy  Usuario?   @relation("FechadorTicket", fields: [closedById], references: [id])
+  closedById  Int?
 
-  respostas RepostaTicketUsuario[]
+  usuario   Usuario  @relation("CriadorTicket", fields: [userId], references: [id])
+  updatedBy Usuario? @relation("AtualizadorTicket", fields: [updatedById], references: [id])
+  closedBy  Usuario? @relation("FechadorTicket", fields: [closedById], references: [id])
+
+  respostas RepostaTicketUsuario[] @relation("TicketToRespostas") // Relação com respostas de ticket
 }
-
 
 model RepostaTicketUsuario {
-  id                      Int                      @id @default(autoincrement())
-  ticketId                Int
-  userId                  Int
-  resposta                String
-  status                  StatusEnum
-  createdAt               DateTime                 @default(now())
-  updatedAt               DateTime                 @updatedAt
+  id        Int      @id @default(autoincrement())
+  ticketId  Int
+  userId    Int
+  resposta  String
+  statusId  Int? // Referência ao ID do StatusEnum
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  usuario                 Usuario                  @relation(fields: [userId], references: [id])
-  ticket                  TicketUsuario            @relation(fields: [ticketId], references: [id])
-  
+  usuario Usuario       @relation(fields: [userId], references: [id])
+  ticket  TicketUsuario @relation(fields: [ticketId], references: [id], name: "TicketToRespostas") // Relacionamento oposto
 
+  // Remove a relação direta com StatusEnum, pois statusId é uma chave estrangeira
 }
-
-
 
 model RefreshToken {
   id        Int      @id @default(autoincrement())
@@ -112,10 +108,10 @@ model BlacklistedToken {
 }
 
 model Access {
-  id     Int      @id @default(autoincrement())
-  userId Int
-  date   DateTime
-  user   Usuario  @relation(fields: [userId], references: [id]) // Supondo que haja um modelo User
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  date      DateTime
+  user      Usuario  @relation(fields: [userId], references: [id]) // Supondo que haja um modelo User
   createdAt DateTime @default(now()) // Armazena a data e hora do acesso
 }
 

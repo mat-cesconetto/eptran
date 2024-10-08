@@ -123,7 +123,8 @@ class TicketRepository {
                     usuario: {
                         select: {
                             id: true,              // ID do usuário
-                            nome: true,            // Nome do usuário
+                            nome: true,
+                            email: true,            // Nome do usuário
                             profilePicture: true,      // Foto de perfil
                         },
                     },
@@ -136,7 +137,8 @@ class TicketRepository {
         const formattedTickets: TicketInfo[] = tickets.map(ticket => ({
             usuarioId: ticket.usuario.id,                  // ID do usuário
             usuarioNome: ticket.usuario.nome,              // Nome do usuário
-            usuarioFotoPerfil: ticket.usuario.profilePicture,  // Foto de perfil
+            usuarioFotoPerfil: ticket.usuario.profilePicture,
+            email: ticket.usuario.email,  // Foto de perfil
             assunto: ticket.assunto,                       // Assunto do ticket
             status: ticket.status,                         // Status do ticket
             prioridade: ticket.prioridade as unknown as PrioridadeEnum, // Convertendo para PrioridadeEnum
@@ -149,12 +151,6 @@ class TicketRepository {
             totalPages: Math.ceil(totalTickets / limit),
         };
     }
-    
-    
-    
-
-
-    
 
     async updateTicketStatus(id: number, status: Status) {
         return await prismaClient.ticketUsuario.update({
@@ -181,11 +177,11 @@ class TicketRepository {
         if (!userExists) {
             throw new Error(`Usuário com id ${userId} não encontrado.`);
         }
-    
+        
         // Se o ticket e o usuário existirem, cria a resposta
         const result = await prismaClient.repostaTicketUsuario.create({
             data: {
-                status: StatusEnum.EM_ANDAMENTO,
+                  // Define o statusId com o ID do status "EM_ABERTO"
                 ticketId: ticketId,
                 resposta: resposta,
                 userId: userId,
@@ -198,17 +194,13 @@ class TicketRepository {
         // Atualiza o status do ticket para "EM ANDAMENTO"
         await prismaClient.ticketUsuario.update({
             where: { id: ticketId },
-            data: { status: 'EM_ANDAMENTO' }, // Altere 'EM_ANDAMENTO' conforme necessário
+            data: { status: 'EM_ANDAMENTO' }, // Atualizando o status do ticket
         });
     
         return result;
     }
     
     
-    
-    
-    
-
     async getTicketsByUserId(userId: number): Promise<TicketUsuario[]> {
         return await prismaClient.ticketUsuario.findMany({
             where: { userId },
