@@ -185,6 +185,7 @@ class TicketRepository {
         // Se o ticket e o usuário existirem, cria a resposta
         const result = await prismaClient.repostaTicketUsuario.create({
             data: {
+                status: StatusEnum.EM_ANDAMENTO,
                 ticketId: ticketId,
                 resposta: resposta,
                 userId: userId,
