@@ -34,7 +34,7 @@ export default function Suporte() {
           <h3 className="font-semibold text-darkBlue-500 text-md pt-10">
             ASSUNTO
           </h3>
-          <div className="w-auto mr-20">
+          <div className="w-auto mr-20">''
             <form action="">
               <input
                 type="text"

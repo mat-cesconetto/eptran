@@ -61,7 +61,7 @@ const NavBar: React.FC = () => {
         <NavLink href="/atividade">Atividades</NavLink>
         <NavLink href="/conquistas">Conquistas</NavLink>
         <NavLink href="/sobre">Sobre nós</NavLink>
-        <NavLink href="/fale_conosco">Fale Conosco</NavLink>
+        <NavLink href="/fale-conosco">Fale Conosco</NavLink>
       </div>
       <div className="flex-shrink-0">
         <Image
@@ -106,7 +106,7 @@ const NavBar: React.FC = () => {
             <NavLink href="/sobre" mobile>
               Sobre nós
             </NavLink>
-            <NavLink href="/fale_conosco" mobile>
+            <NavLink href="/fale-conosco" mobile>
               Fale Conosco
             </NavLink>
           </div>
