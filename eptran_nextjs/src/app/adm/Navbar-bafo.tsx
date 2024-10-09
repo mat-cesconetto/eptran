@@ -11,7 +11,6 @@ import {
   X,
   CircleUserRound,
 } from "lucide-react";
-import { HiMiniUserCircle } from "react-icons/hi2";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -35,40 +34,44 @@ export default function NavBarBafo() {
             <Image src="/logo.svg" width={112} height={10} alt="logo-eptran" className="w-24 md:w-28 lg:w-32" />
           </Link>
         </div>
-        <div className="hidden md:flex justify-center">
+        <div className="hidden md:flex justify-center flex-grow">
           <Link
             href="../img/ensino.html"
-            className="hover:underline text-sm md:text-base lg:text-lg text-white no-underline font-medium ml-2 md:ml-4 lg:ml-10"
+            className="hover:underline text-sm md:text-base lg:text-lg text-white no-underline font-medium mx-2 md:mx-4 lg:mx-6"
           >
             Atividade
           </Link>
           <Link
             href="#"
-            className="hover:underline text-sm md:text-base lg:text-lg text-white no-underline font-medium ml-2 md:ml-4 lg:ml-10"
+            className="hover:underline text-sm md:text-base lg:text-lg text-white no-underline font-medium mx-2 md:mx-4 lg:mx-6"
           >
             Consquistas
           </Link>
           <Link
             href="../img/sobrenos.html"
-            className="hover:underline text-sm md:text-base lg:text-lg text-white no-underline font-medium ml-2 md:ml-4 lg:ml-10"
+            className="hover:underline text-sm md:text-base lg:text-lg text-white no-underline font-medium mx-2 md:mx-4 lg:mx-6"
           >
             Sobre Nós
           </Link>
           <Link
             href="../img/faleConosco.html"
-            className="hover:underline text-sm md:text-base lg:text-lg text-white no-underline font-medium ml-2 md:ml-4 lg:ml-10"
+            className="hover:underline text-sm md:text-base lg:text-lg text-white no-underline font-medium mx-2 md:mx-4 lg:mx-6"
           >
             Fale Conosco
           </Link>
           <Link
             href="#"
-            className="hover:underline text-sm md:text-base lg:text-lg text-white no-underline font-medium ml-2 md:ml-4 lg:ml-10"
+            className="hover:underline text-sm md:text-base lg:text-lg text-white no-underline font-medium mx-2 md:mx-4 lg:mx-6"
           >
             Administrador
           </Link>
         </div>
+        
         <div className="flex items-center">
-          <button className="md:hidden text-white" onClick={toggleMobileMenu}>
+          <Link href='../'>
+            <CircleUserRound color='white' className="w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12" />
+          </Link>
+          <button className="ml-4 md:hidden text-white" onClick={toggleMobileMenu}>
             <Menu className="w-6 h-6" />
           </button>
         </div>
@@ -83,27 +86,22 @@ export default function NavBarBafo() {
             </button>
           </div>
           <nav className="flex flex-col items-center">
-            <Link href="../img/ensino.html" className="text-white py-2">
+            <Link href="../img/ensino.html" className="text-white py-4 text-lg">
               Atividade
             </Link>
-            <Link href="#" className="text-white py-2">
+            <Link href="#" className="text-white py-4 text-lg">
               Consquistas
             </Link>
-            <Link href="../img/sobrenos.html" className="text-white py-2">
+            <Link href="../img/sobrenos.html" className="text-white py-4 text-lg">
               Sobre Nós
             </Link>
-            <Link href="../img/faleConosco.html" className="text-white py-2">
+            <Link href="../img/faleConosco.html" className="text-white py-4 text-lg">
               Fale Conosco
             </Link>
-            <Link href="#" className="text-white py-2">
+            <Link href="#" className="text-white py-4 text-lg">
               Administrador
             </Link>
           </nav>
-          <div className="flex justify-end items-start col-span-1 px-5 ">
-            <Link href='../'>
-            <HiMiniUserCircle  className="w-20 h-16 mr-4"/>
-            </Link>
-          </div>
         </div>
       )}
 
