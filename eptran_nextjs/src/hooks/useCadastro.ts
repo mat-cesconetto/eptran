@@ -13,31 +13,29 @@ interface User {
   data_nasc: string;
   escolaridade: string;
   sexo: string;
-  bairro: string;
 }
 
 export const useCadastro = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
-  const registerUser = async (formData: any) => {
+  const registerUser = async (nome: string, email: string, senha: string, cep: string, rua: string, cidade: string, estado: string, escola: string, data_nasc: string, escolaridade: string, sexo: string ) => {
     setIsLoading(true);
     setError(null);
 
     // Formata os dados conforme esperado pelo backend
     const userData: User = {
-      nome: formData.nome,
-      email: formData.email,
-      senha: formData.senha,
-      cep: formData.cep,
-      rua: formData.rua,
-      cidade: formData.cidade,
-      estado: formData.estado,
-      escola: formData.escola,
-      data_nasc: formData.data_nasc,
-      escolaridade: formData.escolaridade,
-      sexo: formData.sexo,
-      bairro: formData.bairro
+      nome: nome,
+      email: email,
+      senha: senha,
+      cep: cep,
+      rua: rua,
+      cidade: cidade,
+      estado: estado,
+      escola: escola,
+      data_nasc: data_nasc,
+      escolaridade: escolaridade,
+      sexo: sexo,
     };
 
     console.log('Dados sendo enviados:', userData);

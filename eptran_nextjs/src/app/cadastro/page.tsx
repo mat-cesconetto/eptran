@@ -17,6 +17,7 @@ export default function Home() {
           <h3 className="text-neutral-400 text-base mt-2 mb-6 ">Siga os passos para se cadastrar</h3>
           <Formulario />
           <div className="mt-4 md:mt-7">
+
           </div>
         </div>
       </div>

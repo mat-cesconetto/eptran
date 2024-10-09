@@ -1,3 +1,5 @@
+import { Escolaridade } from "./Escolaridade";
+import { Estados } from "./Estados";
 import { Sexo } from "./Sexo";
 
 interface User {
@@ -7,10 +9,10 @@ interface User {
     cep: string;
     rua: string;
     cidade: string;
-    estado: string;
+    estado: Estados;
     escola: string;
     data_nasc: string;
-    escolaridade: string;
+    escolaridade: Escolaridade;
     sexo: Sexo;
   }
   
