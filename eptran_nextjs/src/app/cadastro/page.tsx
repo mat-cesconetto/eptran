@@ -7,7 +7,7 @@ import { Button } from "@nextui-org/react";
 
 export default function Home() {
   const [isChecked, setIsChecked] = useState(false);
-
+ 
   return (
     <div className="flex flex-col md:flex-row w-full h-full">
       <div className="relative w-full md:w-3/6 h-64 md:h-[840px] bg-[url('/moinho.svg')] bg-cover bg-center">
