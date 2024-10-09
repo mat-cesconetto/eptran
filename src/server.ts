@@ -11,8 +11,15 @@ import ticketRoutes from './routes/ticketRoutes';
 import fastifyStatic from '@fastify/static';
 import * as path from 'path';
 import { resetRoutes } from './routes/resetRoutes';
+import fastifyCors from '@fastify/cors';
 
 const app = fastify();
+
+// Registra o plugin de CORS
+app.register(fastifyCors, {
+  origin: '*', // Permitir todas as origens, ou você pode especificar uma lista de origens
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Métodos permitidos
+});
 
 // Registra o plugin de cookies
 app.register(fastifyCookie);
@@ -21,7 +28,7 @@ app.register(fastifyCookie);
 app.register(multipart, {
   limits: {
     fileSize: 5 * 1024 * 1024, // 5MB
-  }
+  },
 });
 
 // Registra o plugin JWT
