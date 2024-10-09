@@ -2,8 +2,6 @@
 
 import { useState } from "react";
 import Formulario from "./form";
-import CustomCheckbox from "./checkbox";
-import { Button } from "@nextui-org/react";
 
 export default function Home() {
   const [isChecked, setIsChecked] = useState(false);
@@ -19,17 +17,7 @@ export default function Home() {
           <h3 className="text-neutral-400 text-base mt-2 mb-6 ">Siga os passos para se cadastrar</h3>
           <Formulario />
           <div className="mt-4 md:mt-7">
-            <CustomCheckbox
-              label="Concordo com os termos de serviço"
-              onChange={(e) => setIsChecked(e.target.checked)}
-            />
           </div>
-          <Button 
-            className="bg-[#003966] text-white w-full h-12 rounded-md mt-6 md:mt-10 font-bold text-lg"
-            disabled={!isChecked}
-          >
-            Cadastrar
-          </Button>
         </div>
       </div>
     </div>
