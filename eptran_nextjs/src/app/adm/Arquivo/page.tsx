@@ -11,7 +11,7 @@ export default function Suporte() {
           <h1 className="text-darkBlue-500 font-bold text-2xl md:text-3xl mb-4">ARQUIVO</h1>
           <hr className="bg-darkBlue-500 w-full border-1 border-darkBlue-500 rounded-full mb-8" />
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             <div className="space-y-6">
               <section>
                 <h2 className="font-semibold text-xl text-darkBlue-500 mb-2">DESCRIÇÃO</h2>
@@ -22,19 +22,19 @@ export default function Suporte() {
                     <h3 className="font-semibold text-md text-darkBlue-500 mb-2">NOME DO VÍDEO</h3>
                     <input 
                       type="text" 
-                      className="border-darkBlue-500 border-2 rounded-md h-12 w-full max-w-md" 
-                      placeholder=" Vídeo Educativo EPTRAN"
+                      className="border-darkBlue-500 border-2 rounded-md h-12 w-full max-w-md p-3" 
+                      placeholder="Vídeo Educativo EPTRAN"
                     />
                   </div>
                   
                   <div>
                     <h3 className="font-semibold text-md text-darkBlue-500 mb-2">DESCRIÇÃO DO VÍDEO</h3>
                     <textarea 
-                      className="border-2 border-darkBlue-400 rounded-md w-full max-w-md resize-none" 
+                      className="border-2 border-darkBlue-400 rounded-md w-full max-w-md resize-none p-3" 
                       name="descricao" 
                       id="Descricao" 
                       rows={4} 
-                      placeholder=" Vídeo Educativo Eptran"
+                      placeholder="Vídeo Educativo Eptran"
                     ></textarea>
                   </div>
                 </div>
@@ -62,7 +62,7 @@ export default function Suporte() {
               </section>
             </div>
 
-            <div className="space-y-6">
+            <div className="space-y-6 flex flex-col justify-between">
               <section>
                 <h2 className="text-xl font-semibold text-darkBlue-500 mb-2">VÍDEO</h2>
                 <hr className="bg-darkBlue-400 w-full border-1 border-darkBlue-500 rounded-full mb-4" />
@@ -71,28 +71,29 @@ export default function Suporte() {
                   <div className="w-full max-w-md h-56 bg-darkBlue-400 rounded-md"></div>
                   
                   <h3 className="text-darkBlue-500 font-semibold text-sm">67% CONCLUÍDO</h3>
-                  
-                  <div className="flex flex-wrap gap-4 text-darkBlue-500 font-semibold text-sm">
+                  <br>
+                  </br>
+                  <div className="flex flex-wrap gap-4 text-darkBlue-500 font-semibold text-sm items-start space-x-20 ">
                     <div>
-                      <p className="text-xs">ARQUIVO</p>
+                      <p className="text-xs font-bold">ARQUIVO</p>
                       <p className="text-black text-sm">arquivo.mp4</p>
                     </div>
                     <div>
-                      <p className="text-xs">DURAÇÃO</p>
+                      <p className="text-xs font-bold">DURAÇÃO</p>
                       <p className="text-black text-sm">3:07</p>
                     </div>
                     <div>
-                      <p className="text-xs">TAMANHO</p>
+                      <p className="text-xs font-bold">TAMANHO</p>
                       <p className="text-black text-sm">370 MB</p>
                     </div>
                   </div>
-
-                  <div className="flex flex-wrap gap-4">
-                    <button className="border border-darkBlue-500 text-darkBlue-500 font-semibold py-2 px-6 rounded-md">CANCELAR</button>
-                    <button className="bg-darkBlue-500 text-white font-semibold py-2 px-6 rounded-md">ENVIAR</button>
-                  </div>
                 </div>
               </section>
+
+              <div className="flex flex-wrap gap-4">
+                <button className="border border-darkBlue-500 text-darkBlue-500 font-semibold py-2 px-6 rounded-md">CANCELAR</button>
+                <button className="bg-darkBlue-500 text-white font-semibold py-2 px-6 rounded-md">ENVIAR</button>
+              </div>
             </div>
           </div>
         </div>
