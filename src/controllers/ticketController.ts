@@ -102,27 +102,41 @@ class TicketController {
     }
 
 // No controlador do seu Ticket
-    async finalizarTicket(req: FastifyRequest, reply: FastifyReply) {
-        try {
-            // Pegar o ID do ticket a partir dos parâmetros da URL
-            const { id } = req.params as { id: number };
-            
-            // Buscar o ticket para garantir que existe (opcional)
-            const ticket = await this.ticketRepository.getTicketById(id);
-            if (!ticket) {
-                return reply.status(404).send({ message: 'Ticket não encontrado' });
-            }
+async finalizarTicket(req: FastifyRequest, reply: FastifyReply) {
+    try {
+        const { id } = req.params as { id: string };
+        
+        console.log(`Tentando finalizar o ticket com ID: ${id}`);
 
-            // Atualizar o status do ticket para "CONCLUIDO"
-            const ticketAtualizado = await this.ticketRepository.updateTicketStatus(id, StatusEnum.RESOLVIDO)
-
-            // Retornar o ticket atualizado
-            return reply.status(200).send(ticketAtualizado);
-        } catch (error) {
-            console.error("Erro ao finalizar o ticket:", error);
-            return reply.status(500).send({ message: 'Erro interno do servidor' });
+        if (!id || isNaN(Number(id))) {
+            console.log(`ID inválido: ${id}`);
+            return reply.status(400).send({ message: 'ID de ticket inválido' });
         }
+
+        const ticketId = Number(id);
+
+        const ticket = await this.ticketRepository.getTicketById(ticketId);
+        if (!ticket) {
+            console.log(`Ticket não encontrado para o ID: ${ticketId}`);
+            return reply.status(404).send({ message: 'Ticket não encontrado' });
+        }
+
+        console.log(`Ticket encontrado:`, ticket);
+
+        const ticketAtualizado = await this.ticketRepository.updateTicketStatus(ticketId, StatusEnum.RESOLVIDO);
+        
+        console.log(`Ticket atualizado:`, ticketAtualizado);
+
+        return reply.status(200).send(ticketAtualizado);
+    } catch (error) {
+        console.error("Erro ao finalizar o ticket:", error);
+        if (error instanceof Error) {
+            console.error("Mensagem de erro:", error.message);
+            console.error("Stack trace:", error.stack);
+        }
+        return reply.status(500).send({ message: 'Erro interno do servidor', error: error instanceof Error ? error.message : String(error) });
     }
+}
 
 
     async addResposta(req: FastifyRequest, reply: FastifyReply) {

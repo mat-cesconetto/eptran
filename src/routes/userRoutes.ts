@@ -64,7 +64,7 @@ export async function userRoutes(fastify: FastifyInstance) {
       return userController.uploadProfilePicture(request, reply);
     }
   );
-  
+
   fastify.get<{
     Querystring: SearchQuery;
   }>(
@@ -78,7 +78,7 @@ export async function userRoutes(fastify: FastifyInstance) {
   );
 
   fastify.patch(
-    "/update-info",
+    "/update-info", { preHandler: authMiddleware},
     async (request: FastifyRequest, reply: FastifyReply) => {
       return userController.updateUserInfo(request, reply);
     }

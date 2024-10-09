@@ -1,4 +1,4 @@
-import { User, RegisterUser, ListUsers, UserInfo } from "../../types/User";
+import { User, RegisterUser, ListUsers, UserInfo, UserUpdate } from "../../types/User";
 import prismaClient from "../prisma";
 import bcrypt from "bcrypt" ;  // Importando bcrypt para fazer o hash da senha
 
@@ -104,23 +104,26 @@ class UserRepository {
   
   
 
-  async updateUser(userId: number, data: Partial<User>): Promise<User> {
+  async updateUser(userId: number, data: Partial<UserUpdate>): Promise<UserUpdate> {
     try {
+      // Remover os campos 'email' e 'senha' da atualização, caso presentes
+      const { email, senha, ...allowedData } = data;
+  
       const updatedUser = await prismaClient.usuario.update({
         where: { id: userId },
         data: {
-          ...data,
+          ...allowedData,
           updatedAt: new Date(),
         },
       });
-
+  
       return updatedUser;
     } catch (error) {
       console.error("Erro ao atualizar usuário:", error);
       throw new Error("Erro ao atualizar informações do usuário.");
     }
   }
-
+  
   // Novo método para atualizar a senha do usuário usando o email
   async updatePasswordByEmail(email: string, newPassword: string): Promise<void> {
     try {
