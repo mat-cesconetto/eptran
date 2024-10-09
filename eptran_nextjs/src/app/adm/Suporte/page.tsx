@@ -63,12 +63,7 @@ export default function Suporte() {
               <h3 className="font-semibold text-darkBlue-500 text-md">
                 CRIAÇÃO DO TICKET
               </h3>
-              <input
-                type="date"
-                name="data"
-                id="data"
-                className="mt-2 w-full px-2 bg-transparent border border-gray-300 rounded"
-              />
+              <p className="mt-2 w-full px-2 font-semibold">24/07/2024</p>
             </div>
             <div>
               <h3 className="font-semibold text-darkBlue-500 text-md">
@@ -103,7 +98,7 @@ export default function Suporte() {
 
         <div className="col-span-1 mt-8 lg:mt-0">
           <h2 className="text-xl font-semibold">RESPOSTA</h2>
-          <hr className="bg-darkBlue-400 w-auto my-2 border-1 border-darkBlue-500 rounded-full lg:mr-20" />
+          <hr className="bg-darkBlue-400 w-full my-2 border-1 border-darkBlue-500 rounded-full lg:mr-20" />
           <br />
           <h3 className="font-semibold text-darkBlue-500 text-md">
             RESPOSTA AO TICKET
