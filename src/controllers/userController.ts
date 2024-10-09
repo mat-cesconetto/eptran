@@ -88,13 +88,14 @@ export class UserController {
         }
     }
 
-    async searchUsers (request: FastifyRequest<{ Querystring: SearchQuery }>, reply: FastifyReply){
+    async searchUsers(request: FastifyRequest<{ Querystring: SearchQuery }>, reply: FastifyReply) {
         const { searchTerm } = request.query;
+        
         if (!searchTerm) {
-            return reply.status(400).send({ error: 'searchTerm is required' });
+          return reply.status(400).send({ error: 'searchTerm is required' });
         }
     
-        // Aqui você pode chamar seu repositório de usuários e fazer a pesquisa
+        // Chamando o repositório para buscar usuários
         const users = await this.userRepository.searchUsers(searchTerm);
         return reply.send(users);
       }

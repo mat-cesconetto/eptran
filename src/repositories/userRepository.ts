@@ -1,4 +1,4 @@
-import { User, RegisterUser, ListUsers } from "../../types/User";
+import { User, RegisterUser, ListUsers, UserInfo } from "../../types/User";
 import prismaClient from "../prisma";
 import bcrypt from "bcrypt" ;  // Importando bcrypt para fazer o hash da senha
 
@@ -69,8 +69,8 @@ class UserRepository {
     });
   }
 
-  async searchUsers(term: string): Promise<User[]> {
-    return prismaClient.usuario.findMany({
+  async searchUsers(term: string): Promise<UserInfo[]> {
+    const users = await prismaClient.usuario.findMany({
       where: {
         OR: [
           { nome: { contains: term, mode: "insensitive" } },
@@ -79,8 +79,30 @@ class UserRepository {
           { id: Number(term) || undefined },
         ],
       },
+      select: {
+        id: true,
+        nome: true,
+        email: true,
+        cep: true,
+        rua: true,
+        cidade: true,
+        estado: true,
+        escola: true,
+        data_nasc: true,
+        escolaridade: true,
+        sexo: true,
+        profilePicture: true,
+      },
     });
+  
+    // Transformar o resultado para garantir compatibilidade com UserInfo
+    return users.map(user => ({
+      ...user,
+      profilePicture: user.profilePicture || "", // Transformar null para string vazia
+    }));
   }
+  
+  
 
   async updateUser(userId: number, data: Partial<User>): Promise<User> {
     try {
@@ -115,6 +137,23 @@ class UserRepository {
     } catch (error) {
       console.error("Erro ao atualizar senha:", error);
       throw new Error("Erro ao atualizar a senha.");
+    }
+  }
+  async updateEmailByEmail(email: string, emailNovo: string): Promise<void> {
+    try {
+      // Atualiza a senha no banco de dados
+      await prismaClient.usuario.update({
+        where: { email },
+        data: {
+          email: emailNovo,
+          updatedAt: new Date(),
+        },
+      });
+
+      console.log(`Email atualizado para o usuário com email: ${email}`);
+    } catch (error) {
+      console.error("Erro ao atualizar email:", error);
+      throw new Error("Erro ao atualizar a email.");
     }
   }
 

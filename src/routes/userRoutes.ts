@@ -2,6 +2,8 @@ import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import { authMiddleware } from "../middlewares/authMiddleware"; // Ajuste o caminho conforme sua estrutura de diretórios
 import { adminMiddleware } from "../middlewares/adminMiddleware";
 import { UserController } from "../controllers/userController";
+import { SearchQuery } from '../../types/Search'; // Make sure this is the correct path to your shared type
+
 
 export async function userRoutes(fastify: FastifyInstance) {
   const userController = new UserController(fastify);
@@ -62,11 +64,18 @@ export async function userRoutes(fastify: FastifyInstance) {
       return userController.uploadProfilePicture(request, reply);
     }
   );
-
-  fastify.get("/search", {
-    handler: userController.searchUsers.bind(userController),
-    preHandler: [authMiddleware, adminMiddleware],
-  });
+  
+  fastify.get<{
+    Querystring: SearchQuery;
+  }>(
+    '/search',
+    {
+      preHandler: [authMiddleware, adminMiddleware],
+      handler: async (request, reply) => {
+        return userController.searchUsers(request, reply);
+      },
+    }
+  );
 
   fastify.patch(
     "/update-info",
