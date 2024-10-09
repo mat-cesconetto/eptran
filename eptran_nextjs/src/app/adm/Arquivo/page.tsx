@@ -22,7 +22,7 @@ export default function Suporte() {
                     <h3 className="font-semibold text-md text-darkBlue-500 mb-2">NOME DO VÍDEO</h3>
                     <input 
                       type="text" 
-                      className="border-darkBlue-500 border-2 rounded-md h-12 w-full max-w-md p-3" 
+                      className="border-darkBlue-300 border-2 rounded-md h-12 w-full max-w-md p-3" 
                       placeholder="Vídeo Educativo EPTRAN"
                     />
                   </div>
@@ -30,7 +30,7 @@ export default function Suporte() {
                   <div>
                     <h3 className="font-semibold text-md text-darkBlue-500 mb-2">DESCRIÇÃO DO VÍDEO</h3>
                     <textarea 
-                      className="border-2 border-darkBlue-400 rounded-md w-full max-w-md resize-none p-3" 
+                      className="border-2 border-darkBlue-300 rounded-md w-full max-w-md resize-none p-3" 
                       name="descricao" 
                       id="Descricao" 
                       rows={4} 
@@ -91,8 +91,8 @@ export default function Suporte() {
               </section>
 
               <div className="flex flex-wrap gap-4">
-                <button className="border border-darkBlue-500 text-darkBlue-500 font-semibold py-2 px-6 rounded-md">CANCELAR</button>
                 <button className="bg-darkBlue-500 text-white font-semibold py-2 px-6 rounded-md">ENVIAR</button>
+                <button className="border border-darkBlue-500 text-darkBlue-500 font-semibold py-2 px-6 rounded-md">CANCELAR</button>
               </div>
             </div>
           </div>
