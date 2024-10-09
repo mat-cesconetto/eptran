@@ -49,13 +49,15 @@ const NavBar: React.FC = () => {
         </button>
       </div>
       <div className="flex-shrink-0">
-        <Image
-          src="/logo-eptran.svg"
-          width={100}
-          height={100}
-          alt="imagem logo"
-          className="m-4 sm:m-10"
-        />
+        <Link href={"../"}>
+          <Image
+            src="/logo-eptran.svg"
+            width={100}
+            height={100}
+            alt="imagem logo"
+            className="m-4 sm:m-10"
+          />
+        </Link>
       </div>
       <div className="hidden md:flex justify-center items-center flex-grow text-blue-950 font-bold text-lg">
         <NavLink href="/atividade">Atividades</NavLink>
