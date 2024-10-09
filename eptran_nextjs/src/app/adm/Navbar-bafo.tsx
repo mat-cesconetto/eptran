@@ -9,7 +9,9 @@ import {
   Tickets,
   Menu,
   X,
+  CircleUserRound,
 } from "lucide-react";
+import { HiMiniUserCircle } from "react-icons/hi2";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -97,6 +99,11 @@ export default function NavBarBafo() {
               Administrador
             </Link>
           </nav>
+          <div className="flex justify-end items-start col-span-1 px-5 ">
+            <Link href='../'>
+            <HiMiniUserCircle  className="w-20 h-16 mr-4"/>
+            </Link>
+          </div>
         </div>
       )}
 
