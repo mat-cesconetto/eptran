@@ -2,7 +2,7 @@ import { Escolaridade } from "./Escolaridade";
 import { Estados } from "./Estados";
 import { Sexo } from "./Sexo";
 
-interface User {
+export interface User {
     nome: string;
     email: string;
     senha: string;
