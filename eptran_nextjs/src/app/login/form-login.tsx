@@ -32,7 +32,7 @@ const FormularioLogin: React.FC = () => {
 
       <div className="w-full flex justify-between items-center mb-4">
         <CustomCheckbox label="Lembrar" />
-        <Link href={""}>
+        <Link href={"./forgot-password"}>
           <p className="text-[#003966] text-sm md:text-base">Esqueceu sua senha?</p>
         </Link>
       </div>
