@@ -38,7 +38,7 @@ class PasswordResetController {
       );
 
       // Enviar o email com o link de redefinição de senha
-      const resetLink = `${process.env.FRONTEND_URL}/reset-password?token=${resetToken}`;
+      const resetLink = `${process.env.FRONTEND_URL}/resetar-senha?token=${resetToken}`;
 
       const emailSubject = "Redefinição de Senha";
       const emailText = `Clique no link abaixo para redefinir sua senha:\n${resetLink}`;
