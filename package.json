@@ -29,6 +29,7 @@
     "fastify-multipart": "^5.3.1",
     "fastify-swagger": "^5.1.1",
     "glob": "^11.0.0",
+    "googleapis": "^144.0.0",
     "jsonwebtoken": "^9.0.2",
     "nodemailer": "^6.9.15",
     "prisma": "^5.20.0",
