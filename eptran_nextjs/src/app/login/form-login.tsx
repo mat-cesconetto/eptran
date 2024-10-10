@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import CustomCheckbox from "../cadastro/checkbox";
 import Link from "next/link";
 import { useLogin } from "@/hooks/useLogin";
-import { Router } from "lucide-react";
 
 const FormularioLogin: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
@@ -21,22 +20,20 @@ const FormularioLogin: React.FC = () => {
     try {
       await loginUser(email, senha);
       console.log('tudo tranquilo');
-
     } catch (error: any) {
       setError(error.message || 'Houve um erro ao logar o usuário');
     }
   }
-
 
   return (
     <form onSubmit={handleLogin} className="grid grid-cols-1 gap-4 w-full">
       <FormField label="Email" type="email" id="email" name="email" />
       <FormField label="Senha" type="password" id="senha" name="senha" />
 
-      <div className="w-full flex justify-between mb-4">
+      <div className="w-full flex justify-between items-center mb-4">
         <CustomCheckbox label="Lembrar" />
         <Link href={""}>
-          <p className="text-[#003966]">Esqueceu sua senha?</p>
+          <p className="text-[#003966] text-sm md:text-base">Esqueceu sua senha?</p>
         </Link>
       </div>
 
@@ -46,6 +43,8 @@ const FormularioLogin: React.FC = () => {
       >
         Entrar
       </button>
+
+      {error && <p className="text-red-500 text-sm text-center">{error}</p>}
     </form>
   );
 };
@@ -64,7 +63,7 @@ const FormField: React.FC<FormFieldProps> = ({ label, type, id, name }) => (
       type={type}
       id={id}
       name={name}
-      className="border-2 border-[#003966] border-opacity-30 rounded-md p-1 text-black w-full mb-3"
+      className="border-2 border-[#003966] border-opacity-30 rounded-md p-2 text-black w-full"
     />
   </div>
 );
