@@ -1,26 +1,42 @@
 'use client';
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSearchParams } from 'next/navigation';
 import { useReset } from "@/hooks/useReset";
 
 const FormularioReset: React.FC = () => {
-  const [senhaNova, setSenhaNova] = useState("");
+  const [newPassword, setnewPassword] = useState("");
   const [repetirSenha, setRepetirSenha] = useState("");
   const [error, setError] = useState<string | null>(null);
   const { resetPassword } = useReset();
+  const searchParams = useSearchParams();
+  const [token, setToken] = useState<string | null>(null);
+
+  useEffect(() => {
+    // Extrai o token da URL
+    const queryToken = searchParams.get('token');
+    if (queryToken) {
+      setToken(queryToken);
+    }
+  }, [searchParams]);
 
   const handleReset = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     
     // Verifica se as senhas coincidem
-    if (senhaNova !== repetirSenha) {
+    if (newPassword !== repetirSenha) {
       setError("As senhas não coincidem");
       return;
     }
 
+    if (!token) {
+      setError("Token inválido ou ausente");
+      return;
+    }
+
     try {
-      // Processa o reset da senha
-      await resetPassword(senhaNova);
+      // Processa o reset da senha com o token extraído
+      await resetPassword(newPassword, token);
       console.log('Senha redefinida com sucesso');
       setError(null); // Reseta o erro se for bem-sucedido
     } catch (error: any) {
@@ -35,8 +51,8 @@ const FormularioReset: React.FC = () => {
         type="password" 
         id="senha-nova" 
         name="senha-nova" 
-        value={senhaNova}
-        onChange={(e) => setSenhaNova(e.target.value)} 
+        value={newPassword}
+        onChange={(e) => setnewPassword(e.target.value)} 
       />
 
       <FormField 

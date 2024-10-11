@@ -1,4 +1,3 @@
-// useCadastro.ts
 import { useState } from 'react';
 
 interface User {
@@ -10,14 +9,14 @@ export const useLogin = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
-  const loginUser = async (email: string, senha: string ) => {
+  const loginUser = async (email: string, senha: string) => {
     setIsLoading(true);
     setError(null);
 
     // Formata os dados conforme esperado pelo backend
     const userData: User = {
       email: email,
-      senha: senha
+      senha: senha,
     };
 
     console.log('Dados sendo enviados:', userData);
@@ -29,6 +28,7 @@ export const useLogin = () => {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
         },
+        credentials: 'include', // Corrigido aqui
         body: JSON.stringify(userData),
       });
 
