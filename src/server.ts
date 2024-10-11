@@ -23,8 +23,9 @@ const app = fastify();
 
 // Registra o plugin de CORS
 app.register(fastifyCors, {
-  origin: '*', // Permitir todas as origens, ou você pode especificar uma lista de origens
+  origin: process.env.FRONTEND_URL, // Permitir todas as origens, ou você pode especificar uma lista de origens
   methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE'], // Métodos permitidos
+  credentials: true,
 });
 
 // Registra o plugin de cookies
