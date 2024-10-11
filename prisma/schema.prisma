@@ -6,7 +6,6 @@ datasource db {
 generator client {
   provider = "prisma-client-js"
 }
-
 model Usuario {
   id             Int              @id @default(autoincrement())
   nome           String           @db.VarChar(99)
@@ -14,28 +13,74 @@ model Usuario {
   senha          String           @db.VarChar(99)
   cep            String           @db.VarChar(99)
   rua            String           @db.VarChar(99)
+  bairro         String?          @db.VarChar(99) // Permitir NULL
   cidade         String           @db.VarChar(99)
   estado         EstadoEnum
   escola         String           @db.VarChar(100)
   data_nasc      DateTime
   escolaridade   EscolaridadeEnum
   sexo           SexoEnum
-  adm            Boolean?         @default(false) // Valor padrão "false"
+  adm            Boolean?         @default(false) 
   conquistas     Conquistas?
   profilePicture String?
-  createdAt      DateTime         @default(now()) // Data de criação do usuário
-  updatedAt      DateTime         @updatedAt // Data de última atualização do usuário
-  refreshTokens  RefreshToken[]   @relation("UserRefreshTokens") // Relação com tokens de refresh
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  refreshTokens  RefreshToken[]   @relation("UserRefreshTokens")
 
-  // Relações com tickets e suas atualizações
   ticketsCriados     TicketUsuario[] @relation("CriadorTicket")
   ticketsAtualizados TicketUsuario[] @relation("AtualizadorTicket")
   ticketsFechados    TicketUsuario[] @relation("FechadorTicket")
 
-  // Relação com respostas e histórico de status
   respostasTickets RepostaTicketUsuario[]
-
   Access Access[]
+
+  Videos Videos[] @relation("UsuarioVideos")
+}
+
+
+enum BairrosJoinville {
+  NOVA_BRASILIA
+  SAO_MARCOS
+  VILA_NOVA
+  GLORIA
+  COSTA_E_SILVA
+  SANTO_ANTONIO
+  AMERICA
+  CENTRO
+  ATIRADORES
+  ANITA_GARIBALDI
+  FLORESTA
+  ITINGA
+  ITAUM
+  JARIVATUBA
+  FATIMA
+  GUANABARA
+  BUCAREIN
+  BOA_VISTA
+  SAGUACU
+  IRIRIU
+  BOM_RETIRO
+  AVENTUREIRO
+  JARDIM_SOFIA
+  MORRO_DO_MEIO
+  ZONA_INDUSTRIAL_1
+  PIRABEIRABA
+  RIO_BONITO
+  JARDIM_IRIRIU
+  COMASA
+  ADHEMAR_GARCIA
+  PARANAGUA_MIRIM
+  JOAO_COSTA
+  BOEHMERWALDT
+  PETROPOLIS
+  ESPINHEIROS
+  JARDIM_PARAISO
+  VILA_CUBATAO
+  ZONA_INDUSTRIAL_2
+  PARQUE_GUARANI
+  ULYSSES_GUIMARAES
+  DONA_FRANCISCA
+  PROFIPO
 }
 
 enum StatusEnum {
@@ -132,9 +177,13 @@ model FaleConosco {
 }
 
 model Videos {
-  id         Int     @id @default(autoincrement())
-  video_link String? @db.Text
+  id            Int               @id @default(autoincrement())
+  titulo  String
+  video_link    String?           @db.Text
+  escolaridade  EscolaridadeEnum  // Relaciona-se diretamente com a escolaridade
+  usuarios      Usuario[]         @relation("UsuarioVideos") // Relacionamento com o usuário
 }
+
 
 model Livros {
   id         Int     @id @default(autoincrement())

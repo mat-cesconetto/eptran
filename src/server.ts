@@ -12,13 +12,19 @@ import fastifyStatic from '@fastify/static';
 import * as path from 'path';
 import { resetRoutes } from './routes/resetRoutes';
 import fastifyCors from '@fastify/cors';
+import { locationRoutes } from './routes/locationRoutes';
+import * as dotenv from 'dotenv';
+import { videoRoutes } from './routes/videoRoutes';
+
+// Carregando variáveis de ambiente
+dotenv.config();
 
 const app = fastify();
 
 // Registra o plugin de CORS
 app.register(fastifyCors, {
   origin: '*', // Permitir todas as origens, ou você pode especificar uma lista de origens
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Métodos permitidos
+  methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE'], // Métodos permitidos
 });
 
 // Registra o plugin de cookies
@@ -27,13 +33,13 @@ app.register(fastifyCookie);
 // Registra o plugin multipart com opções
 app.register(multipart, {
   limits: {
-    fileSize: 5 * 1024 * 1024, // 5MB
+    fileSize: 50 * 1024 * 1024, // 50MB
   },
 });
 
-// Registra o plugin JWT
+// Registra o plugin JWT usando a variável de ambiente
 app.register(fastifyJwt, {
-  secret: 'EPTRAN-SECRETO', // Altere para um segredo mais seguro em produção
+  secret: process.env.JWT_SECRET || 'fallback-secret', // Usando variável de ambiente para segurança
   cookie: {
     cookieName: 'refreshToken', // Nome do cookie onde o token está armazenado
     signed: false, // Altere para true se você estiver usando cookies assinados
@@ -43,7 +49,7 @@ app.register(fastifyJwt, {
 // Registra o plugin static
 app.register(fastifyStatic, {
   root: path.join(__dirname, '../uploads/tickets'),
-  prefix: '/anexos/',
+  prefix: '/anexos/', // Prefixo para acessar arquivos estáticos
 });
 
 // Registra o manipulador de erros
@@ -55,20 +61,40 @@ app.register(userRoutes, {
   preHandler: authMiddleware, // Adiciona o middleware de autenticação
 });
 
+// Registrando as rotas de ticket com o middleware de autenticação
 app.register(ticketRoutes, {
   prefix: '/ticket',
   preHandler: authMiddleware, // Adiciona o middleware de autenticação
 });
 
+// Registrando a rota de autenticação sem middleware (sem necessidade de estar autenticado)
 app.register(authRoutes, {
   prefix: '/auth',
+  preHandler: undefined, // Nenhum middleware de autenticação aqui
 });
 
+// Registrando a rota de reset sem middleware (sem necessidade de estar autenticado)
 app.register(resetRoutes, {
   prefix: '/reset',
+  preHandler: undefined, // Nenhum middleware de autenticação aqui
 });
 
-app.register(statsRoutes, { prefix: '/stats' });
+// Registrando a rota de localização sem middleware (sem necessidade de estar autenticado)
+app.register(locationRoutes, {
+  prefix: '/location',
+  preHandler: undefined, // Nenhum middleware de autenticação aqui
+});
+
+// Registrando a rota de estatísticas com middleware de autenticação
+app.register(statsRoutes, {
+  prefix: '/stats',
+  preHandler: authMiddleware, // Adiciona o middleware de autenticação
+});
+
+app.register(videoRoutes, {
+  prefix: '/videos',
+  preHandler: authMiddleware, // Adiciona o middleware de autenticação
+});
 
 // Inicia o servidor
 const start = async () => {

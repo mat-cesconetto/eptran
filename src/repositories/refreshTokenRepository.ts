@@ -113,6 +113,32 @@ class RefreshTokenRepository {
             throw new Error("Erro ao remover tokens expirados.");
         }
     }
+
+    async getRefreshTokenByUserId(userId: string): Promise<RefreshToken | null> {
+        try {
+            const userIdAsNumber = parseInt(userId, 10); // Converte o userId para number
+    
+            const refreshToken = await this.prisma.refreshToken.findFirst({
+                where: {
+                    userId: userIdAsNumber, // Agora passando o valor como number
+                    expiresAt: {
+                        gt: new Date(),
+                    },
+                },
+            });
+    
+            if (!refreshToken) {
+                console.log('Refresh token não encontrado ou expirado para o usuário.');
+                return null;
+            }
+    
+            return refreshToken;
+        } catch (error) {
+            console.error("Erro ao buscar o refresh token:", error);
+            throw new Error("Erro ao buscar o refresh token.");
+        }
+    }
+    
 }
 
 export { RefreshTokenRepository };
