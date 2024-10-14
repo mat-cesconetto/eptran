@@ -76,12 +76,13 @@ const FormularioReset: React.FC = () => {
 
       {error && <p className="text-red-500">{error}</p>}
 
-      <button
+      <Button
+        onPress={onOpen}
         type="submit"
-        className="bg-[#003966] text-white w-full h-12 rounded-md font-bold text-lg col-span-full mt-10 mb-3"
+        className="bg-[#003966] text-white w-full h-12 rounded-md font-bold text-base sm:text-lg col-span-full mt-6 sm:mt-10 mb-3"
       >
-        Redefinir Senha
-      </button>
+        Redefinir a Senha
+      </Button>
       <Modal 
         isOpen={isOpen} 
         onOpenChange={onOpenChange} 
@@ -97,12 +98,12 @@ const FormularioReset: React.FC = () => {
           {(onClose) => (
             <div className="p-4 sm:p-5 md:p-6 text-center rounded-lg bg-white shadow-2xl">
               <div className="flex flex-col text-left gap-2 text-[#003966] text-xl sm:text-xl md:text-2xl font-bold mb-3">
-                Pedido de redefinição de senha enviado!
+                Senha alterada com sucesso!
               </div>
               <ModalBody className="w-full p-0">
                 <div className="w-full h-0.5 bg-black mb-3"></div>
                 <p className="text-sm sm:text-sm md:text-base text-[#003966] text-left mb-4">
-                  Fique de olho no seu e-mail para fazer a redefinição de sua senha.
+                  A senha da sua conta foi alterada com sucesso, não se esqueça dela.
                 </p>
               </ModalBody>  
               <ModalFooter className="justify-center p-0">
