@@ -1,8 +1,15 @@
+import Image from "next/image"
+
 export default function Suporte() {
   return (
-<main className="w-auto h-screen ml-60 pl-14 pt-36 pr-10">
-    <h1 className="flex text-darkBlue-500 font-bold justify-start text-3xl pl-10 pt-10">ARQUIVO</h1>
-    <hr className="bg-darkBlue-500 w-auto my-4 border-1 border-darkBlue-500 rounded-full ml-10" />
+    <div className="flex min-h-screen bg-white">
+      {/* Espaço reservado para a sidebar */}
+      <div className="w-60 flex-shrink-0"></div>
+      
+      <main className="flex-1 p-4 md:p-8 mt-40">
+        <div className="max-w-5xl mx-auto">
+          <h1 className="text-darkBlue-500 font-bold text-2xl md:text-3xl mb-4">ARQUIVO</h1>
+          <hr className="bg-darkBlue-500 w-full border-1 border-darkBlue-500 rounded-full mb-8" />
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             <div className="space-y-6">
@@ -83,17 +90,14 @@ export default function Suporte() {
                 </div>
               </section>
 
-      <div className="flex justify-start mt-6 gap-4">
-          <button className="border border-darkBlue-500 text-darkBlue-500 font-semibold py-2 px-6 rounded-md ml-20">CANCELAR</button>
-          <button className="bg-darkBlue-500 text-white font-semibold py-2 px-6 rounded-md">ENVIAR</button>
-      </div>
+              <div className="flex flex-wrap gap-4">
+                <button className="bg-darkBlue-500 text-white font-semibold py-2 px-6 rounded-md">ENVIAR</button>
+                <button className="border border-darkBlue-500 text-darkBlue-500 font-semibold py-2 px-6 rounded-md">CANCELAR</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
     </div>
-  </div>
-      
-
-      </div>
- 
-  </main>
   )
 }
-
