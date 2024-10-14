@@ -1,3 +1,5 @@
+export default function Suporte() {
+  return (
 <main className="w-auto h-screen ml-60 pl-14 pt-36 pr-10">
     <h1 className="flex text-darkBlue-500 font-bold justify-start text-3xl pl-10 pt-10">ARQUIVO</h1>
     <hr className="bg-darkBlue-500 w-auto my-4 border-1 border-darkBlue-500 rounded-full ml-10" />
@@ -71,5 +73,6 @@
       </div>
  
   </main>
-
+  )
+}
 
