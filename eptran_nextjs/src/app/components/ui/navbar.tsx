@@ -8,11 +8,11 @@ const NavBar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <div className="relative h-32 w-full bg-neutral-100 flex items-center justify-between shadow-2xl px-4 sm:px-10">
+    <div className="relative h-32 w-full bg-[#023859] flex items-center justify-between shadow-2xl px-4 sm:px-10">
       <div className="md:hidden">
         <button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="p-2 text-blue-950"
+          className="p-2 text-white"
           aria-label="Toggle menu"
         >
           {isMenuOpen ? (
@@ -49,35 +49,39 @@ const NavBar: React.FC = () => {
         </button>
       </div>
       <div className="flex-shrink-0">
-        <Image
-          src="/logo-eptran.svg"
-          width={100}
-          height={100}
-          alt="imagem logo"
-          className="m-4 sm:m-10"
-        />
+        <Link href={"../"}>
+          <Image
+            src="/logo.svg"
+            width={100}
+            height={100}
+            alt="imagem logo"
+            className="m-4 sm:m-10"
+          />
+        </Link>
       </div>
-      <div className="hidden md:flex justify-center items-center flex-grow text-blue-950 font-bold text-lg">
+      <div className="hidden md:flex justify-center items-center flex-grow text-white font-bold text-lg">
         <NavLink href="/atividade">Atividades</NavLink>
         <NavLink href="/conquistas">Conquistas</NavLink>
         <NavLink href="/sobre">Sobre nós</NavLink>
         <NavLink href="/fale-conosco">Fale Conosco</NavLink>
       </div>
       <div className="flex-shrink-0">
-        <Image
-          src="/Male User.svg"
-          width={57}
-          height={57}
-          alt="imagem usuario"
-          className="m-4 sm:m-10"
-        />
+        <Link href={"/login"}>
+          <Image
+            src="/user.svg"
+            width={57}
+            height={57}
+            alt="imagem usuario"
+            className="m-4 sm:m-10"
+          />
+        </Link>
       </div>
       {isMenuOpen && (
-        <div className="fixed inset-0 bg-neutral-100 z-50 flex items-center justify-center md:hidden">
+        <div className="fixed inset-0 bg-[#023859] z-50 flex items-center justify-center md:hidden">
           <div className="absolute top-4 left-4">
             <button
               onClick={() => setIsMenuOpen(false)}
-              className="p-2 text-blue-950"
+              className="p-2 text-white"
               aria-label="Close menu"
             >
               <svg
@@ -96,7 +100,7 @@ const NavBar: React.FC = () => {
               </svg>
             </button>
           </div>
-          <div className="flex flex-col items-center py-4 text-blue-950">
+          <div className="flex flex-col items-center py-4 text-white">
             <NavLink href="/atividade" mobile>
               Atividades
             </NavLink>
@@ -135,7 +139,7 @@ const NavLink: React.FC<NavLinkProps> = ({
     `}
   >
     {children}
-    <div className="absolute left-0 bottom-[-6px] w-full h-[3px] bg-black scale-x-0 origin-right transition-transform duration-500 group-hover:scale-x-100"></div>
+    <div className="absolute left-0 bottom-[-6px] w-full h-[3px] bg-white scale-x-0 origin-right transition-transform duration-500 group-hover:scale-x-100"></div>
   </Link>
 );
 
