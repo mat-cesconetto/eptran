@@ -138,7 +138,6 @@ async finalizarTicket(req: FastifyRequest, reply: FastifyReply) {
     }
 }
 
-
     async addResposta(req: FastifyRequest, reply: FastifyReply) {
         try {
             const { ticketId } = req.params as { ticketId: string }; // Ainda vem como string da rota

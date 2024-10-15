@@ -1,42 +1,58 @@
-import { FastifyRequest, FastifyReply } from 'fastify';
-import path from 'path';
-import fs from 'fs';
+import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify'
+import fp from 'fastify-plugin'
+import multipart, { MultipartFile } from '@fastify/multipart'
+import fs from 'fs'
+import path from 'path'
+import { pipeline } from 'stream/promises'
 
-interface VideoUploadBody {
+interface UploadFields {
+  titulo: string;
+  descricao: string;
   escolaridade: string;
-  video_url?: string;
+  videoPath: string;
 }
 
-export const uploadMiddleware = async (req: FastifyRequest<{ Body: VideoUploadBody }>, res: FastifyReply) => {
-  try {
-    const { escolaridade } = req.body;
+const uploadMiddleware = (fastify: FastifyInstance, opts: any, done: () => void) => {
 
-    if (!escolaridade) {
-      return res.status(400).send({ error: 'Escolaridade é obrigatória.' });
+  fastify.addHook('preHandler', async (request: FastifyRequest, reply: FastifyReply) => {
+    if (!request.isMultipart()) {
+      return
     }
 
-    const data = await req.file();
-
-    if (!data) {
-      return res.status(400).send({ error: 'Nenhum arquivo foi enviado.' });
+    const uploadDir = path.resolve(__dirname, '..', '..', 'uploads')
+    
+    try {
+      await fs.promises.access(uploadDir)
+    } catch (error) {
+      await fs.promises.mkdir(uploadDir, { recursive: true })
     }
 
-    const fileBuffer = await data.toBuffer();
-    const filePath = path.join(__dirname, '../../uploads', data.filename);
+    const parts = request.parts()
+    const fields: Partial<UploadFields> = {}
+    let videoFile: MultipartFile | null = null
 
-    fs.writeFileSync(filePath, fileBuffer);
+    for await (const part of parts) {
+      if (part.type === 'file') {
+        videoFile = part
+      } else {
+        // Aqui fazemos uma verificação de tipo mais explícita
+        if (typeof part.value === 'string') {
+          fields[part.fieldname as keyof UploadFields] = part.value
+        }
+      }
+    }
 
-    // Atualize a URL do vídeo com o caminho correto
-    req.body = { ...req.body, video_url: `/uploads/${data.filename}` };
+    if (videoFile) {
+      const fileName = `${Date.now()}-${videoFile.filename}`
+      const filePath = path.join(uploadDir, fileName)
+      await pipeline(videoFile.file, fs.createWriteStream(filePath))
+      fields.videoPath = filePath
+    }
 
-    return res.status(200).send({
-      success: true,
-      file: data.filename,
-      video_url: req.body.video_url,
-    });
+    request.body = fields as UploadFields
+  })
 
-  } catch (err) {
-    console.error(err);
-    return res.status(500).send({ error: 'Erro ao processar o upload' });
-  }
-};
+  done()
+}
+
+export default fp(uploadMiddleware)
