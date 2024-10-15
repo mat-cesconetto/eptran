@@ -66,7 +66,7 @@ const NavBar: React.FC = () => {
         <NavLink href="/fale-conosco">Fale Conosco</NavLink>
       </div>
       <div className="flex-shrink-0">
-        <Link href={"/cadastro"}>
+        <Link href={"/login"}>
           <Image
             src="/user.svg"
             width={57}

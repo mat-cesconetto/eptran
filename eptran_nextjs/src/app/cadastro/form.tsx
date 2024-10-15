@@ -32,7 +32,7 @@ const Formulario: React.FC = () => {
       console.log('Deu tudo certo');
       Router.push('/');
     } catch (error: any) {
-      setError("Houve um erro ao cadastrar usuário");
+      setError(error.message || 'Houve um erro ao cadastrar o usuário');
     }
   };
 
