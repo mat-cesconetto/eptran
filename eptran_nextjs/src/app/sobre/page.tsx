@@ -3,29 +3,28 @@ import Footer from "../components/ui/footer";
 
 export default function Home() {
   return (
-    <div className="">
-      <div className="flex items-center">
-        <div className="flex items-center relative m-10 ml-44">
-          <div className="w-14 h-14 bg-[#023859] rounded-xl flex items-center justify-center">
-            <Image
-              src="/Prize.svg"
-              width={42}
-              height={42}
-              alt="sobre"
-              className="m-2"
-            />
-          </div>
+    <div className="min-h-screen flex flex-col">
+      <div className="flex items-center p-4 sm:p-10 sm:ml-44">
+        <div className="flex items-center justify-center w-14 h-14 bg-[#023859] rounded-xl mr-4">
+          <Image
+            src="/Prize.svg"
+            width={42}
+            height={42}
+            alt="sobre"
+            className="m-2"
+          />
         </div>
-        <h1 className="text-3xl font-bold text-[#023859]">Sobre Nós</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold text-[#023859]">Sobre Nós</h1>
       </div>
-      <div className="relative p-16">
-        <div className="absolute -top-[10%] left-[750px] w-[1000px] h-[600px] bg-gray-300 rounded-lg"></div>
-        <div className="w-[680px] h-96 bg-[#023859] ml-64 rounded-xl relative z-10">
-          <h1 className="p-16 pb-10 w-full font-semibold text-white text-4xl">
+
+      <div className="relative p-4 sm:p-16">
+        <div className="hidden lg:block absolute -top-[5%] left-[25%]  w-[60%] h-[500px] bg-gray-300 rounded-lg"></div>
+        <div className="w-full max-w-[680px] bg-[#023859] mx-auto lg:ml-64 rounded-xl relative z-10 p-6 sm:p-16">
+          <h1 className="font-semibold text-white text-3xl sm:text-4xl mb-6">
             Nossa Missão
           </h1>
-          <div className="w-[552px] ml-16 h-0.5 bg-white mb-4"></div>
-          <p className="pl-16 w-[615px] text-justify">
+          <div className="w-full h-0.5 bg-white mb-4"></div>
+          <p className="text-white text-sm sm:text-base text-justify">
             A Escola de Trânsito Eptran tem a missão de educar motoristas,
             pedestres e ciclistas para garantir um trânsito mais seguro. Com
             foco em informação e formação prática, oferecemos cursos e palestras
@@ -36,35 +35,18 @@ export default function Home() {
           </p>
         </div>
       </div>
-      <div className="mt-24 mb-36 flex">
-        <Image
-          src="/eptran-team.svg"
-          width={350}
-          height={350}
-          alt="sobre"
-          className="ml-44"
-        />
-        <Image
-          src="/eptran-team.svg"
-          width={350}
-          height={350}
-          alt="sobre"
-          className="ml-10"
-        />
-        <Image
-          src="/eptran-team.svg"
-          width={350}
-          height={350}
-          alt="sobre"
-          className="ml-10"
-        />
-        <Image
-          src="/eptran-team.svg"
-          width={350}
-          height={350}
-          alt="sobre"
-          className="ml-10"
-        /> 
+
+      <div className="mt-12 sm:mt-24 mb-12 sm:mb-36 flex flex-wrap justify-center gap-4 sm:gap-10">
+        {[1, 2, 3, 4].map((index) => (
+          <Image
+            key={index}
+            src="/eptran-team.svg"
+            width={350}
+            height={350}
+            alt={`Equipe Eptran ${index}`}
+            className="w-full max-w-[250px] sm:max-w-[350px] h-auto"
+          />
+        ))}
       </div>
 
       <Footer />
