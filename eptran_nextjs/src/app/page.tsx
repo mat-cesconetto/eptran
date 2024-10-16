@@ -1,5 +1,5 @@
-import Footer from "./components/ui/footer";
-import Placa from "./placa";
+import Footer from "./components/ui/footer"
+import Placa from "./placa"
 
 export default function Home() {
   return (
@@ -8,10 +8,12 @@ export default function Home() {
         <div className="absolute inset-0 bg-black opacity-40 z-10"></div>
         <div></div>
         <div className="relative z-20 flex justify-center items-end">
-          <Placa />
+          <div className="w-[200px] h-[200px] sm:w-[300px] sm:h-[300px] md:w-[558px] md:h-[558px]">
+            <Placa />
+          </div>
         </div>
       </div>
       <Footer />
     </div>
-  );
+  )
 }
