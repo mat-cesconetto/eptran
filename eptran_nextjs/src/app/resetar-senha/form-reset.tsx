@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
 import React, { useState, useEffect } from "react";
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams } from "next/navigation";
 import { useReset } from "@/hooks/useReset";
 import {
   Modal,
@@ -22,7 +22,7 @@ const FormularioReset: React.FC = () => {
 
   useEffect(() => {
     // Extrai o token da URL
-    const queryToken = searchParams.get('token');
+    const queryToken = searchParams.get("token");
     if (queryToken) {
       setToken(queryToken);
     }
@@ -30,7 +30,7 @@ const FormularioReset: React.FC = () => {
 
   const handleReset = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
+
     // Verifica se as senhas coincidem
     if (newPassword !== repetirSenha) {
       setError("As senhas não coincidem");
@@ -45,10 +45,10 @@ const FormularioReset: React.FC = () => {
     try {
       // Processa o reset da senha com o token extraído
       await resetPassword(newPassword, token);
-      console.log('Senha redefinida com sucesso');
+      console.log("Senha redefinida com sucesso");
       setError(null); // Reseta o erro se for bem-sucedido
     } catch (error: any) {
-      setError(error.message || 'Houve um erro ao redefinir a senha');
+      setError(error.message || "Houve um erro ao redefinir a senha");
     }
   };
 
@@ -56,22 +56,22 @@ const FormularioReset: React.FC = () => {
 
   return (
     <form className="grid grid-cols-1 gap-4 w-full" onSubmit={handleReset}>
-      <FormField 
-        label="Senha Nova" 
-        type="password" 
-        id="senha-nova" 
-        name="senha-nova" 
+      <FormField
+        label="Senha Nova"
+        type="password"
+        id="senha-nova"
+        name="senha-nova"
         value={newPassword}
-        onChange={(e) => setnewPassword(e.target.value)} 
+        onChange={(e) => setnewPassword(e.target.value)}
       />
 
-      <FormField 
-        label="Repetir Senha Nova" 
-        type="password" 
-        id="repetir-senha" 
-        name="repetir-senha" 
+      <FormField
+        label="Repetir Senha Nova"
+        type="password"
+        id="repetir-senha"
+        name="repetir-senha"
         value={repetirSenha}
-        onChange={(e) => setRepetirSenha(e.target.value)} 
+        onChange={(e) => setRepetirSenha(e.target.value)}
       />
 
       {error && <p className="text-red-500">{error}</p>}
@@ -83,9 +83,9 @@ const FormularioReset: React.FC = () => {
       >
         Redefinir a Senha
       </Button>
-      <Modal 
-        isOpen={isOpen} 
-        onOpenChange={onOpenChange} 
+      <Modal
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
         placement="center"
         hideCloseButton
         classNames={{
@@ -103,9 +103,10 @@ const FormularioReset: React.FC = () => {
               <ModalBody className="w-full p-0">
                 <div className="w-full h-0.5 bg-black mb-3"></div>
                 <p className="text-sm sm:text-sm md:text-base text-[#003966] text-left mb-4">
-                  A senha da sua conta foi alterada com sucesso, não se esqueça dela.
+                  A senha da sua conta foi alterada com sucesso, não se esqueça
+                  dela.
                 </p>
-              </ModalBody>  
+              </ModalBody>
               <ModalFooter className="justify-center p-0">
                 <Button
                   className="bg-[#003966] text-white font-bold w-full rounded-md h-9 sm:h-10"

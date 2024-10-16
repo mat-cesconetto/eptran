@@ -14,7 +14,9 @@ export default function Home() {
             className="m-2"
           />
         </div>
-        <h1 className="text-2xl sm:text-3xl font-bold text-[#023859]">Sobre Nós</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold text-[#023859]">
+          Sobre Nós
+        </h1>
       </div>
 
       <div className="relative p-4 sm:p-16">
