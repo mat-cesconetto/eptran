@@ -90,7 +90,7 @@ export default function NavBarBafo() {
               Atividade
             </Link>
             <Link href="#" className="text-white py-4 text-lg">
-              Consquistas
+              Conquistas
             </Link>
             <Link href="../img/sobrenos.html" className="text-white py-4 text-lg">
               Sobre Nós
@@ -126,7 +126,7 @@ export default function NavBarBafo() {
         <div className="grid grid-cols-7 align-middle items-center">
           <BookText color="white" />
           <p className="text-white px-2 py-2 hover:underline col-span-6 text-xl">
-            <Link href="#">Conteudo</Link>
+            <Link href="#">Conteúdo</Link>
           </p>
           <Video color="white" />
           <p className="text-white px-2 py-2 hover:underline col-span-6 text-xl">
