@@ -6,7 +6,7 @@ export default function DadosUsuarios() {
       <h1 className="text-darkBlue-500 pl-8 font-bold text-2xl md:text-3xl mb-4">
         Dados Pessoais de USUÁRIO
       </h1>
-      <hr className="bg-darkBlue-500 ml-8 mr-32 my-4 border-1 border-darkBlue-500 rounded-full" />
+      <hr className="bg-darkBlue-500 ml-10 mr-32 my-4 border-1 border-darkBlue-500 rounded-full" />
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="w-auto pl-8">

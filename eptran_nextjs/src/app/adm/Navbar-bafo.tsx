@@ -142,7 +142,7 @@ export default function NavBarBafo() {
           </p>
           <Tickets color="white" />
           <p className="text-white px-2 py-2 hover:underline col-span-6 text-xl">
-            <Link href="#">Ticket</Link>
+            <Link href="/suporte">Suporte</Link>
           </p>
         </div>
       </aside>
