@@ -1,31 +1,39 @@
 "use client";
 
-import React, { useState } from "react";
+import { useUser } from "@/hooks/useUserData";
+import React, { useState, useEffect } from "react";
 import { FaPencilAlt } from "react-icons/fa";
 
 const School: React.FC = () => {
+  const { userEscola, userEscolaridade, isLoading } = useUser();
+
+  if (isLoading) {
+    return <p>Carregando...</p>;
+  }
+
   return (
-    <form className="grid grid-cols-1 gap-4 w-full">
+    <form className="grid grid-cols-1 gap-4 w-full placeholder-black text-black">
       <EditableFormField
         label="ESCOLA"
         type="text"
         id="escola"
         name="escola"
-        placeholder="Nome da escola"
+        placeholder={userEscola || "Nome da escola"}
+        defaultValue={userEscola}
       />
       <EditableFormField
         label="SÉRIE"
         type="select"
         id="serie"
         name="serie"
-        placeholder="Selecione a série"
+        defaultValue={userEscolaridade}
       >
         <option value="" disabled>
           Selecione
         </option>
-        <option value="1">1ª Série</option>
-        <option value="2">2ª Série</option>
-        <option value="3">3ª Série</option>
+        <option value="ENSINO_FUNDAMENTAL_I">Ensino Fundamental 1</option>
+        <option value="ENSINO_FUNDAMENTAL_II">Ensino Fundamental 2</option>
+        <option value="ENSINO_MEDIO">Ensino Médio</option>
       </EditableFormField>
     </form>
   );
@@ -37,6 +45,7 @@ interface EditableFormFieldProps {
   id: string;
   name: string;
   placeholder?: string;
+  defaultValue?: string;
   children?: React.ReactNode;
 }
 
@@ -46,10 +55,15 @@ const EditableFormField: React.FC<EditableFormFieldProps> = ({
   id,
   name,
   placeholder,
+  defaultValue = "",
   children,
 }) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState(defaultValue);
+
+  useEffect(() => {
+    setValue(defaultValue);
+  }, [defaultValue]);
 
   const handleEditClick = () => {
     setIsEditing(true);
