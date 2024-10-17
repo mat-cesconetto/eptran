@@ -6,27 +6,9 @@ import { FaPencilAlt } from "react-icons/fa";
 const AlterData: React.FC = () => {
   return (
     <form className="grid grid-cols-1 gap-4 w-full">
-      <EditableFormField
-        label="NOME"
-        type="text"
-        id="nome"
-        name="nome"
-        icon={<FaPencilAlt />}
-      />
-      <EditableFormField
-        label="Data de Nascimento"
-        type="date"
-        id="data_nasc"
-        name="data_nasc"
-        icon={<FaPencilAlt />}
-      />
-      <EditableFormField
-        label="Sexo"
-        type="select"
-        id="sexo"
-        name="sexo"
-        icon={<FaPencilAlt />}
-      >
+      <EditableFormField label="NOME" type="text" id="nome" name="nome" placeholder="Nome do usuário" />
+      <EditableFormField label="Data de Nascimento" type="date" id="data_nasc" name="data_nasc" placeholder="01/01/2000" />
+      <EditableFormField label="Sexo" type="select" id="sexo" name="sexo">
         <option value="" disabled>
           Selecione
         </option>
@@ -34,46 +16,45 @@ const AlterData: React.FC = () => {
         <option value="FEMININO">Feminino</option>
         <option value="NAO_DECLARAR">Prefiro Não Dizer</option>
       </EditableFormField>
-      <EditableFormField
-        label="CEP"
-        type="text"
-        id="cep"
-        name="cep"
-        icon={<FaPencilAlt />}
-      />
-      <EditableFormField
-        label="Estado"
-        type="select"
-        id="estado"
-        name="estado"
-        icon={<FaPencilAlt />}
-      >
+      <EditableFormField label="CEP" type="text" id="cep" name="cep" placeholder="00000-000" />
+      <EditableFormField label="Estado" type="select" id="estado" name="estado">
         <option value="" disabled>
           Selecione
         </option>
-        {/* Adicione aqui as opções do estado */}
+        <option value="" disabled>
+          Selecione
+        </option>
+        <option value="AC">Acre</option>
+        <option value="AL">Alagoas</option>
+        <option value="AP">Amapá</option>
+        <option value="AM">Amazonas</option>
+        <option value="BA">Bahia</option>
+        <option value="CE">Ceará</option>
+        <option value="DF">Distrito Federal</option>
+        <option value="ES">Espírito Santo</option>
+        <option value="GO">Goiás</option>
+        <option value="MA">Maranhão</option>
+        <option value="MT">Mato Grosso</option>
+        <option value="MS">Mato Grosso do Sul</option>
+        <option value="MG">Minas Gerais</option>
+        <option value="PA">Pará</option>
+        <option value="PB">Paraíba</option>
+        <option value="PR">Paraná</option>
+        <option value="PE">Pernambuco</option>
+        <option value="PI">Piauí</option>
+        <option value="RJ">Rio de Janeiro</option>
+        <option value="RN">Rio Grande do Norte</option>
+        <option value="RS">Rio Grande do Sul</option>
+        <option value="RO">Rondônia</option>
+        <option value="RR">Roraima</option>
+        <option value="SC">Santa Catarina</option>
+        <option value="SP">São Paulo</option>
+        <option value="SE">Sergipe</option>
+        <option value="TO">Tocantins</option>
       </EditableFormField>
-      <EditableFormField
-        label="Cidade"
-        type="text"
-        id="cidade"
-        name="cidade"
-        icon={<FaPencilAlt />}
-      />
-      <EditableFormField
-        label="Bairro"
-        type="text"
-        id="bairro"
-        name="bairro"
-        icon={<FaPencilAlt />}
-      />
-      <EditableFormField
-        label="Rua"
-        type="text"
-        id="rua"
-        name="rua"
-        icon={<FaPencilAlt />}
-      />
+      <EditableFormField label="Cidade" type="text" id="cidade" name="cidade" placeholder="Cidade do usuário" />
+      <EditableFormField label="Bairro" type="text" id="bairro" name="bairro" placeholder="Bairro do usuário" />
+      <EditableFormField label="Rua" type="text" id="rua" name="rua" placeholder="Rua do usuário" />
     </form>
   );
 };
@@ -83,7 +64,7 @@ interface EditableFormFieldProps {
   type: string;
   id: string;
   name: string;
-  icon: React.ReactNode;
+  placeholder?: string;
   children?: React.ReactNode;
 }
 
@@ -92,7 +73,7 @@ const EditableFormField: React.FC<EditableFormFieldProps> = ({
   type,
   id,
   name,
-  icon,
+  placeholder,
   children,
 }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -112,10 +93,8 @@ const EditableFormField: React.FC<EditableFormFieldProps> = ({
 
   return (
     <div className="flex flex-col mt-2">
-      <label className="text-sm sm:text-base text-[#003966] font-bold mb-1">
-        {label}
-      </label>
-      <div className="flex">
+      <label className="text-sm sm:text-base text-[#003966] font-bold mb-1">{label}</label>
+      <div className="flex items-center">
         {isEditing ? (
           <>
             {type === "select" ? (
@@ -125,7 +104,7 @@ const EditableFormField: React.FC<EditableFormFieldProps> = ({
                 value={value}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                className="border-2 border-[#003966] border-opacity-30 rounded-md p-1 text-black w-2/3"
+                className="border-2 border-[#003966] border-opacity-30 rounded-md p-1 text-black flex-1"
               >
                 {children}
               </select>
@@ -135,17 +114,20 @@ const EditableFormField: React.FC<EditableFormFieldProps> = ({
                 id={id}
                 name={name}
                 value={value}
+                placeholder={placeholder}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                className="border-2 border-[#003966] border-opacity-30 rounded-md p-1 text-black w-2/3"
+                className="border-2 border-[#003966] border-opacity-30 rounded-md p-1 text-black flex-1"
               />
             )}
           </>
         ) : (
-          <div className="border-2 border-[#003966] border-opacity-30 rounded-md p-1 text-black w-2/3 flex items-center justify-between">
-            <span>{value || "INFO DO USUÁRIO"}</span>
+          <div className="flex items-center justify-between w-full">
+            <div className="flex-1 border-2 border-[#003966] border-opacity-30 rounded-md p-1">
+              <span>{value || placeholder}</span>
+            </div>
             <span className="ml-3 cursor-pointer" onClick={handleEditClick}>
-              {icon}
+              <FaPencilAlt />
             </span>
           </div>
         )}
