@@ -1,7 +1,7 @@
 import { Button } from "@nextui-org/react";
-import AlterData from "./form-alter";
-import Photo from "./photo";
-import School from "./school";
+import AlterData from "../../components/ui/form-alter";
+import Photo from "../../components/ui/photo";
+import School from "../../components/ui/school";
 
 export default function Home() {
   return (
