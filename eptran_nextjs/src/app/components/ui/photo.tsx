@@ -20,14 +20,17 @@ const Photo: React.FC = () => {
   };
 
   return (
-    <div className="w-full bg-neutral-200 h-80 mt-4 text-center relative cursor-pointer" onClick={handleImageClick}>
+    <div 
+      className="w-full bg-neutral-200 h-60 sm:h-72 md:h-80 mt-4 text-center relative cursor-pointer flex flex-col items-center justify-center" 
+      onClick={handleImageClick}
+    >
       {imageSrc ? (
         <Image
           src={imageSrc}
           width={200}
           height={200}
           alt="Foto de perfil"
-          className="m-auto align-middle pt-[8%] rounded-full object-cover"
+          className="rounded-full object-cover w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48"
         />
       ) : (
         <Image
@@ -35,7 +38,7 @@ const Photo: React.FC = () => {
           width={200}
           height={200}
           alt="Default User"
-          className="m-auto align-middle pt-[8%] rounded-full object-cover"
+          className="rounded-full object-cover w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48"
         />
       )}
       <input
@@ -45,7 +48,9 @@ const Photo: React.FC = () => {
         ref={hiddenFileInput}
         className="hidden"
       />
-      <p className="text-[#003966] font-normal pt-4">Clique na imagem para adicionar ou alterar a foto de perfil</p>
+      <p className="text-[#003966] font-normal mt-4 text-sm sm:text-base">
+        Clique na imagem para adicionar ou alterar a foto de perfil
+      </p>
     </div>
   );
 };

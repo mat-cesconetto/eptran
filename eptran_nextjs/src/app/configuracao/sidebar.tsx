@@ -1,25 +1,38 @@
-import Link from "next/link"; 
-import React from "react";
-import { FaUser } from "react-icons/fa";
+"use client"
+
+import Link from "next/link";
+import React, { useState } from "react";
+import { FaUser, FaBars } from "react-icons/fa";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { MdKeyboardAlt } from "react-icons/md";
 
-
-
-
 const SideBar: React.FC = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <div className="w-[250px] h-screen border-b bg-[#003966]">
-      <div className="flex flex-col px-6 py-10 space-y-3 justify-center text-center items-center">
-        <h1 className="w-full font-bold text-white text-2xl">Configurações</h1>
-        <hr className="w-full " />
+    <>
+      <button
+        className="lg:hidden fixed top-4 left-4 z-20 p-2 bg-[#003966] text-white rounded-md"
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <FaBars />
+      </button>
+      <div className={`
+        fixed top-0 left-0 h-screen bg-[#003966] transition-all duration-300 ease-in-out z-10
+        ${isOpen ? 'w-[250px]' : 'w-0 lg:w-[250px]'}
+        overflow-hidden lg:relative
+      `}>
+        <div className="flex flex-col px-6 py-10 space-y-3 justify-center text-center items-center">
+          <h1 className="w-full font-bold text-white text-2xl">Configurações</h1>
+          <hr className="w-full" />
+        </div>
+        <div className="flex-col flex space-y-6">
+          <SideLink href="./dados" icon={<FaUser />}>Dados</SideLink>
+          <SideLink href="/outra-atividade" icon={<RiLockPasswordFill />}>Privacidade</SideLink>
+          <SideLink href="/mais-atividades" icon={<MdKeyboardAlt />}>Acessibilidade</SideLink>
+        </div>
       </div>
-      <div className="flex-col flex space-y-6">
-        <SideLink href="./dados" icon={<FaUser />}>Dados</SideLink>
-        <SideLink href="/outra-atividade" icon={<RiLockPasswordFill />}>Privacidade</SideLink>
-        <SideLink href="/mais-atividades" icon={<MdKeyboardAlt />}>Acessibilidade</SideLink>
-      </div>
-    </div>
+    </>
   );
 };
 

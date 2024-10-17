@@ -23,7 +23,6 @@ const School: React.FC = () => {
         <option value="" disabled>
           Selecione
         </option>
-        {/* Adicione aqui as opções das séries */}
         <option value="1">1ª Série</option>
         <option value="2">2ª Série</option>
         <option value="3">3ª Série</option>
@@ -77,7 +76,7 @@ const EditableFormField: React.FC<EditableFormFieldProps> = ({
                 value={value}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                className="border-2 border-[#003966] border-opacity-30 rounded-md p-1 text-black flex-1"
+                className="border-2 border-[#003966] border-opacity-30 rounded-md p-1 text-black flex-1 w-full"
               >
                 {children}
               </select>
@@ -90,14 +89,14 @@ const EditableFormField: React.FC<EditableFormFieldProps> = ({
                 placeholder={placeholder}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                className="border-2 border-[#003966] border-opacity-30 rounded-md p-1 text-black flex-1"
+                className="border-2 border-[#003966] border-opacity-30 rounded-md p-1 text-black flex-1 w-full"
               />
             )}
           </>
         ) : (
           <div className="flex items-center justify-between w-full">
-            <div className="flex-1 border-2 border-[#003966] border-opacity-30 rounded-md p-1">
-              <span>{value || placeholder}</span>
+            <div className="flex-1 border-2 border-[#003966] border-opacity-30 rounded-md p-1 min-h-[38px] flex items-center">
+              <span className="truncate">{value || placeholder}</span>
             </div>
             <span className="ml-3 cursor-pointer" onClick={handleEditClick}>
               <FaPencilAlt />
