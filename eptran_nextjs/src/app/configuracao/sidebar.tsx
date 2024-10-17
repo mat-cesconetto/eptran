@@ -11,11 +11,11 @@ const SideBar: React.FC = () => {
   return (
     <div className="w-[250px] h-screen border-b bg-[#003966]">
       <div className="flex flex-col px-6 py-10 space-y-3 justify-center text-center items-center">
-        <h1 className="w-full font-bold text-2xl">Configurações</h1>
+        <h1 className="w-full font-bold text-white text-2xl">Configurações</h1>
         <hr className="w-full " />
       </div>
       <div className="flex-col flex space-y-6">
-        <SideLink href="configuracao/dados" icon={<FaUser />}>Dados</SideLink>
+        <SideLink href="./dados" icon={<FaUser />}>Dados</SideLink>
         <SideLink href="/outra-atividade" icon={<RiLockPasswordFill />}>Privacidade</SideLink>
         <SideLink href="/mais-atividades" icon={<MdKeyboardAlt />}>Acessibilidade</SideLink>
       </div>
@@ -30,7 +30,7 @@ interface SideLinkProps {
 }
 
 const SideLink: React.FC<SideLinkProps> = ({ href, children, icon }) => (
-  <Link href={href} className="relative flex items-center mx-4 w-fit text-lg font-medium group ml-10">
+  <Link href={href} className="relative flex items-center mx-4 w-fit text-lg text-white font-medium group ml-10">
     <span className="mr-4"> 
       {icon}
     </span>

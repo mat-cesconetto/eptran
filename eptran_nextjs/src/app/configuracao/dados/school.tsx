@@ -10,17 +10,24 @@ const School: React.FC = () => {
         label="ESCOLA"
         type="text"
         id="escola"
-        name="ecola"
-        icon={<FaPencilAlt />}
+        name="escola"
+        placeholder="Nome da escola"
       />
       <EditableFormField
         label="SÉRIE"
         type="select"
         id="serie"
         name="serie"
-        icon={<FaPencilAlt />}
-      />
-
+        placeholder="Selecione a série"
+      >
+        <option value="" disabled>
+          Selecione
+        </option>
+        {/* Adicione aqui as opções das séries */}
+        <option value="1">1ª Série</option>
+        <option value="2">2ª Série</option>
+        <option value="3">3ª Série</option>
+      </EditableFormField>
     </form>
   );
 };
@@ -30,7 +37,7 @@ interface EditableFormFieldProps {
   type: string;
   id: string;
   name: string;
-  icon: React.ReactNode;
+  placeholder?: string;
   children?: React.ReactNode;
 }
 
@@ -39,7 +46,7 @@ const EditableFormField: React.FC<EditableFormFieldProps> = ({
   type,
   id,
   name,
-  icon,
+  placeholder,
   children,
 }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -59,10 +66,8 @@ const EditableFormField: React.FC<EditableFormFieldProps> = ({
 
   return (
     <div className="flex flex-col mt-2">
-      <label className="text-sm sm:text-base text-[#003966] font-bold mb-1">
-        {label}
-      </label>
-      <div className="flex">
+      <label className="text-sm sm:text-base text-[#003966] font-bold mb-1">{label}</label>
+      <div className="flex items-center">
         {isEditing ? (
           <>
             {type === "select" ? (
@@ -72,7 +77,7 @@ const EditableFormField: React.FC<EditableFormFieldProps> = ({
                 value={value}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                className="border-2 border-[#003966] border-opacity-30 rounded-md p-1 text-black w-2/3"
+                className="border-2 border-[#003966] border-opacity-30 rounded-md p-1 text-black flex-1"
               >
                 {children}
               </select>
@@ -82,17 +87,20 @@ const EditableFormField: React.FC<EditableFormFieldProps> = ({
                 id={id}
                 name={name}
                 value={value}
+                placeholder={placeholder}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                className="border-2 border-[#003966] border-opacity-30 rounded-md p-1 text-black w-2/3"
+                className="border-2 border-[#003966] border-opacity-30 rounded-md p-1 text-black flex-1"
               />
             )}
           </>
         ) : (
-          <div className="border-2 border-[#003966] border-opacity-30 rounded-md p-1 text-black w-2/3 flex items-center justify-between">
-            <span>{value || "INFO DO USUÁRIO"}</span>
+          <div className="flex items-center justify-between w-full">
+            <div className="flex-1 border-2 border-[#003966] border-opacity-30 rounded-md p-1">
+              <span>{value || placeholder}</span>
+            </div>
             <span className="ml-3 cursor-pointer" onClick={handleEditClick}>
-              {icon}
+              <FaPencilAlt />
             </span>
           </div>
         )}
