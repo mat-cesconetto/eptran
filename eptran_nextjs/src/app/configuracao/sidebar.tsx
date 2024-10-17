@@ -1,21 +1,21 @@
 "use client"
 
-import Link from "next/link";
-import React, { useState } from "react";
-import { FaUser, FaBars } from "react-icons/fa";
-import { RiLockPasswordFill } from "react-icons/ri";
-import { MdKeyboardAlt } from "react-icons/md";
+import Link from "next/link"
+import React, { useState } from "react"
+import { FaUser, FaBars, FaTimes } from "react-icons/fa"
+import { RiLockPasswordFill } from "react-icons/ri"
+import { MdKeyboardAlt } from "react-icons/md"
 
 const SideBar: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false)
 
   return (
     <>
       <button
-        className="lg:hidden fixed top-4 left-4 z-20 p-2 bg-[#003966] text-white rounded-md"
+        className="lg:hidden fixed bottom-4 right-4 z-20 p-2 bg-[#003966] text-white rounded-md"
         onClick={() => setIsOpen(!isOpen)}
       >
-        <FaBars />
+        {isOpen ? <FaTimes /> : <FaBars />}
       </button>
       <div className={`
         fixed top-0 left-0 h-screen bg-[#003966] transition-all duration-300 ease-in-out z-10
@@ -33,13 +33,13 @@ const SideBar: React.FC = () => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
 interface SideLinkProps {
-  href: string;
-  children: React.ReactNode;
-  icon: React.ReactNode; 
+  href: string
+  children: React.ReactNode
+  icon: React.ReactNode 
 }
 
 const SideLink: React.FC<SideLinkProps> = ({ href, children, icon }) => (
@@ -50,6 +50,6 @@ const SideLink: React.FC<SideLinkProps> = ({ href, children, icon }) => (
     {children}
     <div className="absolute left-0 bottom-[-6px] w-full h-[3px] bg-white scale-x-0 origin-right transition-transform duration-500 group-hover:scale-x-100"></div>
   </Link>
-);
+)
 
-export default SideBar;
+export default SideBar

@@ -26,7 +26,7 @@ const AlterData: React.FC = () => {
   } = useUser();
 
   if (isLoading) {
-    return <p>Carregando...</p>; // Ou um spinner para indicar carregamento
+    return <p className="text-black">Carregando...</p>; // Ou um spinner para indicar carregamento
   }
 
   // Aqui formatamos a data antes de passar para o input

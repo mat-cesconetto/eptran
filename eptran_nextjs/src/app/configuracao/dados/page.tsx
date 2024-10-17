@@ -9,12 +9,12 @@ export default function Home() {
       <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#003966]">Dados Pessoais</h1>
       <hr className="w-full bg-black h-0.5 my-4" />
       <div className="flex flex-col lg:flex-row">
-        <div className="w-full lg:w-1/2 lg:pr-10 pt-6 lg:pt-10">
+        <div className="w-full lg:w-1/2 lg:pr-10 pt-6 lg:pt-7">
           <h2 className="text-black text-xl sm:text-2xl">DADOS PESSOAIS</h2>
           <hr className="w-full bg-black h-0.5 my-2" />
           <AlterData />
         </div>
-        <div className="w-full lg:w-1/2 lg:pl-10 pt-6 lg:pt-10">
+        <div className="w-full lg:w-1/2 lg:pl-10 pt-6 lg:pt-7">
           <h2 className="text-black text-xl sm:text-2xl">FOTO</h2>
           <hr className="w-full bg-black h-0.5 my-2" />
           <Photo />

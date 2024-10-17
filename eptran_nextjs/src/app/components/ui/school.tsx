@@ -8,7 +8,7 @@ const School: React.FC = () => {
   const { userEscola, userEscolaridade, isLoading } = useUser();
 
   if (isLoading) {
-    return <p>Carregando...</p>;
+    return <p className="text-black">Carregando...</p>;
   }
 
   return (
