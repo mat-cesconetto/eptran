@@ -181,6 +181,7 @@ model Videos {
   titulo  String
   video_link    String?           @db.Text
   escolaridade  EscolaridadeEnum  // Relaciona-se diretamente com a escolaridade
+  descricao String
   usuarios      Usuario[]         @relation("UsuarioVideos") // Relacionamento com o usuário
 }
 
