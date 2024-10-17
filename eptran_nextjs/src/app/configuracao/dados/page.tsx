@@ -5,7 +5,7 @@ import School from "../../components/ui/school";
 
 export default function Home() {
   return (
-    <div className="px-4 sm:px-8 md:px-16 lg:px-32 pt-8 md:pt-14">
+    <div className="px-4 sm:px-8 md:px-16 lg:px-32 pt-6 md:pt-10">
       <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#003966]">Dados Pessoais</h1>
       <hr className="w-full bg-black h-0.5 my-4" />
       <div className="flex flex-col lg:flex-row">
