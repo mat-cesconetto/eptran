@@ -18,7 +18,7 @@ const School: React.FC = () => {
         type="text"
         id="escola"
         name="escola"
-        placeholder={userEscola || "Nome da escola"}
+        placeholder={userEscola}
         defaultValue={userEscola}
       />
       <EditableFormField
