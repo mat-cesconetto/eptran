@@ -6,6 +6,7 @@ datasource db {
 generator client {
   provider = "prisma-client-js"
 }
+
 model Usuario {
   id             Int              @id @default(autoincrement())
   nome           String           @db.VarChar(99)
@@ -20,7 +21,7 @@ model Usuario {
   data_nasc      DateTime
   escolaridade   EscolaridadeEnum
   sexo           SexoEnum
-  adm            Boolean?         @default(false) 
+  adm            Boolean?         @default(false)
   conquistas     Conquistas?
   profilePicture String?
   createdAt      DateTime         @default(now())
@@ -32,11 +33,8 @@ model Usuario {
   ticketsFechados    TicketUsuario[] @relation("FechadorTicket")
 
   respostasTickets RepostaTicketUsuario[]
-  Access Access[]
-
-  Videos Videos[] @relation("UsuarioVideos")
+  Access           Access[]
 }
-
 
 enum BairrosJoinville {
   NOVA_BRASILIA
@@ -177,14 +175,14 @@ model FaleConosco {
 }
 
 model Videos {
-  id            Int               @id @default(autoincrement())
-  titulo  String
-  video_link    String?           @db.Text
-  escolaridade  EscolaridadeEnum  // Relaciona-se diretamente com a escolaridade
-  descricao String
-  usuarios      Usuario[]         @relation("UsuarioVideos") // Relacionamento com o usuário
+  id           Int              @id @default(autoincrement())
+  titulo       String
+  descricao    String
+  videoLink   String           @db.Text
+  escolaridade EscolaridadeEnum // Relaciona-se diretamente com a escolaridade
+  createdAt    DateTime         @default(now()) // Armazena a data e hora do acesso
+  updatedAt    DateTime         @default(now()) // Armazena a data e hora do acesso
 }
-
 
 model Livros {
   id         Int     @id @default(autoincrement())
