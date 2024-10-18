@@ -64,7 +64,7 @@ export default function Suporte() {
 
             <div className="space-y-6 flex flex-col justify-between">
               <section>
-                <h2 className="text-xl font-semibold text-darkBlue-500 mb-2">VÍDEO</h2>
+                <h2 className="text-xl font-semibold text-darkBlue-500 mb-2">CONTEÚDO</h2>
                 <hr className="bg-darkBlue-400 w-full border-1 border-darkBlue-500 rounded-full mb-4" />
                 
                 <div className="space-y-4">
@@ -79,8 +79,8 @@ export default function Suporte() {
                       <p className="text-black text-sm">arquivo.mp4</p>
                     </div>
                     <div>
-                      <p className="text-xs font-bold">DURAÇÃO</p>
-                      <p className="text-black text-sm">3:07</p>
+                      <p className="text-xs font-bold">PÁGINAS</p>
+                      <p className="text-black text-sm">27</p>
                     </div>
                     <div>
                       <p className="text-xs font-bold">TAMANHO</p>
