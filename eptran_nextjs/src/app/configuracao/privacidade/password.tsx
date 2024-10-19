@@ -1,7 +1,7 @@
-"use client";
+"use client"
 
-import { useForgot } from "@/hooks/useForgot";
-import { useState } from "react";
+import { useForgot } from "@/hooks/useForgot"
+import { useState } from "react"
 import {
   Modal,
   ModalContent,
@@ -9,36 +9,45 @@ import {
   ModalFooter,
   Button,
   useDisclosure,
-} from "@nextui-org/react";
-import React from "react";
+} from "@nextui-org/react"
+import React from "react"
 
 const RedefinirSenha: React.FC = () => {
-  const [error, setError] = useState<string | null>(null);
-  const { forgotPassword } = useForgot();
+  const [error, setError] = useState<string | null>(null)
+  const { forgotPassword } = useForgot()
+  const { isOpen, onOpen, onOpenChange } = useDisclosure()
 
   const handleForgot = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    const formData = new FormData(e.currentTarget);
-    const email = formData.get("email")?.toString() || "";
+    const formData = new FormData(e.currentTarget)
+    const email = formData.get("email")?.toString() || ""
 
     try {
-      await forgotPassword(email);
-      console.log("tudo funcionando");
+      await forgotPassword(email)
+      onOpen()
     } catch (error: any) {
-      setError(error.message || "Houve um erro ao resetar a senha do usuário");
+      setError(error.message || "Houve um erro ao resetar a senha do usuário")
     }
-  };
-
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  }
 
   return (
-    <form onSubmit={handleForgot} className="grid grid-cols-1 gap-4 w-full">
-      <FormField label="E-MAIL" type="email" id="email" name="email" />
+    <form onSubmit={handleForgot} className="flex flex-col w-full">
+      <div className="mb-4">
+        <label htmlFor="email" className="text-sm sm:text-base md:text-lg text-[#003966] font-bold mb-1 block">
+          E-MAIL
+        </label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="emaildousuario@gmail.com"
+          className="border-2 border-[#003966] border-opacity-30 rounded-md p-2 text-black w-full lg:w-2/3"
+        />
+      </div>
       <Button
-        onPress={onOpen}
         type="submit"
-        className="bg-[#003966] text-white w-2/5 h-11 rounded-md font-semibold text-base sm:text-lg col-span-full mt-4  mb-3"
+        className="bg-[#003966] text-white w-full lg:w-2/5 h-11 rounded-md font-semibold text-base sm:text-lg mt-4 mb-3"
       >
         REDEFINIR SENHA
       </Button>
@@ -49,19 +58,19 @@ const RedefinirSenha: React.FC = () => {
         hideCloseButton
         classNames={{
           backdrop: "bg-black/70 backdrop-opacity-40",
-          base: "border-[#003966] bg-white dark:bg-[#003966] max-w-[85%] sm:max-w-[60%] md:max-w-[40%] lg:max-w-[26%]",
+          base: "border-[#003966] bg-white dark:bg-[#003966] max-w-[90%] sm:max-w-[80%] md:max-w-[60%] lg:max-w-[40%]",
           header: "border-b-[1px] border-[#003966]",
         }}
       >
         <ModalContent>
           {(onClose) => (
             <div className="p-4 sm:p-5 md:p-6 text-center rounded-lg bg-white shadow-2xl">
-              <div className="flex flex-col text-left gap-2 text-[#003966] text-xl sm:text-xl md:text-2xl font-bold mb-3">
+              <div className="flex flex-col text-left gap-2 text-[#003966] text-xl sm:text-2xl font-bold mb-3">
                 Pedido de redefinição de senha enviado!
               </div>
               <ModalBody className="w-full p-0">
                 <div className="w-full h-0.5 bg-black mb-3"></div>
-                <p className="text-sm sm:text-sm md:text-base text-[#003966] text-left mb-4">
+                <p className="text-sm sm:text-base text-[#003966] text-left mb-4">
                   Fique de olho no seu e-mail para fazer a redefinição de sua
                   senha.
                 </p>
@@ -78,31 +87,9 @@ const RedefinirSenha: React.FC = () => {
           )}
         </ModalContent>
       </Modal>
-      {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+      {error && <p className="text-red-500 text-sm text-center mt-2">{error}</p>}
     </form>
-  );
-};
-
-interface FormFieldProps {
-  label: string;
-  type: string;
-  id: string;
-  name: string;
+  )
 }
 
-const FormField: React.FC<FormFieldProps> = ({ label, type, id, name }) => (
-  <div className="flex flex-col pt-8">
-    <label className="text-sm sm:text-xl text-[#003966] font-bold mb-1 ">
-      {label}
-    </label>
-    <input
-      type={type}
-      id={id}
-      name={name}
-      placeholder="emaildousuario@gmail.com"
-      className="border-2 border-[#003966] border-opacity-30 rounded-md p-2 text-black w-2/3"
-    />
-  </div>
-);
-
-export default RedefinirSenha;
+export default RedefinirSenha
