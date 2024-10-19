@@ -2,27 +2,29 @@
 import { useState } from "react";
 
 interface User {
-  email: string;
+  emailAntigo: string;
+  emailNovo: string;
 }
 
-export const useForgot = () => {
+export const useEmail = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
-  const forgotPassword = async (email: string) => {
+  const changeEmail = async (emailAntigo: string, emailNovo: string) => {
     setIsLoading(true);
     setError(null);
 
     // Formata os dados conforme esperado pelo backend
     const userData: User = {
-      email: email,
+      emailAntigo: emailAntigo,
+      emailNovo: emailNovo,
     };
 
     console.log("Dados sendo enviados:", userData);
 
     try {
       const response = await fetch(
-        "http://localhost:3333/reset/request-password-reset",
+        "http://localhost:3333/reset/request-email-reset",
         {
           method: "POST",
           headers: {
@@ -56,7 +58,7 @@ export const useForgot = () => {
   };
 
   return {
-    forgotPassword,
+    changeEmail,
     isLoading,
     error,
   };
