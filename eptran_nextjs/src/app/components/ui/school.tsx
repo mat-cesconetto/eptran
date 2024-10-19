@@ -4,21 +4,33 @@ import { useUser } from "@/hooks/useUserData";
 import React, { useState, useEffect } from "react";
 import { FaPencilAlt } from "react-icons/fa";
 
-const School: React.FC = () => {
+
+interface SchoolProps {
+  onFormChange: (data: { [key: string]: string }) => void; // Tipagem da prop onFormChange
+}
+
+
+const School: React.FC<SchoolProps> = ({ onFormChange }) => {
   const { userEscola, userEscolaridade, isLoading } = useUser();
+
+  const handleAlter = (e: React.ChangeEvent<HTMLFormElement>) => {
+    const { name, value } = e.target;
+    onFormChange({ [name]: value }); // Passa o novo valor ao pai
+  };
+
 
   if (isLoading) {
     return <p className="text-black">Carregando...</p>;
   }
 
   return (
-    <form className="grid grid-cols-1 gap-4 w-full placeholder-black text-black">
+    <form onChange={handleAlter} className="grid grid-cols-1 gap-4 w-full placeholder-black text-black">
       <EditableFormField
         label="ESCOLA"
         type="text"
         id="escola"
         name="escola"
-        placeholder={userEscola}
+        placeholder="Escola"
         defaultValue={userEscola}
       />
       <EditableFormField

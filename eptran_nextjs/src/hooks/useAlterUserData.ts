@@ -19,7 +19,7 @@ export const useAlter = () => {
   const [error, setError] = useState<Error | null>(null);
 
   // Agora usando Partial<User> para enviar apenas os dados que foram alterados
-  const registerUser = async (updates: Partial<User>) => {
+  const alterUser = async (updates: Partial<User>) => {
     setIsLoading(true);
     setError(null);
 
@@ -51,7 +51,7 @@ export const useAlter = () => {
   };
 
   return {
-    registerUser,
+    alterUser,
     isLoading,
     error,
   };

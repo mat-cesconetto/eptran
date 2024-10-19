@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import CustomCheckbox from "../cadastro/checkbox";
 import Link from "next/link";
 import { useLogin } from "@/hooks/useLogin";
+import { Router } from "lucide-react";
 
 const FormularioLogin: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
@@ -20,6 +21,7 @@ const FormularioLogin: React.FC = () => {
     try {
       await loginUser(email, senha);
       console.log('tudo tranquilo');
+      Router.push('./configuracao/dados')
     } catch (error: any) {
       setError(error.message || 'Houve um erro ao logar o usuário');
     }

@@ -1,19 +1,27 @@
 "use client";
 
+import { useAlter } from "@/hooks/useAlterUserData";
 import { useUser } from "@/hooks/useUserData";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { FaPencilAlt } from "react-icons/fa";
 
+// Função para formatar a data no padrão DD/MM/YYYY
 const formatDate = (dateString: string) => {
   if (!dateString) return ""; // Retorna vazio se não houver data
   const date = new Date(dateString);
-  const day = String(date.getDate()).padStart(2, '0'); // Garante dois dígitos
-  const month = String(date.getMonth() + 1).padStart(2, '0'); // Meses começam em 0
+  const day = String(date.getDate()).padStart(2, "0"); // Garante dois dígitos
+  const month = String(date.getMonth() + 1).padStart(2, "0"); // Meses começam em 0
   const year = date.getFullYear();
   return `${day}/${month}/${year}`; // Formato DD/MM/YYYY
 };
 
-const AlterData: React.FC = () => {
+interface AlterDataProps {
+  onFormChange: (data: { [key: string]: string }) => void; // Tipagem da prop onFormChange
+}
+
+const AlterData: React.FC<AlterDataProps> = ({ onFormChange }) => {
+  const [error, setError] = useState<string | null>(null);
+  const { alterUser } = useAlter();
   const {
     userName,
     userDataNasc,
@@ -25,22 +33,28 @@ const AlterData: React.FC = () => {
     isLoading,
   } = useUser();
 
-  if (isLoading) {
-    return <p className="text-black">Carregando...</p>; // Ou um spinner para indicar carregamento
-  }
+  const handleAlter = (e: React.ChangeEvent<HTMLFormElement>) => {
+    const { name, value } = e.target;
+    onFormChange({ [name]: value }); // Passa o novo valor ao pai
+  };
 
-  // Aqui formatamos a data antes de passar para o input
   const formattedDate = formatDate(userDataNasc);
 
+  if (isLoading) {
+    return <p className="text-black">Carregando...</p>;
+  }
 
   return (
-    <form className="grid grid-cols-1 gap-4 w-full text-black placeholder-black">
+    <form
+      onChange={handleAlter}
+      className="grid grid-cols-1 gap-4 w-full text-black placeholder-black"
+    >
       <EditableFormField
         label="NOME"
         type="text"
         id="nome"
         name="nome"
-        placeholder={userName}
+        placeholder="Nome"
         defaultValue={userName}
       />
       <EditableFormField
@@ -48,8 +62,8 @@ const AlterData: React.FC = () => {
         type="date"
         id="data_nasc"
         name="data_nasc"
-        placeholder={formattedDate} // Usa a data formatada
-        defaultValue={formattedDate} // Usa a data formatada
+        placeholder={formattedDate}
+        defaultValue={formattedDate}
       />
       <EditableFormField
         label="Sexo"
@@ -70,7 +84,7 @@ const AlterData: React.FC = () => {
         type="text"
         id="cep"
         name="cep"
-        placeholder={userCep}
+        placeholder="CEP"
         defaultValue={userCep}
       />
       <EditableFormField
@@ -80,6 +94,9 @@ const AlterData: React.FC = () => {
         name="estado"
         defaultValue={userEstado}
       >
+        <option value="" disabled>
+          Selecione
+        </option>
         <option value="" disabled>
           Selecione
         </option>
@@ -116,24 +133,19 @@ const AlterData: React.FC = () => {
         type="text"
         id="cidade"
         name="cidade"
-        placeholder={userCidade}
+        placeholder="Cidade"
         defaultValue={userCidade}
-      />
-      <EditableFormField
-        label="Bairro"
-        type="text"
-        id="bairro"
-        name="bairro"
-        placeholder="Bairro do usuário"
       />
       <EditableFormField
         label="Rua"
         type="text"
         id="rua"
         name="rua"
-        placeholder={userRua}
+        placeholder="Rua"
         defaultValue={userRua}
       />
+
+      {error && <p className="text-red-500">{error}</p>}
     </form>
   );
 };
@@ -157,11 +169,10 @@ const EditableFormField: React.FC<EditableFormFieldProps> = ({
   defaultValue = "",
   children,
 }) => {
-  const [isEditing, setIsEditing] = React.useState(false);
-  const [value, setValue] = React.useState(defaultValue);
+  const [isEditing, setIsEditing] = useState(false);
+  const [value, setValue] = useState(defaultValue);
 
-  // Sincroniza o valor com o defaultValue quando ele muda
-  React.useEffect(() => {
+  useEffect(() => {
     setValue(defaultValue);
   }, [defaultValue]);
 
@@ -180,35 +191,37 @@ const EditableFormField: React.FC<EditableFormFieldProps> = ({
   };
 
   return (
-    <div className="flex flex-col mt-2 placeholder-black">
+    <div className="flex flex-col mt-2">
       <label className="text-sm sm:text-base text-[#003966] font-bold mb-1">
         {label}
       </label>
       <div className="flex items-center">
         {isEditing ? (
-          type === "select" ? (
-            <select
-              id={id}
-              name={name}
-              value={value} // Use `value` para campos controlados
-              onChange={handleChange}
-              onBlur={handleBlur}
-              className="border-2 border-[#003966] border-opacity-30 rounded-md p-1 text-black flex-1 w-full"
-            >
-              {children}
-            </select>
-          ) : (
-            <input
-              type={type}
-              id={id}
-              name={name}
-              value={value}
-              placeholder={placeholder}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              className="border-2 border-[#003966] border-opacity-30 rounded-md p-1 text-black placeholder-black flex-1 w-full"
-            />
-          )
+          <>
+            {type === "select" ? (
+              <select
+                id={id}
+                name={name}
+                value={value}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                className="border-2 border-[#003966] border-opacity-30 rounded-md p-1 text-black flex-1 w-full"
+              >
+                {children}
+              </select>
+            ) : (
+              <input
+                type={type}
+                id={id}
+                name={name}
+                value={value}
+                placeholder={placeholder}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                className="border-2 border-[#003966] border-opacity-30 rounded-md p-1 text-black flex-1 w-full"
+              />
+            )}
+          </>
         ) : (
           <div className="flex items-center justify-between w-full">
             <div className="flex-1 border-2 border-[#003966] border-opacity-30 rounded-md p-1 min-h-[38px] flex items-center">
