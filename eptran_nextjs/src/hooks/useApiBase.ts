@@ -1,6 +1,6 @@
 import useSWR, { SWRConfiguration } from 'swr';
 import { useRouter } from 'next/navigation';
-import { ApiError } from '@/@types/apiErros';// Importe o tipo ApiError do seu arquivo de tipos
+import { ApiError } from '@/@types/apiErros';
 
 const API_URL = 'http://0.0.0.0:3333/';
 
