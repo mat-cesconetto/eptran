@@ -28,8 +28,8 @@ const SideBar: React.FC = () => {
         </div>
         <div className="flex-col flex space-y-6">
           <SideLink href="./dados" icon={<FaUser />}>Dados</SideLink>
-          <SideLink href="/outra-atividade" icon={<RiLockPasswordFill />}>Privacidade</SideLink>
-          <SideLink href="/mais-atividades" icon={<MdKeyboardAlt />}>Acessibilidade</SideLink>
+          <SideLink href="./privacidade" icon={<RiLockPasswordFill />}>Privacidade</SideLink>
+          <SideLink href="./acessibilidade" icon={<MdKeyboardAlt />}>Acessibilidade</SideLink>
         </div>
       </div>
     </>
