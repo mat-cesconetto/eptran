@@ -166,14 +166,6 @@ model Conquistas {
   usuario       Usuario @relation(fields: [fk_id_usuario], references: [id])
 }
 
-model FaleConosco {
-  id       Int    @id @default(autoincrement())
-  nome     String @db.VarChar(99)
-  email    String @db.VarChar(99)
-  assunto  String @db.VarChar(99)
-  mensagem String @db.Text
-}
-
 model Videos {
   id           Int              @id @default(autoincrement())
   titulo       String
@@ -181,12 +173,16 @@ model Videos {
   videoLink   String           @db.Text
   escolaridade EscolaridadeEnum // Relaciona-se diretamente com a escolaridade
   createdAt    DateTime         @default(now()) // Armazena a data e hora do acesso
-  updatedAt    DateTime         @default(now()) // Armazena a data e hora do acesso
+  updatedAt    DateTime         @updatedAt // Armazena a data e hora do acesso
 }
-
-model Livros {
-  id         Int     @id @default(autoincrement())
-  livro_link String? @db.Text
+model Materiais {
+  id           Int              @id @default(autoincrement())
+  titulo       String
+  descricao    String
+  materialLink   String           @db.Text
+  escolaridade EscolaridadeEnum // Relaciona-se diretamente com a escolaridade
+  createdAt    DateTime         @default(now()) // Armazena a data e hora do acesso
+  updatedAt    DateTime         @updatedAt // Armazena a data e hora do acesso
 }
 
 enum EstadoEnum {
