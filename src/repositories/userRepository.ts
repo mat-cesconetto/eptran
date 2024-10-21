@@ -40,6 +40,11 @@ class UserRepository {
     }
   }
   
+  async findById(id: number): Promise<User | null> {
+    return prismaClient.usuario.findUnique({
+      where: { id },
+    });
+  }
 
   async listUsers(page: number, limit: number): Promise<ListUsers> {
     const [users, totalUsers] = await prismaClient.$transaction([
@@ -160,7 +165,57 @@ class UserRepository {
     }
   }
 
-  
+  async delete(id: number): Promise<void> {
+    try {
+      await prismaClient.$transaction(async (prisma) => {
+        // Deletar todos os RefreshTokens associados ao usuário
+        await prisma.refreshToken.deleteMany({
+          where: { userId: id },
+        });
+
+        // Deletar todos os Access associados ao usuário
+        await prisma.access.deleteMany({
+          where: { userId: id },
+        });
+
+        // Deletar as Conquistas associadas ao usuário (se existirem)
+        await prisma.conquistas.delete({
+          where: { fk_id_usuario: id },
+        }).catch(() => {
+          // Ignora o erro se não existirem conquistas para este usuário
+        });
+
+        // Deletar todas as respostas de tickets associadas ao usuário
+        await prisma.repostaTicketUsuario.deleteMany({
+          where: { userId: id },
+        });
+
+        // Atualizar tickets onde o usuário é o criador, atualizador ou fechador
+        await prisma.ticketUsuario.updateMany({
+          where: {
+            OR: [
+              { userId: id },
+              { updatedById: id },
+              { closedById: id },
+            ],
+          },
+          data: {
+            updatedById: null,
+            closedById: null,
+          },
+        });
+
+        // Finalmente, deletar o usuário
+        await prisma.usuario.delete({
+          where: { id },
+        });
+      });
+    } catch (error) {
+      console.error("Erro ao deletar usuário:", error);
+      throw new Error("Não foi possível deletar o usuário e seus dados relacionados.");
+    }
+  }
 }
+
 
 export { UserRepository };

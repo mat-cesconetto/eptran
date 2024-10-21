@@ -23,6 +23,17 @@ export async function locationRoutes( fastify: FastifyInstance ) {
           reply.code(500).send({ error: 'Erro ao buscar cidades.' });
         }
       });
+      fastify.get<{ Params: { cep: string } }>('/:cep', async (request, reply) => {
+        const { cep } = request.params; // Agora o TypeScript sabe que uf é uma string
+      
+        try {
+          const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+          const data = await response.json();
+          reply.send(data);
+        } catch (error) {
+          reply.code(500).send({ error: 'Erro ao buscar informações.' });
+        }
+      });
 
       fastify.get('/bairros/joinville', async (request, reply) => {
         try {
@@ -31,6 +42,7 @@ export async function locationRoutes( fastify: FastifyInstance ) {
           reply.code(500).send({ error: 'Erro ao buscar bairros.' });
         }
       });
+
 
       enum BairrosJoinville {
         NOVA_BRASILIA = 'Nova Brasília',

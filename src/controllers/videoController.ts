@@ -69,21 +69,18 @@ export const getVideosByEscolaridade = async (
 };
 
 export const getAllVideos = async (
-  req: FastifyRequest<{ Params: { escolaridade: string } }>,
+  req: FastifyRequest<{ Querystring: { page?: string; limit?: string } }>,
   res: FastifyReply
 ) => {
   try {
     // Extrai os parâmetros `page` e `limit` da query string, com valores padrão
-    const { page = "1", limit = "10" } = req.query as {
-      page?: string;
-      limit?: string;
-    };
+    const { page = "1", limit = "10" } = req.query;
 
     // Converte `page` e `limit` para números
     const pageNumber = parseInt(page, 10);
     const limitNumber = parseInt(limit, 10);
 
-    // Chama a função que lista os usuários com paginação
+    // Chama a função que lista os vídeos com paginação
     const { videos, totalVideos, totalPages } =
       await videoRepository.listVideos(pageNumber, limitNumber);
 
@@ -103,7 +100,7 @@ export const getAllVideos = async (
     });
   } catch (error) {
     // Trata qualquer erro e responde com status 500
-    return res.status(500).send({ error: "Erro ao buscar usuários" });
+    return res.status(500).send({ error: "Erro ao buscar vídeos" });
   }
 };
 
