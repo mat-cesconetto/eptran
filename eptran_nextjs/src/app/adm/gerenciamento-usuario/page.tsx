@@ -1,14 +1,12 @@
 "use client";
 
-import { TbUserSquareRounded } from "react-icons/tb";
+import Image from "next/image";
 import { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
@@ -52,9 +50,14 @@ export default function Gerenciamento() {
     <main className=" min-h-screen p-4 md:p-8 lg:pl-72 pt-24 text-black">
       <div className="mt-24 py-5 flex gap-5 ">
         <div>
-          <TbUserSquareRounded size={56} color="#023859" />
+          <Image
+            src="/user-svgrepo-com.svg"
+            width={50}
+            height={50}
+            alt="perfil"
+          />
         </div>
-        <div className="text-darkBlue-500 text-4xl font-bold pt-3">
+        <div className="text-darkBlue-500 text-4xl font-bold pt-2">
           <h1>Gestão de Usuários</h1>
         </div>
       </div>
@@ -70,10 +73,10 @@ export default function Gerenciamento() {
           />
         </div>
         <Select value={userFilter} onValueChange={setUserFilter}>
-          <SelectTrigger className="w-full md:w-auto">
+          <SelectTrigger className="text-darkBlue-500 font-bold w-full md:w-auto ">
             <SelectValue placeholder="Todos os Usuários" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className="text-darkBlue-500 font-bold">
             <SelectItem value="all">Todos os Usuários</SelectItem>
             <SelectItem value="active">Usuários Ativos</SelectItem>
             <SelectItem value="inactive">Usuários Inativos</SelectItem>
@@ -85,16 +88,24 @@ export default function Gerenciamento() {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[100px]">ID</TableHead>
-              <TableHead>Usuário</TableHead>
-              <TableHead className="hidden md:table-cell">E-mail</TableHead>
-              <TableHead className="hidden md:table-cell">Gênero</TableHead>
-              <TableHead className="hidden md:table-cell">Nascimento</TableHead>
-              <TableHead className="hidden md:table-cell">
+              <TableHead className="w-[100px] text-darkBlue-500 font-bold">ID</TableHead>
+              <TableHead className="text-darkBlue-500 font-bold">Usuário</TableHead>
+              <TableHead className="hidden md:table-cell text-darkBlue-500 font-bold">
+                E-mail
+              </TableHead>
+              <TableHead className="hidden md:table-cell text-darkBlue-500 font-bold">
+                Gênero
+              </TableHead>
+              <TableHead className="hidden md:table-cell text-darkBlue-500 font-bold">
+                Nascimento
+              </TableHead>
+              <TableHead className="hidden md:table-cell text-darkBlue-500 font-bold">
                 Cidade/Estado
               </TableHead>
-              <TableHead className="hidden md:table-cell">Escola</TableHead>
-              <TableHead className="hidden md:table-cell">
+              <TableHead className="hidden md:table-cell text-darkBlue-500 font-bold">
+                Escola
+              </TableHead>
+              <TableHead className="hidden md:table-cell text-darkBlue-500 font-bold">
                 Escolaridade
               </TableHead>
               <TableHead className="text-right"></TableHead>
@@ -106,8 +117,8 @@ export default function Gerenciamento() {
                 <TableCell className="font-medium">{user.id}</TableCell>
                 <TableCell>
                   <div className="flex items-center">
-                    <Avatar className="h-8 w-8 mr-2">
-                      <AvatarImage src="/image/salsicha.png" alt={user.name} />
+                    <Avatar className="h-8 w-8 mr-2 border-darkBlue-500 border-2">
+                      <AvatarImage src="/salsicha.svg" alt={user.name} />
                       <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
                     </Avatar>
                     {user.name}
@@ -139,7 +150,10 @@ export default function Gerenciamento() {
                         <MoreHorizontal className="h-4 w-4" />
                       </Button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
+                    <DropdownMenuContent
+                      align="end"
+                      className="text-darkBlue-500 font-bold"
+                    >
                       <DropdownMenuItem>
                         <SquarePen className="mr-2 h-4 w-4" />
                         <span>Editar Usuário</span>
