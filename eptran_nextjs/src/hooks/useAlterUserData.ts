@@ -29,6 +29,7 @@ export const useAlter = () => {
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
+          credentials: 'include'
         },
         body: JSON.stringify(updates), // Enviando apenas os dados modificados
       });

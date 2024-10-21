@@ -25,6 +25,7 @@ const FormularioForgot: React.FC = () => {
     try {
       await forgotPassword(email);
       console.log("tudo funcionando");
+      onOpen()
     } catch (error: any) {
       setError(error.message || "Houve um erro ao resetar a senha do usuário");
     }
@@ -36,7 +37,6 @@ const FormularioForgot: React.FC = () => {
     <form onSubmit={handleForgot} className="grid grid-cols-1 gap-4 w-full">
       <FormField label="Email" type="email" id="email" name="email" />
       <Button
-        onPress={onOpen}
         type="submit"
         className="bg-[#003966] text-white w-full h-12 rounded-md font-bold text-base sm:text-lg col-span-full mt-6 sm:mt-10 mb-3"
       >
