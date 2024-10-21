@@ -1,3 +1,5 @@
+"use client";
+
 import { useEmail } from "@/hooks/useEmail"
 import { Button } from "@nextui-org/react"
 import { useState } from "react"
