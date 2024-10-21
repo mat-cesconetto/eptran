@@ -1,20 +1,22 @@
-'use client'
+"use client";
 
 import React from "react";
-import { useCadastro } from "@/hooks/useCadastro"
-import { useState } from "react"
+import { useCadastro } from "@/hooks/useCadastro";
+import { useState } from "react";
 import CustomCheckbox from "./checkbox";
 import Router from "next/router";
+import { maskCEP } from "../components/mask/mask";
 
 const Formulario: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
-  const { registerUser } = useCadastro()
+  const { registerUser } = useCadastro();
+  const [crudCEP, setCEP] = useState("");
 
   const handleFormulario = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-  
+
     const formData = new FormData(e.currentTarget);
-  
+
     const nome = formData.get("nome")?.toString() || "";
     const email = formData.get("email")?.toString() || "";
     const senha = formData.get("senha")?.toString() || "";
@@ -26,18 +28,38 @@ const Formulario: React.FC = () => {
     const data_nasc = formData.get("data_nasc")?.toString() || "";
     const escolaridade = formData.get("escolaridade")?.toString() || "";
     const sexo = formData.get("sexo")?.toString() || "";
-  
+
     try {
-      await registerUser(nome, email, senha, cep, rua, cidade, estado, escola, data_nasc, escolaridade, sexo);
-      console.log('Deu tudo certo');
-      Router.push('/');
+      await registerUser(
+        nome,
+        email,
+        senha,
+        cep,
+        rua,
+        cidade,
+        estado,
+        escola,
+        data_nasc,
+        escolaridade,
+        sexo
+      );
+      console.log("Deu tudo certo");
+      Router.push("/");
     } catch (error: any) {
-      setError(error.message || 'Houve um erro ao cadastrar o usuário');
+      setError(error.message || "Houve um erro ao cadastrar o usuário");
     }
   };
 
+  function handleChangeMaskCEP(event: any) {
+    const { value } = event.target;
+    setCEP(maskCEP(value));
+  }
+
   return (
-    <form onSubmit={handleFormulario} className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 w-full">
+    <form
+      onSubmit={handleFormulario}
+      className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 w-full"
+    >
       <FormField label="Nome completo" type="text" id="nome" name="nome" />
       <FormField label="Estado" type="select" id="estado" name="estado">
         <option value="" disabled>
@@ -73,7 +95,12 @@ const Formulario: React.FC = () => {
       </FormField>
       <FormField label="Email" type="email" id="email" name="email" />
       <FormField label="Senha" type="password" id="senha" name="senha" />
-      <FormField label="Data de nascimento" type="date" id="data_nasc" name="data_nasc" />
+      <FormField
+        label="Data de nascimento"
+        type="date"
+        id="data_nasc"
+        name="data_nasc"
+      />
       <FormField label="Cidade" type="text" id="cidade" name="cidade" />
       <FormField label="Bairro" type="text" id="bairro" name="bairro" />
       <FormField label="Rua" type="text" id="rua" name="rua" />
@@ -86,16 +113,28 @@ const Formulario: React.FC = () => {
         <option value="NAO_DECLARAR">Prefiro Não Dizer</option>
       </FormField>
       <FormField label="Escola" type="text" id="escola" name="escola" />
-      <FormField label="CEP" type="text" id="cep" name="cep" />
+      <FormField
+        label="CEP"
+        type="text"
+        id="cep"
+        name="cep"
+        value={crudCEP}
+        onChange={handleChangeMaskCEP}
+        maxLength={9}
+      />
+
       <FormField
         label="Escolaridade"
         type="select"
         id="escolaridade"
         name="escolaridade"
       >
-        <option value="">Selecione</option>
-        <option value="ENSINO_MEDIO">Ensino Medio</option>
-        <option value="">Selecione</option>
+        <option value="" disabled>
+          Selecione
+        </option>
+        <option value="ENSINO_FUNDAMENTAL_I">Ensino Fundamental 1</option>
+        <option value="ENSINO_FUNDAMENTAL_II">Ensino Fundamental 2</option>
+        <option value="ENSINO_MEDIO">Ensino Médio</option>
       </FormField>
       <CustomCheckbox label="Concordo com os termos de serviço" />
       <button
@@ -113,6 +152,11 @@ interface FormFieldProps {
   type: string;
   id: string;
   name: string;
+  value?: string;
+  onChange?: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => void;
+  maxLength?: number;
   children?: React.ReactNode;
 }
 
@@ -121,6 +165,9 @@ const FormField: React.FC<FormFieldProps> = ({
   type,
   id,
   name,
+  value,
+  onChange,
+  maxLength,
   children,
 }) => (
   <div className="flex flex-col">
@@ -138,6 +185,9 @@ const FormField: React.FC<FormFieldProps> = ({
         type={type}
         id={id}
         name={name}
+        value={value}
+        onChange={onChange}
+        maxLength={maxLength}
         className="border-2 border-[#003966] border-opacity-30 rounded-md p-1 text-black w-full"
       />
     )}

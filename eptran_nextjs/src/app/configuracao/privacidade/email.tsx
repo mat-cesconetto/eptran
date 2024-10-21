@@ -11,6 +11,8 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 
+
+
 const RedefinirEmail: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const { changeEmail } = useEmail();
@@ -117,4 +119,8 @@ const RedefinirEmail: React.FC = () => {
   );
 };
 
-export default RedefinirEmail;
+
+
+
+export default RedefinirEmail
+

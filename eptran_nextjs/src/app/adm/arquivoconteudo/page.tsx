@@ -1,10 +1,9 @@
+import { Button } from "@nextui-org/react"
 import Image from "next/image"
 
 export default function Suporte() {
   return (
     <div className="flex min-h-screen bg-white">
-      {/* Espaço reservado para a sidebar */}
-      <div className="w-60 flex-shrink-0"></div>
       
       <main className="flex-1 p-4 md:p-8 mt-40">
         <div className="max-w-5xl mx-auto">
@@ -54,7 +53,7 @@ export default function Suporte() {
                   className="text-darkBlue-300 block font-semibold p-2 text-sm shadow-md rounded-lg cursor-pointer border-2 border-darkBlue-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 w-full max-w-xs"
                   name="selecionar"
                 >
-                  <option className="text-darkBlue-300" value="selecionar" selected>Selecionar</option>
+                  <option className="text-darkBlue-300" value="selecionar" disabled selected>Selecionar</option>
                   <option className="text-darkBlue-500" value="ensino-medio">Ensino Médio</option>
                   <option className="text-darkBlue-500" value="ensino-fundamental">Ensino Fundamental</option>
                   <option className="text-darkBlue-500" value="series-iniciais">Séries Iniciais</option>
@@ -91,8 +90,8 @@ export default function Suporte() {
               </section>
 
               <div className="flex flex-wrap gap-4">
-                <button className="bg-darkBlue-500 text-white font-semibold py-2 px-6 rounded-md">ENVIAR</button>
-                <button className="border border-darkBlue-500 text-darkBlue-500 font-semibold py-2 px-6 rounded-md">CANCELAR</button>
+                <Button className="bg-darkBlue-500 text-white font-semibold py-2 px-6 rounded-md">ENVIAR</Button>
+                <Button className="border border-darkBlue-500 bg-white text-darkBlue-500 font-semibold py-2 px-6 rounded-md">CANCELAR</Button>
               </div>
             </div>
           </div>
