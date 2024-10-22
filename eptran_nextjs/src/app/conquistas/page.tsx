@@ -55,7 +55,7 @@ export default function Home() {
               Conquistas
             </h1>
           </div>
-          <ProgressBar percentage={50} />
+          <ProgressBar percentage={100} />
         </div>
         <div className="flex flex-col sm:flex-row justify-between items-center mt-6 sm:mt-10">
           <div className="relative w-full sm:w-auto mb-4 sm:mb-0">
