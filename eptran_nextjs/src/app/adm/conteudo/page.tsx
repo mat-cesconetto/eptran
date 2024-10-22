@@ -1,5 +1,22 @@
-import { Link } from "lucide-react";
+import { Button } from "@/components/ui/button"
+import { Copy, Link } from "lucide-react";
+import {
+    Dialog,
+    DialogClose,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+  } from "@/components/ui/dialog"
+  import { Input } from "@/components/ui/input"
+  import { Label } from "@/components/ui/label"
+  import { Textarea } from "@/components/ui/textarea";
 import Image from "next/image";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+
+
 
 export default function Conteudo() {
     return (
@@ -96,16 +113,65 @@ export default function Conteudo() {
                     </div>
 
                     <div className="w-72">
-                        <button className="font-semibold w-56 h-10 mt-1 shadow-xl flex items-center bg-darkBlue-500 text-white px-5 rounded-md">
-                            <Image
-                                className="w-7 mr-3"
-                                src="/Image/circulo.svg"
-                                alt="Adicionar"
-                                width={28}
-                                height={28}
-                            />
-                            Adicionar Material
-                        </button>
+                    <Dialog>
+      <DialogTrigger asChild>
+      <Button variant="outline" className="font-semibold w-56 h-10 mt-1 shadow-xl flex items-center bg-darkBlue-500 text-white px-5 rounded-md"> 
+      <Image className="w-7 mr-3" src="/Image/circulo.svg" alt="Adicionar" width={28} height={28} 
+      />Adicionar Material</Button> 
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[600px] w-full">
+        <DialogHeader>
+          <DialogTitle className="text-[40px] font-bold text-darkBlue-500">Adicionar Material</DialogTitle>
+        </DialogHeader>
+        <div className="grid gap-4 py-4">
+          <div className="grid">
+            <Label htmlFor="link" className="text-xs font-bold text-darkBlue-600">
+              LINK DO CONTEÚDO
+            </Label>
+            <Input id="link" className="border-darkBlue-400" placeholder="http://sia.com.br" />
+          </div>
+          <div className="grid">
+            <Label htmlFor="name" className="text-xs font-bold text-darkBlue-600">
+              NOME DO CONTEÚDO
+            </Label>
+            <Input id="name" className="border-darkBlue-400" placeholder="Nome conteúdo EPTRAN" />
+          </div>
+          <div className="grid">
+            <Label htmlFor="description" className="text-xs font-bold text-darkBlue-600">
+              DESCRIÇÃO DO CONTEÚDO
+            </Label>
+            <Textarea
+              id="description"
+              placeholder="Descrição conteúdo EPTRAN"
+              className="border-darkBlue-400"
+            />
+          </div>
+        </div>
+        <div className="flex items-end justify-between">
+          <div className="w-[45%]">
+            <Label htmlFor="classification" className="text-xs font-bold text-darkBlue-600 block">
+              CLASSIFICAÇÃO
+            </Label>
+            <Select>
+              <SelectTrigger className="border-darkBlue-400 w-full">
+                <SelectValue placeholder="Selecionar" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="high-school">Ensino Médio</SelectItem>
+                <SelectItem value="elementary">Ensino Fundamental</SelectItem>
+                <SelectItem value="early-grades">Séries Iniciais</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="w-[45%] flex justify-end space-x-2">
+            <DialogClose asChild>
+              <Button variant="outline" className="w-full border-darkBlue-400 font-bold text-xs">CANCELAR</Button>
+            </DialogClose>
+            <Button type="submit" className="w-full bg-darkBlue-500 text-white font-bold text-xs">ENVIAR</Button>
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
                     </div>
                 </div>
 
