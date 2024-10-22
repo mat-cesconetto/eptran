@@ -158,7 +158,8 @@ export default function Conteudo() {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="high-school">Ensino Médio</SelectItem>
-                <SelectItem value="elementary">Ensino Fundamental</SelectItem>
+                <SelectItem value="elementary">Ensino Fundamental 1</SelectItem>
+                <SelectItem value="elementary">Ensino Fundamental 2</SelectItem>
                 <SelectItem value="early-grades">Séries Iniciais</SelectItem>
               </SelectContent>
             </Select>
