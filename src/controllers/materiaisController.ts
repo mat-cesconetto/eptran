@@ -4,12 +4,28 @@ import { MaterialRepository } from "../repositories/materiaisRepository";
 
 const materialRepository = new MaterialRepository();
 
+interface CreateMaterialBody {
+  titulo: string;
+  descricao: string;
+  materialLink: string;
+  escolaridade: EscolaridadeEnum;
+}
+
+interface UpdateMaterialBody {
+  titulo?: string;
+  descricao?: string;
+  materialLink?: string;
+  escolaridade?: EscolaridadeEnum;
+}
+
 export const createMaterial = async (
-  req: FastifyRequest<{ Body: Materiais }>,
-  res: FastifyReply
+  request: FastifyRequest<{
+    Body: CreateMaterialBody;
+  }>,
+  reply: FastifyReply
 ) => {
   try {
-    const { escolaridade, titulo, descricao, materialLink } = req.body;
+    const { escolaridade, titulo, descricao, materialLink } = request.body;
 
     const validEscolaridade =
       EscolaridadeEnum[
@@ -17,8 +33,9 @@ export const createMaterial = async (
       ];
 
     if (!validEscolaridade) {
-      return res.status(400).send({ error: "Escolaridade inválida." });
+      return reply.status(400).send({ error: "Escolaridade inválida." });
     }
+    
     await materialRepository.create(
       validEscolaridade,
       materialLink,
@@ -26,24 +43,24 @@ export const createMaterial = async (
       descricao
     );
 
-    // Mover o arquivo para um diretório permanente em vez de excluí-lo
-
-    return res.status(201).send({
+    return reply.status(201).send({
       success: true,
-      message: "Video criado com sucesso!",
+      message: "Material criado com sucesso!",
     });
   } catch (err) {
     console.error(err);
-    return res.status(500).send({ error: "Erro ao criar vídeo." });
+    return reply.status(500).send({ error: "Erro ao criar material." });
   }
 };
 
 export const getMateriaisByEscolaridade = async (
-  req: FastifyRequest<{ Params: { escolaridade: string } }>,
-  res: FastifyReply
+  request: FastifyRequest<{
+    Params: { escolaridade: string };
+  }>,
+  reply: FastifyReply
 ) => {
   try {
-    const { escolaridade } = req.params;
+    const { escolaridade } = request.params;
 
     const validEscolaridade =
       EscolaridadeEnum[
@@ -51,37 +68,34 @@ export const getMateriaisByEscolaridade = async (
       ];
 
     if (!validEscolaridade) {
-      return res.status(400).send({ error: "Escolaridade inválida." });
+      return reply.status(400).send({ error: "Escolaridade inválida." });
     }
 
-    const videos = await materialRepository.findByEscolaridade(validEscolaridade);
+    const materiais = await materialRepository.findByEscolaridade(validEscolaridade);
 
-    return res.status(200).send({
+    return reply.status(200).send({
       success: true,
-      videos,
+      materiais,
     });
   } catch (err) {
     console.error(err);
-    return res.status(500).send({ error: "Erro ao buscar vídeos." });
+    return reply.status(500).send({ error: "Erro ao buscar materiais." });
   }
 };
 
 export const getAllMateriais = async (
-  req: FastifyRequest<{ Params: { escolaridade: string } }>,
-  res: FastifyReply
+  request: FastifyRequest,
+  reply: FastifyReply
 ) => {
   try {
-    // Extrai os parâmetros `page` e `limit` da query string, com valores padrão
-    const { page = "1", limit = "10" } = req.query as {
+    const { page = "1", limit = "10" } = request.query as {
       page?: string;
       limit?: string;
     };
 
-    // Converte `page` e `limit` para números
     const pageNumber = parseInt(page, 10);
     const limitNumber = parseInt(limit, 10);
 
-    // Chama a função que lista os usuários com paginação
     const { materiais, totalMateriais, totalPages } =
       await materialRepository.listMateriais(pageNumber, limitNumber);
 
@@ -92,73 +106,73 @@ export const getAllMateriais = async (
       escolaridade: material.escolaridade,
     }));
 
-    // Responde com os dados paginados
-    return res.send({
-        materiaisInfo,
+    return reply.send({
+      materiaisInfo,
       totalMateriais,
       totalPages,
       currentPage: pageNumber,
     });
   } catch (error) {
-    // Trata qualquer erro e responde com status 500
-    return res.status(500).send({ error: "Erro ao buscar usuários" });
+    return reply.status(500).send({ error: "Erro ao buscar materiais" });
   }
 };
 
 export const updateMaterial = async (
-  req: FastifyRequest<{ Params: { id: string }, Body: Partial<Materiais> }>,
-  res: FastifyReply
+  request: FastifyRequest<{
+    Params: { id: string };
+    Body: UpdateMaterialBody;
+  }>,
+  reply: FastifyReply
 ) => {
   try {
-    const { id } = req.params;
-    const { titulo, descricao, escolaridade, materialLink } = req.body;
+    const { id } = request.params;
+    const { titulo, descricao, escolaridade, materialLink } = request.body;
 
-    // Chama o método do repositório para atualizar o vídeo
-    const updatedVideo = await materialRepository.updateMaterial(Number(id), {
+    const updatedMaterial = await materialRepository.updateMaterial(Number(id), {
       titulo,
       descricao,
       escolaridade,
       materialLink,
     });
 
-    if (!updatedVideo) {
-      return res.status(404).send({ error: "Vídeo não encontrado" });
+    if (!updatedMaterial) {
+      return reply.status(404).send({ error: "Material não encontrado" });
     }
 
-    return res.status(200).send({
+    return reply.status(200).send({
       success: true,
-      message: "Vídeo atualizado com sucesso",
-      updatedVideo,
+      message: "Material atualizado com sucesso",
+      updatedMaterial,
     });
   } catch (err) {
     console.error(err);
-    return res.status(500).send({ error: "Erro ao atualizar vídeo" });
+    return reply.status(500).send({ error: "Erro ao atualizar material" });
   }
 };
 
 export const deleteMaterial = async (
-  req: FastifyRequest<{ Params: { id: string } }>,
-  res: FastifyReply
+  request: FastifyRequest<{
+    Params: { id: string };
+  }>,
+  reply: FastifyReply
 ) => {
   try {
-    const { id } = req.params;
+    const { id } = request.params;
 
-    // Verifica se o vídeo existe antes de tentar excluir
-    const videoExists = await materialRepository.findById(Number(id));
+    const materialExists = await materialRepository.findById(Number(id));
 
-    if (!videoExists) {
-      return res.status(404).send({ error: "Vídeo não encontrado." });
+    if (!materialExists) {
+      return reply.status(404).send({ error: "Material não encontrado." });
     }
 
-    // Realiza a exclusão do vídeo
     await materialRepository.delete(Number(id));
 
-    return res.status(200).send({
+    return reply.status(200).send({
       success: true,
-      message: "Vídeo excluído com sucesso.",
+      message: "Material excluído com sucesso.",
     });
   } catch (err) {
     console.error(err);
-    return res.status(500).send({ error: "Erro ao excluir vídeo." });
+    return reply.status(500).send({ error: "Erro ao excluir material." });
   }
 };

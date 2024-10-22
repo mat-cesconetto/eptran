@@ -14,8 +14,9 @@ import { resetRoutes } from './routes/resetRoutes';
 import fastifyCors from '@fastify/cors';
 import { locationRoutes } from './routes/locationRoutes';
 import * as dotenv from 'dotenv';
-import { videoRoutes } from './routes/videoRoutes';
-import { materiaisRoutes } from './routes/materiaisRoutes';
+import videoRoutes  from './routes/videoRoutes';
+import materiaisRoutes  from './routes/materiaisRoutes';
+import { adminMiddleware } from './middlewares/adminMiddleware';
 
 // Carregando variáveis de ambiente
 dotenv.config();
@@ -99,7 +100,7 @@ app.register(videoRoutes, {
 });
 app.register(materiaisRoutes, {
   prefix: '/materiais',
-  preHandler: authMiddleware, // Adiciona o middleware de autenticação
+  preHandler: adminMiddleware, // Adiciona o middleware de autenticação
 });
 
 // Inicia o servidor

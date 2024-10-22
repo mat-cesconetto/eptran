@@ -26,13 +26,17 @@ class AuthController {
     }
 
     // Função de registro do usuário
-    async register({ nome, email, senha, cep, rua, cidade, estado, escola, data_nasc, escolaridade, sexo }: User): Promise<User> {
+    // Função de registro do usuário
+    async register({ nome, email, senha, cep, rua, cidade, estado, escola, data_nasc, escolaridade, sexo }: User): Promise<{ message: string }> {
         try {
             const verifyIfUserExists = await this.authRepository.findByEmail(email);
+            
             if (verifyIfUserExists) {
                 throw new BadRequestError("Usuário já existe");
             }
+    
             const hashedPassword = await bcrypt.hash(senha, 10);
+    
             const result = await this.userRepository.create({
                 nome,
                 email,
@@ -46,8 +50,9 @@ class AuthController {
                 escolaridade,
                 sexo
             });
-
-            return result;
+    
+            return { message: "Usuário criado com sucesso!" };
+    
         } catch (error) {
             console.error("Erro ao registrar usuário:", error);
             if (error instanceof BadRequestError) {
@@ -56,6 +61,7 @@ class AuthController {
             throw new BadRequestError("Falha ao registrar usuário");
         }
     }
+
 
     // Função de login do usuário
     async login(email: string, senha: string, reply: FastifyReply) {

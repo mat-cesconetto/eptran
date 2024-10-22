@@ -3,9 +3,9 @@ import prismaClient from "../prisma";
 import bcrypt from "bcrypt" ;  // Importando bcrypt para fazer o hash da senha
 
 class UserRepository {
-  async create(data: RegisterUser): Promise<User> {
+  async create(data: RegisterUser): Promise<{ message: string }> {
     try {
-      const result = await prismaClient.usuario.create({
+      await prismaClient.usuario.create({
         data: {
           nome: data.nome,
           email: data.email,
@@ -21,7 +21,8 @@ class UserRepository {
         },
       });
 
-      return result as User;
+      // Retorna uma mensagem de sucesso
+      return { message: "Usuário criado com sucesso!" };
     } catch (error) {
       console.error("Erro ao criar usuário:", error);
       throw new Error("Erro ao criar usuário.");

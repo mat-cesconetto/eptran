@@ -32,7 +32,10 @@ export async function userRoutes(fastify: FastifyInstance) {
           escolaridade: user.escolaridade,
           sexo: user.sexo,
           adm: user.adm,
+          profilePicture: user.profilePicture,
         };
+        console.log(user);
+
 
         return reply.send({ message: "Informações do usuário", data }); // Retorna as informações do usuário
       } catch (error: any) {

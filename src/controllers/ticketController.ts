@@ -22,21 +22,21 @@ class TicketController {
 
     async createTicket(req: FastifyRequest, reply: FastifyReply) {
         try {
-            const userId = req.user.id; // Supondo que o userId está disponível no objeto de request
-
+            const userId = req.user.id;
+    
             let assunto: string | undefined;
             let descricao: string | undefined;
             let anexo: string | undefined;
             let anexoFilename: string | undefined;
-
+    
             const parts = req.parts();
             const uploadDir = path.join(__dirname, '../../uploads/tickets');
-
+    
             // Certifique-se de que a pasta uploads/tickets existe
             if (!fs.existsSync(uploadDir)) {
                 fs.mkdirSync(uploadDir, { recursive: true });
             }
-
+    
             for await (const part of parts) {
                 if (part.type === 'field') {
                     if (part.fieldname === 'assunto') {
@@ -46,13 +46,13 @@ class TicketController {
                     }
                 } else if (part.type === 'file' && part.fieldname === 'anexo') {
                     const file = part as MultipartFile;
-
+    
                     // Valida o tipo de arquivo antes de salvar
                     if (!this.isFileTypeAllowed(file.filename)) {
                         reply.status(400).send({ message: 'Tipo de arquivo não permitido.' });
                         return;
                     }
-
+    
                     anexoFilename = `${Date.now()}-${file.filename}`;
                     const uploadPath = path.join(uploadDir, anexoFilename);
                     const writeStream = fs.createWriteStream(uploadPath);
@@ -63,19 +63,38 @@ class TicketController {
                     anexo = uploadPath; // Caminho do arquivo salvo
                 }
             }
-
+    
             if (!assunto || !descricao) {
                 reply.status(400).send({ message: 'Assunto e descrição são obrigatórios.' });
                 return;
             }
-
+    
             const ticket = await this.ticketRepository.create({ userId, assunto, descricao, anexo });
-            reply.send({ ticket, anexoUrl: `http://localhost:3333/anexos/${anexoFilename}` }); // Retorna o link do anexo
+    
+            // Limpa o objeto `usuario` dentro do ticket antes de enviar a resposta
+            const sanitizedTicket = {
+                ...ticket,
+                usuario: {
+                    id: ticket.usuario.id,
+                    nome: ticket.usuario.nome,
+                    email: ticket.usuario.email,
+                    escolaridade: ticket.usuario.escolaridade,
+                    escola: ticket.usuario.escola,
+                    profilePicture: ticket.usuario.profilePicture
+                }
+            };
+    
+            reply.send({
+                ticket: sanitizedTicket, // Retorna o ticket com `usuario` sanitizado
+                anexoUrl: `http://localhost:3333/anexos/${anexoFilename}` // Link do anexo
+            });
         } catch (error) {
             console.error("Erro no createTicket:", error); // Log do erro
             reply.status(500).send({ message: 'Internal Server Error' });
         }
     }
+    
+    
 
     async getTicketById(req: FastifyRequest, reply: FastifyReply) {
         try {
@@ -138,37 +157,49 @@ async finalizarTicket(req: FastifyRequest, reply: FastifyReply) {
     }
 }
 
-    async addResposta(req: FastifyRequest, reply: FastifyReply) {
-        try {
-            const { ticketId } = req.params as { ticketId: string }; // Ainda vem como string da rota
-            const { resposta } = req.body as { resposta: string };
-            const userId = req.user.id;
-    
-            // Converte ticketId para número
-            const ticketIdNumber = parseInt(ticketId, 10); // Garante que o ticketId seja um número
-    
-            // Chama o repositório passando o ticketId como número
-            const respostaAdded = await this.ticketRepository.addResposta(ticketIdNumber, resposta, userId);
-    
-            // Buscar o ticket para obter as informações do usuário
-            const ticket = await this.ticketRepository.getTicketById(ticketIdNumber);
-    
-            if (ticket && ticket.usuario) {
-                // Enviar email para o usuário
-                await emailService.sendEmail(
-                    ticket.usuario.email,
-                    `Resposta ao seu ticket #${ticketId}`,
-                    resposta,
-                    `<h1>Nova resposta ao seu ticket #${ticketId}</h1><p>${resposta}</p>`
-                );
-            }
-    
-            reply.send(respostaAdded);
-        } catch (error) {
-            console.error("Erro no addResposta:", error);
-            reply.status(500).send({ message: 'Internal Server Error' });
+async addResposta(req: FastifyRequest, reply: FastifyReply) {
+    try {
+        const { ticketId } = req.params as { ticketId: string }; 
+        const { resposta } = req.body as { resposta: string };
+        const userId = req.user.id;
+
+        const ticketIdNumber = parseInt(ticketId, 10);
+
+        const respostaAdded = await this.ticketRepository.addResposta(ticketIdNumber, resposta, userId);
+
+        const ticket = await this.ticketRepository.getTicketById(ticketIdNumber);
+
+        if (ticket && ticket.usuario) {
+            // Sanitiza os dados do usuário antes de enviar qualquer resposta
+            const sanitizedTicket = {
+                ...ticket,
+                usuario: {
+                    id: ticket.usuario.id,
+                    nome: ticket.usuario.nome,
+                    email: ticket.usuario.email,
+                }
+            };
+
+            await emailService.sendEmail(
+                ticket.usuario.email,
+                `Resposta ao seu ticket #${ticketId}`,
+                resposta,
+                `<h1>Nova resposta ao seu ticket #${ticketId}</h1><p>${resposta}</p>`
+            );
+
+            reply.send({
+                ticket: sanitizedTicket,  // Retorna o ticket com `usuario` sanitizado
+                respostaAdded
+            });
+        } else {
+            reply.send({ message: 'Ticket ou usuário não encontrado' });
         }
+    } catch (error) {
+        console.error("Erro no addResposta:", error);
+        reply.status(500).send({ message: 'Internal Server Error' });
     }
+}
+
     
     
 
