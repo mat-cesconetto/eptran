@@ -1,6 +1,5 @@
 "use client";
 
-
 import { TbUserSquareRounded } from "react-icons/tb";
 import { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -29,7 +28,6 @@ import {
 } from "@/components/ui/table";
 import { MoreHorizontal, Trash, SquarePen, Search } from "lucide-react";
 
-
 const users = [
   {
     id: "23222",
@@ -37,16 +35,14 @@ const users = [
     assunto: "Dificuldade para entrar no jogo",
     prioridade: "Média",
     status: "Em aberto",
-    data: "11/12/2024"
+    data: "11/12/2024",
   },
   // Add more user objects here...
 ];
 
-
 export default function Gerenciamento() {
   const [searchTerm, setSearchTerm] = useState("");
   const [userFilter, setUserFilter] = useState("all");
-
 
   return (
     <main className=" min-h-screen p-4 md:p-8 lg:pl-72 pt-24 text-black">
@@ -81,7 +77,6 @@ export default function Gerenciamento() {
         </Select>
       </div>
 
-
       <div className="rounded-lg border shadow-md">
         <Table>
           <TableHeader>
@@ -93,7 +88,7 @@ export default function Gerenciamento() {
               <TableHead className="hidden md:table-cell">Status</TableHead>
               <TableHead className="hidden md:table-cell">
                 Data da Criação
-              </TableHead>          
+              </TableHead>
               <TableHead className="text-right"></TableHead>
             </TableRow>
           </TableHeader>
@@ -122,7 +117,7 @@ export default function Gerenciamento() {
                 <TableCell className="hidden md:table-cell">
                   {user.data}
                 </TableCell>
-               
+
                 <TableCell className="text-right">
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
@@ -151,6 +146,3 @@ export default function Gerenciamento() {
     </main>
   );
 }
-
-
-
