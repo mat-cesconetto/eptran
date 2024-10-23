@@ -5,7 +5,7 @@ import Footer from "@/app/components/ui/footer"
 export default function Component() {
   return (
     <main>
-    <div className="container mx-auto px-4 pt-10 mb-10">
+    <div className="container mx-auto px-4 pt-10 mb-40">
       {/* Título */}
       <div className="mb-6">
         <div className="text-2xl font-bold text-darkBlue-500 flex items-center">
