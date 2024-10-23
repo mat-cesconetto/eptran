@@ -29,17 +29,17 @@ export default function NavBarBafo() {
   return (
     <div className="bg-white">
       <div className="shadow-xl fixed w-full h-16 md:h-20 lg:h-28 items-center z-50 bg-darkBlue-500 flex justify-between px-4 md:px-6 lg:px-10">
-        <div className="flex-shrink-0">
-          <Link href={"../"}>
-            <Image
-              src="/logo.svg"
-              width={100}
-              height={100}
-              alt="imagem logo"
-              className="m-4 sm:m-10"
-            />
-          </Link>
-        </div>
+      <div className="flex-shrink-0">
+        <Link href={"../"}>
+          <Image
+            src="/logo.svg"
+            width={100}
+            height={100}
+            alt="imagem logo"
+            className="m-4 sm:m-10"
+          />
+        </Link>
+      </div>
         <div className="hidden md:flex justify-center flex-grow">
           <Link
             href="../img/ensino.html"
@@ -72,18 +72,12 @@ export default function NavBarBafo() {
             Administrador
           </Link>
         </div>
-
+        
         <div className="flex items-center">
-          <Link href="../">
-            <CircleUserRound
-              color="white"
-              className="w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12"
-            />
+          <Link href='../'>
+            <CircleUserRound color='white' className="w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12" />
           </Link>
-          <button
-            className="ml-4 md:hidden text-white"
-            onClick={toggleMobileMenu}
-          >
+          <button className="ml-4 md:hidden text-white" onClick={toggleMobileMenu}>
             <Menu className="w-6 h-6" />
           </button>
         </div>
@@ -104,16 +98,10 @@ export default function NavBarBafo() {
             <Link href="#" className="text-white py-4 text-lg">
               Conquistas
             </Link>
-            <Link
-              href="../img/sobrenos.html"
-              className="text-white py-4 text-lg"
-            >
+            <Link href="../img/sobrenos.html" className="text-white py-4 text-lg">
               Sobre Nós
             </Link>
-            <Link
-              href="../img/faleConosco.html"
-              className="text-white py-4 text-lg"
-            >
+            <Link href="../img/faleConosco.html" className="text-white py-4 text-lg">
               Fale Conosco
             </Link>
             <Link href="#" className="text-white py-4 text-lg">
