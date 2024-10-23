@@ -34,24 +34,24 @@ const users = [
     id: "23222",
     name: "José Silva",
     assunto: "Dificuldade para entrar no jogo",
-    prioridade: "Baixa",
-    status: "Cancelado",
+    prioridade: "Média",
+    status: "Em aberto",
     data: "11/12/2024",
   },
 ];
 
 const priorityColors = {
-  Alta: "bg-red-200 text-red-600 font-semibold",
-  Média: "bg-yellow-200 text-yellow-500 font-semibold",
-  Baixa: "bg-blue-200 text-blue-500 font-semibold",
-  Nenhuma: "bg-gray-300 text-gray-600 font-semibold",
+  'Alta': "bg-red-200  font-semibold text-red-700",
+  'Média': "bg-yellow-200 text-yellow-600 font-semibold",
+  'Baixa': "bg-blue-200 text-blue-600 font-semibold",
+  'Nenhuma': "bg-gray-300 text-gray-700 font-semibold",
 };
 
 const priorityStatus = {
-  'Em andamento': "bg-orange-200 text-orange-500 font-semibold",
-  'Em aberto': "bg-green-200 text-green-500 font-semibold",
-  'Resolvido': "bg-blue-200 text-blue-500 font-semibold",
-  'Cancelado': "bg-gray-300 text-gray-600 font-semibold",
+  'Em andamento': "bg-orange-200 text-orange-600 font-semibold",
+  'Em aberto': "bg-green-200 text-green-600 font-semibold",
+  'Resolvido': "bg-blue-200 text-blue-600 font-semibold",
+  'Cancelado': "bg-gray-300 text-gray-700 font-semibold",
 };
 
 
