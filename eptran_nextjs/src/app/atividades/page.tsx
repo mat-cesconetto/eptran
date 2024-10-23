@@ -1,11 +1,12 @@
-import Footer from "../components/ui/footer"
-import Image from "next/image"
-import { Micro_5 } from "next/font/google"
+import Footer from "../components/ui/footer";
+import Image from "next/image";
+import { Micro_5 } from "next/font/google";
+import Link from "next/link";
 
 const micro5 = Micro_5({
   weight: "400",
   subsets: ["latin"],
-})
+});
 
 export default function Home() {
   return (
@@ -28,27 +29,34 @@ export default function Home() {
         </div>
 
         <div className="w-full lg:w-1/3 h-screen relative flex flex-col items-center justify-start lg:justify-start lg:items-start order-2 lg:order-2 mt-8 lg:pt-0">
-          <Image
-            src="/placa-red.png"
-            width={402}
-            height={402}
-            alt="vermelho"
-            className="lg:absolute lg:top-1/3 mt-0 lg:mt-0 z-10 cursor-pointer transition-transform duration-300 ease-in-out hover:scale-110 hover:translate-y-[-10px] object-contain mb-4 lg:mb-0"
-          />
-          <Image
-            src="/placa-yel.png"
-            width={402}
-            height={402}
-            alt="amarelo"
-            className="lg:absolute lg:top-1/2 lg:mt-2 mt-4 z-10 cursor-pointer transition-transform duration-300 ease-in-out hover:scale-110 hover:translate-y-[-10px] object-contain mb-4 lg:mb-0"
-          />
-          <Image
-            src="/placa-green.png"
-            width={402}
-            height={402}
-            alt="verde"
-            className="lg:absolute lg:top-3/4 lg:-mt-14 mt-6 lg:mr-2 z-10 cursor-pointer transition-transform duration-300 ease-in-out hover:scale-110 hover:translate-y-[-10px] object-contain"
-          />
+          <Link href={"./atividades/jogos"}>
+            <Image
+              src="/placa-red.png"
+              width={402}
+              height={402}
+              alt="vermelho"
+              className="lg:absolute lg:top-1/3 mt-0 lg:mt-0 z-10 cursor-pointer transition-transform duration-300 ease-in-out hover:scale-110 hover:translate-y-[-10px] object-contain mb-4 lg:mb-0"
+            />
+          </Link>
+          <Link href={"./atividades/videos"}>
+            <Image
+              src="/placa-yel.png"
+              width={402}
+              height={402}
+              alt="amarelo"
+              className="lg:absolute lg:top-1/2 lg:mt-2 mt-4 z-10 cursor-pointer transition-transform duration-300 ease-in-out hover:scale-110 hover:translate-y-[-10px] object-contain mb-4 lg:mb-0"
+            />
+          </Link>
+          <Link href={"./atividades/conteudo"}>
+            <Image
+              src="/placa-green.png"
+              width={402}
+              height={402}
+              alt="verde"
+              className="lg:absolute lg:top-3/4 lg:-mt-14 mt-6 lg:mr-2 z-10 cursor-pointer transition-transform duration-300 ease-in-out hover:scale-110 hover:translate-y-[-10px] object-contain"
+            />
+          </Link>
+
           <Image
             src="/placa-ativ1.png"
             width={402}
@@ -60,5 +68,5 @@ export default function Home() {
       </div>
       <Footer />
     </div>
-  )
+  );
 }

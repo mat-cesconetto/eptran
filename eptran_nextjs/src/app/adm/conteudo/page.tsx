@@ -153,7 +153,7 @@ export default function Conteudo() {
               CLASSIFICAÇÃO
             </Label>
             <Select>
-              <SelectTrigger className="border-darkBlue-400 w-full">
+              <SelectTrigger className="border-darkBlue-400 w-full">              
                 <SelectValue placeholder="Selecionar" />
               </SelectTrigger>
               <SelectContent>
