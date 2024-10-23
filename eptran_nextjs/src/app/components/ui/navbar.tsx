@@ -60,7 +60,7 @@ const NavBar: React.FC = () => {
         </Link>
       </div>
       <div className="hidden md:flex justify-center items-center flex-grow text-white font-bold text-lg">
-        <NavLink href="/atividade">Atividades</NavLink>
+        <NavLink href="/atividades">Atividades</NavLink>
         <NavLink href="/conquistas">Conquistas</NavLink>
         <NavLink href="/sobre">Sobre nós</NavLink>
         <NavLink href="/fale-conosco">Fale Conosco</NavLink>
@@ -101,7 +101,7 @@ const NavBar: React.FC = () => {
             </button>
           </div>
           <div className="flex flex-col items-center py-4 text-white">
-            <NavLink href="/atividade" mobile>
+            <NavLink href="/atividades" mobile>
               Atividades
             </NavLink>
             <NavLink href="/conquistas" mobile>

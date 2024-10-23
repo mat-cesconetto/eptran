@@ -10,6 +10,11 @@
   }
 }
 
+.trofeu-image:hover ~ .trofeu-text {
+  transform: scale(1.1) translateY(-10px);
+}
+
+
 body { /* Usando a variável para o fundo */
   font-family: Arial, Helvetica, sans-serif;
 }
