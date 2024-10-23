@@ -1,9 +1,11 @@
 import * as React from "react"
 import { Video } from "lucide-react"
+import Footer from "@/app/components/ui/footer"
 
 export default function Component() {
   return (
-    <div className="container mx-auto px-4 pt-10">
+    <main>
+    <div className="container mx-auto px-4 pt-10 mb-10">
       {/* Título */}
       <div className="mb-6">
         <div className="text-2xl font-bold text-darkBlue-500 flex items-center">
@@ -48,6 +50,9 @@ export default function Component() {
           ))}
         </div>
       </div>
+      
     </div>
+    <Footer></Footer>
+    </main>
   )
 }
