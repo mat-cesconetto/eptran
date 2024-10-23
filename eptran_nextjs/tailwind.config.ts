@@ -25,6 +25,11 @@ const config: Config = {
   				'800': '#011624',
   				'900': '#000b12'
   			},
+
+			fonte: {
+				'verde': '#68AA40'
+			},
+
   			card: {
   				DEFAULT: 'hsl(var(--card))',
   				foreground: 'hsl(var(--card-foreground))'
