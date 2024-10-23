@@ -98,11 +98,84 @@ export default function Estatisticas() {
 
         {/* gráfico 1 */}
 
-        <div className=" w-96 h-80 rounded-2xl border-2">1</div>
+        <div className=" w-96 h-80 rounded-2xl border-2">
+
+        <div className="mt-10 ml-12">
+          <Image
+            src="/Image/users-svgrepo-com.svg"
+            width={100}
+            height={20}
+            alt="perfil"
+          />
+        </div>
+
+        <h1 className="mt-6 ml-12 font-bold text-darkBlue-500 text-5xl">113.007k</h1>
+
+        <p className="ml-12 flex font-semibold text-darkBlue-200"><p className="mr-1 text-fonte-verde font-semibold">+9,07k</p> nos últimos 7 dias</p>
+
+        <h1 className="mt-4 ml-12 font-bold text-darkBlue-500 text-xl">Acessos Totais</h1>
+
+        </div>
 
         {/* gráfico 2 */}
 
-        <div className=" w-96 h-80 rounded-2xl border-2">2</div>
+        <div className="w-96 h-80 rounded-2xl border-2">
+
+        <div className="align-middle text-center">
+
+        <h2 className="mt-10 font-bold text-darkBlue-500 text-2xl">Principais escolas</h2>
+        </div>
+        <div className="grid grid-cols-6 pl-12 pr-12 font-bold pt-10 text-xl text-darkBlue-500">
+            <div className="col-span-1">
+             <h3>1.</h3>
+            </div>
+            <div className="col-span-4">
+             <h3>Geovani</h3>
+            </div>
+            <div className="col-span-1">
+             <h3>3132</h3>
+            </div>
+            <div className="col-span-1">
+             <h3>2.</h3>
+            </div>
+            <div className="col-span-4">
+             <h3>Zulma</h3>
+            </div>
+            <div className="col-span-1">
+             <h3>139</h3>
+            </div>
+            <div className="col-span-1">
+             <h3>3.</h3>
+            </div>
+            <div className="col-span-4">
+             <h3>Meyer</h3>
+            </div>
+            <div className="col-span-1">
+             <h3>1321</h3>
+            </div>
+            <div className="col-span-1">
+             <h3>4.</h3>
+            </div>
+            <div className="col-span-4">
+             <h3>Bonja</h3>
+            </div>
+            <div className="col-span-1">
+             <h3>132</h3>
+            </div>
+            <div className="col-span-1">
+             <h3>5.</h3>
+            </div>
+            <div className="col-span-4">
+             <h3>sesi</h3>
+            </div>
+            <div className="col-span-1">
+             <h3>1321</h3>
+            </div>
+            
+
+
+        </div>
+        </div>
 
         {/* gráfico 3 */}
 
