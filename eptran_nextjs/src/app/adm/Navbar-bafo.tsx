@@ -29,11 +29,17 @@ export default function NavBarBafo() {
   return (
     <div className="bg-white">
       <div className="shadow-xl fixed w-full h-16 md:h-20 lg:h-28 items-center z-50 bg-darkBlue-500 flex justify-between px-4 md:px-6 lg:px-10">
-        <div className="flex items-center">
-          <Link href="../">
-            <Image src="/logo.svg" width={112} height={10} alt="logo-eptran" className="w-24 md:w-28 lg:w-32" />
-          </Link>
-        </div>
+      <div className="flex-shrink-0">
+        <Link href={"../"}>
+          <Image
+            src="/logo.svg"
+            width={100}
+            height={100}
+            alt="imagem logo"
+            className="m-4 sm:m-10"
+          />
+        </Link>
+      </div>
         <div className="hidden md:flex justify-center flex-grow">
           <Link
             href="../img/ensino.html"
@@ -105,7 +111,7 @@ export default function NavBarBafo() {
         </div>
       )}
 
-      {/* Sidebar Toggle Button for Mobile and Tablet */}
+      {/* Sidebar Botão para Mobile e Tablet */}
       <button
         className="fixed bottom-4 right-4 bg-darkBlue-500 text-white p-2 rounded-full lg:hidden z-50"
         onClick={toggleSidebar}

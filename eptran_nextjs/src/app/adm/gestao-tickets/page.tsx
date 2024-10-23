@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+
 import { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -48,10 +49,11 @@ const priorityColors = {
 
 const priorityStatus = {
   'Em andamento': "bg-orange-200 text-orange-600 font-semibold",
-  'Em aberto': "bg-green-200 text-green-600 font-semibold",
+  'Em aberto': "bg-green-200 text-green-700 font-semibold",
   'Resolvido': "bg-blue-200 text-blue-600 font-semibold",
   'Cancelado': "bg-gray-300 text-gray-700 font-semibold",
 };
+
 
 export default function Gerenciamento() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -179,6 +181,7 @@ export default function Gerenciamento() {
                 <TableCell className="hidden md:table-cell">
                   {user.data}
                 </TableCell>
+
                 <TableCell className="text-right">
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
