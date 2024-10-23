@@ -12,6 +12,7 @@ export interface RegisterUser {
     cep: string;
     rua: string;
     cidade: string;
+    bairro: string;
     estado: EstadoEnum;
     escola: string;
     data_nasc: Date;

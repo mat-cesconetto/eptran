@@ -27,7 +27,7 @@ class AuthController {
 
     // Função de registro do usuário
     // Função de registro do usuário
-    async register({ nome, email, senha, cep, rua, cidade, estado, escola, data_nasc, escolaridade, sexo }: User): Promise<{ message: string }> {
+    async register({ nome, email, senha, cep, rua, cidade, bairro, estado, escola, data_nasc, escolaridade, sexo }: User): Promise<{ message: string }> {
         try {
             const verifyIfUserExists = await this.authRepository.findByEmail(email);
             
@@ -42,6 +42,7 @@ class AuthController {
                 email,
                 senha: hashedPassword,
                 cep,
+                bairro,
                 rua,
                 cidade,
                 estado,

@@ -11,6 +11,7 @@ class UserRepository {
           email: data.email,
           senha: data.senha, // Usa a senha criptografada
           cep: data.cep,
+          bairro: data.bairro,
           cidade: data.cidade,
           data_nasc: new Date(data.data_nasc), // Converter a data
           escola: data.escola,
@@ -98,13 +99,14 @@ class UserRepository {
         escolaridade: true,
         sexo: true,
         profilePicture: true,
+        bairro: true,
       },
     });
   
     // Transformar o resultado para garantir compatibilidade com UserInfo
     return users.map(user => ({
       ...user,
-      profilePicture: user.profilePicture || "", // Transformar null para string vazia
+      profilePicture: user.profilePicture || "",
     }));
   }
   

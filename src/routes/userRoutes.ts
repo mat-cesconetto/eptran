@@ -26,6 +26,7 @@ export async function userRoutes(fastify: FastifyInstance) {
           cep: user.cep,
           rua: user.rua,
           cidade: user.cidade,
+          bairro: user.bairro,
           estado: user.estado,
           escola: user.escola,
           data_nasc: user.data_nasc,

@@ -17,6 +17,7 @@ import * as dotenv from 'dotenv';
 import videoRoutes  from './routes/videoRoutes';
 import materiaisRoutes  from './routes/materiaisRoutes';
 import { adminMiddleware } from './middlewares/adminMiddleware';
+import { escolaRoutes } from './routes/escolasRoutes';
 
 // Carregando variáveis de ambiente
 dotenv.config();
@@ -101,6 +102,9 @@ app.register(videoRoutes, {
 app.register(materiaisRoutes, {
   prefix: '/materiais',
   preHandler: adminMiddleware, // Adiciona o middleware de autenticação
+});
+app.register(escolaRoutes, {
+  prefix: '/escolas',
 });
 
 // Inicia o servidor
