@@ -49,7 +49,7 @@ const priorityColors = {
 
 const priorityStatus = {
   'Em andamento': "bg-orange-200 text-orange-600 font-semibold",
-  'Em aberto': "bg-green-200 text-green-600 font-semibold",
+  'Em aberto': "bg-green-200 text-green-700 font-semibold",
   'Resolvido': "bg-blue-200 text-blue-600 font-semibold",
   'Cancelado': "bg-gray-300 text-gray-700 font-semibold",
 };
