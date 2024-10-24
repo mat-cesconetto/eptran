@@ -12,4 +12,14 @@ export async function statsRoutes(fastify: FastifyInstance) {
     { preHandler: [authMiddleware, adminMiddleware] },
     accessController.getWeeklyAccessesByEducation.bind(accessController)
   );
+  fastify.get(
+    "/accesses/top-escolas",
+    { preHandler: [authMiddleware, adminMiddleware] },
+    accessController.getTopSchools.bind(accessController)
+    );
+  fastify.get(
+    "/accesses/total",
+    { preHandler: [authMiddleware, adminMiddleware] },
+    accessController.getTotalAccesses.bind(accessController)
+    );
 }

@@ -1,4 +1,5 @@
 import prismaClient from "../prisma"; // Importando o Prisma Client
+import { SexoEnum } from "@prisma/client";
 
 class AccessRepository {
 
@@ -10,6 +11,37 @@ class AccessRepository {
             }
         });
     }
+
+    async getTotalAccesses() {
+        const totalAccesses = await prismaClient.access.count();
+        return totalAccesses;
+    }
+
+    async getTopSchoolsByAccess() {
+        const topSchools = await prismaClient.usuario.findMany({
+            select: {
+                escola: true,
+                _count: {
+                    select: {
+                        Access: true
+                    }
+                }
+            },
+            orderBy: {
+                Access: {
+                    _count: 'desc'
+                }
+            },
+            take: 5
+        });
+
+        // Formatando o resultado para ficar mais legível
+        return topSchools.map(school => ({
+            escola: school.escola,
+            totalAcessos: school._count.Access
+        }));
+    }
+
 
     async getWeeklyAccessesByEducation() {
         const today = new Date();
@@ -53,6 +85,37 @@ class AccessRepository {
                 accesses: accessByEducationAndDay[escolaridade][index], // Agora escolaridade é corretamente tipada
             })),
         }));
+    }
+
+    async countAccessesByGender() {
+        try {
+            const accessesByGender = await prismaClient.usuario.groupBy({
+                by: ['sexo'],
+                _count: {
+                    Access: true
+                }
+            });
+
+            // Formata o resultado para um objeto mais legível
+            const formattedResult = accessesByGender.reduce((acc, curr) => {
+                return {
+                    ...acc,
+                    [curr.sexo]: curr._count.Access
+                };
+            }, {} as Record<SexoEnum, number>);
+
+            // Garante que todos os gêneros estejam representados, mesmo sem acessos
+            const completeResult = {
+                MASCULINO: formattedResult.MASCULINO || 0,
+                FEMININO: formattedResult.FEMININO || 0,
+                NAO_DECLARAR: formattedResult.NAO_DECLARAR || 0
+            };
+
+            return completeResult;
+        } catch (error) {
+            console.error("Erro ao contar acessos por sexo:", error);
+            throw new Error('Erro ao contar acessos por sexo');
+        }
     }
 }
 

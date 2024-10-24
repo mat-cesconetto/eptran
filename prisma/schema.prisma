@@ -14,7 +14,7 @@ model Usuario {
   senha          String           @db.VarChar(99)
   cep            String           @db.VarChar(99)
   rua            String           @db.VarChar(99)
-  bairro         String          @db.VarChar(99)
+  bairro         String?          @db.VarChar(99)
   cidade         String           @db.VarChar(99)
   estado         EstadoEnum
   escola         String           @db.VarChar(100)
