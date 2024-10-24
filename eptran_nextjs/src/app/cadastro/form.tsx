@@ -7,6 +7,7 @@ import CustomCheckbox from "./checkbox";
 import Router from "next/router";
 import { maskCEP } from "../components/mask/mask";
 
+
 const Formulario: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const { registerUser } = useCadastro();
