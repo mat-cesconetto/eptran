@@ -7,19 +7,19 @@ export default function Conteudo() {
 
             <div className="flex w-96 bg-white rounded-r-xl h-28 items-center">
                     <Image
-                        className="bg-darkBlue-500 rounded-lg h-14 w-14 ml-6"
+                        className="bg-darkBlue-500 rounded-lg h-14 w-14 ml-6 "
                         src="/Image/livros-conteudo.svg"
                         alt="Livro"
                         width={56}
                         height={56}
                     />
-                    <h1 className="text-darkBlue-500 font-bold text-5xl pl-4">
+                    <h1 className="text-darkBlue-500 font-bold text-5xl pl-4 ">
                         Conteúdo
                     </h1>
             </div>
 
         {/* div conteudos */}
-          <div className="pl-28 pt-20 flex gap-36">
+          <div className="pl-24 pt-20 flex gap-36">
 
 
             {/* div 1 */}
@@ -61,7 +61,7 @@ export default function Conteudo() {
             </div>
 
         {/* div conteudos */}
-          <div className="pl-28 pt-20 pb-10 flex gap-36">
+          <div className="pl-24 pt-20 pb-10 flex gap-36">
 
 
             {/* div 5 */}
