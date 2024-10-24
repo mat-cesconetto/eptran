@@ -7,7 +7,7 @@ import {
   ModalFooter,
   Button,
   useDisclosure,
-} from "@nextui-org/react"; // ou a lib que você está usando
+} from "@nextui-org/react";
 
 interface CustomCheckboxProps {
   label: string;
@@ -21,30 +21,31 @@ const CustomCheckbox = ({
   className,
 }: CustomCheckboxProps) => {
   const [isChecked, setIsChecked] = useState<boolean>(false);
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleCheckboxChange = (e: ChangeEvent<HTMLInputElement>) => {
     setIsChecked(e.target.checked);
     if (onChange) onChange(e);
   };
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const handleAccept = () => {
+    setIsChecked(true); 
+    onClose(); 
+  };
 
   return (
-    <label
-      className={`flex items-center gap-2 cursor-pointer ${className || ""}`}
-    >
+    <div className={`flex items-center gap-2 ${className || ""}`}>
       <div className="relative">
         <input
           type="checkbox"
           checked={isChecked}
-          onChange={handleChange}
-          className="peer sr-only"
+          onChange={handleCheckboxChange}
+          className="appearance-none w-5 h-5 border-2 border-[#003966] rounded-md cursor-pointer peer"
         />
         <div
-          className="w-5 h-5 border-2 border-[#003966] rounded-md 
-          peer-checked:bg-[#003966] peer-checked:border-[#003966] 
-          transition-all duration-200 ease-in-out
-          flex items-center justify-center"
+          className={`absolute top-0 left-0 w-5 h-5 flex items-center justify-center pointer-events-none ${
+            isChecked ? "bg-[#003966] border-[#003966]" : "border-[#003966]"
+          }`}
         >
           <svg
             className={`w-3 h-3 ${isChecked ? "text-white" : "hidden"}`}
@@ -70,6 +71,7 @@ const CustomCheckbox = ({
           termos de serviço
         </a>
       </span>
+
       <Modal
         isOpen={isOpen}
         onOpenChange={onClose}
@@ -163,7 +165,7 @@ const CustomCheckbox = ({
                 <Button color="danger" variant="light" onPress={onClose}>
                   Fechar
                 </Button>
-                <Button color="primary" onPress={onClose}>
+                <Button color="primary" onPress={handleAccept}>
                   Aceitar
                 </Button>
               </ModalFooter>
@@ -171,7 +173,7 @@ const CustomCheckbox = ({
           )}
         </ModalContent>
       </Modal>
-    </label>
+    </div>
   );
 };
 
