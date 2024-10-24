@@ -41,6 +41,7 @@ const CustomCheckbox = ({
           checked={isChecked}
           onChange={handleCheckboxChange}
           className="appearance-none w-5 h-5 border-2 border-[#003966] rounded-md cursor-pointer peer"
+          required
         />
         <div
           className={`absolute top-0 left-0 w-5 h-5 flex items-center justify-center pointer-events-none ${
