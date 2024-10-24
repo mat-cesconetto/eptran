@@ -40,6 +40,7 @@ import { MoreHorizontal, Trash, SquarePen, Search } from "lucide-react";
 export default function Conteudo() {
     return (
         <main>
+            
             <div className="flex">
                 <Image
                     className="bg-darkBlue-500 rounded-lg h-14 w-14 ml-80 mt-40"
@@ -113,7 +114,7 @@ export default function Conteudo() {
                     <div className="">
                     <Dialog>
       <DialogTrigger asChild>
-      <Button variant="default" className="font-semibold w-56 h-10 mt-1 shadow-xl flex items-center bg-darkBlue-500 text-white px-5 rounded-md text-lg"> 
+      <Button variant="default" className=" font-semibold w-56 h-10 mt-1 shadow-xl flex items-center bg-darkBlue-500 text-white px-5 rounded-md text-lg"> 
       <Image className="w-7 mr-1" src="/Image/circulo.svg" alt="Adicionar" width={28} height={28} 
       />Adicionar Material</Button> 
       </DialogTrigger>
@@ -163,7 +164,7 @@ export default function Conteudo() {
           </div>
           <div className="w-[45%] flex justify-end space-x-2">
             <DialogClose asChild>
-              <Button variant="outline" className="w-full border-darkBlue-400 font-bold text-xs">CANCELAR</Button>
+              <Button variant="outline" className="w-full border-darkBlue-400 font-bold text-xs hover:bg-slate-200">CANCELAR</Button>
             </DialogClose>
             <Button type="submit" className="w-full bg-darkBlue-500 text-white font-bold text-xs">ENVIAR</Button>
           </div>
@@ -184,6 +185,8 @@ export default function Conteudo() {
                                 width={192}
                                 height={192}
                             />
+   
+                            
                             <div className="flex justify-between">
                                 <p className="text-[8px] text-white text-center ml-3 mt-2 border rounded-md w-20 h-6 pt-1">
                                     Conteúdo Eptran
@@ -204,27 +207,32 @@ export default function Conteudo() {
                                 </p>
                             </div>
                             <div className="flex">
-                            <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button variant="default" className="h-8 w-8 p-0 ml-2 mt-1 bg-transparent">
-                        <span className="sr-only">Abrir menu</span>
-                        <MoreHorizontal className="h-4 w-4" />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent
-                      align="start"
-                      className="text-darkBlue-500 font-bold"
-                    >
-                      <DropdownMenuItem>
-                        <SquarePen className="mr-2 h-4 w-4" />
-                        <span>Editar Usuário</span>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem>
-                        <Trash className="mr-2 h-4 w-4" />
-                        <span>Excluir Usuário</span>
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+                                <DropdownMenu>
+                                    <DropdownMenuTrigger asChild>
+                                        <Button variant="default" className="h-8 w-8 p-0 ml-2 mt-1 bg-transparent border-0">
+                                         <span className="sr-only">Abrir menu</span>
+                                        <MoreHorizontal className="h-4 w-4" />
+                                        </Button>
+                                    </DropdownMenuTrigger>
+                                        <DropdownMenuContent
+                                            align="start"
+                                            className="text-darkBlue-500 font-bold">
+                                            <DropdownMenuItem>
+                                                <SquarePen className="mr-2 h-4 w-4" />
+                                                
+                                                <Button variant="ghost" className="p-0">Editar Usuário</Button>
+      
+                                                    
+                                            </DropdownMenuItem>
+                                            <DropdownMenuItem>
+                                                <Trash className="mr-2 h-4 w-4" />
+                                                
+                                            <Button variant="ghost" className="p-0">Excluir Usuário</Button>
+      
+                                            </DropdownMenuItem>
+                                           
+                                        </DropdownMenuContent>
+                                </DropdownMenu>
                             </div>
                         </div>
 
