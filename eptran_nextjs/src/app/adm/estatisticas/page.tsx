@@ -10,12 +10,37 @@ import {
 } from "@/components/ui/select";
 import React from "react";
 import { useState } from "react";
+
 const escolas = [
-  { nome: "Escola Sesi", value: 113 },
-  { nome: "E.E.B. GAG", value: 215 },
-  { nome: "Colégio Santo Antônio", value: 15 },
-  { nome: "E.E.M. Celso Ramos", value: 12 },
-  { nome: "Bom Jesus", value: 36 },
+  { nomeEscola: "Escola Sesi", valorEscola: 113 },
+  { nomeEscola: "E.E.B. GAG", valorEscola: 215 },
+  { nomeEscola: "Colégio Santo Antônio", valorEscola: 15 },
+  { nomeEscola: "E.E.M. Celso Ramos", valorEscola: 12 },
+  { nomeEscola: "Bom Jesus", valorEscola: 36 },
+];
+
+const estados = [
+  { nomeEstado: "Santa Catarina", valorEstado: 113 },
+  { nomeEstado: "Paraná", valorEstado: 215 },
+  { nomeEstado: "Rio Grande do Sul", valorEstado: 15 },
+  { nomeEstado: "Bahia", valorEstado: 12 },
+  { nomeEstado: "São Paulo", valorEstado: 36 },
+];
+
+const cidades = [
+  { nomeCidade: "Joinville", valorCidade: 113 },
+  { nomeCidade: "Blumenau", valorCidade: 215 },
+  { nomeCidade: "Barra do Sul", valorCidade: 15 },
+  { nomeCidade: "Criciúma", valorCidade: 12 },
+  { nomeCidade: "Anta Gorda", valorCidade: 36 },
+];
+
+const bairros = [
+  { nomeBairro: "Centro", valorBairro: 113 },
+  { nomeBairro: "Bucarein", valorBairro: 215 },
+  { nomeBairro: "Santo Antônio", valorBairro: 15 },
+  { nomeBairro: "América", valorBairro: 12 },
+  { nomeBairro: "Vila Nova", valorBairro: 36 },
 ];
 
 export default function Estatisticas() {
@@ -99,11 +124,11 @@ export default function Estatisticas() {
                         {index + 1}.
                       </span>
                       <span className="text-lg font-bold text-[#0A305A]">
-                        {escolas.nome}
+                        {escolas.nomeEscola}
                       </span>
                     </span>
                     <span className="text-lg font-bold text-[#0A305A]">
-                      {escolas.value}
+                      {escolas.valorEscola}
                     </span>
                   </li>
                 ))}
@@ -115,7 +140,6 @@ export default function Estatisticas() {
         {/* gráfico 3 */}
 
         <div className=" w-96 h-80 rounded-2xl border-2">
-        
         </div>
       </div>
       {/* div principal 2 */}
@@ -147,15 +171,107 @@ export default function Estatisticas() {
       <div className="w-full h-full mt-10 flex justify-between">
         {/* gráfico 8 */}
 
-        <div className=" w-96 h-80 rounded-2xl border-2">8</div>
+        <div className="w-96 h-80 rounded-2xl border-2">
+          <div className="align-middle text-center">
+            <h2 className="mt-10 font-bold text-darkBlue-500 text-2xl">
+              Acessos por estado
+            </h2>
+
+            <div className="max-w-md mx-auto p-8 py-6">
+              <ol className="list-none space-y-3">
+                {estados.map((estados, index) => (
+                  <li
+                    key={index}
+                    className="flex items-center justify-between rounded-lg"
+                  >
+                    <span className="flex items-center">
+                      <span className="text-lg font-bold text-[#0A305A] mr-4">
+                        {index + 1}.
+                      </span>
+                      <span className="text-lg font-bold text-[#0A305A]">
+                        {estados.nomeEstado}
+                      </span>
+                    </span>
+                    <span className="text-lg font-bold text-[#0A305A]">
+                      {estados.valorEstado}
+                    </span>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          </div>
+        </div>
+    
+        
 
         {/* gráfico 9 */}
 
-        <div className=" w-96 h-80 rounded-2xl border-2">9</div>
+        <div className="w-96 h-80 rounded-2xl border-2">
+          <div className="align-middle text-center">
+            <h2 className="mt-10 font-bold text-darkBlue-500 text-2xl">
+            Acessos por cidade
+            </h2>
+
+            <div className="max-w-md mx-auto p-8 py-6">
+              <ol className="list-none space-y-3">
+                {cidades.map((cidades, index) => (
+                  <li
+                    key={index}
+                    className="flex items-center justify-between rounded-lg"
+                  >
+                    <span className="flex items-center">
+                      <span className="text-lg font-bold text-[#0A305A] mr-4">
+                        {index + 1}.
+                      </span>
+                      <span className="text-lg font-bold text-[#0A305A]">
+                        {cidades.nomeCidade}
+                      </span>
+                    </span>
+                    <span className="text-lg font-bold text-[#0A305A]">
+                      {cidades.valorCidade}
+                    </span>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          </div>
+        </div>
+
+
 
         {/* gráfico 10 */}
 
-        <div className=" w-96 h-80 rounded-2xl border-2">10</div>
+        <div className="w-96 h-80 rounded-2xl border-2">
+          <div className="align-middle text-center">
+            <h2 className="mt-10 font-bold text-darkBlue-500 text-2xl">
+            Acessos por bairro
+            </h2>
+
+            <div className="max-w-md mx-auto p-8 py-6">
+              <ol className="list-none space-y-3">
+                {bairros.map((bairros, index) => (
+                  <li
+                    key={index}
+                    className="flex items-center justify-between rounded-lg"
+                  >
+                    <span className="flex items-center">
+                      <span className="text-lg font-bold text-[#0A305A] mr-4">
+                        {index + 1}.
+                      </span>
+                      <span className="text-lg font-bold text-[#0A305A]">
+                        {bairros.nomeBairro}
+                      </span>
+                    </span>
+                    <span className="text-lg font-bold text-[#0A305A]">
+                      {bairros.valorBairro}
+                    </span>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          </div>
+        </div>
+
       </div>
     </main>
   );
