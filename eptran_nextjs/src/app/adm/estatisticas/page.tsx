@@ -95,8 +95,8 @@ export default function Estatisticas() {
           </h1>
 
           <p className="ml-12 flex font-semibold text-darkBlue-200">
-            <p className="mr-1 text-fonte-verde font-semibold">+9,07k</p> nos
-            últimos 7 dias
+            <span className="mr-1 text-fonte-verde font-semibold">+9,07k</span>{" "}
+            nos últimos 7 dias
           </p>
 
           <h1 className="mt-4 ml-12 font-bold text-darkBlue-500 text-xl">
@@ -139,8 +139,7 @@ export default function Estatisticas() {
 
         {/* gráfico 3 */}
 
-        <div className=" w-96 h-80 rounded-2xl border-2">
-        </div>
+        <div className=" w-96 h-80 rounded-2xl border-2"></div>
       </div>
       {/* div principal 2 */}
 
@@ -201,15 +200,13 @@ export default function Estatisticas() {
             </div>
           </div>
         </div>
-    
-        
 
         {/* gráfico 9 */}
 
         <div className="w-96 h-80 rounded-2xl border-2">
           <div className="align-middle text-center">
             <h2 className="mt-10 font-bold text-darkBlue-500 text-2xl">
-            Acessos por cidade
+              Acessos por cidade
             </h2>
 
             <div className="max-w-md mx-auto p-8 py-6">
@@ -237,14 +234,12 @@ export default function Estatisticas() {
           </div>
         </div>
 
-
-
         {/* gráfico 10 */}
 
         <div className="w-96 h-80 rounded-2xl border-2">
           <div className="align-middle text-center">
             <h2 className="mt-10 font-bold text-darkBlue-500 text-2xl">
-            Acessos por bairro
+              Acessos por bairro
             </h2>
 
             <div className="max-w-md mx-auto p-8 py-6">
@@ -271,7 +266,6 @@ export default function Estatisticas() {
             </div>
           </div>
         </div>
-
       </div>
     </main>
   );

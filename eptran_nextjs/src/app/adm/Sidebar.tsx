@@ -2,11 +2,11 @@
 
 import Link from "next/link";
 import React, { useState } from "react";
-import { FaUser, FaBars, FaTimes } from "react-icons/fa";
-import { RiLockPasswordFill } from "react-icons/ri";
-import { MdKeyboardAlt } from "react-icons/md";
+import { FaUser, FaBars, FaTimes, FaBook } from "react-icons/fa";
+import { BsCameraReelsFill, BsFillInfoSquareFill } from "react-icons/bs";
+import { IoTicketSharp } from "react-icons/io5";
 
-const SideBar: React.FC = () => {
+const SideBarBafo: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -19,26 +19,32 @@ const SideBar: React.FC = () => {
       </button>
       <div
         className={`
-            fixed top-0 left-0 min-h-screen bg-[#003966] transition-all duration-300 ease-in-out z-10
-            ${isOpen ? "w-[250px]" : "w-0 lg:w-[250px]"}
-            lg:relative overflow-y-auto
+    fixed top-0 left-0 min-h-screen bg-[#003966] transition-all duration-300 ease-in-out z-10
+    ${isOpen ? "w-[250px]" : "w-0 lg:w-[250px]"}
+    lg:relative overflow-y-auto
       `}
       >
         <div className="flex flex-col px-6 py-10 space-y-3 justify-center text-center items-center">
           <h1 className="w-full font-bold text-white text-2xl">
-            Configurações
+            Administrador
           </h1>
           <hr className="w-full" />
         </div>
         <div className="flex-col flex space-y-6">
-          <SideLink href="./dados" icon={<FaUser />}>
-            Dados
+          <SideLink href="./gestao-conteudo" icon={<FaBook />}>
+            Conteudo
           </SideLink>
-          <SideLink href="./privacidade" icon={<RiLockPasswordFill />}>
-            Privacidade
+          <SideLink href="./gestao-videos" icon={<BsCameraReelsFill />}>
+            Videos
           </SideLink>
-          <SideLink href="./acessibilidade" icon={<MdKeyboardAlt />}>
-            Acessibilidade
+          <SideLink href="./estatisticas" icon={<BsFillInfoSquareFill />}>
+            Estatísticas
+          </SideLink>
+          <SideLink href="./gestao-usuario" icon={<FaUser />}>
+            Usuários
+          </SideLink>
+          <SideLink href="./gestao-tickets" icon={<IoTicketSharp />}>
+            Suporte
           </SideLink>
         </div>
       </div>
@@ -63,4 +69,4 @@ const SideLink: React.FC<SideLinkProps> = ({ href, children, icon }) => (
   </Link>
 );
 
-export default SideBar;
+export default SideBarBafo;
