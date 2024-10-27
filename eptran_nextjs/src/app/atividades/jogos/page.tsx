@@ -13,17 +13,17 @@ export default function Home() {
   return (
     <div className="min-h-screen flex flex-col">
       <div className="w-full flex-grow bg-left lg:bg-bottom bg-[url('/fundo-jogos.png')] bg-cover lg:flex-row justify-between h-auto lg:h-screen">
-        <div className="bg-white w-full lg:w-1/5 h-20 mt-4 lg:mt-10 flex items-center">
-          <div className="bg-[#023859] w-12 lg:w-1/5 h-12 lg:h-3/4 mt-0 lg:mt-2 ml-4 lg:ml-10 rounded-xl flex items-center justify-center">
+        <div className="bg-white w-full lg:w-[18%] rounded-r-xl h-24 mt-4 lg:mt-10 flex items-center">
+          <div className="bg-[#023859] w-12 lg:w-[22%] h-12 lg:h-3/4 mt-0  ml-4 lg:ml-10 rounded-xl flex items-center justify-center">
             <Image
               src="/control.svg"
-              width={55}
+              width={100}
               height={70}
               alt="verde"
               className="m-auto w-8 h-8 lg:w-auto lg:h-auto"
             />
           </div>
-          <h1 className="ml-4 lg:ml-10 mt-0 lg:mt-5 text-[#023859] font-bold text-2xl lg:text-4xl">
+          <h1 className="ml-4 lg:ml-10 mt-0  text-[#023859] font-bold text-2xl lg:text-[43px]">
             Jogos
           </h1>
         </div>
