@@ -4,7 +4,7 @@ import React from "react";
 
 export default function Suporte() {
   return (
-    <main className="w-full min-h-screen p-4 lg:pl-72 lg:pt-36">
+    <main className="w-full min-h-screen p-4">
       <h1 className="text-darkBlue-500 font-bold text-2xl md:text-3xl mb-4 lg:pl-10 lg:pt-10">
         Ticket de USUARIO
       </h1>
@@ -16,41 +16,27 @@ export default function Suporte() {
           <hr className="bg-darkBlue-400 w-auto my-2 border-1 border-darkBlue-500 rounded-full lg:mr-20" />
           <br />
           <h3 className="font-semibold text-darkBlue-500 text-md">Nome</h3>
-          <input
-            type="text"
-            value="Henrique Ataide"
-            className="text-gray-400 h-10 w-full mt-2 px-2 bg-transparent"
-            readOnly
-          />
+          <p className="text-gray-400 h-10 w-full mt-2 px-2 bg-transparent">
+            Henrique Ataide
+          </p>
           <h3 className="pt-6 font-semibold text-darkBlue-500 text-md">
             Email
           </h3>
-          <input
-            type="email"
-            value="Henrique45Ataide@gmail.com"
-            className="text-gray-400 h-10 w-full mt-2 px-2 bg-transparent"
-            readOnly
-          />
+          <p className="text-gray-400 h-10 w-full mt-2 px-2 bg-transparent">
+            Henrique45Ataide@gmail.com
+          </p>
           <h3 className="font-semibold text-darkBlue-500 text-md pt-6">
             ASSUNTO
           </h3>
-          <input
-            type="text"
-            className="text-gray-400 h-10 w-full mt-2 px-2 bg-transparent"
-            value="Estou com problema ao entrar no jogo"
-            id="Assunto"
-            disabled
-          />
+          <p className="text-gray-400 h-10 w-full mt-2 px-2 bg-transparent">
+            Estou com problema ao entrar no jogo
+          </p>
           <h3 className="pt-6 font-semibold text-darkBlue-500 text-md">
             DESCRIÇÃO
           </h3>
-          <input
-            className="text-gray-400 h-10 w-full mt-2 px-2 bg-transparent"
-            name="descricao"
-            id="Descricao"
-            value="Não consigo acessar o jogo por algum motivo"
-            disabled
-          />
+          <p className="text-gray-400 h-10 w-full mt-2 px-2 bg-transparent">
+            Não consigo acessar o jogo por algum motivo
+          </p>
           <h3 className="mt-5 font-semibold text-darkBlue-500 text-md">
             ANEXOS
           </h3>
@@ -69,14 +55,7 @@ export default function Suporte() {
               <h3 className="font-semibold text-darkBlue-500 text-md">
                 STATUS
               </h3>
-              <input
-                type="text"
-                name="status"
-                id="status"
-                value="Em Andamento"
-                className="mt-2 w-full px-2 text-black font-semibold bg-transparent"
-                readOnly
-              />
+              <p className="mt-2 w-full px-2 font-semibold">Em Andamento</p>
             </div>
             <div>
               <h3 className="font-semibold text-darkBlue-500 text-md">

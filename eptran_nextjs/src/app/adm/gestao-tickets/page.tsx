@@ -81,8 +81,8 @@ export default function Gerenciamento() {
   );
 
   return (
-    <main className="min-h-screen p-4 md:p-8 lg:pl-72 pt-24 text-black">
-      <div className="mt-24 py-5 flex gap-5 ">
+    <main className="min-h-screen p-4 md:p-8 pt-24 text-black">
+      <div className="pb-5 flex gap-5 ">
         <div>
           <Image
             src="/ticket-8-svgrepo-com.svg"
@@ -193,7 +193,7 @@ export default function Gerenciamento() {
                     <DropdownMenuContent align="end">
                       <DropdownMenuItem>
                         <SquarePen className="mr-2 h-4 w-4" />
-                        <Button variant= "ghost" className="p-0">Editar Ticket </Button>
+                        <Button variant= "ghost" className="p-0">Abrir Ticket </Button>
                       </DropdownMenuItem>
                       <DropdownMenuItem>
                         <Trash className="mr-2 h-4 w-4" />

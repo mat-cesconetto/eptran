@@ -5,8 +5,8 @@ export default function Suporte() {
   return (
     <div className="flex min-h-screen bg-white">
       
-      <main className="flex-1 p-4 md:p-8 mt-40">
-        <div className="max-w-5xl mx-auto">
+      <main className="flex-1 p-4 md:p-8">
+        <div className="max-w-5xl ">
           <h1 className="text-darkBlue-500 font-bold text-2xl md:text-3xl mb-4">ARQUIVO</h1>
           <hr className="bg-darkBlue-500 w-full border-1 border-darkBlue-500 rounded-full mb-8" />
 

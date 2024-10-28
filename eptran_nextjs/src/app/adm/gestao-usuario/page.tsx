@@ -47,8 +47,8 @@ export default function Gerenciamento() {
   const [userFilter, setUserFilter] = useState("all");
 
   return (
-    <main className=" min-h-screen p-4 md:p-8 lg:pl-72 pt-24 text-black">
-      <div className="mt-24 py-5 flex gap-5 ">
+    <main className=" min-h-screen p-4 md:p-8 pt-24 text-black">
+      <div className="pb-5 flex gap-5 ">
         <div>
           <Image
             src="/user-svgrepo-com.svg"
