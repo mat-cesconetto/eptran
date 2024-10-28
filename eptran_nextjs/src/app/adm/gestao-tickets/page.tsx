@@ -193,7 +193,7 @@ export default function Gerenciamento() {
                     <DropdownMenuContent align="end">
                       <DropdownMenuItem>
                         <SquarePen className="mr-2 h-4 w-4" />
-                        <Button variant= "ghost" className="p-0">Editar Ticket </Button>
+                        <Button variant= "ghost" className="p-0">Abrir Ticket </Button>
                       </DropdownMenuItem>
                       <DropdownMenuItem>
                         <Trash className="mr-2 h-4 w-4" />

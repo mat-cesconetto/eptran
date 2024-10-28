@@ -69,14 +69,7 @@ export default function Suporte() {
               <h3 className="font-semibold text-darkBlue-500 text-md">
                 STATUS
               </h3>
-              <input
-                type="text"
-                name="status"
-                id="status"
-                value="Em Andamento"
-                className="mt-2 w-full px-2 text-black font-semibold bg-transparent"
-                readOnly
-              />
+              <p className="mt-2 w-full px-2 font-semibold">Em Andamento</p>
             </div>
             <div>
               <h3 className="font-semibold text-darkBlue-500 text-md">
