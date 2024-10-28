@@ -6,7 +6,7 @@ import School from "../../components/ui/school";
 
 export default function DadosUsuarios() {
   return (
-    <main className="w-full min-h-screen bg-white p-4 pt-20 lg:mr-80">
+    <main className="w-full min-h-screen bg-white p-4 lg:mr-80">
       <h1 className="text-darkBlue-500 pl-8 font-bold text-2xl md:text-3xl mb-4">
         Dados Pessoais de USUÁRIO
       </h1>
@@ -25,7 +25,7 @@ export default function DadosUsuarios() {
           <hr className="bg-darkBlue-400 w-auto my-4 border-1 border-darkBlue-500 rounded-full" />
           <Photo />
 
-          <h2 className="text-xl font-semibold mb-4">ESCOLARIDADE</h2>
+          <h2 className="text-xl font-semibold mb-4 mt-4">ESCOLARIDADE</h2>
           <hr className="bg-darkBlue-400 w-auto my-4 border-1 border-darkBlue-500 rounded-full" />
           <School />
           <div className="mt-10 lg:mt-14 flex flex-col sm:flex-row gap-4">
