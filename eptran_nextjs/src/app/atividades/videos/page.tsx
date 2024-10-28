@@ -21,7 +21,7 @@ export default function Component() {
         {/* Vídeo principal */}
         <div className="w-full md:w-2/3">
           <div className="bg-gray-900 aspect-video rounded-[20px] mb-4">
-          <iframe src="https://www.youtube.com/watch?v=6ixvM3Cez_E" title="video" className="w-full h-full"></iframe>
+          <iframe src="https://www.youtube.com/embed/yhsfkAWedbg?si=f70vXVzU48986YjR" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen className="w-full h-full rounded-[20px]"></iframe>
           </div>
           <div className="text-xl font-semibold text-blue-900">
             Eptran: Como ter uma vida segura
