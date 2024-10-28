@@ -3,11 +3,11 @@ import type { Config } from "tailwindcss";
 
 const config: Config = {
     darkMode: ["class"],
-    content: [
+  content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./node_modules/@nextui-org/theme/dist/components/(slider|popover).js"
+    "./node_modules/@nextui-org/theme/dist/components/(modal|slider|popover).js"
   ],
   theme: {
   	extend: {
@@ -25,6 +25,11 @@ const config: Config = {
   				'800': '#011624',
   				'900': '#000b12'
   			},
+
+			fonte: {
+				'verde': '#68AA40'
+			},
+
   			card: {
   				DEFAULT: 'hsl(var(--card))',
   				foreground: 'hsl(var(--card-foreground))'

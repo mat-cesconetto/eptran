@@ -1,10 +1,14 @@
 "use client"
-
-import * as React from "react"
-import * as DialogPrimitive from "@radix-ui/react-dialog"
-import { Cross2Icon } from "@radix-ui/react-icons"
-
-import { cn } from "@/lib/utils"
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import * as React from "react";
+import * as DialogPrimitive from "@radix-ui/react-dialog";
+import { Cross2Icon } from "@radix-ui/react-icons";
+import { cn } from "@/lib/utils";
+import Image from "next/image";
+import { Button } from "@/components/ui/button"; // Certifique-se de que o Button está sendo importado corretamente
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
 
 const Dialog = DialogPrimitive.Root
 

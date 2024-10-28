@@ -8,63 +8,46 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import React from "react";
 import { useState } from "react";
 
+const escolas = [
+  { nomeEscola: "Escola Sesi", valorEscola: 113 },
+  { nomeEscola: "E.E.B. GAG", valorEscola: 215 },
+  { nomeEscola: "Colégio Santo Antônio", valorEscola: 15 },
+  { nomeEscola: "E.E.M. Celso Ramos", valorEscola: 12 },
+  { nomeEscola: "Bom Jesus", valorEscola: 36 },
+];
 
-const priorityColors = {
-    'Alta': "bg-red-200  font-semibold text-red-700",
-    'Média': "bg-yellow-200 text-yellow-600 font-semibold",
-    'Baixa': "bg-blue-200 text-blue-600 font-semibold",
-    'Nenhuma': "bg-gray-300 text-gray-700 font-semibold",
-  };
-  
-  const priorityStatus = {
-    'Em andamento': "bg-orange-200 text-orange-600 font-semibold",
-    'Em aberto': "bg-green-200 text-green-600 font-semibold",
-    'Resolvido': "bg-blue-200 text-blue-600 font-semibold",
-    'Cancelado': "bg-gray-300 text-gray-700 font-semibold",
-  };
+const estados = [
+  { nomeEstado: "Santa Catarina", valorEstado: 113 },
+  { nomeEstado: "Paraná", valorEstado: 215 },
+  { nomeEstado: "Rio Grande do Sul", valorEstado: 15 },
+  { nomeEstado: "Bahia", valorEstado: 12 },
+  { nomeEstado: "São Paulo", valorEstado: 36 },
+];
 
-  const users = [
-    {
-      id: "23222",
-      name: "José Silva",
-      assunto: "Dificuldade para entrar no jogo",
-      prioridade: "Média",
-      status: "Em aberto",
-      data: "11/12/2024",
-    },
-  ];
+const cidades = [
+  { nomeCidade: "Joinville", valorCidade: 113 },
+  { nomeCidade: "Blumenau", valorCidade: 215 },
+  { nomeCidade: "Barra do Sul", valorCidade: 15 },
+  { nomeCidade: "Criciúma", valorCidade: 12 },
+  { nomeCidade: "Anta Gorda", valorCidade: 36 },
+];
+
+const bairros = [
+  { nomeBairro: "Centro", valorBairro: 113 },
+  { nomeBairro: "Bucarein", valorBairro: 215 },
+  { nomeBairro: "Santo Antônio", valorBairro: 15 },
+  { nomeBairro: "América", valorBairro: 12 },
+  { nomeBairro: "Vila Nova", valorBairro: 36 },
+];
 
 export default function Estatisticas() {
+  const [userFilter, setUserFilter] = useState("all");
 
-        const [searchTerm, setSearchTerm] = useState("");
-        const [userFilter, setUserFilter] = useState("all");
-      
-        const getPriorityColor = (priority: string) => {
-          return (
-            priorityColors[priority as keyof typeof priorityColors] ||
-            priorityColors["Nenhuma"]
-          );
-        };
-      
-        const getPriorityStatus = (priority: string) => {
-          return (
-            priorityStatus[priority as keyof typeof priorityStatus] ||
-            priorityStatus["Cancelado"]
-          );
-        };
-      
-        const filteredUsers = users.filter(
-          (user) =>
-            user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            user.assunto.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            user.id.includes(searchTerm)
-        );
   return (
-
     <main className="min-h-screen p-4 md:p-8 lg:pl-72 pt-24 text-black">
-      
       <div className="mt-24 py-5 flex gap-5 ">
         <div>
           <Image
@@ -79,7 +62,7 @@ export default function Estatisticas() {
         </div>
       </div>
 
-    <div className="w-full items-end justify-end flex">
+      <div className="w-full items-end justify-end flex">
         <Select value={userFilter} onValueChange={setUserFilter}>
           <SelectTrigger className=" text-darkBlue-500 font-bold w-full md:w-auto">
             <SelectValue placeholder="Selecione" />
@@ -92,28 +75,75 @@ export default function Estatisticas() {
         </Select>
       </div>
 
-    {/* div principal 1 */}
+      {/* div principal 1 */}
 
-    <div className="w-full h-full mt-10 flex justify-between">
-
+      <div className="w-full h-full mt-10 flex justify-between">
         {/* gráfico 1 */}
 
-        <div className=" w-96 h-80 rounded-2xl border-2">1</div>
+        <div className=" w-96 h-80 rounded-2xl border-2">
+          <div className="mt-10 ml-12">
+            <Image
+              src="/Image/users-svgrepo-com.svg"
+              width={100}
+              height={20}
+              alt="perfil"
+            />
+          </div>
+
+          <h1 className="mt-6 ml-12 font-bold text-darkBlue-500 text-5xl">
+            113.007k
+          </h1>
+
+          <p className="ml-12 flex font-semibold text-darkBlue-200">
+            <span className="mr-1 text-fonte-verde font-semibold">+9,07k</span>{" "}
+            nos últimos 7 dias
+          </p>
+
+          <h1 className="mt-4 ml-12 font-bold text-darkBlue-500 text-xl">
+            Acessos Totais
+          </h1>
+        </div>
 
         {/* gráfico 2 */}
 
-        <div className=" w-96 h-80 rounded-2xl border-2">2</div>
+        <div className="w-96 h-80 rounded-2xl border-2">
+          <div className="align-middle text-center">
+            <h2 className="mt-10 font-bold text-darkBlue-500 text-2xl">
+              Principais escolas
+            </h2>
+
+            <div className="max-w-md mx-auto p-8 py-6">
+              <ol className="list-none space-y-3">
+                {escolas.map((escolas, index) => (
+                  <li
+                    key={index}
+                    className="flex items-center justify-between rounded-lg"
+                  >
+                    <span className="flex items-center">
+                      <span className="text-lg font-bold text-[#0A305A] mr-4">
+                        {index + 1}.
+                      </span>
+                      <span className="text-lg font-bold text-[#0A305A]">
+                        {escolas.nomeEscola}
+                      </span>
+                    </span>
+                    <span className="text-lg font-bold text-[#0A305A]">
+                      {escolas.valorEscola}
+                    </span>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          </div>
+        </div>
 
         {/* gráfico 3 */}
 
-        <div className=" w-96 h-80 rounded-2xl border-2">3</div>
+        <div className=" w-96 h-80 rounded-2xl border-2"></div>
+      </div>
+      {/* div principal 2 */}
 
-    </div>
-
-    {/* div principal 2 */}
-
-    <div className="w-full h-full mt-10 flex justify-between">
-
+      <div className="w-full h-full mt-10 flex justify-between">
         {/* gráfico 4 */}
 
         <div className="w-[62.5%] h-96 border-2 rounded-2xl">4</div>
@@ -121,13 +151,11 @@ export default function Estatisticas() {
         {/* gráfico 5 */}
 
         <div className="w-96 h-96 border-2 rounded-2xl">5</div>
+      </div>
 
-    </div>
+      {/* div principal 3 */}
 
-    {/* div principal 3 */}
-
-    <div className="w-full h-full mt-10 flex justify-between">
-
+      <div className="w-full h-full mt-10 flex justify-between">
         {/* gráfico 6 */}
 
         <div className="w-[48%] h-96 border-2 rounded-2xl">6</div>
@@ -135,27 +163,110 @@ export default function Estatisticas() {
         {/* gráfico 7 */}
 
         <div className="w-[48%] h-96 border-2 rounded-2xl">7</div>
+      </div>
 
-    </div>
+      {/* div principal 4 */}
 
-    {/* div principal 4 */}
-
-    <div className="w-full h-full mt-10 flex justify-between">
-
+      <div className="w-full h-full mt-10 flex justify-between">
         {/* gráfico 8 */}
 
-        <div className=" w-96 h-80 rounded-2xl border-2">8</div>
+        <div className="w-96 h-80 rounded-2xl border-2">
+          <div className="align-middle text-center">
+            <h2 className="mt-10 font-bold text-darkBlue-500 text-2xl">
+              Acessos por estado
+            </h2>
+
+            <div className="max-w-md mx-auto p-8 py-6">
+              <ol className="list-none space-y-3">
+                {estados.map((estados, index) => (
+                  <li
+                    key={index}
+                    className="flex items-center justify-between rounded-lg"
+                  >
+                    <span className="flex items-center">
+                      <span className="text-lg font-bold text-[#0A305A] mr-4">
+                        {index + 1}.
+                      </span>
+                      <span className="text-lg font-bold text-[#0A305A]">
+                        {estados.nomeEstado}
+                      </span>
+                    </span>
+                    <span className="text-lg font-bold text-[#0A305A]">
+                      {estados.valorEstado}
+                    </span>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          </div>
+        </div>
 
         {/* gráfico 9 */}
 
-        <div className=" w-96 h-80 rounded-2xl border-2">9</div>
+        <div className="w-96 h-80 rounded-2xl border-2">
+          <div className="align-middle text-center">
+            <h2 className="mt-10 font-bold text-darkBlue-500 text-2xl">
+              Acessos por cidade
+            </h2>
+
+            <div className="max-w-md mx-auto p-8 py-6">
+              <ol className="list-none space-y-3">
+                {cidades.map((cidades, index) => (
+                  <li
+                    key={index}
+                    className="flex items-center justify-between rounded-lg"
+                  >
+                    <span className="flex items-center">
+                      <span className="text-lg font-bold text-[#0A305A] mr-4">
+                        {index + 1}.
+                      </span>
+                      <span className="text-lg font-bold text-[#0A305A]">
+                        {cidades.nomeCidade}
+                      </span>
+                    </span>
+                    <span className="text-lg font-bold text-[#0A305A]">
+                      {cidades.valorCidade}
+                    </span>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          </div>
+        </div>
 
         {/* gráfico 10 */}
 
-        <div className=" w-96 h-80 rounded-2xl border-2">10</div>
+        <div className="w-96 h-80 rounded-2xl border-2">
+          <div className="align-middle text-center">
+            <h2 className="mt-10 font-bold text-darkBlue-500 text-2xl">
+              Acessos por bairro
+            </h2>
 
-    </div>
-      
+            <div className="max-w-md mx-auto p-8 py-6">
+              <ol className="list-none space-y-3">
+                {bairros.map((bairros, index) => (
+                  <li
+                    key={index}
+                    className="flex items-center justify-between rounded-lg"
+                  >
+                    <span className="flex items-center">
+                      <span className="text-lg font-bold text-[#0A305A] mr-4">
+                        {index + 1}.
+                      </span>
+                      <span className="text-lg font-bold text-[#0A305A]">
+                        {bairros.nomeBairro}
+                      </span>
+                    </span>
+                    <span className="text-lg font-bold text-[#0A305A]">
+                      {bairros.valorBairro}
+                    </span>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
     </main>
   );
 }

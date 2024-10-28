@@ -114,7 +114,7 @@ export default function Gerenciamento() {
             <SelectItem value="all">Todos</SelectItem>
             <SelectItem value="active">Em Aberto</SelectItem>
             <SelectItem value="inactive">Em Andamento</SelectItem>
-            <SelectItem value="inactive">Concluído</SelectItem>
+            <SelectItem value="completed">Concluído</SelectItem>
           </SelectContent>
         </Select>
       </div>
@@ -193,11 +193,11 @@ export default function Gerenciamento() {
                     <DropdownMenuContent align="end">
                       <DropdownMenuItem>
                         <SquarePen className="mr-2 h-4 w-4" />
-                        <span>Editar Ticket</span>
+                        <Button variant= "ghost" className="p-0">Editar Ticket </Button>
                       </DropdownMenuItem>
                       <DropdownMenuItem>
                         <Trash className="mr-2 h-4 w-4" />
-                        <span>Excluir Ticket</span>
+                        <Button variant= "ghost" className="p-0">Excluir </Button>
                       </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
