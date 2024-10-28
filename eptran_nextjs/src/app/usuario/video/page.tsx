@@ -20,7 +20,9 @@ export default function Component() {
       <div className="flex flex-col md:flex-row gap-16 border-solid">
         {/* Vídeo principal */}
         <div className="w-full md:w-2/3">
-          <div className="bg-gray-900 aspect-video rounded-[20px] mb-4"></div>
+          <div className="bg-gray-900 aspect-video rounded-[20px] mb-4">
+          <iframe src="https://www.youtube.com/watch?v=6ixvM3Cez_E" title="video" className="w-full h-full"></iframe>
+          </div>
           <div className="text-xl font-semibold text-blue-900">
             Eptran: Como ter uma vida segura
           </div>
