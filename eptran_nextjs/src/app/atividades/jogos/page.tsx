@@ -34,7 +34,7 @@ export default function Home() {
           <Game imageUrl="/desvio.png" title="Jogo do Desvio" href={""} />
           <Game imageUrl="/memoria.png" title="Jogo da Memória" href={""} />
           <Game imageUrl="/1cruzada.png" title="Palavras Cruzadas" href={""} />
-          <Game imageUrl="/caca.png" title="Caça Palavras" href={"./jogos/caça_palavra"} />
+          <Game imageUrl="/caca.png" title="Caça Palavras" href={"./jogos/caca"} />
         </div>
       </div>
       <Footer />

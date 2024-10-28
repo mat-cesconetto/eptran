@@ -11,7 +11,7 @@ body {
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    position: relative;
+
     font-family: Arial, sans-serif;
     margin: 0;
     min-height: 100vh;
@@ -61,6 +61,7 @@ body {
 
     .game-header h1 {
         font-size: 24px;
+        color: #333;
     }
 
 
@@ -84,7 +85,6 @@ body {
    
 }
 
-
 @media (max-width: 400px) {
     #crossword td {
         width: 25px;
@@ -105,11 +105,7 @@ body {
 }
 
 
-
-
-
-
-body::before {
+.body::before {
     content: '';
     position: fixed;
     top: 0;
@@ -262,7 +258,7 @@ td.found {
 }
 
 
-h2 {
+.h2 {
     color: #333;
     text-align: center;
     margin-bottom: 20px;
@@ -346,7 +342,12 @@ h2 {
 }
 
 
-button {
+
+
+
+.bt1{
+    width: 200px;
+    height: 70px;
     padding: 10px 20px;
     margin: 5px;
     font-size: 16px;
@@ -357,11 +358,6 @@ button {
     border-radius: 4px;
 }
 
-
-button:hover {
+.bt1:hover {
     background: #45a049;
-}
-.bt1{
-    width: 200px;
-    height: 70px;
 }

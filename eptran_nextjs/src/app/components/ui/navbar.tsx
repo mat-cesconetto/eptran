@@ -1,11 +1,19 @@
-"use client";
+"use client"
 
-import React, { useState } from "react";
-import Image from "next/image";
-import Link from "next/link";
+import React, { useState, useEffect } from "react"
+import Image from "next/image"
+import Link from "next/link"
+import { usePathname } from 'next/navigation'
 
 const NavBar: React.FC = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isSpecialPage, setIsSpecialPage] = useState(false)
+  const pathname = usePathname()
+
+  useEffect(() => {
+    // Check if the current page is the special page that needs different styling
+    setIsSpecialPage(pathname === '/jogos/caca')
+  }, [pathname])
 
   return (
     <div className="relative h-32 w-full bg-[#023859] flex items-center justify-between shadow-2xl px-4 sm:px-10">
@@ -59,7 +67,7 @@ const NavBar: React.FC = () => {
           />
         </Link>
       </div>
-      <div className="hidden md:flex justify-center items-center flex-grow text-white font-bold text-lg">
+      <div className={`${isSpecialPage ? 'md:flex' : 'hidden md:flex'} justify-center items-center flex-grow text-white font-bold text-lg`}>
         <NavLink href="/atividades">Atividades</NavLink>
         <NavLink href="/conquistas">Conquistas</NavLink>
         <NavLink href="/sobre">Sobre nós</NavLink>
@@ -117,13 +125,13 @@ const NavBar: React.FC = () => {
         </div>
       )}
     </div>
-  );
-};
+  )
+}
 
 interface NavLinkProps {
-  href: string;
-  children: React.ReactNode;
-  mobile?: boolean;
+  href: string
+  children: React.ReactNode
+  mobile?: boolean
 }
 
 const NavLink: React.FC<NavLinkProps> = ({
@@ -141,6 +149,6 @@ const NavLink: React.FC<NavLinkProps> = ({
     {children}
     <div className="absolute left-0 bottom-[-6px] w-full h-[3px] bg-white scale-x-0 origin-right transition-transform duration-500 group-hover:scale-x-100"></div>
   </Link>
-);
+)
 
-export default NavBar;
+export default NavBar
