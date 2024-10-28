@@ -4,7 +4,7 @@ import React from "react";
 
 export default function Suporte() {
   return (
-    <main className="w-full min-h-screen p-4 lg:pl-72 lg:pt-36">
+    <main className="w-full min-h-screen p-4">
       <h1 className="text-darkBlue-500 font-bold text-2xl md:text-3xl mb-4 lg:pl-10 lg:pt-10">
         Ticket de USUARIO
       </h1>

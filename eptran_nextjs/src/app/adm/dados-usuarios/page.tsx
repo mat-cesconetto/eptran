@@ -6,7 +6,7 @@ import School from "../../components/ui/school";
 
 export default function DadosUsuarios() {
   return (
-    <main className="w-full min-h-screen bg-white p-4 pt-20 md:pt-36 lg:mr-80 lg:pl-64">
+    <main className="w-full min-h-screen bg-white p-4 pt-20 lg:mr-80">
       <h1 className="text-darkBlue-500 pl-8 font-bold text-2xl md:text-3xl mb-4">
         Dados Pessoais de USUÁRIO
       </h1>
