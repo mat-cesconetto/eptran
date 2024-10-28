@@ -1,47 +1,182 @@
-import prismaClient from "../prisma"; // Importando o Prisma Client
-import { SexoEnum } from "@prisma/client";
+import prismaClient from "../prisma";
+import { SexoEnum, Prisma, Access, Usuario } from "@prisma/client";
 
 class AccessRepository {
-
     async logAccess(userId: number) {
         await prismaClient.access.create({
             data: {
-                userId: userId, // O ID do usuário que está acessando
-                date: new Date(), // Adicione a data do acesso
+                userId: userId,
+                date: new Date(),
             }
         });
     }
+    // No AccessRepository
 
+
+    
     async getTotalAccesses() {
-        const totalAccesses = await prismaClient.access.count();
+        const totalAccesses = await prismaClient.usuario.count();
         return totalAccesses;
     }
 
+    async countAccessesByAgeGroups() {
+        const currentDate = new Date();
+        
+        // Calculate cutoff dates for each age group
+        const age18Cutoff = new Date(currentDate);
+        age18Cutoff.setFullYear(currentDate.getFullYear() - 18);
+        
+        const age14Cutoff = new Date(currentDate);
+        age14Cutoff.setFullYear(currentDate.getFullYear() - 14);
+        
+        const age11Cutoff = new Date(currentDate);
+        age11Cutoff.setFullYear(currentDate.getFullYear() - 11);
+        
+        const age6Cutoff = new Date(currentDate);
+        age6Cutoff.setFullYear(currentDate.getFullYear() - 6);
+
+        // Get counts for each age group separately
+        const [age18Plus, age14to17, age11to13, age6to10, under6] = await Promise.all([
+            // 18+
+            prismaClient.usuario.count({
+                where: {
+                    data_nasc: {
+                        lte: age18Cutoff,
+                    },
+                },
+            }),
+            // 14-17
+            prismaClient.usuario.count({
+                where: {
+                    data_nasc: {
+                        gt: age18Cutoff,
+                        lte: age14Cutoff,
+                    },
+                },
+            }),
+            // 11-13
+            prismaClient.usuario.count({
+                where: {
+                    data_nasc: {
+                        gt: age14Cutoff,
+                        lte: age11Cutoff,
+                    },
+                },
+            }),
+            // 6-10
+            prismaClient.usuario.count({
+                where: {
+                    data_nasc: {
+                        gt: age11Cutoff,
+                        lte: age6Cutoff,
+                    },
+                },
+            }),
+            // Under 6
+            prismaClient.usuario.count({
+                where: {
+                    data_nasc: {
+                        gt: age6Cutoff,
+                    },
+                },
+            }),
+        ]);
+
+        return {
+            mais18: age18Plus,                    // Apenas 18+
+            mais14: age14to17,                    // Apenas 14-17
+            mais11: age11to13,                    // Apenas 11-13
+            mais6: age6to10,                      // Apenas 6-10
+            menos6: under6,                       // Menos de 6
+            total: age18Plus + age14to17 + age11to13 + age6to10 + under6
+        };
+    }
+
+    // No AccessRepository
+async getTopLocationsByAccess() {
+    // Busca top 5 estados
+    const topStates = await prismaClient.usuario.groupBy({
+        by: ['estado'],
+        _count: {
+            id: true
+        },
+        orderBy: {
+            _count: {
+                id: 'desc'
+            }
+        },
+        take: 5
+    });
+
+    // Busca top 5 cidades
+    const topCities = await prismaClient.usuario.groupBy({
+        by: ['cidade'],
+        _count: {
+            id: true
+        },
+        orderBy: {
+            _count: {
+                id: 'desc'
+            }
+        },
+        take: 5
+    });
+
+    // Busca top 5 bairros
+    const topNeighborhoods = await prismaClient.usuario.groupBy({
+        by: ['bairro'],
+        _count: {
+            id: true
+        },
+        orderBy: {
+            _count: {
+                id: 'desc'
+            }
+        },
+        take: 5
+    });
+
+    return {
+        estados: topStates.map(state => ({
+            estado: state.estado,
+            totalAcessos: state._count.id
+        })),
+        cidades: topCities.map(city => ({
+            cidade: city.cidade,
+            totalAcessos: city._count.id
+        })),
+        bairros: topNeighborhoods.map(neighborhood => ({
+            bairro: neighborhood.bairro,
+            totalAcessos: neighborhood._count.id
+        }))
+    };
+}
+
+
     async getTopSchoolsByAccess() {
-        const topSchools = await prismaClient.usuario.findMany({
-            select: {
-                escola: true,
-                _count: {
-                    select: {
-                        Access: true
-                    }
-                }
+        const topSchools = await prismaClient.usuario.groupBy({
+            by: ['escola'],
+            _count: {
+                id: true
             },
             orderBy: {
-                Access: {
-                    _count: 'desc'
+                _count: {
+                    id: 'desc'
+                }
+            },
+            where: {
+                id: {
+                    gt: 0
                 }
             },
             take: 5
         });
 
-        // Formatando o resultado para ficar mais legível
         return topSchools.map(school => ({
             escola: school.escola,
-            totalAcessos: school._count.Access
+            totalAcessos: school._count?.id ?? 0
         }));
     }
-
 
     async getWeeklyAccessesByEducation() {
         const today = new Date();
@@ -62,7 +197,6 @@ class AccessRepository {
                 },
             },
         });
-        
         const daysOfWeek = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
         const accessByEducationAndDay = {
             ENSINO_FUNDAMENTAL_I: new Array(7).fill(0),
@@ -91,25 +225,20 @@ class AccessRepository {
         try {
             const accessesByGender = await prismaClient.usuario.groupBy({
                 by: ['sexo'],
-                _count: {
-                    Access: true
-                }
+                _count: true
             });
 
-            // Formata o resultado para um objeto mais legível
-            const formattedResult = accessesByGender.reduce((acc, curr) => {
-                return {
-                    ...acc,
-                    [curr.sexo]: curr._count.Access
-                };
-            }, {} as Record<SexoEnum, number>);
-
-            // Garante que todos os gêneros estejam representados, mesmo sem acessos
-            const completeResult = {
-                MASCULINO: formattedResult.MASCULINO || 0,
-                FEMININO: formattedResult.FEMININO || 0,
-                NAO_DECLARAR: formattedResult.NAO_DECLARAR || 0
+            const completeResult: Record<SexoEnum, number> = {
+                MASCULINO: 0,
+                FEMININO: 0,
+                NAO_DECLARAR: 0
             };
+
+            accessesByGender.forEach((result) => {
+                if (result.sexo && result._count) {
+                    completeResult[result.sexo as SexoEnum] = result._count;
+                }
+            });
 
             return completeResult;
         } catch (error) {
