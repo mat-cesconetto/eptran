@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from 'react';
 import { Button } from "@/components/ui/button"
 import { Copy, Link } from "lucide-react";
 import {
@@ -37,24 +40,26 @@ import { Select,
 
 import { MoreHorizontal, Trash, SquarePen, Search } from "lucide-react";
 
+
+
 export default function Conteudo() {
     return (
         <main>
             
             <div className="flex">
                 <Image
-                    className="bg-darkBlue-500 rounded-lg h-14 w-14 ml-80 mt-40"
+                    className="bg-darkBlue-500 rounded-lg h-14 w-14 ml-14 mt-10"
                     src="/Image/livro.svg"
                     alt="Livro"
                     width='56'
                     height='56'
                 />
-                <h1 className="text-darkBlue-500 font-bold text-5xl pl-4 pt-40 -mb-96">
+                <h1 className="text-darkBlue-500 font-bold text-5xl pl-4 pt-10 -mb-96">
                     Gestão de Conteúdo
                 </h1>
             </div>
 
-            <div className="ml-72 pt-0.5 p-8">
+            <div className="ml-6 pt-0.5 p-8">
                 <div className="w-full flex mt-10 justify-between">
                     <div className="relative w-[28vw]">
                         <div className="absolute flex items-center ps-3 pointer-events-none">
@@ -276,6 +281,7 @@ export default function Conteudo() {
         </div>
       </DialogContent>
     </Dialog>
+
                                                 
       
                                                     
