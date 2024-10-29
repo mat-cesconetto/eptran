@@ -24,6 +24,7 @@ export const useUser = () => {
     userEmail: data?.data?.email || "",
     userCep: data?.data?.cep || "",
     userRua: data?.data?.rua || "",
+    userBairro: data?.data?.bairro || "",
     userCidade: data?.data?.cidade || "",
     userEstado: data?.data?.estado || "",
     userEscola: data?.data?.escola || "",

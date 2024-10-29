@@ -30,6 +30,7 @@ const AlterData: React.FC<AlterDataProps> = ({ onFormChange }) => {
     userEstado,
     userCidade,
     userRua,
+    userBairro,
     isLoading,
   } = useUser();
 
@@ -143,6 +144,15 @@ const AlterData: React.FC<AlterDataProps> = ({ onFormChange }) => {
         name="rua"
         placeholder="Rua"
         defaultValue={userRua}
+      />
+
+      <EditableFormField
+        label="Bairro"
+        type="text"
+        id="bairro"
+        name="bairro"
+        placeholder="Bairro"
+        defaultValue={userBairro}
       />
 
       {error && <p className="text-red-500">{error}</p>}

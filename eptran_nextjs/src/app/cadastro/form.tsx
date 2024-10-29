@@ -23,6 +23,7 @@ const Formulario: React.FC = () => {
     const senha = formData.get("senha")?.toString() || "";
     const cep = formData.get("cep")?.toString() || "";
     const rua = formData.get("rua")?.toString() || "";
+    const bairro = formData.get("bairro")?.toString() || "";
     const cidade = formData.get("cidade")?.toString() || "";
     const estado = formData.get("estado")?.toString() || "";
     const escola = formData.get("escola")?.toString() || "";
@@ -37,6 +38,7 @@ const Formulario: React.FC = () => {
         senha,
         cep,
         rua,
+        bairro,
         cidade,
         estado,
         escola,
@@ -105,6 +107,7 @@ const Formulario: React.FC = () => {
       <FormField label="Cidade" type="text" id="cidade" name="cidade" />
       <FormField label="Bairro" type="text" id="bairro" name="bairro" />
       <FormField label="Rua" type="text" id="rua" name="rua" />
+      <FormField label="Bairro" type="text" id="bairro" name="bairro" />
       <FormField label="Sexo" type="select" id="sexo" name="sexo">
         <option value="" disabled>
           Selecione
