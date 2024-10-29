@@ -59,7 +59,7 @@ const NavBar: React.FC = () => {
           />
         </Link>
       </div>
-      <div className="hidden md:flex justify-center items-center flex-grow text-white font-bold text-lg">
+      <div className="hidden sm:flex md:flex lg:flex justify-center items-center flex-grow text-white font-bold text-lg">
         <NavLink href="/atividades">Atividades</NavLink>
         <NavLink href="/conquistas">Conquistas</NavLink>
         <NavLink href="/sobre">Sobre nós</NavLink>

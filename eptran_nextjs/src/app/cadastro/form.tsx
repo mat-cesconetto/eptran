@@ -23,6 +23,7 @@ const Formulario: React.FC = () => {
     const senha = formData.get("senha")?.toString() || "";
     const cep = formData.get("cep")?.toString() || "";
     const rua = formData.get("rua")?.toString() || "";
+    const bairro = formData.get("bairro")?.toString() || "";
     const cidade = formData.get("cidade")?.toString() || "";
     const estado = formData.get("estado")?.toString() || "";
     const escola = formData.get("escola")?.toString() || "";
@@ -37,6 +38,7 @@ const Formulario: React.FC = () => {
         senha,
         cep,
         rua,
+        bairro,
         cidade,
         estado,
         escola,

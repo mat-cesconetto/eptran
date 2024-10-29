@@ -28,13 +28,13 @@ export default function Home() {
           </h1>
         </div>
         <div className="px-4 lg:pl-24 w-full flex flex-wrap justify-center lg:justify-start">
-          <Game imageUrl="/quiz.png" title="Quiz Eptran" />
-          <Game imageUrl="/travessia.png" title="Jogo da Travessia" />
-          <Game imageUrl="/forca.png" title="Jogo da Forca" />
-          <Game imageUrl="/desvio.png" title="Jogo do Desvio" />
-          <Game imageUrl="/memoria.png" title="Jogo da Memória" />
-          <Game imageUrl="/1cruzada.png" title="Palavras Cruzadas" />
-          <Game imageUrl="/caca.png" title="Caça Palavras" />
+          <Game imageUrl="/quiz.png" title="Quiz Eptran" href={""} />
+          <Game imageUrl="/travessia.png" title="Jogo da Travessia" href={""} />
+          <Game imageUrl="/forca.png" title="Jogo da Forca" href={""} />
+          <Game imageUrl="/desvio.png" title="Jogo do Desvio" href={""} />
+          <Game imageUrl="/memoria.png" title="Jogo da Memória" href={""} />
+          <Game imageUrl="/1cruzada.png" title="Palavras Cruzadas" href={""} />
+          <Game imageUrl="/caca.png" title="Caça Palavras" href={"./jogos/caca"} />
         </div>
       </div>
       <Footer />

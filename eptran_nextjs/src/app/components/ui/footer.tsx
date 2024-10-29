@@ -8,7 +8,7 @@ const Footer: React.FC = () => {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
           <div className="space-y-4">
-            <h2 className="text-lg font-semibold">Leia Mais</h2>
+            <h2 className="text-lg font-semibold text-white">Leia Mais</h2>
             <ul className="space-y-2">
               <li>
                 <Link href="" className="text-sm hover:underline">
