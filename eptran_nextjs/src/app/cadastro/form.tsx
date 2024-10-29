@@ -26,12 +26,14 @@ const Formulario: React.FC = () => {
 
   useEffect(() => {
     if (cepData) {
+      console.log("Dados recebidos do CEP:", cepData); // Log para verificar o retorno do hook useCep
       setCidade(cepData.cidade);
       setBairro(cepData.bairro);
       setRua(cepData.rua);
       setEstadoSelecionado(cepData.estado);
     }
   }, [cepData]);
+  
 
   const handleFormulario = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -72,6 +74,7 @@ const Formulario: React.FC = () => {
 
   function handleChangeMaskCEP(event: any) {
     const { value } = event.target;
+    console.log("CEP atualizado:", value); // Log para verificar a mudança do CEP
     setCEP(maskCEP(value));
   }
 
@@ -87,13 +90,16 @@ const Formulario: React.FC = () => {
         id="estado"
         name="estado"
         value={estadoSelecionado}
-        onChange={(e) => setEstadoSelecionado(e.target.value)} // Capturando a mudança de estado
+        onChange={(e) => {
+          setEstadoSelecionado(e.target.value);
+          console.log("Estado selecionado:", e.target.value); // Log para verificar o estado selecionado
+        }}
       >
         <option value="" disabled>
           Selecione
         </option>
         <option value="AC">Acre</option>
-        <option value="al">Alagoas</option>
+        <option value="AL">Alagoas</option>
         <option value="AP">Amapá</option>
         <option value="AM">Amazonas</option>
         <option value="BA">Bahia</option>
@@ -134,7 +140,10 @@ const Formulario: React.FC = () => {
         id="cidade"
         name="cidade"
         value={cidade}
-        onChange={(e) => setCidade(e.target.value)} // Capturando a mudança de cidade
+        onChange={(e) => {
+          setCidade(e.target.value);
+          console.log("Cidade selecionada:", e.target.value); // Log para verificar a cidade selecionada
+        }}
       >
         {isLoadingCities ? (
           <option value="" disabled>
