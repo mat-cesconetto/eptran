@@ -86,7 +86,7 @@ const Formulario: React.FC = () => {
         type="select"
         id="estado"
         name="estado"
-        value={estadoSelecionado} // Setando o valor de estado
+        value={estadoSelecionado}
         onChange={(e) => setEstadoSelecionado(e.target.value)} // Capturando a mudança de estado
       >
         <option value="" disabled>
@@ -134,8 +134,9 @@ const Formulario: React.FC = () => {
         id="cidade"
         name="cidade"
         value={cidade}
+        onChange={(e) => setCidade(e.target.value)} // Capturando a mudança de cidade
       >
-        {isLoadingCities ? ( // Mostra um loading enquanto busca as cidades
+        {isLoadingCities ? (
           <option value="" disabled>
             Carregando cidades...
           </option>
