@@ -107,7 +107,6 @@ const Formulario: React.FC = () => {
       <FormField label="Cidade" type="text" id="cidade" name="cidade" />
       <FormField label="Bairro" type="text" id="bairro" name="bairro" />
       <FormField label="Rua" type="text" id="rua" name="rua" />
-      <FormField label="Bairro" type="text" id="bairro" name="bairro" />
       <FormField label="Sexo" type="select" id="sexo" name="sexo">
         <option value="" disabled>
           Selecione
