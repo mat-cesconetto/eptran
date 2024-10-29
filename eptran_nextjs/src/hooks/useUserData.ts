@@ -33,7 +33,5 @@ export const useUser = () => {
     userSexo: data?.data?.sexo || "",
     isLoading: !error && !data,
     isLoggedOut: error?.message === "Unauthorized",
-    
   };
-  
 };

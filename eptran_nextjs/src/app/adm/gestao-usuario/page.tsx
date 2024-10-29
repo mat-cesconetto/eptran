@@ -27,41 +27,35 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { MoreHorizontal, Trash, SquarePen, Search } from "lucide-react";
-
-const users = [
-  {
-    id: "23222",
-    name: "José Silva",
-    email: "jose.silva@gmail.com",
-    gender: "♂",
-    birthdate: "11/12/2024",
-    location: "JOINVILLE/SC",
-    school: "E.E.B GAG",
-    grade: "3º EM",
-  },
-  // Add more user objects here...
-];
+import { useUsers } from "@/hooks/useUsers";
+import UserRow from "./userRow";
 
 export default function Gerenciamento() {
   const [searchTerm, setSearchTerm] = useState("");
   const [userFilter, setUserFilter] = useState("all");
 
+  const { users, isLoading, isLoggedOut } = useUsers();
+
+  // Filtragem de usuários baseada na busca
+  const filteredUsers = users.filter(user => 
+    user.nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    user.email.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  if (isLoading) return <div>Loading...</div>;
+  if (isLoggedOut) return <div>Você não está autenticado.</div>;
+
   return (
-    <main className=" min-h-screen p-4 md:p-8 pt-24 text-black">
-      <div className="pb-5 flex gap-5 ">
+    <main className="min-h-screen p-4 md:p-8 pt-24 text-black">
+      <div className="pb-5 flex gap-5">
         <div>
-          <Image
-            src="/user-svgrepo-com.svg"
-            width={50}
-            height={50}
-            alt="perfil"
-          />
+          <Image src="/user-svgrepo-com.svg" width={50} height={50} alt="perfil" />
         </div>
         <div className="text-darkBlue-500 text-4xl font-bold pt-2">
           <h1>Gestão de Usuários</h1>
         </div>
       </div>
-      <div className=" flex flex-col md:flex-row md:justify-between md:items-center space-y-4 md:space-y-0 md:space-x-4 mb-6">
+      <div className="flex flex-col md:flex-row md:justify-between md:items-center space-y-4 md:space-y-0 md:space-x-4 mb-6">
         <div className="relative">
           <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500" />
           <Input
@@ -90,82 +84,30 @@ export default function Gerenciamento() {
             <TableRow>
               <TableHead className="w-[100px] text-darkBlue-500 font-bold">ID</TableHead>
               <TableHead className="text-darkBlue-500 font-bold">Usuário</TableHead>
-              <TableHead className="hidden md:table-cell text-darkBlue-500 font-bold">
-                E-mail
-              </TableHead>
-              <TableHead className="hidden md:table-cell text-darkBlue-500 font-bold">
-                Gênero
-              </TableHead>
-              <TableHead className="hidden md:table-cell text-darkBlue-500 font-bold">
-                Nascimento
-              </TableHead>
-              <TableHead className="hidden md:table-cell text-darkBlue-500 font-bold">
-                Cidade/Estado
-              </TableHead>
-              <TableHead className="hidden md:table-cell text-darkBlue-500 font-bold">
-                Escola
-              </TableHead>
-              <TableHead className="hidden md:table-cell text-darkBlue-500 font-bold">
-                Escolaridade
-              </TableHead>
+              <TableHead className="hidden md:table-cell text-darkBlue-500 font-bold">E-mail</TableHead>
+              <TableHead className="hidden md:table-cell text-darkBlue-500 font-bold">Gênero</TableHead>
+              <TableHead className="hidden md:table-cell text-darkBlue-500 font-bold">Nascimento</TableHead>
+              <TableHead className="hidden md:table-cell text-darkBlue-500 font-bold">Cidade/Estado</TableHead>
+              <TableHead className="hidden md:table-cell text-darkBlue-500 font-bold">Escola</TableHead>
+              <TableHead className="hidden md:table-cell text-darkBlue-500 font-bold">Escolaridade</TableHead>
               <TableHead className="text-right"></TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {users.map((user) => (
-              <TableRow key={user.id}>
-                <TableCell className="font-medium">{user.id}</TableCell>
-                <TableCell>
-                  <div className="flex items-center">
-                    <Avatar className="h-8 w-8 mr-2 border-darkBlue-500 border-2">
-                      <AvatarImage src="/salsicha.svg" alt={user.name} />
-                      <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
-                    </Avatar>
-                    {user.name}
-                  </div>
-                </TableCell>
-                <TableCell className="hidden md:table-cell">
-                  {user.email}
-                </TableCell>
-                <TableCell className="hidden md:table-cell">
-                  {user.gender}
-                </TableCell>
-                <TableCell className="hidden md:table-cell">
-                  {user.birthdate}
-                </TableCell>
-                <TableCell className="hidden md:table-cell">
-                  {user.location}
-                </TableCell>
-                <TableCell className="hidden md:table-cell">
-                  {user.school}
-                </TableCell>
-                <TableCell className="hidden md:table-cell">
-                  {user.grade}
-                </TableCell>
-                <TableCell className="text-right">
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" className="h-8 w-8 p-0">
-                        <span className="sr-only">Abrir menu</span>
-                        <MoreHorizontal className="h-4 w-4" />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent
-                      align="end"
-                      className="text-darkBlue-500 font-bold"
-                    >
-                      <DropdownMenuItem>
-                        <SquarePen className="mr-2 h-4 w-4" />
-                        <span>Editar Usuário</span>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem>
-                        <Trash className="mr-2 h-4 w-4" />
-                        <span>Excluir Usuário</span>
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </TableCell>
-              </TableRow>
+            {filteredUsers.map((user) => (
+              <UserRow
+                key={user.id}
+                user={{
+                  id: String(user.id),
+                  name: user.nome,
+                  email: user.email,
+                  gender: user.sexo,
+                  birthdate: new Date(user.data_nasc).toLocaleDateString(),
+                  location: `${user.cidade}/${user.estado}`,
+                  school: user.escola,
+                  grade: user.escolaridade
+                }}
+              />
             ))}
           </TableBody>
         </Table>
