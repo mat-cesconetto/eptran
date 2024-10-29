@@ -6,6 +6,7 @@ interface User {
   senha: string;
   cep: string;
   rua: string;
+  bairro: string;
   cidade: string;
   estado: string;
   escola: string;

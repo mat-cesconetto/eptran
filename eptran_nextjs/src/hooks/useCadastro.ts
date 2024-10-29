@@ -7,6 +7,7 @@ interface User {
   senha: string;
   cep: string;
   rua: string;
+  bairro: string;
   cidade: string;
   estado: string;
   escola: string;
@@ -19,7 +20,7 @@ export const useCadastro = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
-  const registerUser = async (nome: string, email: string, senha: string, cep: string, rua: string, cidade: string, estado: string, escola: string, data_nasc: string, escolaridade: string, sexo: string ) => {
+  const registerUser = async (nome: string, email: string, senha: string, cep: string, rua: string, bairro: string, cidade: string, estado: string, escola: string, data_nasc: string, escolaridade: string, sexo: string ) => {
     setIsLoading(true);
     setError(null);
 
@@ -30,6 +31,7 @@ export const useCadastro = () => {
       senha: senha,
       cep: cep,
       rua: rua,
+      bairro: bairro,
       cidade: cidade,
       estado: estado,
       escola: escola,
