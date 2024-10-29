@@ -7,7 +7,12 @@ export function useCidade(state: string) {
   useEffect(() => {
     if (state) {
       setIsLoading(true);
-      fetch(`http://localhost:3333/cidades/${state}`)
+      
+      // Crie a URL e faça o log dela
+      const url = `http://localhost:3333/cidades/${state}`;
+      console.log("Fetching cities from URL:", url); // Adicione este log para verificar a URL
+      
+      fetch(url)
         .then((response) => {
           if (!response.ok) {
             throw new Error(`Failed to fetch cities: ${response.statusText}`);
@@ -22,4 +27,3 @@ export function useCidade(state: string) {
 
   return { cityName, isLoading };
 }
- 
