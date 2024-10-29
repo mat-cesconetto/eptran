@@ -12,7 +12,7 @@ const Formulario: React.FC = () => {
   const { registerUser } = useCadastro();
   const [crudCEP, setCEP] = useState("");
   const [estadoSelecionado, setEstadoSelecionado] = useState<string>("");
-  const { cityName, isLoading } = useCidade(estadoSelecionado); // Usando o hook
+  const { cityNames, isLoading } = useCidade(estadoSelecionado); // Usando o hook
 
   const handleFormulario = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -83,7 +83,7 @@ const Formulario: React.FC = () => {
             Carregando cidades...
           </option>
         ) : (
-          cityName.map((cidade) => (
+          cityNames.map((cidade) => (
             <option key={cidade} value={cidade}>
               {cidade}
             </option>
