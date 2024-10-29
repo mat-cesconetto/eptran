@@ -6,6 +6,7 @@ export type User = {
   nome: string;
   email: string;
   senha: string;
+  bairro: string; 
   cep: string;
   rua: string;
   cidade: string;
@@ -20,11 +21,13 @@ export type User = {
   updatedAt: Date;
 };
 
+
 export type UserInfo = {
   id: number,
   nome: string,
   email: string,
   cep: string,
+  bairro: string;
   rua: string,
   cidade: string,
   estado: EstadoEnum,
@@ -43,6 +46,7 @@ export type UserUpdate = {
   cep: string;
   rua: string;
   cidade: string;
+  bairro: string;
   estado: EstadoEnum;
   escola: string;
   data_nasc: Date;
@@ -89,6 +93,7 @@ export interface UserStats {
   id: number;
   escolaridade: 'ENSINO_FUNDAMENTAL_I' | 'ENSINO_FUNDAMENTAL_II' | 'ENSINO_MEDIO' | 'OUTROS';
 }
+
 
 export interface ListUsers {
   users: User[],

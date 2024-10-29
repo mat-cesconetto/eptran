@@ -3,14 +3,15 @@ import prismaClient from "../prisma";
 import bcrypt from "bcrypt" ;  // Importando bcrypt para fazer o hash da senha
 
 class UserRepository {
-  async create(data: RegisterUser): Promise<User> {
+  async create(data: RegisterUser): Promise<{ message: string }> {
     try {
-      const result = await prismaClient.usuario.create({
+      await prismaClient.usuario.create({
         data: {
           nome: data.nome,
           email: data.email,
           senha: data.senha, // Usa a senha criptografada
           cep: data.cep,
+          bairro: data.bairro,
           cidade: data.cidade,
           data_nasc: new Date(data.data_nasc), // Converter a data
           escola: data.escola,
@@ -21,7 +22,8 @@ class UserRepository {
         },
       });
 
-      return result as User;
+      // Retorna uma mensagem de sucesso
+      return { message: "Usuário criado com sucesso!" };
     } catch (error) {
       console.error("Erro ao criar usuário:", error);
       throw new Error("Erro ao criar usuário.");
@@ -40,6 +42,11 @@ class UserRepository {
     }
   }
   
+  async findById(id: number): Promise<User | null> {
+    return prismaClient.usuario.findUnique({
+      where: { id },
+    });
+  }
 
   async listUsers(page: number, limit: number): Promise<ListUsers> {
     const [users, totalUsers] = await prismaClient.$transaction([
@@ -92,13 +99,14 @@ class UserRepository {
         escolaridade: true,
         sexo: true,
         profilePicture: true,
+        bairro: true,
       },
     });
   
     // Transformar o resultado para garantir compatibilidade com UserInfo
     return users.map(user => ({
       ...user,
-      profilePicture: user.profilePicture || "", // Transformar null para string vazia
+      profilePicture: user.profilePicture || "",
     }));
   }
   
@@ -160,7 +168,57 @@ class UserRepository {
     }
   }
 
-  
+  async delete(id: number): Promise<void> {
+    try {
+      await prismaClient.$transaction(async (prisma) => {
+        // Deletar todos os RefreshTokens associados ao usuário
+        await prisma.refreshToken.deleteMany({
+          where: { userId: id },
+        });
+
+        // Deletar todos os Access associados ao usuário
+        await prisma.access.deleteMany({
+          where: { userId: id },
+        });
+
+        // Deletar as Conquistas associadas ao usuário (se existirem)
+        await prisma.conquistas.delete({
+          where: { fk_id_usuario: id },
+        }).catch(() => {
+          // Ignora o erro se não existirem conquistas para este usuário
+        });
+
+        // Deletar todas as respostas de tickets associadas ao usuário
+        await prisma.repostaTicketUsuario.deleteMany({
+          where: { userId: id },
+        });
+
+        // Atualizar tickets onde o usuário é o criador, atualizador ou fechador
+        await prisma.ticketUsuario.updateMany({
+          where: {
+            OR: [
+              { userId: id },
+              { updatedById: id },
+              { closedById: id },
+            ],
+          },
+          data: {
+            updatedById: null,
+            closedById: null,
+          },
+        });
+
+        // Finalmente, deletar o usuário
+        await prisma.usuario.delete({
+          where: { id },
+        });
+      });
+    } catch (error) {
+      console.error("Erro ao deletar usuário:", error);
+      throw new Error("Não foi possível deletar o usuário e seus dados relacionados.");
+    }
+  }
 }
+
 
 export { UserRepository };

@@ -7,6 +7,7 @@ export { PrismaStatus as Status, RepostaTicketUsuario };
 
 // Tipo para o modelo Usuario (simplificado para associar com TicketUsuario)
 export type UsuarioInfo = {
+  profilePicture: any;
   id: number;
   nome: string;
   email: string;

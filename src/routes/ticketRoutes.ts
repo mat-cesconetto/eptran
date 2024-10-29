@@ -21,12 +21,12 @@ async function routes(fastify: FastifyInstance, options: FastifyPluginOptions) {
   );
   fastify.post(
     "/:ticketId/responder",
-    { preHandler: [adminMiddleware, authMiddleware] },
+    { preHandler: [authMiddleware, adminMiddleware] },
     ticketController.addResposta.bind(ticketController)
   );
   fastify.get(
     "/:id",
-    { preHandler: [adminMiddleware, authMiddleware] },
+    { preHandler: [authMiddleware, adminMiddleware] },
     ticketController.getTicketById.bind(ticketController)
   );
   fastify.patch(

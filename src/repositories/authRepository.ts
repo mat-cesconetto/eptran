@@ -14,7 +14,7 @@ class AuthRepository {
     }
 
     // Método para buscar usuário por ID
-    async getUserById(userId: number): Promise<User | null> {
+    async getUserById(userId: number) {
         try {
             // Use await para obter o usuário
             const user = await prismaClient.usuario.findUnique({
@@ -28,7 +28,6 @@ class AuthRepository {
                 throw new NotFoundError('Usuário não encontrado');
             }
 
-            return user; // Retorna o usuário encontrado
         } catch (error) {
             console.error("Erro ao buscar usuário por ID:", error);
             throw new NotFoundError('Erro ao buscar usuário por ID');
