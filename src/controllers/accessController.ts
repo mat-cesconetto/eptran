@@ -2,7 +2,6 @@ import { AccessRepository } from "../repositories/accessRepository";
 import { FastifyReply, FastifyRequest } from "fastify";
 import { SexoEnum, Prisma, Access, Usuario } from "@prisma/client";
 
-
 class AccessController {
     private accessRepository: AccessRepository;
 
@@ -10,7 +9,6 @@ class AccessController {
         this.accessRepository = new AccessRepository();
     }
 
-    // Método para obter acessos semanais por escolaridade
     async getWeeklyAccessesByEducation(request: FastifyRequest, reply: FastifyReply) {
         try {
             const weeklyAccesses = await this.accessRepository.getWeeklyAccessesByEducation();
@@ -20,17 +18,17 @@ class AccessController {
             return reply.status(500).send({ message: "Erro ao obter acessos semanais por escolaridade" });
         }
     }
-        // Função para calcular a idade a partir da data de nascimento
-        async getAccessesByAgeGroups(request: FastifyRequest, reply: FastifyReply) {
-            try {
-                const accessesByAgeGroup = await this.accessRepository.countAccessesByAgeGroups();
-                return reply.send(accessesByAgeGroup);
-            } catch (error) {
-                console.error("Erro ao obter acessos por faixa etária:", error);
-                return reply.status(500).send({ message: "Erro ao obter acessos por faixa etária" });
-            }
+
+    async getAccessesByAgeGroupAndGender(request: FastifyRequest, reply: FastifyReply) {
+        try {
+            const accessesByAgeGroupAndGender = await this.accessRepository.countAccessesByAgeGroups();
+            return reply.send(accessesByAgeGroupAndGender);
+        } catch (error) {
+            console.error("Erro ao obter acessos por faixa etária e sexo:", error);
+            return reply.status(500).send({ message: "Erro ao obter acessos por faixa etária e sexo" });
         }
-    // Método para obter total de acessos
+    }
+
     async getTotalAccesses(request: FastifyRequest, reply: FastifyReply) {
         try {
             const totalAccesses = await this.accessRepository.getTotalAccesses();
@@ -41,7 +39,6 @@ class AccessController {
         }
     }
 
-    // Método para obter top 5 escolas com mais acessos
     async getTopSchools(request: FastifyRequest, reply: FastifyReply) {
         try {
             const topSchools = await this.accessRepository.getTopSchoolsByAccess();
@@ -51,15 +48,27 @@ class AccessController {
             return reply.status(500).send({ message: "Erro ao obter top escolas" });
         }
     }
+
+    async getTopSchoolsByAccessAndGender(request: FastifyRequest, reply: FastifyReply) {
+        try {
+            const topSchoolsByGender = await this.accessRepository.getTopSchoolsByAccessAndGender();
+            return reply.send(topSchoolsByGender);
+        } catch (error) {
+            console.error("Erro ao obter top escolas por sexo:", error);
+            return reply.status(500).send({ message: "Erro ao obter top escolas por sexo" });
+        }
+    }
+
     async countAccessByGender(request: FastifyRequest, reply: FastifyReply) {
         try {
             const accessGender = await this.accessRepository.countAccessesByGender();
             return reply.send(accessGender);
         } catch (error) {
             console.error("Erro ao obter acessos por sexo:", error);
-            return reply.status(500).send({ message: "Erro ao obter top escolas" });
+            return reply.status(500).send({ message: "Erro ao obter acessos por sexo" });
         }
     }
+
     async getTopLocations(request: FastifyRequest, reply: FastifyReply) {
         try {
             const topLocations = await this.accessRepository.getTopLocationsByAccess();
