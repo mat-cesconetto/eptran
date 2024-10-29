@@ -1,23 +1,73 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useCadastro } from "@/hooks/useCadastro";
-import { useCidade } from "@/hooks/useCidades"; // Importando o hook
+import { useCidade } from "@/hooks/useCidades";
+import { useCep } from "@/hooks/useCep"; // Importando o hook para o CEP
 import CustomCheckbox from "./checkbox";
+
 import Router from "next/router";
 import { maskCEP } from "../components/mask/mask";
+
+// Interfaces
 
 const Formulario: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const { registerUser } = useCadastro();
   const [crudCEP, setCEP] = useState("");
   const [estadoSelecionado, setEstadoSelecionado] = useState<string>("");
-  const { cityNames, isLoading } = useCidade(estadoSelecionado); // Usando o hook
+  const { cityNames, isLoading: isLoadingCities } =
+    useCidade(estadoSelecionado);
+  const { cepData, isLoading: isLoadingCep } = useCep(crudCEP.replace("-", ""));
+
+  const [rua, setRua] = useState("");
+  const [bairro, setBairro] = useState("");
+  const [cidade, setCidade] = useState("");
+
+  useEffect(() => {
+    if (cepData) {
+      setCidade(cepData.cidade);
+      setBairro(cepData.bairro);
+      setRua(cepData.rua);
+      setEstadoSelecionado(cepData.estado);
+    }
+  }, [cepData]);
 
   const handleFormulario = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    // ... (o resto do código permanece igual)
+    const nome = formData.get("nome")?.toString() || "";
+    const email = formData.get("email")?.toString() || "";
+    const senha = formData.get("senha")?.toString() || "";
+    const cep = formData.get("cep")?.toString() || "";
+    const rua = formData.get("rua")?.toString() || "";
+    const bairro = formData.get("bairro")?.toString() || "";
+    const cidade = formData.get("cidade")?.toString() || "";
+    const estado = formData.get("estado")?.toString() || "";
+    const escola = formData.get("escola")?.toString() || "";
+    const data_nasc = formData.get("data_nasc")?.toString() || "";
+    const escolaridade = formData.get("escolaridade")?.toString() || "";
+    const sexo = formData.get("sexo")?.toString() || "";
+    try {
+      await registerUser(
+        nome,
+        email,
+        senha,
+        cep,
+        rua,
+        bairro,
+        cidade,
+        estado,
+        escola,
+        data_nasc,
+        escolaridade,
+        sexo
+      );
+      console.log("Deu tudo certo");
+      Router.push("/");
+    } catch (error: any) {
+      setError(error.message || "Houve um erro ao cadastrar o usuário");
+    }
   };
 
   function handleChangeMaskCEP(event: any) {
@@ -36,6 +86,7 @@ const Formulario: React.FC = () => {
         type="select"
         id="estado"
         name="estado"
+        value={estadoSelecionado} // Setando o valor de estado
         onChange={(e) => setEstadoSelecionado(e.target.value)} // Capturando a mudança de estado
       >
         <option value="" disabled>
@@ -77,8 +128,14 @@ const Formulario: React.FC = () => {
         id="data_nasc"
         name="data_nasc"
       />
-      <FormField label="Cidade" type="select" id="cidade" name="cidade">
-        {isLoading ? ( // Mostra um loading enquanto busca as cidades
+      <FormField
+        label="Cidade"
+        type="select"
+        id="cidade"
+        name="cidade"
+        value={cidade}
+      >
+        {isLoadingCities ? ( // Mostra um loading enquanto busca as cidades
           <option value="" disabled>
             Carregando cidades...
           </option>
@@ -90,8 +147,14 @@ const Formulario: React.FC = () => {
           ))
         )}
       </FormField>
-      <FormField label="Bairro" type="text" id="bairro" name="bairro" />
-      <FormField label="Rua" type="text" id="rua" name="rua" />
+      <FormField
+        label="Bairro"
+        type="text"
+        id="bairro"
+        name="bairro"
+        value={bairro}
+      />
+      <FormField label="Rua" type="text" id="rua" name="rua" value={rua} />
       <FormField label="Sexo" type="select" id="sexo" name="sexo">
         <option value="" disabled>
           Selecione
