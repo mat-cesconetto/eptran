@@ -8,11 +8,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import React from "react";
 import { useState } from "react";
 import Box from "@mui/material/Box";
 import { PieChart } from "@mui/x-charts/PieChart";
 import { mobileAndDesktopOS, valueFormatter } from "./webUsageStats";
+import * as React from "react";
+import { BarChart } from "@mui/x-charts/BarChart";
 
 const escolas = [
   { nomeEscola: "Escola Sesi", valorEscola: 113 },
@@ -153,7 +154,19 @@ export default function Estatisticas() {
       <div className="w-full h-full mt-10 flex justify-between">
         {/* gráfico 4 */}
 
-        <div className="w-[62.5%] h-96 border-2 rounded-2xl">4</div>
+        <div className="w-[62.5%] h-96 border-2 rounded-2xl">
+          <BarChart
+            series={[
+              { data: [200, 180, 340, 310, 320] },
+              { data: [130, 200, 150, 250, 350] },
+              { data: [300, 230, 290, 280, 280] },
+              
+            ]}
+            height={290}
+            xAxis={[{ data: ["SEGUNDA", "TERÇA", "QUARTA", "QUINTA", "SEXTA"], scaleType: "band" }]}
+            margin={{ top: 10, bottom: 30, left: 50, right: 10 }}
+          />
+        </div>
 
         {/* gráfico 5 */}
 
