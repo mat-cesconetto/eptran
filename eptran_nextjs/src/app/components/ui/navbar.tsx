@@ -3,9 +3,12 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useAuth } from "@/hooks/useAuth";
+import { Button } from "@nextui-org/react";
 
 const NavBar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const isAuthenticated = useAuth();
 
   return (
     <div className="relative h-32 w-full bg-[#023859] flex items-center justify-between shadow-2xl px-4 sm:px-10">
@@ -66,15 +69,30 @@ const NavBar: React.FC = () => {
         <NavLink href="/fale-conosco">Fale Conosco</NavLink>
       </div>
       <div className="flex-shrink-0">
-        <Link href={"/login"}>
-          <Image
-            src="/user.svg"
-            width={57}
-            height={57}
-            alt="imagem usuario"
-            className="m-4 sm:m-10"
-          />
-        </Link>
+        <div className="flex-shrink-0">
+          {isAuthenticated ? (
+            <Image
+              src="/user.svg"
+              width={57}
+              height={57}
+              alt="imagem usuario"
+              className="m-4 sm:m-10"
+            />
+          ) : (
+            <div>
+              <Link href="/login">
+                <Button className="bg-white text-[#023859] text-sm px-8 py-2 rounded mr-8">
+                  Login
+                </Button>
+              </Link>
+              <Link href="/cadastro">
+                <Button className="border-white border-2 bg-transparent text-sm text-white px-6 py-2 rounded">
+                  Cadastro
+                </Button>
+              </Link>
+            </div>
+          )}
+        </div>
       </div>
       {isMenuOpen && (
         <div className="fixed inset-0 bg-[#023859] z-50 flex items-center justify-center md:hidden">
