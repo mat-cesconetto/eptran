@@ -9,6 +9,8 @@ import { Button } from "@nextui-org/react";
 const NavBar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isAuthenticated = useAuth();
+  console.log("Usuário autenticado:", isAuthenticated); // Adicione este log
+
 
   return (
     <div className="relative h-32 w-full bg-[#023859] flex items-center justify-between shadow-2xl px-4 sm:px-10">
