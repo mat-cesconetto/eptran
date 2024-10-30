@@ -8,8 +8,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import React from "react";
 import { useState } from "react";
+import Box from "@mui/material/Box";
+import { PieChart } from "@mui/x-charts/PieChart";
+import { mobileAndDesktopOS, valueFormatter } from "./webUsageStats";
+import * as React from "react";
+import { BarChart } from "@mui/x-charts/BarChart";
 
 const escolas = [
   { nomeEscola: "Escola Sesi", valorEscola: 113 },
@@ -45,6 +49,8 @@ const bairros = [
 
 export default function Estatisticas() {
   const [userFilter, setUserFilter] = useState("all");
+  const [radius] = React.useState(30);
+  const [itemNb] = React.useState(5);
 
   return (
     <main className="min-h-screen p-4 md:p-8 pt-24 text-black">
@@ -139,18 +145,56 @@ export default function Estatisticas() {
 
         {/* gráfico 3 */}
 
-        <div className=" w-96 h-80 rounded-2xl border-2"></div>
+        <div className="w-96 h-80 rounded-2xl border-2 flex items-center justify-center">
+          
+        </div>
       </div>
       {/* div principal 2 */}
 
       <div className="w-full h-full mt-10 flex justify-between">
         {/* gráfico 4 */}
 
-        <div className="w-[62.5%] h-96 border-2 rounded-2xl">4</div>
+        <div className="w-[62.5%] h-96 border-2 rounded-2xl">
+          <BarChart
+            series={[
+              { data: [200, 180, 340, 310, 320] },
+              { data: [130, 200, 150, 250, 350] },
+              { data: [300, 230, 290, 280, 280] },
+              
+            ]}
+            height={290}
+            xAxis={[{ data: ["SEGUNDA", "TERÇA", "QUARTA", "QUINTA", "SEXTA"], scaleType: "band" }]}
+            margin={{ top: 10, bottom: 30, left: 100, right: 10 }}
+          />
+        </div>
 
         {/* gráfico 5 */}
 
-        <div className="w-96 h-96 border-2 rounded-2xl">5</div>
+        <div className="flex border-2 rounded-2xl justify-center align-middle">
+        <Box sx={{ width: "100%", height: "100%" }}>
+            <PieChart
+              series={[
+                {
+                  data: mobileAndDesktopOS.slice(0, itemNb),
+                  innerRadius: radius,
+                  outerRadius: radius + 90,
+                  paddingAngle: 2,
+                  cornerRadius: 5,
+                  arcLabel: (item) => `${item.label}: ${item.value}`,
+                  arcLabelMinAngle: 45,
+                },
+              ]}
+              slotProps={{
+                legend: {
+                  hidden: true, 
+                },
+              }}
+              height={300}
+              width={350}
+              margin={{ top: 60, bottom: 10, left: 30, right: 10 }}
+            />
+          </Box>
+        </div>
       </div>
 
       {/* div principal 3 */}
