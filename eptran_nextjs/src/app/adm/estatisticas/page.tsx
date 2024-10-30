@@ -145,33 +145,43 @@ export default function Estatisticas() {
 
         {/* gráfico 3 */}
 
-        <div className="w-96 h-80 rounded-2xl border-2 flex items-center justify-center">
-          
-        </div>
+        <div className="w-96 h-80 rounded-2xl border-2 flex items-center justify-center"></div>
       </div>
       {/* div principal 2 */}
 
       <div className="w-full h-full mt-10 flex justify-between">
         {/* gráfico 4 */}
 
-        <div className="w-[62.5%] h-96 border-2 rounded-2xl">
-          <BarChart
-            series={[
-              { data: [200, 180, 340, 310, 320] },
-              { data: [130, 200, 150, 250, 350] },
-              { data: [300, 230, 290, 280, 280] },
+        <div className="w-[62.5%] h-96 border-2 rounded-md align-middle text-center">
+          <h2 className="mt-6 font-bold text-darkBlue-500 text-3xl">
+            Acessos semanais
+          </h2>
               
+          <div className="align-middle justify-center flex mt-8">
+          <BarChart
+            borderRadius={8}
+            series={[
+              { data: [200, 180, 340, 310, 320], color: "#CA8DFB" },
+              { data: [130, 200, 150, 250, 350], color: "#8995FA" },
+              { data: [300, 230, 290, 280, 280], color: "#003A7E" },
             ]}
             height={290}
-            xAxis={[{ data: ["SEGUNDA", "TERÇA", "QUARTA", "QUINTA", "SEXTA"], scaleType: "band" }]}
-            margin={{ top: 10, bottom: 30, left: 100, right: 10 }}
+            width={600}
+            xAxis={[
+              {
+                data: ["SEGUNDA", "TERÇA", "QUARTA", "QUINTA", "SEXTA"],
+                scaleType: "band",
+              },
+            ]}
+            margin={{ top: 10, bottom: 30, left: 50, right: 10 }}
           />
+          </div>
         </div>
 
         {/* gráfico 5 */}
 
         <div className="flex border-2 rounded-2xl justify-center align-middle">
-        <Box sx={{ width: "100%", height: "100%" }}>
+          <Box sx={{ width: "100%", height: "100%" }}>
             <PieChart
               series={[
                 {
@@ -186,7 +196,7 @@ export default function Estatisticas() {
               ]}
               slotProps={{
                 legend: {
-                  hidden: true, 
+                  hidden: true,
                 },
               }}
               height={300}
