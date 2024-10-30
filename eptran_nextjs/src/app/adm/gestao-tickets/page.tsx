@@ -34,24 +34,24 @@ const users = [
     id: "23222",
     name: "José Silva",
     assunto: "Dificuldade para entrar no jogo",
-    prioridade: "Média",
+    prioridade: "Alta",
     status: "Em aberto",
     data: "11/12/2024",
   },
 ];
 
 const priorityColors = {
-  'Alta': "bg-red-200  font-semibold text-red-700",
+  'Alta': "bg-red-200  font-semibold text-red-600",
   'Média': "bg-yellow-200 text-yellow-600 font-semibold",
-  'Baixa': "bg-blue-200 text-blue-600 font-semibold",
-  'Nenhuma': "bg-gray-300 text-gray-700 font-semibold",
+  'Baixa': "bg-blue-200 text-blue-700 font-semibold",
+  'Nenhuma': "bg-gray-300 text-gray-800 font-semibold",
 };
 
 const priorityStatus = {
-  'Em andamento': "bg-orange-200 text-orange-600 font-semibold",
-  'Em aberto': "bg-green-200 text-green-700 font-semibold",
-  'Resolvido': "bg-blue-200 text-blue-600 font-semibold",
-  'Cancelado': "bg-gray-300 text-gray-700 font-semibold",
+  'Em andamento': "bg-orange-200 text-orange-500 font-semibold",
+  'Em aberto': "bg-green-200 text-green-600 font-semibold",
+  'Resolvido': "bg-blue-200 text-blue-700 font-semibold",
+  'Cancelado': "bg-gray-300 text-gray-800 font-semibold",
 };
 
 
@@ -146,7 +146,7 @@ export default function Gerenciamento() {
           </TableHeader>
           <TableBody>
             {filteredUsers.map((user) => (
-              <TableRow key={user.id}>
+              <TableRow key={user.id}>,
                 <TableCell className="font-medium">{user.id}</TableCell>
                 <TableCell>
                   <div className="flex items-center">

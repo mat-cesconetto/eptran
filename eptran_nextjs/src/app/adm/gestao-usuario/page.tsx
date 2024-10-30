@@ -28,7 +28,7 @@ import {
 } from "@/components/ui/table";
 import { MoreHorizontal, Trash, SquarePen, Search } from "lucide-react";
 import { useUsers } from "@/hooks/useUsers";
-import UserRow from "./userRow";
+import UserRow from "./UserRow";
 
 export default function Gerenciamento() {
   const [searchTerm, setSearchTerm] = useState("");
