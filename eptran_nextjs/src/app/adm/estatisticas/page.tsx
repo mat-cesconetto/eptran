@@ -10,8 +10,13 @@ import {
 } from "@/components/ui/select";
 import { useState } from "react";
 import Box from "@mui/material/Box";
-import { PieChart } from "@mui/x-charts/PieChart";
-import { mobileAndDesktopOS, valueFormatter } from "./webUsageStats";
+import {
+  PieChart,
+  PiePlot,
+  PieArcLabel,
+  PieArcLabelProps,
+} from "@mui/x-charts/PieChart";
+import { mobileAndDesktopOS } from "./webUsageStats";
 import * as React from "react";
 import { BarChart } from "@mui/x-charts/BarChart";
 
@@ -47,10 +52,11 @@ const bairros = [
   { nomeBairro: "Vila Nova", valorBairro: 36 },
 ];
 
+const itemNb = mobileAndDesktopOS.length;
+const radius = 80;
+
 export default function Estatisticas() {
   const [userFilter, setUserFilter] = useState("all");
-  const [radius] = React.useState(30);
-  const [itemNb] = React.useState(5);
 
   return (
     <main className="min-h-screen p-4 md:p-8 pt-24 text-black">
@@ -147,61 +153,105 @@ export default function Estatisticas() {
 
         <div className="w-96 h-80 rounded-2xl border-2 flex items-center justify-center"></div>
       </div>
+
       {/* div principal 2 */}
 
       <div className="w-full h-full mt-10 flex justify-between">
         {/* gráfico 4 */}
 
-        <div className="w-[62.5%] h-96 border-2 rounded-md align-middle text-center">
-          <h2 className="mt-6 font-bold text-darkBlue-500 text-3xl">
+        <div className="w-[62.5%] border-2 rounded-md align-middle text-center">
+          <h2 className="mt-4 font-bold text-darkBlue-500 text-3xl">
             Acessos semanais
           </h2>
-              
-          <div className="align-middle justify-center flex mt-8">
-          <BarChart
-            borderRadius={8}
-            series={[
-              { data: [200, 180, 340, 310, 320], color: "#CA8DFB" },
-              { data: [130, 200, 150, 250, 350], color: "#8995FA" },
-              { data: [300, 230, 290, 280, 280], color: "#003A7E" },
-            ]}
-            height={290}
-            width={600}
-            xAxis={[
-              {
-                data: ["SEGUNDA", "TERÇA", "QUARTA", "QUINTA", "SEXTA"],
-                scaleType: "band",
-              },
-            ]}
-            margin={{ top: 10, bottom: 30, left: 50, right: 10 }}
-          />
+
+          <div className=" align-middle justify-center flex">
+            <BarChart
+              borderRadius={8}
+              series={[
+                {
+                  data: [200, 180, 340, 310, 320],
+                  color: "#CA8DFB",
+                  label: "Séries Iniciais",
+                },
+                {
+                  data: [130, 200, 150, 250, 350],
+                  color: "#8995FA",
+                  label: "Ensino Fundamental",
+                },
+                {
+                  data: [300, 230, 290, 280, 280],
+                  color: "#003A7E",
+                  label: "Ensino Médio",
+                },
+              ]}
+              height={330}
+              width={700}
+              xAxis={[
+                {
+                  data: ["SEGUNDA", "TERÇA", "QUARTA", "QUINTA", "SEXTA"],
+                  scaleType: "band",
+                },
+              ]}
+              slotProps={{
+                legend: {
+                  direction: "row",
+                  position: { vertical: "top", horizontal: "middle" },
+                  padding: 10,
+                },
+              }}
+              sx={{
+                '.MuiChartsAxis-bottom .MuiChartsAxis-line': {
+                  display: 'none',
+                },
+                '.MuiChartsAxis-bottom .MuiChartsAxis-tickLabel': {
+                  fontWeight: 'bold',
+                },
+                '.MuiChartsAxis-left .MuiChartsAxis-line': {
+                  display: 'none',
+                },
+                '.MuiChartsAxis-left .MuiChartsAxis-tickLabel': {
+                  fontWeight: 'bold',
+                },
+              }}
+                          
+              margin={{ top: 50, bottom: 30, left: 50, right: 10 }}
+            />
           </div>
         </div>
 
         {/* gráfico 5 */}
 
-        <div className="flex border-2 rounded-2xl justify-center align-middle">
+        <div className="grid border-2 rounded-2xl">
+          <h2 className="mt-4 flex justify-center font-bold text-darkBlue-500 text-3xl">
+            Sexo
+          </h2>
+
           <Box sx={{ width: "100%", height: "100%" }}>
             <PieChart
               series={[
                 {
                   data: mobileAndDesktopOS.slice(0, itemNb),
                   innerRadius: radius,
-                  outerRadius: radius + 90,
-                  paddingAngle: 2,
-                  cornerRadius: 5,
-                  arcLabel: (item) => `${item.label}: ${item.value}`,
+                  outerRadius: 120,
                   arcLabelMinAngle: 45,
                 },
               ]}
+              sx={{
+                "--ChartsLegend-rootSpacing": "10px",
+                "--ChartsLegend-itemWidth": "100px",
+              }}
+            
+              width={400}
+              height={400}
+              margin={{ top: 10, bottom: 100, left: 30, right: 30 }}
               slotProps={{
                 legend: {
-                  hidden: true,
+                  direction: "column",
+                  position: { vertical: "bottom", horizontal: "left" },
+                  padding: 20,
+                  
                 },
               }}
-              height={300}
-              width={350}
-              margin={{ top: 60, bottom: 10, left: 30, right: 10 }}
             />
           </Box>
         </div>
