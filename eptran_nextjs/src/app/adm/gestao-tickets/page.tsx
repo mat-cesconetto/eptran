@@ -207,7 +207,6 @@ export default function Gerenciamento() {
           </TableBody>
         </Table>
       </div>
-      <div></div>
     </main>
   );
 }
