@@ -9,6 +9,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useState } from "react";
+import Box from "@mui/material/Box";
+import { PieChart } from "@mui/x-charts/PieChart";
+import { mobileAndDesktopOS, valueFormatter } from "./webUsageStats";
 import * as React from "react";
 import { BarChart } from "@mui/x-charts/BarChart";
 
@@ -46,6 +49,8 @@ const bairros = [
 
 export default function Estatisticas() {
   const [userFilter, setUserFilter] = useState("all");
+  const [radius] = React.useState(30);
+  const [itemNb] = React.useState(5);
 
   return (
     <main className="min-h-screen p-4 md:p-8 pt-24 text-black">
@@ -140,7 +145,9 @@ export default function Estatisticas() {
 
         {/* gráfico 3 */}
 
-        <div className=" w-96 h-80 rounded-2xl border-2"></div>
+        <div className="w-96 h-80 rounded-2xl border-2 flex items-center justify-center">
+          
+        </div>
       </div>
       {/* div principal 2 */}
 
@@ -163,7 +170,31 @@ export default function Estatisticas() {
 
         {/* gráfico 5 */}
 
-        <div className="w-96 h-96 border-2 rounded-2xl">5</div>
+        <div className="flex border-2 rounded-2xl justify-center align-middle">
+        <Box sx={{ width: "100%", height: "100%" }}>
+            <PieChart
+              series={[
+                {
+                  data: mobileAndDesktopOS.slice(0, itemNb),
+                  innerRadius: radius,
+                  outerRadius: radius + 90,
+                  paddingAngle: 2,
+                  cornerRadius: 5,
+                  arcLabel: (item) => `${item.label}: ${item.value}`,
+                  arcLabelMinAngle: 45,
+                },
+              ]}
+              slotProps={{
+                legend: {
+                  hidden: true, 
+                },
+              }}
+              height={300}
+              width={350}
+              margin={{ top: 60, bottom: 10, left: 30, right: 10 }}
+            />
+          </Box>
+        </div>
       </div>
 
       {/* div principal 3 */}
