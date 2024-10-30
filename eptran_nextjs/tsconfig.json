@@ -39,6 +39,12 @@
     "**/*.tsx",
     ".next/types/**/*.ts"
   ],
+  
+    "scripts": {
+      "dev": "next dev"
+    },
+  
+  
   "exclude": [
     "node_modules"
   ]
