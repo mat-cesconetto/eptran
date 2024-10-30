@@ -16,3 +16,11 @@ export interface User {
     sexo: Sexo;
   }
   
+export type UserInfo = {
+  id: number
+  nome: string
+  email: string
+  escolaridade: Escolaridade
+  escola: string
+  profilePicture: string
+}

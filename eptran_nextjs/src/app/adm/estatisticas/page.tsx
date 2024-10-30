@@ -153,27 +153,70 @@ export default function Estatisticas() {
 
         <div className="w-96 h-80 rounded-2xl border-2 flex items-center justify-center"></div>
       </div>
+
       {/* div principal 2 */}
 
       <div className="w-full h-full mt-10 flex justify-between">
         {/* gráfico 4 */}
 
-        <div className="w-[62.5%] h-96 border-2 rounded-2xl">
-          <BarChart
-            series={[
-              { data: [200, 180, 340, 310, 320] },
-              { data: [130, 200, 150, 250, 350] },
-              { data: [300, 230, 290, 280, 280] },
-            ]}
-            height={290}
-            xAxis={[
-              {
-                data: ["SEGUNDA", "TERÇA", "QUARTA", "QUINTA", "SEXTA"],
-                scaleType: "band",
-              },
-            ]}
-            margin={{ top: 10, bottom: 30, left: 50, right: 10 }}
-          />
+        <div className="w-[62.5%] border-2 rounded-md align-middle text-center">
+          <h2 className="mt-4 font-bold text-darkBlue-500 text-3xl">
+            Acessos semanais
+          </h2>
+
+          <div className=" align-middle justify-center flex">
+            <BarChart
+              borderRadius={8}
+              series={[
+                {
+                  data: [200, 180, 340, 310, 320],
+                  color: "#CA8DFB",
+                  label: "Séries Iniciais",
+                },
+                {
+                  data: [130, 200, 150, 250, 350],
+                  color: "#8995FA",
+                  label: "Ensino Fundamental",
+                },
+                {
+                  data: [300, 230, 290, 280, 280],
+                  color: "#003A7E",
+                  label: "Ensino Médio",
+                },
+              ]}
+              height={330}
+              width={700}
+              xAxis={[
+                {
+                  data: ["SEGUNDA", "TERÇA", "QUARTA", "QUINTA", "SEXTA"],
+                  scaleType: "band",
+                },
+              ]}
+              slotProps={{
+                legend: {
+                  direction: "row",
+                  position: { vertical: "top", horizontal: "middle" },
+                  padding: 10,
+                },
+              }}
+              sx={{
+                '.MuiChartsAxis-bottom .MuiChartsAxis-line': {
+                  display: 'none',
+                },
+                '.MuiChartsAxis-bottom .MuiChartsAxis-tickLabel': {
+                  fontWeight: 'bold',
+                },
+                '.MuiChartsAxis-left .MuiChartsAxis-line': {
+                  display: 'none',
+                },
+                '.MuiChartsAxis-left .MuiChartsAxis-tickLabel': {
+                  fontWeight: 'bold',
+                },
+              }}
+                          
+              margin={{ top: 50, bottom: 30, left: 50, right: 10 }}
+            />
+          </div>
         </div>
 
         {/* gráfico 5 */}

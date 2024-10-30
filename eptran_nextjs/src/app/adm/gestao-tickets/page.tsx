@@ -1,8 +1,8 @@
 "use client";
 
 import Image from "next/image";
-
 import { useState } from "react";
+import { useTickets } from '@/hooks/useTicket'; // adjust path as needed
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -28,61 +28,76 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { MoreHorizontal, Trash, SquarePen, Search } from "lucide-react";
-
-const users = [
-  {
-    id: "23222",
-    name: "José Silva",
-    assunto: "Dificuldade para entrar no jogo",
-    prioridade: "Média",
-    status: "Em aberto",
-    data: "11/12/2024",
-  },
-];
+import { Status } from "@/@types/Status";
+import { useRouter } from "next/navigation";
 
 const priorityColors = {
-  'Alta': "bg-red-200  font-semibold text-red-700",
-  'Média': "bg-yellow-200 text-yellow-600 font-semibold",
-  'Baixa': "bg-blue-200 text-blue-600 font-semibold",
-  'Nenhuma': "bg-gray-300 text-gray-700 font-semibold",
+  'Alta': "bg-red-200 text-red-600",
+  'Média': "bg-yellow-200 text-yellow-600",
+  'Baixa': "bg-blue-200 text-blue-700",
+  'Nenhuma': "bg-gray-300 text-gray-800",
 };
 
-const priorityStatus = {
-  'Em andamento': "bg-orange-200 text-orange-600 font-semibold",
-  'Em aberto': "bg-green-200 text-green-700 font-semibold",
-  'Resolvido': "bg-blue-200 text-blue-600 font-semibold",
-  'Cancelado': "bg-gray-300 text-gray-700 font-semibold",
+const statusColors = {
+  'Em andamento': "bg-orange-200 text-orange-500",
+  'Em aberto': "bg-green-200 text-green-600",
+  'Resolvido': "bg-blue-200 text-blue-700",
+  'Cancelado': "bg-gray-300 text-gray-800",
 };
-
 
 export default function Gerenciamento() {
   const [searchTerm, setSearchTerm] = useState("");
-  const [userFilter, setUserFilter] = useState("all");
+  const [statusFilter, setStatusFilter] = useState("all");
+
+  const router = useRouter();
+
+const handleOpenTicket = (ticketId: number) => {
+  router.push(`/adm/gestao-tickets/ticket/${ticketId}`); // Redireciona para a página do ticket com o ID correspondente
+};
+  
+  const {
+    tickets,
+    ticketsError,
+    finalizarTicket,
+  } = useTickets();
+
+  if (ticketsError) {
+    return <div className="text-red-500">Error loading tickets</div>;
+  }
+
+  if (!tickets) {
+    return <div>Loading...</div>;
+  }
 
   const getPriorityColor = (priority: string) => {
-    return (
-      priorityColors[priority as keyof typeof priorityColors] ||
-      priorityColors["Nenhuma"]
-    );
+    return priorityColors[priority as keyof typeof priorityColors] || "bg-gray-300 text-gray-800";
   };
 
-  const getPriorityStatus = (priority: string) => {
-    return (
-      priorityStatus[priority as keyof typeof priorityStatus] ||
-      priorityStatus["Cancelado"]
-    );
+  const getStatusColor = (status: string) => {
+    return statusColors[status as keyof typeof statusColors] || "bg-gray-300 text-gray-800";
   };
 
-  const filteredUsers = users.filter(
-    (user) =>
-      user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      user.assunto.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      user.id.includes(searchTerm)
-  );
+  const filteredTickets = tickets.filter(ticket => {
+    const matchesStatus = 
+      statusFilter === "all" || 
+      (statusFilter === "active" && ticket.status === Status.EM_ABERTO) ||
+      (statusFilter === "inactive" && ticket.status === Status.PENDENTE) ||
+      (statusFilter === "completed" && ticket.status === Status.FINALIZADO);
+
+    return matchesStatus;
+  });
+
+  const handleDeleteTicket = async (ticketId: number) => {
+    try {
+      await finalizarTicket(ticketId);
+    } catch (error) {
+      console.error('Failed to delete ticket:', error);
+    }
+  };
 
   return (
     <main className="min-h-screen p-4 md:p-8 pt-24 text-black">
-      <div className="pb-5 flex gap-5 ">
+      <div className="pb-5 flex gap-5">
         <div>
           <Image
             src="/ticket-8-svgrepo-com.svg"
@@ -95,6 +110,7 @@ export default function Gerenciamento() {
           <h1>Gestão de Ticket</h1>
         </div>
       </div>
+      
       <div className="flex flex-col md:flex-row md:justify-between md:items-center space-y-4 md:space-y-0 md:space-x-4 mb-6">
         <div className="relative">
           <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500" />
@@ -106,8 +122,8 @@ export default function Gerenciamento() {
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
-        <Select value={userFilter} onValueChange={setUserFilter}>
-          <SelectTrigger className=" text-darkBlue-500 font-bold w-full md:w-auto">
+        <Select value={statusFilter} onValueChange={setStatusFilter}>
+          <SelectTrigger className="text-darkBlue-500 font-bold w-full md:w-auto">
             <SelectValue placeholder="Todos" />
           </SelectTrigger>
           <SelectContent className="text-darkBlue-500 font-bold">
@@ -123,65 +139,42 @@ export default function Gerenciamento() {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[100px] text-darkBlue-500 font-bold">
-                ID
-              </TableHead>
-              <TableHead className="text-darkBlue-500 font-bold">
-                Usuário
-              </TableHead>
-              <TableHead className="hidden md:table-cell text-darkBlue-500 font-bold">
-                Assunto
-              </TableHead>
-              <TableHead className="hidden md:table-cell text-darkBlue-500 font-bold">
-                Prioridade
-              </TableHead>
-              <TableHead className="pl-7 hidden md:table-cell text-darkBlue-500 font-bold">
-                Status
-              </TableHead>
-              <TableHead className="hidden md:table-cell text-darkBlue-500 font-bold">
-                Data da Criação
-              </TableHead>
+              <TableHead className="w-[100px] text-darkBlue-500 font-bold">ID</TableHead>
+              <TableHead className="text-darkBlue-500 font-bold">Usuário</TableHead>
+              <TableHead className="hidden md:table-cell text-darkBlue-500 font-bold">Assunto</TableHead>
+              <TableHead className="hidden md:table-cell text-darkBlue-500 font-bold">Prioridade</TableHead>
+              <TableHead className="pl-7 hidden md:table-cell text-darkBlue-500 font-bold">Status</TableHead>
+              <TableHead className="hidden md:table-cell text-darkBlue-500 font-bold">Data da Criação</TableHead>
               <TableHead className="text-right"></TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {filteredUsers.map((user) => (
-              <TableRow key={user.id}>
-                <TableCell className="font-medium">{user.id}</TableCell>
+            {filteredTickets.map((ticket) => (
+              <TableRow key={ticket.id}>
+                <TableCell className="font-medium">{ticket.id}</TableCell>
                 <TableCell>
                   <div className="flex items-center">
                     <Avatar className="h-8 w-8 mr-2 border-darkBlue-500 border-2">
-                      <AvatarImage src="/salsicha.svg" alt={user.name} />
-                      <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
+                      <AvatarImage src={ticket.usuarioFotoPerfil || "/salsicha.svg"} alt={ticket.usuarioNome} />
+                      <AvatarFallback>{ticket.usuarioNome.charAt(0)}</AvatarFallback>
                     </Avatar>
-                    {user.name}
+                    {ticket.usuarioNome}
                   </div>
                 </TableCell>
+                <TableCell className="hidden md:table-cell">{ticket.assunto}</TableCell>
                 <TableCell className="hidden md:table-cell">
-                  {user.assunto}
-                </TableCell>
-                <TableCell className="hidden md:table-cell">
-                  <span
-                    className={`px-4 py-2 rounded-full text-white ${getPriorityColor(
-                      user.prioridade
-                    )}`}
-                  >
-                    {user.prioridade}
+                  <span className={`px-4 py-2 rounded-full font-semibold ${getPriorityColor(ticket.prioridade)}`}>
+                    {ticket.prioridade}
                   </span>
                 </TableCell>
                 <TableCell className="hidden md:table-cell">
-                <span
-                    className={`px-4 py-2 rounded-full text-white ${getPriorityStatus(
-                      user.status
-                    )}`}
-                  >
-                    {user.status}
+                  <span className={`px-4 py-2 rounded-full font-semibold ${getStatusColor(ticket.email)}`}>
+                    {ticket.status}
                   </span>
                 </TableCell>
                 <TableCell className="hidden md:table-cell">
-                  {user.data}
+                  {new Date(ticket.createdAt).toLocaleDateString('pt-BR')}
                 </TableCell>
-
                 <TableCell className="text-right">
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
@@ -191,13 +184,13 @@ export default function Gerenciamento() {
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
-                      <DropdownMenuItem>
-                        <SquarePen className="mr-2 h-4 w-4" />
-                        <Button variant= "ghost" className="p-0">Abrir Ticket </Button>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => handleOpenTicket(ticket.id)}>
+  <SquarePen className="mr-2 h-4 w-4" />
+  <Button variant="ghost" className="p-0">Abrir Ticket</Button>
+</DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => handleDeleteTicket(ticket.id)}>
                         <Trash className="mr-2 h-4 w-4" />
-                        <Button variant= "ghost" className="p-0">Excluir </Button>
+                        <Button variant="ghost" className="p-0">Excluir</Button>
                       </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
