@@ -33,7 +33,7 @@ const users = [
     id: "23222",
     name: "José Silva",
     email: "jose.silva@gmail.com",
-    gender: "♂",
+    gender: "NA",
     birthdate: "11/12/2024",
     location: "JOINVILLE/SC",
     school: "E.E.B GAG",
@@ -108,7 +108,7 @@ export default function Gerenciamento() {
               <TableHead className="hidden md:table-cell text-darkBlue-500 font-bold">
                 Escolaridade
               </TableHead>
-              <TableHead className="text-right"></TableHead>
+              <TableHead className=" text-darkBlue-500 font-bold" > Açoes</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -145,7 +145,7 @@ export default function Gerenciamento() {
                 <TableCell className="text-right">
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" className="h-8 w-8 p-0">
+                      <Button variant="ghost" className="h-8 w-8 mr-0">
                         <span className="sr-only">Abrir menu</span>
                         <MoreHorizontal className="h-4 w-4" />
                       </Button>
