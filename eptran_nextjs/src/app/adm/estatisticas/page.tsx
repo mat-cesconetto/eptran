@@ -160,11 +160,11 @@ export default function Estatisticas() {
         {/* gráfico 4 */}
 
         <div className="w-[62.5%] border-2 rounded-md align-middle text-center">
-          <h2 className="mt-4 font-bold text-darkBlue-500 text-3xl">
+          <h2 className="mt-8 font-bold text-darkBlue-500 text-3xl">
             Acessos semanais
           </h2>
 
-          <div className=" align-middle justify-center flex">
+          <div className=" align-middle justify-center flex mt-8">
             <BarChart
               borderRadius={8}
               series={[
@@ -196,7 +196,8 @@ export default function Estatisticas() {
                 legend: {
                   direction: "row",
                   position: { vertical: "top", horizontal: "middle" },
-                  padding: 10,
+                  padding: -2,
+                  
                 },
               }}
               sx={{
