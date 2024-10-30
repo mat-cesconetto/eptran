@@ -157,7 +157,7 @@ export default function Estatisticas() {
             ]}
             height={290}
             xAxis={[{ data: ["SEGUNDA", "TERÇA", "QUARTA", "QUINTA", "SEXTA"], scaleType: "band" }]}
-            margin={{ top: 10, bottom: 30, left: 50, right: 10 }}
+            margin={{ top: 10, bottom: 30, left: 100, right: 10 }}
           />
         </div>
 
