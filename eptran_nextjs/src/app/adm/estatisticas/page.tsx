@@ -12,11 +12,8 @@ import { useState } from "react";
 import Box from "@mui/material/Box";
 import {
   PieChart,
-  PiePlot,
-  PieArcLabel,
-  PieArcLabelProps,
 } from "@mui/x-charts/PieChart";
-import { desktopOS } from "./estatisticas";
+import { sexoEstatistica } from "./estatisticas";
 import * as React from "react";
 import { BarChart } from "@mui/x-charts/BarChart";
 
@@ -52,7 +49,7 @@ const bairros = [
   { nomeBairro: "Vila Nova", valorBairro: 36 },
 ];
 
-const itemNb = desktopOS.length;
+const itemNb = sexoEstatistica.length;
 const radius = 80;
 
 export default function Estatisticas() {
@@ -217,7 +214,7 @@ export default function Estatisticas() {
             <PieChart
               series={[
                 {
-                  data: desktopOS.slice(0, itemNb),
+                  data: sexoEstatistica.slice(0, itemNb),
                   innerRadius: radius,
                   outerRadius: 120,
                   arcLabelMinAngle: 45,
