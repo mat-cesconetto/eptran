@@ -1,5 +1,6 @@
 "use client";
 
+
 import Image from "next/image";
 import {
   Select,
@@ -71,6 +72,7 @@ export default function Estatisticas() {
         </div>
       </div>
 
+
       <div className="w-full items-end justify-end flex">
         <Select value={userFilter} onValueChange={setUserFilter}>
           <SelectTrigger className="text-darkBlue-500 font-bold w-full md:w-auto">
@@ -83,6 +85,7 @@ export default function Estatisticas() {
           </SelectContent>
         </Select>
       </div>
+
 
       {/* div principal 1 */}
       <div className="w-full h-full mt-10 flex justify-between">
@@ -97,19 +100,23 @@ export default function Estatisticas() {
             />
           </div>
 
+
           <h1 className="mt-6 ml-12 font-bold text-darkBlue-500 text-5xl">
             113.007k
           </h1>
+
 
           <p className="ml-12 flex font-semibold text-darkBlue-200">
             <span className="mr-1 text-fonte-verde font-semibold">+9,07k</span>{" "}
             nos últimos 7 dias
           </p>
 
+
           <h1 className="mt-4 ml-12 font-bold text-darkBlue-500 text-xl">
             Acessos Totais
           </h1>
         </div>
+
 
         {/* gráfico 2 */}
         <div className="w-96 h-80 rounded-2xl border-2">
@@ -117,6 +124,7 @@ export default function Estatisticas() {
             <h2 className="mt-10 font-bold text-darkBlue-500 text-2xl">
               Principais escolas
             </h2>
+
 
             <div className="max-w-md mx-auto p-8 py-6">
               <ol className="list-none space-y-3">
@@ -143,46 +151,10 @@ export default function Estatisticas() {
           </div>
         </div>
 
+
         {/* gráfico 3 */}
         <div className="w-96 h-80 rounded-2xl border-2 flex items-center justify-center">
-          <BarChart
-            borderRadius={8}
-            width={700}
-            height={330}
-            series={acessoPorRegiao.map((serie) => ({
-              data: [serie.value], // Corrected: Use 'value' instead of 'data'
-              label: serie.label,
-              color: serie.color,
-            }))}
-            xAxis={[
-              {
-                data: acessoPorRegiao.map((item) => item.label),
-                scaleType: "band",
-              },
-            ]}
-            slotProps={{
-              legend: {
-                direction: "row",
-                position: { vertical: "top", horizontal: "middle" },
-                padding: -2,
-              },
-            }}
-            sx={{
-              ".MuiChartsAxis-bottom .MuiChartsAxis-line": {
-                display: "none",
-              },
-              ".MuiChartsAxis-bottom .MuiChartsAxis-tickLabel": {
-                fontWeight: "bold",
-              },
-              ".MuiChartsAxis-left .MuiChartsAxis-line": {
-                display: "none",
-              },
-              ".MuiChartsAxis-left .MuiChartsAxis-tickLabel": {
-                fontWeight: "bold",
-              },
-            }}
-            margin={{ top: 50, bottom: 30, left: 50, right: 10 }}
-          />
+          {/* Add content for gráfico 3 here */}
         </div>
       </div>
 
@@ -215,32 +187,50 @@ export default function Estatisticas() {
                   direction: "row",
                   position: { vertical: "top", horizontal: "middle" },
                   padding: -2,
+                  
+                  labelStyle: {
+                    fill: '#023859',
+                    fontWeight: "Bold",
+                  }
                 },
               }}
               sx={{
                 ".MuiChartsAxis-bottom .MuiChartsAxis-line": {
                   display: "none",
                 },
+                ".MuiChartsAxis-bottom .MuiChartsAxis-tick": {
+                  display: "none",
+                },
                 ".MuiChartsAxis-bottom .MuiChartsAxis-tickLabel": {
-                  fontWeight: "bold",
+                  fontWeight: "800",
+                  fill:"#023859"
                 },
                 ".MuiChartsAxis-left .MuiChartsAxis-line": {
                   display: "none",
                 },
-                ".MuiChartsAxis-left .MuiChartsAxis-tickLabel": {
-                  fontWeight: "bold",
+                ".MuiChartsAxis-left .MuiChartsAxis-tick": {
+                  display: "none",
                 },
+                ".MuiChartsAxis-left .MuiChartsAxis-tickLabel": {
+                  fontWeight: "800",
+                  fill:"#023859"
+                },
+                
               }}
+              
+
               margin={{ top: 50, bottom: 30, left: 50, right: 10 }}
             />
           </div>
         </div>
+
 
         {/* gráfico 5 */}
         <div className="grid border-2 rounded-2xl">
           <h2 className="mt-4 flex justify-center font-bold text-darkBlue-500 text-3xl">
             Sexo
           </h2>
+
 
           <Box sx={{ width: "100%", height: "100%" }}>
             <PieChart
@@ -250,6 +240,7 @@ export default function Estatisticas() {
                   innerRadius: 80,
                   outerRadius: 120,
                   arcLabelMinAngle: 45,
+                  
                 },
               ]}
               sx={{
@@ -275,6 +266,7 @@ export default function Estatisticas() {
           </Box>
         </div>
       </div>
+
 
       {/* div principal 3 */}
       <div className="w-full h-full mt-10 flex justify-between">
@@ -316,11 +308,13 @@ export default function Estatisticas() {
           </Box>
         </div>
 
+
         {/* gráfico 7 */}
         <div className="w-[48%] h-96 border-2 rounded-2xl">
           {/* Add content for gráfico 7 here */}
         </div>
       </div>
+
 
       {/* div principal 4 */}
       <div className="w-full h-full mt-10 flex justify-between">
@@ -330,6 +324,7 @@ export default function Estatisticas() {
             <h2 className="mt-10 font-bold text-darkBlue-500 text-2xl">
               Acessos por estado
             </h2>
+
 
             <div className="max-w-md mx-auto p-8 py-6">
               <ol className="list-none space-y-3">
@@ -356,12 +351,14 @@ export default function Estatisticas() {
           </div>
         </div>
 
+
         {/* gráfico 9 */}
         <div className="w-96 h-80 rounded-2xl border-2">
           <div className="align-middle text-center">
             <h2 className="mt-10 font-bold text-darkBlue-500 text-2xl">
               Acessos por cidade
             </h2>
+
 
             <div className="max-w-md mx-auto p-8 py-6">
               <ol className="list-none space-y-3">
@@ -388,12 +385,14 @@ export default function Estatisticas() {
           </div>
         </div>
 
+
         {/* gráfico 10 */}
         <div className="w-96 h-80 rounded-2xl border-2">
           <div className="align-middle text-center">
             <h2 className="mt-10 font-bold text-darkBlue-500 text-2xl">
               Acessos por bairro
             </h2>
+
 
             <div className="max-w-md mx-auto p-8 py-6">
               <ol className="list-none space-y-3">
@@ -419,7 +418,7 @@ export default function Estatisticas() {
             </div>
           </div>
         </div>
-      </div>
+      </div> 
     </main>
   );
 }

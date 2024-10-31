@@ -29,7 +29,7 @@ export const sexoEstatistica = [
       color: '#617CDC'
     },
     {
-      label: 'Nao declarado',
+      label: 'Não declarado',
       value: 5,
       color: '#C7C7C7'
     
