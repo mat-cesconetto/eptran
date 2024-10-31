@@ -4,11 +4,13 @@ import React, { useState } from "react";
 import CustomCheckbox from "../cadastro/checkbox";
 import Link from "next/link";
 import { useLogin } from "@/hooks/useLogin";
-import { Router } from "lucide-react";
+import { useRouter } from 'next/navigation';
 
 const FormularioLogin: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const { loginUser } = useLogin();
+  const router = useRouter(); // Certifique-se de que useRouter está sendo usado aqui corretamente
+
 
   const handleLogin = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -21,7 +23,7 @@ const FormularioLogin: React.FC = () => {
     try {
       await loginUser(email, senha);
       console.log('tudo tranquilo');
-      Router.push('./configuracao/dados')
+      router.push("/")
     } catch (error: any) {
       setError(error.message || 'Houve um erro ao logar o usuário');
     }
