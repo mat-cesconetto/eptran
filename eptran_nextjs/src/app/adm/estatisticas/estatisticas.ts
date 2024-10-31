@@ -1,8 +1,27 @@
+export const acessoPorRegiao = [
+  {
+    label: 's',
+    value: 400,
+    color: '#ED8598'
+  },
+  {
+    label: 'su',
+    value: 400,
+    color: '#ED8598'
+  },
+  {
+    label: 'n',
+    value: 400,
+    color: '#ED8598'
+  },
+]
+
 export const sexoEstatistica = [
     {
       label: 'Feminino',
       value: 72,
-      color: '#FA85CB'
+      color: '#FA85CB',
+      
     },
     {
       label: 'Masculino',
@@ -16,6 +35,24 @@ export const sexoEstatistica = [
     
     },
   ];
+ 
+  export const escolaridade = [
+    {
+      label: 'Séries Inciais',
+      value: 30,
+      color: '#CA8DFB'
+    },
+    {
+      label: 'Ensino Fundamental',
+      value: 20,
+      color: '#8995FA'
+    },
+    {
+      label: 'Ensino Médio',
+      value: 80,
+      color: '#003A7E'
+    },
+  ]
 
   export const acessosSemanais = [
     {
@@ -34,4 +71,3 @@ export const sexoEstatistica = [
       label: "Ensino Médio",
     },
   ]
-  

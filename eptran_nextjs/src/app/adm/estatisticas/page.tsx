@@ -1,20 +1,24 @@
-'use client'
+"use client";
 
-import Image from "next/image"
+import Image from "next/image";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
-import { useState } from "react"
-import Box from "@mui/material/Box"
-import { PieChart } from "@mui/x-charts/PieChart"
-import { BarChart } from "@mui/x-charts/BarChart"
+} from "@/components/ui/select";
+import { useState } from "react";
+import Box from "@mui/material/Box";
+import { PieChart } from "@mui/x-charts/PieChart";
+import { BarChart } from "@mui/x-charts/BarChart";
 
-// Import the statistics data
-import { sexoEstatistica, acessosSemanais } from "./estatisticas"
+import {
+  sexoEstatistica,
+  acessosSemanais,
+  acessoPorRegiao,
+  escolaridade,
+} from "./estatisticas";
 
 const escolas = [
   { nomeEscola: "Escola Sesi", valorEscola: 113 },
@@ -22,7 +26,7 @@ const escolas = [
   { nomeEscola: "Colégio Santo Antônio", valorEscola: 15 },
   { nomeEscola: "E.E.M. Celso Ramos", valorEscola: 12 },
   { nomeEscola: "Bom Jesus", valorEscola: 36 },
-]
+];
 
 const estados = [
   { nomeEstado: "Santa Catarina", valorEstado: 113 },
@@ -30,7 +34,7 @@ const estados = [
   { nomeEstado: "Rio Grande do Sul", valorEstado: 15 },
   { nomeEstado: "Bahia", valorEstado: 12 },
   { nomeEstado: "São Paulo", valorEstado: 36 },
-]
+];
 
 const cidades = [
   { nomeCidade: "Joinville", valorCidade: 113 },
@@ -38,7 +42,7 @@ const cidades = [
   { nomeCidade: "Barra do Sul", valorCidade: 15 },
   { nomeCidade: "Criciúma", valorCidade: 12 },
   { nomeCidade: "Anta Gorda", valorCidade: 36 },
-]
+];
 
 const bairros = [
   { nomeBairro: "Centro", valorBairro: 113 },
@@ -46,10 +50,10 @@ const bairros = [
   { nomeBairro: "Santo Antônio", valorBairro: 15 },
   { nomeBairro: "América", valorBairro: 12 },
   { nomeBairro: "Vila Nova", valorBairro: 36 },
-]
+];
 
 export default function Estatisticas() {
-  const [userFilter, setUserFilter] = useState("all")
+  const [userFilter, setUserFilter] = useState("all");
 
   return (
     <main className="min-h-screen p-4 md:p-8 pt-24 text-black">
@@ -141,7 +145,44 @@ export default function Estatisticas() {
 
         {/* gráfico 3 */}
         <div className="w-96 h-80 rounded-2xl border-2 flex items-center justify-center">
-          {/* Add content for gráfico 3 here */}
+          <BarChart
+            borderRadius={8}
+            width={700}
+            height={330}
+            series={acessoPorRegiao.map((serie) => ({
+              data: [serie.value], // Corrected: Use 'value' instead of 'data'
+              label: serie.label,
+              color: serie.color,
+            }))}
+            xAxis={[
+              {
+                data: acessoPorRegiao.map((item) => item.label),
+                scaleType: "band",
+              },
+            ]}
+            slotProps={{
+              legend: {
+                direction: "row",
+                position: { vertical: "top", horizontal: "middle" },
+                padding: -2,
+              },
+            }}
+            sx={{
+              ".MuiChartsAxis-bottom .MuiChartsAxis-line": {
+                display: "none",
+              },
+              ".MuiChartsAxis-bottom .MuiChartsAxis-tickLabel": {
+                fontWeight: "bold",
+              },
+              ".MuiChartsAxis-left .MuiChartsAxis-line": {
+                display: "none",
+              },
+              ".MuiChartsAxis-left .MuiChartsAxis-tickLabel": {
+                fontWeight: "bold",
+              },
+            }}
+            margin={{ top: 50, bottom: 30, left: 50, right: 10 }}
+          />
         </div>
       </div>
 
@@ -202,14 +243,13 @@ export default function Estatisticas() {
           </h2>
 
           <Box sx={{ width: "100%", height: "100%" }}>
-            <PieChart    
+            <PieChart
               series={[
                 {
                   data: sexoEstatistica,
                   innerRadius: 80,
                   outerRadius: 120,
                   arcLabelMinAngle: 45,
-                  
                 },
               ]}
               sx={{
@@ -222,8 +262,13 @@ export default function Estatisticas() {
               slotProps={{
                 legend: {
                   direction: "column",
-                  position: { vertical: "bottom", horizontal: "left" },
+                  position: { vertical: "bottom", horizontal: "left"},
                   padding: 20,
+                  labelStyle: {
+                    fontWeight: "bold",
+                    fill: "#023859",
+                  },
+                  
                 },
               }}
             />
@@ -234,8 +279,41 @@ export default function Estatisticas() {
       {/* div principal 3 */}
       <div className="w-full h-full mt-10 flex justify-between">
         {/* gráfico 6 */}
-        <div className="w-[48%] h-96 border-2 rounded-2xl">
-          {/* Add content for gráfico 6 here */}
+        <div className="grid border-2 rounded-2xl">
+          <h2 className="mt-4 flex justify-center font-bold text-darkBlue-500 text-3xl">
+            Escolaridade
+          </h2>
+
+          <Box sx={{ width: "00", height: "100" }}>
+            <PieChart
+              series={[
+                {
+                  data: escolaridade,
+                  innerRadius: 60,
+                  outerRadius: 100,
+                  arcLabelMinAngle: 45,
+                },
+              ]}
+              sx={{
+                "--ChartsLegend-rootSpacing": "10px",
+                "--ChartsLegend-itemWidth": "100px",
+              }}
+              width={500}
+              height={300}
+              slotProps={{
+                legend: {
+                  direction: "column",
+                  position: { vertical: "middle", horizontal: "right" },
+
+                  labelStyle: {
+                    fontWeight: "bold",
+                    fill: "#023859",
+                  },
+                },
+              }}
+              margin={{ top: 10, bottom: 10, left: 0, right: 200 }}
+            />
+          </Box>
         </div>
 
         {/* gráfico 7 */}
@@ -343,5 +421,5 @@ export default function Estatisticas() {
         </div>
       </div>
     </main>
-  )
+  );
 }
