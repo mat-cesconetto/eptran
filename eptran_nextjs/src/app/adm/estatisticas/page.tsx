@@ -359,7 +359,7 @@ export default function Estatisticas() {
               borderRadius={8}
               width={500}
               height={330}
-              series={[{ data: [200, 350, 250, 250] }]}
+              series={[{ data: [200, 350, 250, 250]}]}
 
               xAxis={[
                 {
@@ -367,18 +367,7 @@ export default function Estatisticas() {
                   scaleType: "band",
                 },
               ]}
-              slotProps={{
-                legend: {
-                  direction: "row",
-                  position: { vertical: "top", horizontal: "middle" },
-                  padding: -2,
-                 
-                  labelStyle: {
-                    fill: '#023859',
-                    fontWeight: "Bold",
-                  }
-                },
-              }}
+              
               sx={{
                 ".MuiChartsAxis-bottom .MuiChartsAxis-line": {
                   display: "none",
