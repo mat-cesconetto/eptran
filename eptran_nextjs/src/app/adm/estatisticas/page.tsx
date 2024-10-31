@@ -292,8 +292,66 @@ export default function Estatisticas() {
         </div>
 
         {/* gráfico 7 */}
-        <div className="w-[48%] h-96 border-2 rounded-2xl">
-          {/* Add content for gráfico 7 here */}
+        <div className="w-[48%] h-96 border-2 rounded-2xl text-center">
+        <h2 className="mt-4 font-bold text-darkBlue-500 text-3xl">
+            Acessos por idade
+          </h2>
+
+
+          <div className="align-middle justify-center flex ">
+            <BarChart
+              borderRadius={8}
+              width={500}
+              height={330}
+              series={[{ data: [200, 350, 250, 250] }]}
+
+              xAxis={[
+                {
+                  data: ["6+", "11+", "14+", "18+"],
+                  scaleType: "band",
+                },
+              ]}
+              slotProps={{
+                legend: {
+                  direction: "row",
+                  position: { vertical: "top", horizontal: "middle" },
+                  padding: -2,
+                 
+                  labelStyle: {
+                    fill: '#023859',
+                    fontWeight: "Bold",
+                  }
+                },
+              }}
+              sx={{
+                ".MuiChartsAxis-bottom .MuiChartsAxis-line": {
+                  display: "none",
+                },
+                ".MuiChartsAxis-bottom .MuiChartsAxis-tick": {
+                  display: "none",
+                },
+                ".MuiChartsAxis-bottom .MuiChartsAxis-tickLabel": {
+                  fontWeight: "800",
+                  fill:"#023859"
+                },
+                ".MuiChartsAxis-left .MuiChartsAxis-line": {
+                  display: "none",
+                },
+                ".MuiChartsAxis-left .MuiChartsAxis-tick": {
+                  display: "none",
+                },
+                ".MuiChartsAxis-left .MuiChartsAxis-tickLabel": {
+                  fontWeight: "800",
+                  fill:"#023859"
+                },
+               
+              }}
+             
+
+
+              margin={{ top: 50, bottom: 30, left: 50, right: 10 }}
+            />
+          </div>
         </div>
       </div>
 
