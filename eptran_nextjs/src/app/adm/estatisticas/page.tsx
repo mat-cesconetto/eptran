@@ -1,24 +1,25 @@
-"use client";
+'use client'
 
-import Image from "next/image";
+
+import Image from "next/image"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { useState } from "react";
-import Box from "@mui/material/Box";
-import {
-  PieChart,
-  PiePlot,
-  PieArcLabel,
-  PieArcLabelProps,
-} from "@mui/x-charts/PieChart";
-import { mobileAndDesktopOS } from "./webUsageStats";
-import * as React from "react";
-import { BarChart } from "@mui/x-charts/BarChart";
+} from "@/components/ui/select"
+import { useState } from "react"
+import Box from "@mui/material/Box"
+import { PieChart } from "@mui/x-charts/PieChart"
+import { BarChart } from "@mui/x-charts/BarChart"
+
+
+// Import the statistics data
+import { sexoEstatistica, acessosSemanais } from "./estatisticas"
+import { red } from "@mui/material/colors"
+import { Bold } from "lucide-react"
+
 
 const escolas = [
   { nomeEscola: "Escola Sesi", valorEscola: 113 },
@@ -26,7 +27,8 @@ const escolas = [
   { nomeEscola: "Colégio Santo Antônio", valorEscola: 15 },
   { nomeEscola: "E.E.M. Celso Ramos", valorEscola: 12 },
   { nomeEscola: "Bom Jesus", valorEscola: 36 },
-];
+]
+
 
 const estados = [
   { nomeEstado: "Santa Catarina", valorEstado: 113 },
@@ -34,7 +36,8 @@ const estados = [
   { nomeEstado: "Rio Grande do Sul", valorEstado: 15 },
   { nomeEstado: "Bahia", valorEstado: 12 },
   { nomeEstado: "São Paulo", valorEstado: 36 },
-];
+]
+
 
 const cidades = [
   { nomeCidade: "Joinville", valorCidade: 113 },
@@ -42,7 +45,8 @@ const cidades = [
   { nomeCidade: "Barra do Sul", valorCidade: 15 },
   { nomeCidade: "Criciúma", valorCidade: 12 },
   { nomeCidade: "Anta Gorda", valorCidade: 36 },
-];
+]
+
 
 const bairros = [
   { nomeBairro: "Centro", valorBairro: 113 },
@@ -50,13 +54,12 @@ const bairros = [
   { nomeBairro: "Santo Antônio", valorBairro: 15 },
   { nomeBairro: "América", valorBairro: 12 },
   { nomeBairro: "Vila Nova", valorBairro: 36 },
-];
+]
 
-const itemNb = mobileAndDesktopOS.length;
-const radius = 80;
 
 export default function Estatisticas() {
-  const [userFilter, setUserFilter] = useState("all");
+  const [userFilter, setUserFilter] = useState("all")
+
 
   return (
     <main className="min-h-screen p-4 md:p-8 pt-24 text-black">
@@ -74,9 +77,10 @@ export default function Estatisticas() {
         </div>
       </div>
 
+
       <div className="w-full items-end justify-end flex">
         <Select value={userFilter} onValueChange={setUserFilter}>
-          <SelectTrigger className=" text-darkBlue-500 font-bold w-full md:w-auto">
+          <SelectTrigger className="text-darkBlue-500 font-bold w-full md:w-auto">
             <SelectValue placeholder="Selecione" />
           </SelectTrigger>
           <SelectContent className="text-darkBlue-500 font-bold">
@@ -87,12 +91,11 @@ export default function Estatisticas() {
         </Select>
       </div>
 
-      {/* div principal 1 */}
 
+      {/* div principal 1 */}
       <div className="w-full h-full mt-10 flex justify-between">
         {/* gráfico 1 */}
-
-        <div className=" w-96 h-80 rounded-2xl border-2">
+        <div className="w-96 h-80 rounded-2xl border-2">
           <div className="mt-10 ml-12">
             <Image
               src="/Image/users-svgrepo-com.svg"
@@ -102,31 +105,35 @@ export default function Estatisticas() {
             />
           </div>
 
+
           <h1 className="mt-6 ml-12 font-bold text-darkBlue-500 text-5xl">
             113.007k
           </h1>
+
 
           <p className="ml-12 flex font-semibold text-darkBlue-200">
             <span className="mr-1 text-fonte-verde font-semibold">+9,07k</span>{" "}
             nos últimos 7 dias
           </p>
 
+
           <h1 className="mt-4 ml-12 font-bold text-darkBlue-500 text-xl">
             Acessos Totais
           </h1>
         </div>
 
-        {/* gráfico 2 */}
 
+        {/* gráfico 2 */}
         <div className="w-96 h-80 rounded-2xl border-2">
           <div className="align-middle text-center">
             <h2 className="mt-10 font-bold text-darkBlue-500 text-2xl">
               Principais escolas
             </h2>
 
+
             <div className="max-w-md mx-auto p-8 py-6">
               <ol className="list-none space-y-3">
-                {escolas.map((escolas, index) => (
+                {escolas.map((escola, index) => (
                   <li
                     key={index}
                     className="flex items-center justify-between rounded-lg"
@@ -136,11 +143,11 @@ export default function Estatisticas() {
                         {index + 1}.
                       </span>
                       <span className="text-lg font-bold text-[#0A305A]">
-                        {escolas.nomeEscola}
+                        {escola.nomeEscola}
                       </span>
                     </span>
                     <span className="text-lg font-bold text-[#0A305A]">
-                      {escolas.valorEscola}
+                      {escola.valorEscola}
                     </span>
                   </li>
                 ))}
@@ -149,47 +156,38 @@ export default function Estatisticas() {
           </div>
         </div>
 
-        {/* gráfico 3 */}
 
-        <div className="w-96 h-80 rounded-2xl border-2 flex items-center justify-center"></div>
+        {/* gráfico 3 */}
+        <div className="w-96 h-80 rounded-2xl border-2 flex items-center justify-center">
+          {/* Add content for gráfico 3 here */}
+        </div>
       </div>
 
-      {/* div principal 2 */}
 
+      {/* div principal 2 */}
       <div className="w-full h-full mt-10 flex justify-between">
         {/* gráfico 4 */}
-
         <div className="w-[62.5%] border-2 rounded-md align-middle text-center">
           <h2 className="mt-8 font-bold text-darkBlue-500 text-3xl">
             Acessos semanais
           </h2>
 
-          <div className=" align-middle justify-center flex mt-8">
+
+          <div className="align-middle justify-center flex mt-8 ">
             <BarChart
               borderRadius={8}
-              series={[
-                {
-                  data: [200, 180, 340, 310, 320],
-                  color: "#CA8DFB",
-                  label: "Séries Iniciais",
-                },
-                {
-                  data: [130, 200, 150, 250, 350],
-                  color: "#8995FA",
-                  label: "Ensino Fundamental",
-                },
-                {
-                  data: [300, 230, 290, 280, 280],
-                  color: "#003A7E",
-                  label: "Ensino Médio",
-                },
-              ]}
-              height={330}
               width={700}
+              height={330}
+              series={acessosSemanais.map((serie) => ({
+                data: serie.data,
+                label: serie.label,
+                color: serie.color,
+              }))}
               xAxis={[
                 {
                   data: ["SEGUNDA", "TERÇA", "QUARTA", "QUINTA", "SEXTA"],
                   scaleType: "band",
+                  
                 },
               ]}
               slotProps={{
@@ -198,50 +196,65 @@ export default function Estatisticas() {
                   position: { vertical: "top", horizontal: "middle" },
                   padding: -2,
                   
+                  labelStyle: {
+                    fill: '#023859',
+                    fontWeight: "Bold",
+                  }
                 },
               }}
               sx={{
-                '.MuiChartsAxis-bottom .MuiChartsAxis-line': {
-                  display: 'none',
+                ".MuiChartsAxis-bottom .MuiChartsAxis-line": {
+                  display: "none",
                 },
-                '.MuiChartsAxis-bottom .MuiChartsAxis-tickLabel': {
-                  fontWeight: 'bold',
+                ".MuiChartsAxis-bottom .MuiChartsAxis-tick": {
+                  display: "none",
                 },
-                '.MuiChartsAxis-left .MuiChartsAxis-line': {
-                  display: 'none',
+                ".MuiChartsAxis-bottom .MuiChartsAxis-tickLabel": {
+                  fontWeight: "800",
+                  fill:"#023859"
                 },
-                '.MuiChartsAxis-left .MuiChartsAxis-tickLabel': {
-                  fontWeight: 'bold',
+                ".MuiChartsAxis-left .MuiChartsAxis-line": {
+                  display: "none",
                 },
+                ".MuiChartsAxis-left .MuiChartsAxis-tick": {
+                  display: "none",
+                },
+                ".MuiChartsAxis-left .MuiChartsAxis-tickLabel": {
+                  fontWeight: "800",
+                  fill:"#023859"
+                },
+                
               }}
-                          
+              
+
               margin={{ top: 50, bottom: 30, left: 50, right: 10 }}
             />
           </div>
         </div>
 
-        {/* gráfico 5 */}
 
+        {/* gráfico 5 */}
         <div className="grid border-2 rounded-2xl">
           <h2 className="mt-4 flex justify-center font-bold text-darkBlue-500 text-3xl">
             Sexo
           </h2>
 
+
           <Box sx={{ width: "100%", height: "100%" }}>
-            <PieChart
+            <PieChart    
               series={[
                 {
-                  data: mobileAndDesktopOS.slice(0, itemNb),
-                  innerRadius: radius,
+                  data: sexoEstatistica,
+                  innerRadius: 80,
                   outerRadius: 120,
                   arcLabelMinAngle: 45,
+                 
                 },
               ]}
               sx={{
                 "--ChartsLegend-rootSpacing": "10px",
                 "--ChartsLegend-itemWidth": "100px",
               }}
-            
               width={400}
               height={400}
               margin={{ top: 10, bottom: 100, left: 30, right: 30 }}
@@ -250,7 +263,6 @@ export default function Estatisticas() {
                   direction: "column",
                   position: { vertical: "bottom", horizontal: "left" },
                   padding: 20,
-                  
                 },
               }}
             />
@@ -258,32 +270,35 @@ export default function Estatisticas() {
         </div>
       </div>
 
-      {/* div principal 3 */}
 
+      {/* div principal 3 */}
       <div className="w-full h-full mt-10 flex justify-between">
         {/* gráfico 6 */}
+        <div className="w-[48%] h-96 border-2 rounded-2xl">
+          {/* Add content for gráfico 6 here */}
+        </div>
 
-        <div className="w-[48%] h-96 border-2 rounded-2xl">6</div>
 
         {/* gráfico 7 */}
-
-        <div className="w-[48%] h-96 border-2 rounded-2xl">7</div>
+        <div className="w-[48%] h-96 border-2 rounded-2xl">
+          {/* Add content for gráfico 7 here */}
+        </div>
       </div>
 
-      {/* div principal 4 */}
 
+      {/* div principal 4 */}
       <div className="w-full h-full mt-10 flex justify-between">
         {/* gráfico 8 */}
-
         <div className="w-96 h-80 rounded-2xl border-2">
           <div className="align-middle text-center">
             <h2 className="mt-10 font-bold text-darkBlue-500 text-2xl">
               Acessos por estado
             </h2>
 
+
             <div className="max-w-md mx-auto p-8 py-6">
               <ol className="list-none space-y-3">
-                {estados.map((estados, index) => (
+                {estados.map((estado, index) => (
                   <li
                     key={index}
                     className="flex items-center justify-between rounded-lg"
@@ -293,11 +308,11 @@ export default function Estatisticas() {
                         {index + 1}.
                       </span>
                       <span className="text-lg font-bold text-[#0A305A]">
-                        {estados.nomeEstado}
+                        {estado.nomeEstado}
                       </span>
                     </span>
                     <span className="text-lg font-bold text-[#0A305A]">
-                      {estados.valorEstado}
+                      {estado.valorEstado}
                     </span>
                   </li>
                 ))}
@@ -306,17 +321,18 @@ export default function Estatisticas() {
           </div>
         </div>
 
-        {/* gráfico 9 */}
 
+        {/* gráfico 9 */}
         <div className="w-96 h-80 rounded-2xl border-2">
           <div className="align-middle text-center">
             <h2 className="mt-10 font-bold text-darkBlue-500 text-2xl">
               Acessos por cidade
             </h2>
 
+
             <div className="max-w-md mx-auto p-8 py-6">
               <ol className="list-none space-y-3">
-                {cidades.map((cidades, index) => (
+                {cidades.map((cidade, index) => (
                   <li
                     key={index}
                     className="flex items-center justify-between rounded-lg"
@@ -326,11 +342,11 @@ export default function Estatisticas() {
                         {index + 1}.
                       </span>
                       <span className="text-lg font-bold text-[#0A305A]">
-                        {cidades.nomeCidade}
+                        {cidade.nomeCidade}
                       </span>
                     </span>
                     <span className="text-lg font-bold text-[#0A305A]">
-                      {cidades.valorCidade}
+                      {cidade.valorCidade}
                     </span>
                   </li>
                 ))}
@@ -339,17 +355,18 @@ export default function Estatisticas() {
           </div>
         </div>
 
-        {/* gráfico 10 */}
 
+        {/* gráfico 10 */}
         <div className="w-96 h-80 rounded-2xl border-2">
           <div className="align-middle text-center">
             <h2 className="mt-10 font-bold text-darkBlue-500 text-2xl">
               Acessos por bairro
             </h2>
 
+
             <div className="max-w-md mx-auto p-8 py-6">
               <ol className="list-none space-y-3">
-                {bairros.map((bairros, index) => (
+                {bairros.map((bairro, index) => (
                   <li
                     key={index}
                     className="flex items-center justify-between rounded-lg"
@@ -359,11 +376,11 @@ export default function Estatisticas() {
                         {index + 1}.
                       </span>
                       <span className="text-lg font-bold text-[#0A305A]">
-                        {bairros.nomeBairro}
+                        {bairro.nomeBairro}
                       </span>
                     </span>
                     <span className="text-lg font-bold text-[#0A305A]">
-                      {bairros.valorBairro}
+                      {bairro.valorBairro}
                     </span>
                   </li>
                 ))}
@@ -371,7 +388,8 @@ export default function Estatisticas() {
             </div>
           </div>
         </div>
-      </div>
+      </div> 
     </main>
-  );
+  )
 }
+
