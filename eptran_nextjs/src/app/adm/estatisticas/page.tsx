@@ -61,7 +61,7 @@ export default function Estatisticas() {
       <div className="flex gap-5 ">
         <div>
           <Image
-            src="/ticket-8-svgrepo-com.svg"
+            src="/alert-square-filled-svgrepo-com.svg"
             width={50}
             height={50}
             alt="perfil"
