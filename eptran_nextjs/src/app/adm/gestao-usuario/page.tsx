@@ -36,7 +36,6 @@ export default function Gerenciamento() {
 
   const { users, isLoading, isLoggedOut } = useUsers();
 
-  // Filtragem de usuários baseada na busca
   const filteredUsers = users.filter(user => 
     user.nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
     user.email.toLowerCase().includes(searchTerm.toLowerCase())

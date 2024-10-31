@@ -23,7 +23,7 @@ const sections = [
     ],
   },
   {
-    title: "Privacidade e Proteção de Dados",
+    title: "Privacidade e Proteção",
     items: ["Solicitar dados da conta", "Exclusão da conta"],
   },
 ];
