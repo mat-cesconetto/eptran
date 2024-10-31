@@ -89,6 +89,7 @@ export const getAllVideos = async (
       titulo: video.titulo,
       descricao: video.descricao,
       escolaridade: video.escolaridade,
+      video: video.videoLink,
     }));
 
     // Responde com os dados paginados

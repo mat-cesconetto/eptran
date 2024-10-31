@@ -1,9 +1,6 @@
 import { EscolaridadeEnum, PrismaClient, Videos } from "@prisma/client";
-
 import { ListVideos } from "../../types/Videos";
 import prismaClient from "../prisma";
-
-const prisma = new PrismaClient();
 
 export class VideoRepository {
   // Método para criar um vídeo
@@ -13,7 +10,7 @@ export class VideoRepository {
     descricao: string,
     titulo: string
   ): Promise<Videos> {
-    return prisma.videos.create({
+    return prismaClient.videos.create({
       data: {
         titulo,
         descricao,
@@ -25,7 +22,7 @@ export class VideoRepository {
 
   // Método para buscar vídeos por escolaridade
   async findByEscolaridade(escolaridade: EscolaridadeEnum): Promise<Videos[]> {
-    return prisma.videos.findMany({
+    return prismaClient.videos.findMany({
       where: {
         escolaridade,
       },
@@ -54,22 +51,23 @@ export class VideoRepository {
     id: number,
     data: Partial<Videos> // Recebe os campos a serem atualizados
   ): Promise<Videos | null> {
-    return prisma.videos.update({
+    return prismaClient.videos.update({
       where: { id },
       data, // Atualiza apenas os campos passados
     });
   }
+
+  // Método para buscar vídeo pelo ID
   async findById(id: number): Promise<Videos | null> {
-    return prisma.videos.findUnique({
+    return prismaClient.videos.findUnique({
       where: { id },
     });
   }
 
   // Método para deletar vídeo pelo ID
   async delete(id: number): Promise<void> {
-    await prisma.videos.delete({
+    await prismaClient.videos.delete({
       where: { id },
     });
   }
 }
-

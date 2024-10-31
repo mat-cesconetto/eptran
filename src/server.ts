@@ -14,8 +14,8 @@ import { resetRoutes } from './routes/resetRoutes';
 import fastifyCors from '@fastify/cors';
 import { locationRoutes } from './routes/locationRoutes';
 import * as dotenv from 'dotenv';
-import videoRoutes  from './routes/videoRoutes';
-import materiaisRoutes  from './routes/materiaisRoutes';
+import videoRoutes from './routes/videoRoutes';
+import materiaisRoutes from './routes/materiaisRoutes';
 import { adminMiddleware } from './middlewares/adminMiddleware';
 import { escolaRoutes } from './routes/escolasRoutes';
 
@@ -24,15 +24,54 @@ dotenv.config();
 
 const app = fastify();
 
-// Registra o plugin de CORS
+// Lista de origens permitidas
+const allowedOrigins = [
+  'http://localhost:3000',    // Development
+  'http://localhost:3001',    // Alternative development port
+  'http://127.0.0.1:3000',   // Local development alternative
+  // Adicione aqui seus domínios de produção
+  'https://seu-dominio.com',
+  'https://app.seu-dominio.com'
+];
+
+// Registra o plugin de CORS com configuração mais específica
 app.register(fastifyCors, {
-  origin: process.env.FRONTEND_URL, // Permitir todas as origens, ou você pode especificar uma lista de origens
-  methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE'], // Métodos permitidos
+  origin: (origin, cb) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      cb(null, true);
+      return;
+    }
+    // Generate error for other origins
+    cb(new Error('Not allowed by CORS'), false);
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
   credentials: true,
+  maxAge: 86400, // 24 hours
+  preflight: true,
+  exposedHeaders: ['set-cookie']
 });
 
-// Registra o plugin de cookies
-app.register(fastifyCookie);
+// Hook para adicionar headers de CORS em todas as respostas
+app.addHook('onRequest', async (request, reply) => {
+  const origin = request.headers.origin;
+  if (origin && allowedOrigins.includes(origin)) {
+    reply.header('Access-Control-Allow-Origin', origin);
+    reply.header('Access-Control-Allow-Credentials', 'true');
+  }
+});
+
+// Registra o plugin de cookies com configuração segura
+app.register(fastifyCookie, {
+  secret: process.env.COOKIE_SECRET || 'your-secret-key', // Use uma variável de ambiente
+  hook: 'onRequest',
+  parseOptions: {
+    secure: process.env.NODE_ENV === 'production', // Apenas HTTPS em produção
+    httpOnly: true,
+    sameSite: process.env.NODE_ENV === 'production' ? 'strict' : 'lax',
+    path: '/'
+  }
+});
 
 // Registra o plugin multipart com opções
 app.register(multipart, {
@@ -43,74 +82,40 @@ app.register(multipart, {
 
 // Registra o plugin JWT usando a variável de ambiente
 app.register(fastifyJwt, {
-  secret: process.env.JWT_SECRET || 'fallback-secret', // Usando variável de ambiente para segurança
+  secret: process.env.JWT_SECRET || 'fallback-secret',
   cookie: {
-    cookieName: 'refreshToken', // Nome do cookie onde o token está armazenado
-    signed: false, // Altere para true se você estiver usando cookies assinados
+    cookieName: 'refreshToken',
+    signed: false,
   },
 });
 
 // Registra o plugin static
 app.register(fastifyStatic, {
   root: path.join(__dirname, '../uploads/tickets'),
-  prefix: '/anexos/', // Prefixo para acessar arquivos estáticos
+  prefix: '/anexos/',
 });
 
 // Registra o manipulador de erros
 registerErrorHandler(app);
 
-// Registrando as rotas de usuário com o middleware de autenticação
-app.register(userRoutes, {
-  prefix: '/user',
-  preHandler: authMiddleware, // Adiciona o middleware de autenticação
-});
-
-// Registrando as rotas de ticket com o middleware de autenticação
-app.register(ticketRoutes, {
-  prefix: '/ticket',
-  preHandler: authMiddleware, // Adiciona o middleware de autenticação
-});
-
-// Registrando a rota de autenticação sem middleware (sem necessidade de estar autenticado)
-app.register(authRoutes, {
-  prefix: '/auth',
-  preHandler: undefined, // Nenhum middleware de autenticação aqui
-});
-
-// Registrando a rota de reset sem middleware (sem necessidade de estar autenticado)
-app.register(resetRoutes, {
-  prefix: '/reset',
-  preHandler: undefined, // Nenhum middleware de autenticação aqui
-});
-
-// Registrando a rota de localização sem middleware (sem necessidade de estar autenticado)
-app.register(locationRoutes, {
-  prefix: '/location',
-  preHandler: undefined, // Nenhum middleware de autenticação aqui
-});
-
-// Registrando a rota de estatísticas com middleware de autenticação
-app.register(statsRoutes, {
-  prefix: '/stats',
-  preHandler: authMiddleware, // Adiciona o middleware de autenticação
-});
-
-app.register(videoRoutes, {
-  prefix: '/videos',
-  preHandler: authMiddleware, // Adiciona o middleware de autenticação
-});
-app.register(materiaisRoutes, {
-  prefix: '/materiais',
-  preHandler: adminMiddleware, // Adiciona o middleware de autenticação
-});
-app.register(escolaRoutes, {
-  prefix: '/escolas',
-});
+// Rotas
+app.register(userRoutes, { prefix: '/user', preHandler: authMiddleware });
+app.register(ticketRoutes, { prefix: '/ticket' });
+app.register(authRoutes, { prefix: '/auth' });
+app.register(resetRoutes, { prefix: '/reset' });
+app.register(locationRoutes, { prefix: '/location' });
+app.register(statsRoutes, { prefix: '/stats', preHandler: authMiddleware });
+app.register(videoRoutes, { prefix: '/videos', preHandler: authMiddleware });
+app.register(materiaisRoutes, { prefix: '/materiais', preHandler: adminMiddleware });
+app.register(escolaRoutes, { prefix: '/escolas' });
 
 // Inicia o servidor
 const start = async () => {
   try {
-    await app.listen({ port: 3333 });
+    await app.listen({ 
+      port: 3333, 
+      host: '0.0.0.0' // Permite conexões de qualquer interface de rede
+    });
     console.log('Server is running on port 3333');
   } catch (err) {
     console.error(err);

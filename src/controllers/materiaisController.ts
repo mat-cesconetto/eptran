@@ -104,6 +104,7 @@ export const getAllMateriais = async (
       titulo: material.titulo,
       descricao: material.descricao,
       escolaridade: material.escolaridade,
+      material: material.materialLink
     }));
 
     return reply.send({

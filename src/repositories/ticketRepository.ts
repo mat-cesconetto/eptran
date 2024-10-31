@@ -124,8 +124,8 @@ class TicketRepository {
                         select: {
                             id: true,              // ID do usuário
                             nome: true,
-                            email: true,            // Nome do usuário
-                            profilePicture: true,      // Foto de perfil
+                            email: true,           // Nome do usuário
+                            profilePicture: true,  // Foto de perfil
                         },
                     },
                 },
@@ -135,10 +135,11 @@ class TicketRepository {
     
         // Mapeando os tickets para retornar as informações desejadas
         const formattedTickets: TicketInfo[] = tickets.map(ticket => ({
+            id: ticket.id,                                 // ID do ticket
             usuarioId: ticket.usuario.id,                  // ID do usuário
             usuarioNome: ticket.usuario.nome,              // Nome do usuário
             usuarioFotoPerfil: ticket.usuario.profilePicture,
-            email: ticket.usuario.email,  // Foto de perfil
+            email: ticket.usuario.email,                   // Email do usuário
             assunto: ticket.assunto,                       // Assunto do ticket
             status: ticket.status,                         // Status do ticket
             prioridade: ticket.prioridade as unknown as PrioridadeEnum, // Convertendo para PrioridadeEnum
@@ -151,6 +152,7 @@ class TicketRepository {
             totalPages: Math.ceil(totalTickets / limit),
         };
     }
+    
 
     async updateTicketStatus(id: number, status: Status) {
         return await prismaClient.ticketUsuario.update({

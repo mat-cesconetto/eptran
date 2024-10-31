@@ -19,7 +19,7 @@ async function videoRoutes(fastify: FastifyInstance, options: FastifyPluginOptio
   fastify.post<{
     Body: CreateVideoBody
   }>('/create', {
-    preHandler: [adminMiddleware, authMiddleware],
+    preHandler: [ authMiddleware, adminMiddleware],
     handler: createVideo
   });
 
