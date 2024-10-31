@@ -1,33 +1,42 @@
-// src/hooks/useAuth.ts
 import { useEffect, useState } from "react";
 
-export const useAuth = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+interface AuthData {
+  isAuthenticated: boolean;
+  isAdmin: boolean;
+}
+
+export const useAuth = (): AuthData => {
+  const [authData, setAuthData] = useState<AuthData>({
+    isAuthenticated: false,
+    isAdmin: false,
+  });
 
   useEffect(() => {
     const checkAuth = async () => {
       try {
         const response = await fetch("http://localhost:3333/user/info", {
           method: "GET",
-          credentials: "include", // Inclui cookies na requisição
+          credentials: "include",
         });
 
         const data = await response.json();
 
-        // Verifica se o usuário está autenticado
         if (response.ok && data?.data) {
-          setIsAuthenticated(true);
+          setAuthData({
+            isAuthenticated: true,
+            isAdmin: data.data.adm === true,
+          });
         } else if (data.error === "Token não fornecido") {
-          setIsAuthenticated(false);
+          setAuthData({ isAuthenticated: false, isAdmin: false });
         }
       } catch (error) {
         console.error("Erro ao verificar autenticação:", error);
-        setIsAuthenticated(false);
+        setAuthData({ isAuthenticated: false, isAdmin: false });
       }
     };
 
     checkAuth();
   }, []);
 
-  return isAuthenticated;
+  return authData;
 };
