@@ -1,3 +1,5 @@
+import { color } from "framer-motion";
+
 export const sexoEstatistica = [
     {
       label: 'Feminino',

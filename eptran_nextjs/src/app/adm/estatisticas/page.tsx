@@ -17,6 +17,8 @@ import { BarChart } from "@mui/x-charts/BarChart"
 
 // Import the statistics data
 import { sexoEstatistica, acessosSemanais } from "./estatisticas"
+import { red } from "@mui/material/colors"
+import { Bold } from "lucide-react"
 
 
 const escolas = [
@@ -171,7 +173,7 @@ export default function Estatisticas() {
           </h2>
 
 
-          <div className="align-middle justify-center flex mt-8">
+          <div className="align-middle justify-center flex mt-8 ">
             <BarChart
               borderRadius={8}
               width={700}
@@ -185,6 +187,7 @@ export default function Estatisticas() {
                 {
                   data: ["SEGUNDA", "TERÇA", "QUARTA", "QUINTA", "SEXTA"],
                   scaleType: "band",
+                  
                 },
               ]}
               slotProps={{
@@ -192,22 +195,38 @@ export default function Estatisticas() {
                   direction: "row",
                   position: { vertical: "top", horizontal: "middle" },
                   padding: -2,
+                  
+                  labelStyle: {
+                    fill: '#023859',
+                    fontWeight: "Bold",
+                  }
                 },
               }}
               sx={{
                 ".MuiChartsAxis-bottom .MuiChartsAxis-line": {
                   display: "none",
                 },
+                ".MuiChartsAxis-bottom .MuiChartsAxis-tick": {
+                  display: "none",
+                },
                 ".MuiChartsAxis-bottom .MuiChartsAxis-tickLabel": {
-                  fontWeight: "bold",
+                  fontWeight: "800",
+                  fill:"#023859"
                 },
                 ".MuiChartsAxis-left .MuiChartsAxis-line": {
                   display: "none",
                 },
-                ".MuiChartsAxis-left .MuiChartsAxis-tickLabel": {
-                  fontWeight: "bold",
+                ".MuiChartsAxis-left .MuiChartsAxis-tick": {
+                  display: "none",
                 },
+                ".MuiChartsAxis-left .MuiChartsAxis-tickLabel": {
+                  fontWeight: "800",
+                  fill:"#023859"
+                },
+                
               }}
+              
+
               margin={{ top: 50, bottom: 30, left: 50, right: 10 }}
             />
           </div>
@@ -369,7 +388,7 @@ export default function Estatisticas() {
             </div>
           </div>
         </div>
-      </div>
+      </div> 
     </main>
   )
 }
