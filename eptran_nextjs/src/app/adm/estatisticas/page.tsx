@@ -16,7 +16,7 @@ import {
   PieArcLabel,
   PieArcLabelProps,
 } from "@mui/x-charts/PieChart";
-import { mobileAndDesktopOS } from "./webUsageStats";
+import { desktopOS } from "./estatisticas";
 import * as React from "react";
 import { BarChart } from "@mui/x-charts/BarChart";
 
@@ -52,7 +52,7 @@ const bairros = [
   { nomeBairro: "Vila Nova", valorBairro: 36 },
 ];
 
-const itemNb = mobileAndDesktopOS.length;
+const itemNb = desktopOS.length;
 const radius = 80;
 
 export default function Estatisticas() {
@@ -231,7 +231,7 @@ export default function Estatisticas() {
             <PieChart
               series={[
                 {
-                  data: mobileAndDesktopOS.slice(0, itemNb),
+                  data: desktopOS.slice(0, itemNb),
                   innerRadius: radius,
                   outerRadius: 120,
                   arcLabelMinAngle: 45,
