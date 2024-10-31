@@ -71,3 +71,4 @@ export const sexoEstatistica = [
       label: "Ensino Médio",
     },
   ]
+  
