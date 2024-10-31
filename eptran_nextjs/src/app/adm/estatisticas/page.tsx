@@ -13,7 +13,7 @@ import Box from "@mui/material/Box";
 import {
   PieChart,
 } from "@mui/x-charts/PieChart";
-import { sexoEstatistica } from "./estatisticas";
+import { sexoEstatistica, acessosSemanais } from "./estatisticas";
 import * as React from "react";
 import { BarChart } from "@mui/x-charts/BarChart";
 
@@ -165,7 +165,21 @@ export default function Estatisticas() {
             <BarChart
               borderRadius={8}
               series={[
-                
+                {
+                  data: [200, 180, 340, 310, 320],
+                  color: "#CA8DFB",
+                  label: "Séries Iniciais",
+                },
+                {
+                  data: [130, 200, 150, 250, 350],
+                  color: "#8995FA",
+                  label: "Ensino Fundamental",
+                },
+                {
+                  data: [300, 230, 290, 280, 280],
+                  color: "#003A7E",
+                  label: "Ensino Médio",
+                },
               ]}
               height={330}
               width={700}
@@ -189,6 +203,7 @@ export default function Estatisticas() {
                 },
                 '.MuiChartsAxis-bottom .MuiChartsAxis-tickLabel': {
                   fontWeight: 'bold',
+                  
                 },
                 '.MuiChartsAxis-left .MuiChartsAxis-line': {
                   display: 'none',
@@ -206,7 +221,7 @@ export default function Estatisticas() {
         {/* gráfico 5 */}
 
         <div className="grid border-2 rounded-2xl">
-          <h2 className="mt-4 flex justify-center font-bold text-darkBlue-500 text-3xl">
+          <h2 className="mt-8 flex justify-center font-bold text-darkBlue-500 text-3xl">
             Sexo
           </h2>
 
