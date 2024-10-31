@@ -1,5 +1,6 @@
 'use client'
 
+
 import Image from "next/image"
 import {
   Select,
@@ -7,15 +8,16 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { useState } from "react";
-import Box from "@mui/material/Box";
-import {
-  PieChart,
-} from "@mui/x-charts/PieChart";
-import { sexoEstatistica } from "./estatisticas";
-import * as React from "react";
-import { BarChart } from "@mui/x-charts/BarChart";
+} from "@/components/ui/select"
+import { useState } from "react"
+import Box from "@mui/material/Box"
+import { PieChart } from "@mui/x-charts/PieChart"
+import { BarChart } from "@mui/x-charts/BarChart"
+
+
+// Import the statistics data
+import { sexoEstatistica, acessosSemanais } from "./estatisticas"
+
 
 const escolas = [
   { nomeEscola: "Escola Sesi", valorEscola: 113 },
@@ -25,6 +27,7 @@ const escolas = [
   { nomeEscola: "Bom Jesus", valorEscola: 36 },
 ]
 
+
 const estados = [
   { nomeEstado: "Santa Catarina", valorEstado: 113 },
   { nomeEstado: "Paraná", valorEstado: 215 },
@@ -32,6 +35,7 @@ const estados = [
   { nomeEstado: "Bahia", valorEstado: 12 },
   { nomeEstado: "São Paulo", valorEstado: 36 },
 ]
+
 
 const cidades = [
   { nomeCidade: "Joinville", valorCidade: 113 },
@@ -41,6 +45,7 @@ const cidades = [
   { nomeCidade: "Anta Gorda", valorCidade: 36 },
 ]
 
+
 const bairros = [
   { nomeBairro: "Centro", valorBairro: 113 },
   { nomeBairro: "Bucarein", valorBairro: 215 },
@@ -49,8 +54,10 @@ const bairros = [
   { nomeBairro: "Vila Nova", valorBairro: 36 },
 ]
 
+
 export default function Estatisticas() {
   const [userFilter, setUserFilter] = useState("all")
+
 
   return (
     <main className="min-h-screen p-4 md:p-8 pt-24 text-black">
@@ -68,6 +75,7 @@ export default function Estatisticas() {
         </div>
       </div>
 
+
       <div className="w-full items-end justify-end flex">
         <Select value={userFilter} onValueChange={setUserFilter}>
           <SelectTrigger className="text-darkBlue-500 font-bold w-full md:w-auto">
@@ -80,6 +88,7 @@ export default function Estatisticas() {
           </SelectContent>
         </Select>
       </div>
+
 
       {/* div principal 1 */}
       <div className="w-full h-full mt-10 flex justify-between">
@@ -94,19 +103,23 @@ export default function Estatisticas() {
             />
           </div>
 
+
           <h1 className="mt-6 ml-12 font-bold text-darkBlue-500 text-5xl">
             113.007k
           </h1>
+
 
           <p className="ml-12 flex font-semibold text-darkBlue-200">
             <span className="mr-1 text-fonte-verde font-semibold">+9,07k</span>{" "}
             nos últimos 7 dias
           </p>
 
+
           <h1 className="mt-4 ml-12 font-bold text-darkBlue-500 text-xl">
             Acessos Totais
           </h1>
         </div>
+
 
         {/* gráfico 2 */}
         <div className="w-96 h-80 rounded-2xl border-2">
@@ -114,6 +127,7 @@ export default function Estatisticas() {
             <h2 className="mt-10 font-bold text-darkBlue-500 text-2xl">
               Principais escolas
             </h2>
+
 
             <div className="max-w-md mx-auto p-8 py-6">
               <ol className="list-none space-y-3">
@@ -140,11 +154,13 @@ export default function Estatisticas() {
           </div>
         </div>
 
+
         {/* gráfico 3 */}
         <div className="w-96 h-80 rounded-2xl border-2 flex items-center justify-center">
           {/* Add content for gráfico 3 here */}
         </div>
       </div>
+
 
       {/* div principal 2 */}
       <div className="w-full h-full mt-10 flex justify-between">
@@ -154,12 +170,11 @@ export default function Estatisticas() {
             Acessos semanais
           </h2>
 
+
           <div className="align-middle justify-center flex mt-8">
             <BarChart
               borderRadius={8}
-              series={[
-                
-              ]}
+              width={700}
               height={330}
               series={acessosSemanais.map((serie) => ({
                 data: serie.data,
@@ -183,8 +198,8 @@ export default function Estatisticas() {
                 ".MuiChartsAxis-bottom .MuiChartsAxis-line": {
                   display: "none",
                 },
-                '.MuiChartsAxis-bottom .MuiChartsAxis-tickLabel': {
-                  fontWeight: 'bold',
+                ".MuiChartsAxis-bottom .MuiChartsAxis-tickLabel": {
+                  fontWeight: "bold",
                 },
                 ".MuiChartsAxis-left .MuiChartsAxis-line": {
                   display: "none",
@@ -198,11 +213,13 @@ export default function Estatisticas() {
           </div>
         </div>
 
+
         {/* gráfico 5 */}
         <div className="grid border-2 rounded-2xl">
-          <h2 className="mt-8 flex justify-center font-bold text-darkBlue-500 text-3xl">
+          <h2 className="mt-4 flex justify-center font-bold text-darkBlue-500 text-3xl">
             Sexo
           </h2>
+
 
           <Box sx={{ width: "100%", height: "100%" }}>
             <PieChart    
@@ -212,7 +229,7 @@ export default function Estatisticas() {
                   innerRadius: 80,
                   outerRadius: 120,
                   arcLabelMinAngle: 45,
-                  
+                 
                 },
               ]}
               sx={{
@@ -234,6 +251,7 @@ export default function Estatisticas() {
         </div>
       </div>
 
+
       {/* div principal 3 */}
       <div className="w-full h-full mt-10 flex justify-between">
         {/* gráfico 6 */}
@@ -241,11 +259,13 @@ export default function Estatisticas() {
           {/* Add content for gráfico 6 here */}
         </div>
 
+
         {/* gráfico 7 */}
         <div className="w-[48%] h-96 border-2 rounded-2xl">
           {/* Add content for gráfico 7 here */}
         </div>
       </div>
+
 
       {/* div principal 4 */}
       <div className="w-full h-full mt-10 flex justify-between">
@@ -255,6 +275,7 @@ export default function Estatisticas() {
             <h2 className="mt-10 font-bold text-darkBlue-500 text-2xl">
               Acessos por estado
             </h2>
+
 
             <div className="max-w-md mx-auto p-8 py-6">
               <ol className="list-none space-y-3">
@@ -281,12 +302,14 @@ export default function Estatisticas() {
           </div>
         </div>
 
+
         {/* gráfico 9 */}
         <div className="w-96 h-80 rounded-2xl border-2">
           <div className="align-middle text-center">
             <h2 className="mt-10 font-bold text-darkBlue-500 text-2xl">
               Acessos por cidade
             </h2>
+
 
             <div className="max-w-md mx-auto p-8 py-6">
               <ol className="list-none space-y-3">
@@ -313,12 +336,14 @@ export default function Estatisticas() {
           </div>
         </div>
 
+
         {/* gráfico 10 */}
         <div className="w-96 h-80 rounded-2xl border-2">
           <div className="align-middle text-center">
             <h2 className="mt-10 font-bold text-darkBlue-500 text-2xl">
               Acessos por bairro
             </h2>
+
 
             <div className="max-w-md mx-auto p-8 py-6">
               <ol className="list-none space-y-3">
@@ -348,3 +373,4 @@ export default function Estatisticas() {
     </main>
   )
 }
+
