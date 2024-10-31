@@ -16,7 +16,7 @@ import { BarChart } from "@mui/x-charts/BarChart"
 
 
 // Import the statistics data
-import { sexoEstatistica, acessosSemanais } from "./estatisticas"
+import { sexoEstatistica, acessosSemanais} from "./estatisticas"
 import { red } from "@mui/material/colors"
 import { Bold } from "lucide-react"
 
@@ -280,8 +280,53 @@ export default function Estatisticas() {
 
 
         {/* gráfico 7 */}
-        <div className="w-[48%] h-96 border-2 rounded-2xl">
-          {/* Add content for gráfico 7 here */}
+        <div className="w-[48%] h-96 border-2 rounded-2xl text-center">
+        <h2 className="mt-8 font-bold text-darkBlue-500 text-3xl">
+            Acessos por idade
+          </h2>
+
+
+          <div className="align-middle justify-center flex mt-8 ">
+            <BarChart
+              borderRadius={8}
+              width={500}
+              height={280}
+              series={[{ data: [200, 350, 250, 250] }]}
+              xAxis={[
+                {
+                  data: ["6+", "11+", "14+", "18+" ],
+                  scaleType: "band",
+                  
+                },
+              ]}
+             
+              sx={{
+                ".MuiChartsAxis-bottom .MuiChartsAxis-line": {
+                  display: "none",
+                },
+                ".MuiChartsAxis-bottom .MuiChartsAxis-tick": {
+                  display: "none",
+                },
+                ".MuiChartsAxis-bottom .MuiChartsAxis-tickLabel": {
+                  fontWeight: "800",
+                  fill:"#023859"
+                },
+                ".MuiChartsAxis-left .MuiChartsAxis-line": {
+                  display: "none",
+                },
+                ".MuiChartsAxis-left .MuiChartsAxis-tick": {
+                  display: "none",
+                },
+                ".MuiChartsAxis-left .MuiChartsAxis-tickLabel": {
+                  fontWeight: "800",
+                  fill:"#023859"
+                },
+                
+              }}
+              
+              margin={{ top: 50, bottom: 30, left: 50, right: 10 }}
+            />
+          </div>
         </div>
       </div>
 

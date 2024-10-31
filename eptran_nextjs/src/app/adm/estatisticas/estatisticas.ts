@@ -35,5 +35,10 @@ export const sexoEstatistica = [
       color: "#003A7E",
       label: "Ensino Médio",
     },
-  ]
+  ];
+
+  
+
+
+  
   
