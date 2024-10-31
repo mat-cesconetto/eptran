@@ -33,7 +33,6 @@ const Formulario: React.FC = () => {
       setEstadoSelecionado(cepData.estado);
     }
   }, [cepData]);
-  
 
   const handleFormulario = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -85,11 +84,36 @@ const Formulario: React.FC = () => {
     >
       <FormField label="Nome completo" type="text" id="nome" name="nome" />
       <FormField
+        label="Data de nascimento"
+        type="date"
+        id="data_nasc"
+        name="data_nasc"
+      />
+      <FormField label="Email" type="email" id="email" name="email" />
+      <FormField label="Senha" type="password" id="senha" name="senha" />
+      <FormField label="Sexo" type="select" id="sexo" name="sexo">
+        <option value="" disabled>
+          Selecione
+        </option>
+        <option value="MASCULINO">Masculino</option>
+        <option value="FEMININO">Feminino</option>
+        <option value="NAO_DECLARAR">Prefiro Não Dizer</option>
+      </FormField>
+      <FormField
+        label="CEP"
+        type="text"
+        id="cep"
+        name="cep"
+        defaultValue={crudCEP}
+        onChange={handleChangeMaskCEP}
+        maxLength={9}
+      />
+      <FormField
         label="Estado"
         type="select"
         id="estado"
         name="estado"
-        value={estadoSelecionado}
+        defaultValue={estadoSelecionado}
         onChange={(e) => {
           setEstadoSelecionado(e.target.value);
           console.log("Estado selecionado:", e.target.value); // Log para verificar o estado selecionado
@@ -126,20 +150,13 @@ const Formulario: React.FC = () => {
         <option value="SE">Sergipe</option>
         <option value="TO">Tocantins</option>
       </FormField>
-      <FormField label="Email" type="email" id="email" name="email" />
-      <FormField label="Senha" type="password" id="senha" name="senha" />
-      <FormField
-        label="Data de nascimento"
-        type="date"
-        id="data_nasc"
-        name="data_nasc"
-      />
+
       <FormField
         label="Cidade"
         type="select"
         id="cidade"
         name="cidade"
-        value={cidade}
+        defaultValue={cidade}
         onChange={(e) => {
           setCidade(e.target.value);
           console.log("Cidade selecionada:", e.target.value); // Log para verificar a cidade selecionada
@@ -162,27 +179,18 @@ const Formulario: React.FC = () => {
         type="text"
         id="bairro"
         name="bairro"
-        value={bairro}
+        defaultValue={bairro}
       />
-      <FormField label="Rua" type="text" id="rua" name="rua" value={rua} />
-      <FormField label="Sexo" type="select" id="sexo" name="sexo">
-        <option value="" disabled>
-          Selecione
-        </option>
-        <option value="MASCULINO">Masculino</option>
-        <option value="FEMININO">Feminino</option>
-        <option value="NAO_DECLARAR">Prefiro Não Dizer</option>
-      </FormField>
-      <FormField label="Escola" type="text" id="escola" name="escola" />
       <FormField
-        label="CEP"
+        label="Rua"
         type="text"
-        id="cep"
-        name="cep"
-        value={crudCEP}
-        onChange={handleChangeMaskCEP}
-        maxLength={9}
+        id="rua"
+        name="rua"
+        defaultValue={rua}
       />
+
+      <FormField label="Escola" type="text" id="escola" name="escola" />
+
       <FormField
         label="Escolaridade"
         type="select"
@@ -212,7 +220,7 @@ interface FormFieldProps {
   type: string;
   id: string;
   name: string;
-  value?: string;
+  defaultValue?: string;
   onChange?: (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => void;
@@ -225,7 +233,7 @@ const FormField: React.FC<FormFieldProps> = ({
   type,
   id,
   name,
-  value,
+  defaultValue,
   onChange,
   maxLength,
   children,
@@ -237,7 +245,8 @@ const FormField: React.FC<FormFieldProps> = ({
         id={id}
         name={name}
         className="border-2 border-[#003966] border-opacity-30 rounded-md p-2 text-black w-full"
-        onChange={onChange} // Adicionando onChange para o select
+        onChange={onChange}
+        defaultValue={defaultValue} // Apenas defaultValue
       >
         {children}
       </select>
@@ -246,7 +255,7 @@ const FormField: React.FC<FormFieldProps> = ({
         type={type}
         id={id}
         name={name}
-        value={value}
+        defaultValue={defaultValue} // Apenas defaultValue para manter o campo não controlado
         onChange={onChange}
         maxLength={maxLength}
         className="border-2 border-[#003966] border-opacity-30 rounded-md p-1 text-black w-full"
