@@ -35,6 +35,3 @@ export const sexoEstatistica = [
     },
   ]
   
-
-  
-  export default sexoEstatistica;
