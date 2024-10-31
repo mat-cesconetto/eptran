@@ -16,6 +16,24 @@ export const desktopOS = [
     
     },
   ];
+
+  export const acessosSemanais = [
+    {
+      data: [200, 180, 340, 310, 320],
+      color: "#CA8DFB",
+      label: "Séries Iniciais",
+    },
+    {
+      data: [130, 200, 150, 250, 350],
+      color: "#8995FA",
+      label: "Ensino Fundamental",
+    },
+    {
+      data: [300, 230, 290, 280, 280],
+      color: "#003A7E",
+      label: "Ensino Médio",
+    },
+  ]
   
 
   
