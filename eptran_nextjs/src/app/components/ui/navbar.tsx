@@ -1,4 +1,4 @@
-"use client";
+'use client'
 
 import React, { useState } from "react";
 import Image from "next/image";
@@ -14,13 +14,12 @@ import {
 import { Menu, X } from "lucide-react";
 
 const NavBar: React.FC = () => {
-  const isAuthenticated = useAuth();
+  const { isAuthenticated, isAdmin } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
     <>
       <div className="relative w-full bg-[#023859] flex items-center justify-between shadow-2xl px-4 sm:px-10 py-4 md:h-32">
-        {/* Botão para menu mobile */}
         <div className="md:hidden">
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -31,7 +30,6 @@ const NavBar: React.FC = () => {
           </button>
         </div>
 
-        {/* Logo */}
         <div className="flex-shrink-0">
           <Link href={"../"}>
             <Image
@@ -44,15 +42,14 @@ const NavBar: React.FC = () => {
           </Link>
         </div>
 
-        {/* Links da barra de navegação para telas maiores */}
         <div className="hidden md:flex justify-center items-center flex-grow text-white font-bold text-lg">
           <NavLink href="/atividades">Atividades</NavLink>
           <NavLink href="/conquistas">Conquistas</NavLink>
           <NavLink href="/sobre">Sobre nós</NavLink>
           <NavLink href="/fale-conosco">Fale Conosco</NavLink>
+          {isAdmin && <NavLink href="/adm/gestao-conteudo">Administrador</NavLink>}
         </div>
 
-        {/* Ícone do usuário (visível em todas as telas) */}
         <div className="flex-shrink-0">
           {isAuthenticated ? (
             <UserDropdown />
@@ -70,13 +67,11 @@ const NavBar: React.FC = () => {
           )}
         </div>
 
-        {/* Botões de Login/Cadastro (apenas para desktop) */}
         <div className="hidden md:flex">
           {!isAuthenticated && <AuthButtons />}
         </div>
       </div>
 
-      {/* Menu mobile */}
       {isMenuOpen && (
         <div className="md:hidden fixed inset-0 bg-[#023859] z-50 flex flex-col items-center justify-start pt-16">
           <button
@@ -87,18 +82,10 @@ const NavBar: React.FC = () => {
             <X className="h-6 w-6" />
           </button>
           <div className="flex flex-col items-center py-4 text-white space-y-4">
-            <NavLink href="/atividades" mobile>
-              Atividades
-            </NavLink>
-            <NavLink href="/conquistas" mobile>
-              Conquistas
-            </NavLink>
-            <NavLink href="/sobre" mobile>
-              Sobre nós
-            </NavLink>
-            <NavLink href="/fale-conosco" mobile>
-              Fale Conosco
-            </NavLink>
+            <NavLink href="/atividades" mobile>Atividades</NavLink>
+            <NavLink href="/conquistas" mobile>Conquistas</NavLink>
+            <NavLink href="/sobre" mobile>Sobre nós</NavLink>
+            <NavLink href="/fale-conosco" mobile>Fale Conosco</NavLink>
           </div>
           {!isAuthenticated && (
             <div className="mt-8 flex flex-col space-y-4">
@@ -119,6 +106,8 @@ const NavBar: React.FC = () => {
     </>
   );
 };
+
+
 
 interface NavLinkProps {
   href: string;
@@ -204,9 +193,7 @@ const UserDropdown: React.FC = () => (
 const AuthButtons: React.FC = () => (
   <>
     <Link href="/login">
-      <Button className="bg-white text-[#023859] text-sm px-4 py-2 rounded">
-        Login
-      </Button>
+      <Button className="bg-white text-[#023859] text-sm px-4 py-2 rounded">Login</Button>
     </Link>
     <Link href="/cadastro">
       <Button className="border-white border-2 bg-transparent text-sm text-white px-4 py-2 rounded">
