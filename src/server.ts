@@ -36,7 +36,6 @@ const allowedOrigins = [
 
 // Registra o plugin de CORS com configuração mais específica
 app.register(fastifyCors, {
-<<<<<<< HEAD
   origin: (origin, cb) => {
     if (!origin || allowedOrigins.includes(origin)) {
       cb(null, true);
@@ -47,10 +46,6 @@ app.register(fastifyCors, {
   },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
-=======
-  origin: true, // Permitir todas as origens, ou você pode especificar uma lista de origens
-  methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE'], // Métodos permitidos
->>>>>>> 5a2d06d1a72408625d53957e3ab173f7a2904b94
   credentials: true,
   maxAge: 86400, // 24 hours
   preflight: true,
