@@ -149,7 +149,8 @@ const UserDropdown: React.FC = () => (
           </h1>
         </div>
       </DropdownItem>
-        <DropdownItem key="conta" className="text-[#000000] text-sm mt-2">
+        <DropdownItem key="conta" className="text-[#000000] text-sm mt-2">  ,
+          
           Minha Conta
         </DropdownItem>
       <DropdownItem key="divider1" className="py-0">
