@@ -144,7 +144,7 @@ export default function Estatisticas() {
         </div>
 
         {/* gráfico 3 */}
-        <div className="w-96 h-80 rounded-2xl border-2 flex items-center justify-center text-center ">
+        <div className="w-96 h-80 rounded-2xl border-2 grid text-center ">
         <h2 className="mt-4 font-bold text-darkBlue-500 text-3xl">
             Acessos por região
           </h2>
