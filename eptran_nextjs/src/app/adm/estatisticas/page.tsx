@@ -162,6 +162,10 @@ export default function Estatisticas() {
                 {
                   scaleType: "band",
                   data: ["S", "SU", "CO", "N", "NO"],
+                  colorMap: {
+                    type: 'ordinal',
+                    colors: ['#ccebc5', '#a8ddb5', '#7bccc4', '#4eb3d3', '#2b8cbe', '#08589e']
+                  }
                  
                 },
               ]}
@@ -356,6 +360,10 @@ export default function Estatisticas() {
                 {
                   data: ["6+", "11+", "14+", "18+"],
                   scaleType: "band",
+                  colorMap: {
+                    type: 'ordinal',
+                    colors: ['#ccebc5', '#a8ddb5', '#7bccc4', '#4eb3d3', '#2b8cbe', '#08589e']
+                  }
                   
                 },
               ]}
