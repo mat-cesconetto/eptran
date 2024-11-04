@@ -164,7 +164,7 @@ export default function Estatisticas() {
                   data: ["S", "SU", "CO", "N", "NO"],
                   colorMap: {
                     type: 'ordinal',
-                    colors: ['#ccebc5', '#a8ddb5', '#7bccc4', '#4eb3d3', '#2b8cbe', '#08589e']
+                    colors: ['#ED8598', '#B5EE88', '#CA8DFB', '#8995FA', '#003A7E']
                   }
                  
                 },
@@ -362,7 +362,7 @@ export default function Estatisticas() {
                   scaleType: "band",
                   colorMap: {
                     type: 'ordinal',
-                    colors: ['#ccebc5', '#a8ddb5', '#7bccc4', '#4eb3d3', '#2b8cbe', '#08589e']
+                    colors: ['#B5EE88', '#CA8DFB', '#8995FA', '#003A7E']
                   }
                   
                 },
