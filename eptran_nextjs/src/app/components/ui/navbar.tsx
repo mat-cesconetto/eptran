@@ -149,34 +149,24 @@ const UserDropdown: React.FC = () => (
           </h1>
         </div>
       </DropdownItem>
-      <Link href={"/configuracao/dados"}>
         <DropdownItem key="conta" className="text-[#000000] text-sm mt-2">
           Minha Conta
         </DropdownItem>
-      </Link>
       <DropdownItem key="divider1" className="py-0">
         <hr className="my-2 border-[#023859]" />
       </DropdownItem>
-      <Link href={"/configuracao/dados"}>
         <DropdownItem key="account" className="text-[#023859] text-sm">
           Dados pessoais
         </DropdownItem>
-      </Link>
-      <Link href={"/configuracao/privacidade"}>
       <DropdownItem key="privacy" className="text-[#023859] text-sm">
         Privacidade
       </DropdownItem>
-      </Link>
-      <Link href={"/conquistas"}>
       <DropdownItem key="achievements" className="text-[#023859] text-sm">
         Minhas Conquistas
       </DropdownItem>
-      </Link>
-      <Link href={"/"}>
       <DropdownItem key="serviços" className="text-[#000000] text-sm">
         Serviços
       </DropdownItem>
-      </Link>
       <DropdownItem key="divider2" className="py-0">
         <hr className="my-2 border-[#023859]" />
       </DropdownItem>
@@ -193,10 +183,10 @@ const UserDropdown: React.FC = () => (
 const AuthButtons: React.FC = () => (
   <>
     <Link href="/login">
-      <Button className="bg-white text-[#023859] text-sm px-4 py-2 rounded">Login</Button>
+      <Button className="bg-white text-[#023859] text-sm px-8 py-2 mr-4 rounded">Login</Button>
     </Link>
     <Link href="/cadastro">
-      <Button className="border-white border-2 bg-transparent text-sm text-white px-4 py-2 rounded">
+      <Button className="border-white border-2 bg-transparent text-sm text-white px-5 py-2 rounded">
         Cadastro
       </Button>
     </Link>
