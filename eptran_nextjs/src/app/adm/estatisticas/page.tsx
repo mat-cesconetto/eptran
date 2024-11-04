@@ -55,6 +55,8 @@ const bairros = [
 export default function Estatisticas() {
   const [userFilter, setUserFilter] = useState("all");
 
+  
+
   return (
     <main className="min-h-screen p-4 md:p-8 pt-24 text-black">
       <div className="flex gap-5 ">
@@ -144,8 +146,57 @@ export default function Estatisticas() {
         </div>
 
         {/* gráfico 3 */}
-        <div className="w-96 h-80 rounded-2xl border-2 flex items-center justify-center">
-          {/* Add content for gráfico 3 here */}
+        <div className="w-96 h-80 rounded-2xl border-2 grid text-center ">
+        <h2 className="mt-4 font-bold text-darkBlue-500 text-3xl">
+            Acessos por região
+          </h2>
+
+          <div className="align-middle justify-center flex ">
+            <BarChart
+              borderRadius={8}
+              width={300}
+              height={250}
+              series={[{ data: [400, 310, 320, 110, 200]}]}
+
+              xAxis={[
+                {
+                  scaleType: "band",
+                  data: ["S", "SU", "CO", "N", "NO"],
+                  colorMap: {
+                    type: 'ordinal',
+                    colors: ['#ED8598', '#B5EE88', '#CA8DFB', '#8995FA', '#003A7E']
+                  }
+                 
+                },
+              ]}
+              
+              sx={{
+                ".MuiChartsAxis-bottom .MuiChartsAxis-line": {
+                  display: "none",
+                },
+                ".MuiChartsAxis-bottom .MuiChartsAxis-tick": {
+                  display: "none",
+                },
+                ".MuiChartsAxis-bottom .MuiChartsAxis-tickLabel": {
+                  fontWeight: "800",
+                  fill:"#023859"
+                },
+                ".MuiChartsAxis-left .MuiChartsAxis-line": {
+                  display: "none",
+                },
+                ".MuiChartsAxis-left .MuiChartsAxis-tick": {
+                  display: "none",
+                },
+                ".MuiChartsAxis-left .MuiChartsAxis-tickLabel": {
+                  fontWeight: "800",
+                  fill:"#023859"
+                },
+               
+              }}
+
+              margin={{ top: 50, bottom: 30, left: 50, right: 10 }}
+            />
+          </div>
         </div>
       </div>
 
@@ -304,11 +355,16 @@ export default function Estatisticas() {
               width={500}
               height={330}
               series={[{ data: [200, 350, 250, 250]}]}
-
+              
               xAxis={[
                 {
                   data: ["6+", "11+", "14+", "18+"],
                   scaleType: "band",
+                  colorMap: {
+                    type: 'ordinal',
+                    colors: ['#B5EE88', '#CA8DFB', '#8995FA', '#003A7E']
+                  }
+                  
                 },
               ]}
               
@@ -333,10 +389,8 @@ export default function Estatisticas() {
                   fontWeight: "800",
                   fill:"#023859"
                 },
-               
+                
               }}
-             
-
 
               margin={{ top: 50, bottom: 30, left: 50, right: 10 }}
             />
