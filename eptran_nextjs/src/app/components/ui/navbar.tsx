@@ -4,7 +4,13 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useAuth } from "@/hooks/useAuth";
-import { Button, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@nextui-org/react";
+import {
+  Button,
+  Dropdown,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownItem,
+} from "@nextui-org/react";
 import { Menu, X } from "lucide-react";
 
 const NavBar: React.FC = () => {
@@ -81,18 +87,30 @@ const NavBar: React.FC = () => {
             <X className="h-6 w-6" />
           </button>
           <div className="flex flex-col items-center py-4 text-white space-y-4">
-            <NavLink href="/atividades" mobile>Atividades</NavLink>
-            <NavLink href="/conquistas" mobile>Conquistas</NavLink>
-            <NavLink href="/sobre" mobile>Sobre nós</NavLink>
-            <NavLink href="/fale-conosco" mobile>Fale Conosco</NavLink>
+            <NavLink href="/atividades" mobile>
+              Atividades
+            </NavLink>
+            <NavLink href="/conquistas" mobile>
+              Conquistas
+            </NavLink>
+            <NavLink href="/sobre" mobile>
+              Sobre nós
+            </NavLink>
+            <NavLink href="/fale-conosco" mobile>
+              Fale Conosco
+            </NavLink>
           </div>
           {!isAuthenticated && (
             <div className="mt-8 flex flex-col space-y-4">
               <Link href="/login">
-                <Button className="bg-white text-[#023859] text-sm px-8 py-2 rounded w-full">Login</Button>
+                <Button className="bg-white text-[#023859] text-sm px-8 py-2 rounded w-full">
+                  Login
+                </Button>
               </Link>
               <Link href="/cadastro">
-                <Button className="border-white border-2 bg-transparent text-sm text-white px-6 py-2 rounded w-full">Cadastro</Button>
+                <Button className="border-white border-2 bg-transparent text-sm text-white px-6 py-2 rounded w-full">
+                  Cadastro
+                </Button>
               </Link>
             </div>
           )}
@@ -108,12 +126,14 @@ interface NavLinkProps {
   mobile?: boolean;
 }
 
-const NavLink: React.FC<NavLinkProps> = ({ href, children, mobile = false }) => (
+const NavLink: React.FC<NavLinkProps> = ({
+  href,
+  children,
+  mobile = false,
+}) => (
   <Link
     href={href}
-    className={`relative group ${
-      mobile ? "text-2xl py-2" : "mx-4"
-    }`}
+    className={`relative group ${mobile ? "text-2xl py-2" : "mx-4"}`}
   >
     {children}
     <div className="absolute left-0 bottom-[-6px] w-full h-[3px] bg-white scale-x-0 origin-right transition-transform duration-500 group-hover:scale-x-100"></div>
@@ -140,24 +160,34 @@ const UserDropdown: React.FC = () => (
           </h1>
         </div>
       </DropdownItem>
-      <DropdownItem key="conta" className="text-[#000000] text-sm mt-2">
-        Minha Conta
-      </DropdownItem>
+      <Link href={"/configuracao/dados"}>
+        <DropdownItem key="conta" className="text-[#000000] text-sm mt-2">
+          Minha Conta
+        </DropdownItem>
+      </Link>
       <DropdownItem key="divider1" className="py-0">
         <hr className="my-2 border-[#023859]" />
       </DropdownItem>
-      <DropdownItem key="account" className="text-[#023859] text-sm">
-        Dados pessoais
-      </DropdownItem>
+      <Link href={"/configuracao/dados"}>
+        <DropdownItem key="account" className="text-[#023859] text-sm">
+          Dados pessoais
+        </DropdownItem>
+      </Link>
+      <Link href={"/configuracao/privacidade"}>
       <DropdownItem key="privacy" className="text-[#023859] text-sm">
         Privacidade
       </DropdownItem>
+      </Link>
+      <Link href={"/conquistas"}>
       <DropdownItem key="achievements" className="text-[#023859] text-sm">
         Minhas Conquistas
       </DropdownItem>
+      </Link>
+      <Link href={"/"}>
       <DropdownItem key="serviços" className="text-[#000000] text-sm">
         Serviços
       </DropdownItem>
+      </Link>
       <DropdownItem key="divider2" className="py-0">
         <hr className="my-2 border-[#023859]" />
       </DropdownItem>
@@ -174,10 +204,14 @@ const UserDropdown: React.FC = () => (
 const AuthButtons: React.FC = () => (
   <>
     <Link href="/login">
-      <Button className="bg-white text-[#023859] text-sm px-4 py-2 rounded">Login</Button>
+      <Button className="bg-white text-[#023859] text-sm px-4 py-2 rounded">
+        Login
+      </Button>
     </Link>
     <Link href="/cadastro">
-      <Button className="border-white border-2 bg-transparent text-sm text-white px-4 py-2 rounded">Cadastro</Button>
+      <Button className="border-white border-2 bg-transparent text-sm text-white px-4 py-2 rounded">
+        Cadastro
+      </Button>
     </Link>
   </>
 );
