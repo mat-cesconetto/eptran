@@ -389,7 +389,7 @@ export default function Estatisticas() {
                   fontWeight: "800",
                   fill:"#023859"
                 },
-               
+                
               }}
 
               margin={{ top: 50, bottom: 30, left: 50, right: 10 }}
