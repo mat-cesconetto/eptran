@@ -2,6 +2,8 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
+import { useLogout } from '@/hooks/useLogout';
+
 import Link from "next/link";
 import { useAuth } from "@/hooks/useAuth";
 import {
@@ -13,9 +15,13 @@ import {
 } from "@nextui-org/react";
 import { Menu, X } from "lucide-react";
 
+interface UserDropdownProps {
+  onLogout: () => void;
+}
 const NavBar: React.FC = () => {
   const { isAuthenticated, isAdmin } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { logoutUser, isLoading, error } = useLogout();
 
   return (
     <>
@@ -52,7 +58,9 @@ const NavBar: React.FC = () => {
 
         <div className="flex-shrink-0">
           {isAuthenticated ? (
-            <UserDropdown />
+            <UserDropdown onLogout={function (): void {
+              throw new Error("Function not implemented.");
+            } } />
           ) : (
             <div className="md:hidden">
               <Image
@@ -128,7 +136,7 @@ const NavLink: React.FC<NavLinkProps> = ({
   </Link>
 );
 
-const UserDropdown: React.FC = () => (
+const UserDropdown: React.FC<UserDropdownProps> = ({ onLogout }) => (
   <Dropdown>
     <DropdownTrigger>
       <Image
@@ -149,7 +157,6 @@ const UserDropdown: React.FC = () => (
         </div>
       </DropdownItem>
         <DropdownItem key="conta" className="text-[#000000] text-sm mt-2">  ,
-          
           Minha Conta
         </DropdownItem>
       <DropdownItem key="divider1" className="py-0">
@@ -173,7 +180,7 @@ const UserDropdown: React.FC = () => (
       <DropdownItem key="accessibility" className="text-[#023859] text-sm">
         Acessibilidade
       </DropdownItem>
-      <DropdownItem key="logout" className="text-danger text-sm" color="danger">
+      <DropdownItem key="logout" className="text-danger text-sm" color="danger" onClick={onLogout}>
         Sair da conta
       </DropdownItem>
     </DropdownMenu>
