@@ -1,7 +1,10 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { Material } from "@/@types/Material"
 
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { Copy, Link } from "lucide-react";
 import {
   Dialog,
   DialogClose,
@@ -17,7 +20,6 @@ import Image from "next/image";
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
 
   SelectTrigger,
@@ -27,6 +29,31 @@ import { Search } from "lucide-react";
 import Card from "./card-conteudo";
 
 export default function Conteudo() {
+  const { materiais, loading, error } = useMateriais();
+  const [escolaridade, setEscolaridade] = useState("");
+  const [titulo, setTitulo] = useState("");
+  const [descricao, setDescricao] = useState("");
+  const [materialLink, setMaterialLink] = useState("");
+  const { addMaterial } = useAddMaterial();
+
+  const handleAddMaterial = () => {
+    const newMaterial: Material = {
+      escolaridade,
+      titulo,
+      descricao,
+      materialLink,
+    };
+    console.log(newMaterial)
+
+    addMaterial(newMaterial);
+
+    // Limpar os campos do diálogo
+    setEscolaridade("");
+    setTitulo("");
+    setDescricao("");
+    setMaterialLink("");
+  };
+
   return (
     <main className="px-4 sm:px-6 lg:px-8">
       <div className="flex flex-col sm:flex-row items-center sm:items-start mb-8 sm:mb-0">
@@ -123,6 +150,8 @@ export default function Conteudo() {
                       id="link"
                       className="border-darkBlue-400"
                       placeholder="http://sia.com.br"
+                      value={materialLink}
+                      onChange={(e) => setMaterialLink(e.target.value)}
                     />
                   </div>
                   <div className="grid">
@@ -133,6 +162,8 @@ export default function Conteudo() {
                       id="name"
                       className="border-darkBlue-400"
                       placeholder="Nome conteúdo EPTRAN"
+                      value={titulo}
+                      onChange={(e) => setTitulo(e.target.value)}
                     />
                   </div>
                   <div className="grid">
@@ -143,6 +174,8 @@ export default function Conteudo() {
                       id="description"
                       placeholder="Descrição conteúdo EPTRAN"
                       className="border-darkBlue-400"
+                      value={descricao}
+                      onChange={(e) => setDescricao(e.target.value)}
                     />
                   </div>
                 </div>
@@ -154,7 +187,10 @@ export default function Conteudo() {
                     >
                       CLASSIFICAÇÃO
                     </Label>
-                    <Select>
+                    <Select
+                      value={escolaridade}
+                      onValueChange={setEscolaridade}
+                    >
                       <SelectTrigger className="border-darkBlue-400 w-full">
                         <SelectValue placeholder="Selecionar" />
                       </SelectTrigger>
@@ -177,6 +213,7 @@ export default function Conteudo() {
                     <Button
                       type="submit"
                       className="w-full sm:w-auto bg-darkBlue-500 text-white font-bold text-xs"
+                      onClick={handleAddMaterial}
                     >
                       ENVIAR
                     </Button>

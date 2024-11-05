@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tela Inicial do Jogo</title>
+    <link rel="stylesheet" href="Tela.css">
+
+</head>
+<body>
+    <div class="left-lacuna"></div> <!-- Lacuna esquerda -->
+    <div class="right-lacuna"></div> <!-- Lacuna direita -->
+    
+    <div class="container">
+        <button id="startButton"></button>
+        <div id="characterSelection" class="characters" style="display: none;">
+            <img id="char1" src="../Boneco2.png" alt="Personagem 1" class="character-img">
+            <img id="char2" src="../boneco1.png" alt="Personagem 2" class="character-img">
+            <img id="char3" src="../Boneco3.png" alt="Personagem 3" class="character-img">
+            <img id="char4" src="../Boneco4.png" alt="Personagem 4" class="character-img">
+        </div>
+        <button id="confirmButton" style="display: none;"></button>
+        
+        <div class="arrow-container">
+            <img src="../arrow-left.png" alt="Arrow Left" class="arrow" id="arrow-left">
+            <img src="../arrow-right.png" alt="Arrow Right" class="arrow" id="arrow-right">
+        </div>
+        
+    </div>
+
+    <script src="Tela.jsx"></script>
+</body>
+

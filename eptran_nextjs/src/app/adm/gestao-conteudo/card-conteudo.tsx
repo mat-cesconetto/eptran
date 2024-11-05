@@ -30,13 +30,13 @@ import {
 } from "@/components/ui/select";
 
 interface CardProps {
-  src: string;
-  alt: string;
-  conteudo: string;
-  data: string;
-  paginas: string;
-  nivel: string;
-  tamanho: string;
+  src: string;          // URL da imagem
+  alt: string;         // Texto alternativo da imagem
+  conteudo: string;    // Conteúdo do card
+  data: string;        // Data associada
+  paginas: string;     // Número de páginas
+  nivel: string;       // Nível de escolaridade
+  tamanho: string;     // Tamanho do material
 }
 
 const Card: React.FC<CardProps> = ({ src, alt, conteudo, data, paginas, nivel, tamanho }) => {
@@ -50,22 +50,14 @@ const Card: React.FC<CardProps> = ({ src, alt, conteudo, data, paginas, nivel, t
   };
 
   return (
-    <div className="rounded-xl w-48 bg-darkBlue-500">
-      <Image
-        className="border rounded-t-xl"
-        src={src}
-        alt={alt}
-        width={192}
-        height={192}
-      />
-
-      <div className="flex justify-between">
-        <p className="text-[8px] text-white text-center ml-3 mt-2 border rounded-md w-20 h-6 pt-1">
-          {conteudo}
-        </p>
-        <p className="text-[8px] text-white text-center ml-4 mr-8 mt-2 border rounded-md w-14 h-6 p-1">
-          {data}
-        </p>
+    <div className="relative border rounded-lg shadow-lg p-4 m-4 bg-white">
+      <img src={src} alt={alt} className="w-full h-48 object-cover rounded-t-lg" />
+      <div className="p-4">
+        <h2 className="font-bold text-lg">{conteudo}</h2>
+        <p className="text-sm text-gray-600">{data}</p>
+        <p className="text-sm text-gray-600">{paginas}</p>
+        <p className="text-sm text-gray-600">{nivel}</p>
+        <p className="text-sm text-gray-600">{tamanho}</p>
       </div>
       <div className="flex justify-start">
         <p className="text-[8px] text-white text-center ml-3 mt-2 border rounded-md w-9 h-6 p-1">
@@ -82,13 +74,9 @@ const Card: React.FC<CardProps> = ({ src, alt, conteudo, data, paginas, nivel, t
       <div className="flex">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button
-              variant="default"
-              className="h-8 w-8 p-0 ml-2 mt-1 bg-transparent border-0"
-            >
-              <span className="sr-only">Abrir menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
+            <button className="bg-transparent text-gray-600 hover:text-gray-800 focus:outline-none text-lg">
+              <MoreHorizontal /> {/* Ícone de três pontos */}
+            </button>
           </DropdownMenuTrigger>
           <DropdownMenuContent
             align="start"

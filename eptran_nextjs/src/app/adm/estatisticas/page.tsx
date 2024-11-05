@@ -9,88 +9,65 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useState } from "react";
-import Box from "@mui/material/Box";
 import { PieChart } from "@mui/x-charts/PieChart";
 import { BarChart } from "@mui/x-charts/BarChart";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 import {
   sexoEstatistica,
   acessosSemanais,
-  acessoPorRegiao,
+  acessosRegiao,
+  acessosIdade,
   escolaridade,
+  estados,
+  cidades,
+  escolas,
+  bairros,
 } from "./estatisticas";
-
-const escolas = [
-  { nomeEscola: "Escola Sesi", valorEscola: 113 },
-  { nomeEscola: "E.E.B. GAG", valorEscola: 215 },
-  { nomeEscola: "Colégio Santo Antônio", valorEscola: 15 },
-  { nomeEscola: "E.E.M. Celso Ramos", valorEscola: 12 },
-  { nomeEscola: "Bom Jesus", valorEscola: 36 },
-];
-
-const estados = [
-  { nomeEstado: "Santa Catarina", valorEstado: 113 },
-  { nomeEstado: "Paraná", valorEstado: 215 },
-  { nomeEstado: "Rio Grande do Sul", valorEstado: 15 },
-  { nomeEstado: "Bahia", valorEstado: 12 },
-  { nomeEstado: "São Paulo", valorEstado: 36 },
-];
-
-const cidades = [
-  { nomeCidade: "Joinville", valorCidade: 113 },
-  { nomeCidade: "Blumenau", valorCidade: 215 },
-  { nomeCidade: "Barra do Sul", valorCidade: 15 },
-  { nomeCidade: "Criciúma", valorCidade: 12 },
-  { nomeCidade: "Anta Gorda", valorCidade: 36 },
-];
-
-const bairros = [
-  { nomeBairro: "Centro", valorBairro: 113 },
-  { nomeBairro: "Bucarein", valorBairro: 215 },
-  { nomeBairro: "Santo Antônio", valorBairro: 15 },
-  { nomeBairro: "América", valorBairro: 12 },
-  { nomeBairro: "Vila Nova", valorBairro: 36 },
-];
 
 export default function Estatisticas() {
   const [userFilter, setUserFilter] = useState("all");
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const isTablet = useMediaQuery(theme.breakpoints.between("sm", "md"));
 
-  
+  const getChartWidth = (defaultWidth: number) => {
+    if (isMobile) return window.innerWidth - 32; // Subtracting padding
+    if (isTablet) return (window.innerWidth - 48) / 2; // For 2 columns on tablet
+    return defaultWidth;
+  };
 
   return (
     <main className="min-h-screen p-4 md:p-8 pt-24 text-black">
-      <div className="flex gap-5 ">
-        <div>
+      <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-5 mb-10">
+        <div className="flex items-center gap-5">
           <Image
             src="/alert-square-filled-svgrepo-com.svg"
             width={50}
             height={50}
             alt="perfil"
           />
+          <h1 className="text-darkBlue-500 text-2xl md:text-4xl font-bold">Gestão de Gráficos</h1>
         </div>
-        <div className="text-darkBlue-500 text-4xl font-bold pt-2">
-          <h1>Gestão de Gráficos</h1>
+        <div className="w-full md:w-auto">
+          <Select value={userFilter} onValueChange={setUserFilter}>
+            <SelectTrigger className="text-darkBlue-500 font-bold w-full md:w-auto">
+              <SelectValue placeholder="Selecione" />
+            </SelectTrigger>
+            <SelectContent className="text-darkBlue-500 font-bold">
+              <SelectItem value="all">Masculino</SelectItem>
+              <SelectItem value="active">Feminino</SelectItem>
+              <SelectItem value="inactive">Não declarado</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
       </div>
 
-      <div className="w-full items-end justify-end flex">
-        <Select value={userFilter} onValueChange={setUserFilter}>
-          <SelectTrigger className="text-darkBlue-500 font-bold w-full md:w-auto">
-            <SelectValue placeholder="Selecione" />
-          </SelectTrigger>
-          <SelectContent className="text-darkBlue-500 font-bold">
-            <SelectItem value="all">Masculino</SelectItem>
-            <SelectItem value="active">Feminino</SelectItem>
-            <SelectItem value="inactive">Não declarado</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
-
-      {/* div principal 1 */}
-      <div className="w-full h-full mt-10 flex justify-between">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {/* gráfico 1 */}
-        <div className="w-96 h-80 rounded-2xl border-2">
-          <div className="mt-10 ml-12">
+        <div className="rounded-2xl border-2 p-4">
+          <div className="flex justify-center md:justify-start">
             <Image
               src="/Image/users-svgrepo-com.svg"
               width={100}
@@ -98,66 +75,60 @@ export default function Estatisticas() {
               alt="perfil"
             />
           </div>
-
-          <h1 className="mt-6 ml-12 font-bold text-darkBlue-500 text-5xl">
+          <h2 className="mt-6 text-center md:text-left font-bold text-darkBlue-500 text-4xl md:text-5xl">
             113.007k
-          </h1>
-
-          <p className="ml-12 flex font-semibold text-darkBlue-200">
+          </h2>
+          <p className="text-center md:text-left font-semibold text-darkBlue-200">
             <span className="mr-1 text-fonte-verde font-semibold">+9,07k</span>{" "}
             nos últimos 7 dias
           </p>
-
-          <h1 className="mt-4 ml-12 font-bold text-darkBlue-500 text-xl">
+          <h3 className="mt-4 text-center md:text-left font-bold text-darkBlue-500 text-xl">
             Acessos Totais
-          </h1>
+          </h3>
         </div>
 
         {/* gráfico 2 */}
-        <div className="w-96 h-80 rounded-2xl border-2">
-          <div className="align-middle text-center">
-            <h2 className="mt-10 font-bold text-darkBlue-500 text-2xl">
-              Principais escolas
-            </h2>
-
-            <div className="max-w-md mx-auto p-8 py-6">
-              <ol className="list-none space-y-3">
-                {escolas.map((escola, index) => (
-                  <li
-                    key={index}
-                    className="flex items-center justify-between rounded-lg"
-                  >
-                    <span className="flex items-center">
-                      <span className="text-lg font-bold text-[#0A305A] mr-4">
-                        {index + 1}.
-                      </span>
-                      <span className="text-lg font-bold text-[#0A305A]">
-                        {escola.nomeEscola}
-                      </span>
+        <div className="rounded-2xl border-2 p-4">
+          <h2 className="mt-4 font-bold text-darkBlue-500 text-2xl text-center">
+            Principais escolas
+          </h2>
+          <div className="max-w-md mx-auto p-4">
+            <ol className="list-none space-y-3">
+              {escolas.map((escola, index) => (
+                <li
+                  key={index}
+                  className="flex items-center justify-between rounded-lg"
+                >
+                  <span className="flex items-center">
+                    <span className="text-sm md:text-lg font-bold text-[#0A305A] mr-2 md:mr-4">
+                      {index + 1}.
                     </span>
-                    <span className="text-lg font-bold text-[#0A305A]">
-                      {escola.valorEscola}
+                    <span className="text-sm md:text-lg font-bold text-[#0A305A]">
+                      {escola.nomeEscola}
                     </span>
-                  </li>
-                ))}
-              </ol>
-            </div>
+                  </span>
+                  <span className="text-sm md:text-lg font-bold text-[#0A305A]">
+                    {escola.valorEscola}
+                  </span>
+                </li>
+              ))}
+            </ol>
           </div>
         </div>
 
         {/* gráfico 3 */}
-        <div className="w-96 h-80 rounded-2xl border-2 grid text-center ">
-        <h2 className="mt-4 font-bold text-darkBlue-500 text-3xl">
+        <div className="rounded-2xl border-2 p-4">
+          <h2 className="mt-4 font-bold text-darkBlue-500 text-2xl md:text-3xl text-center">
             Acessos por região
           </h2>
-
-          <div className="align-middle justify-center flex ">
+          <div className="flex justify-center">
             <BarChart
               borderRadius={8}
-              width={300}
+              width={getChartWidth(300)}
               height={250}
-              series={[{ data: [400, 310, 320, 110, 200]}]}
-
+              series={acessosRegiao.map((regiao) => ({
+                data: regiao.data,
+              }))}
               xAxis={[
                 {
                   scaleType: "band",
@@ -166,53 +137,39 @@ export default function Estatisticas() {
                     type: 'ordinal',
                     colors: ['#ED8598', '#B5EE88', '#CA8DFB', '#8995FA', '#003A7E']
                   }
-                 
                 },
               ]}
-              
               sx={{
-                ".MuiChartsAxis-bottom .MuiChartsAxis-line": {
-                  display: "none",
-                },
-                ".MuiChartsAxis-bottom .MuiChartsAxis-tick": {
-                  display: "none",
-                },
+                ".MuiChartsAxis-bottom .MuiChartsAxis-line": { display: "none" },
+                ".MuiChartsAxis-bottom .MuiChartsAxis-tick": { display: "none" },
                 ".MuiChartsAxis-bottom .MuiChartsAxis-tickLabel": {
                   fontWeight: "800",
-                  fill:"#023859"
+                  fill: "#023859"
                 },
-                ".MuiChartsAxis-left .MuiChartsAxis-line": {
-                  display: "none",
-                },
-                ".MuiChartsAxis-left .MuiChartsAxis-tick": {
-                  display: "none",
-                },
+                ".MuiChartsAxis-left .MuiChartsAxis-line": { display: "none" },
+                ".MuiChartsAxis-left .MuiChartsAxis-tick": { display: "none" },
                 ".MuiChartsAxis-left .MuiChartsAxis-tickLabel": {
                   fontWeight: "800",
-                  fill:"#023859"
+                  fill: "#023859"
                 },
-               
               }}
-
               margin={{ top: 50, bottom: 30, left: 50, right: 10 }}
             />
           </div>
         </div>
       </div>
 
-      {/* div principal 2 */}
-      <div className="w-full h-full mt-10 flex justify-between">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-10">
         {/* gráfico 4 */}
-        <div className="w-[62.5%] border-2 rounded-md align-middle text-center">
-          <h2 className="mt-8 font-bold text-darkBlue-500 text-3xl">
+        <div className="lg:col-span-2 border-2 rounded-md p-4">
+          <h2 className="mt-4 font-bold text-darkBlue-500 text-2xl md:text-3xl text-center">
             Acessos semanais
           </h2>
-
-          <div className="align-middle justify-center flex mt-8">
+          <div className="flex justify-center mt-8">
             <BarChart
               borderRadius={8}
-              width={700}
-              height={330}
+              width={getChartWidth(700)}
+              height={320}
               series={acessosSemanais.map((serie) => ({
                 data: serie.data,
                 label: serie.label,
@@ -220,7 +177,7 @@ export default function Estatisticas() {
               }))}
               xAxis={[
                 {
-                  data: ["SEGUNDA", "TERÇA", "QUARTA", "QUINTA", "SEXTA"],
+                  data: ["SEG", "TER", "QUA", "QUI", "SEX"],
                   scaleType: "band",
                 },
               ]}
@@ -228,8 +185,7 @@ export default function Estatisticas() {
                 legend: {
                   direction: "row",
                   position: { vertical: "top", horizontal: "middle" },
-                  padding: -2,
-
+                  padding: -7,
                   labelStyle: {
                     fill: "#023859",
                     fontWeight: "Bold",
@@ -237,22 +193,14 @@ export default function Estatisticas() {
                 },
               }}
               sx={{
-                ".MuiChartsAxis-bottom .MuiChartsAxis-line": {
-                  display: "none",
-                },
-                ".MuiChartsAxis-bottom .MuiChartsAxis-tick": {
-                  display: "none",
-                },
+                ".MuiChartsAxis-bottom .MuiChartsAxis-line": { display: "none" },
+                ".MuiChartsAxis-bottom .MuiChartsAxis-tick": { display: "none" },
                 ".MuiChartsAxis-bottom .MuiChartsAxis-tickLabel": {
                   fontWeight: "800",
                   fill: "#023859",
                 },
-                ".MuiChartsAxis-left .MuiChartsAxis-line": {
-                  display: "none",
-                },
-                ".MuiChartsAxis-left .MuiChartsAxis-tick": {
-                  display: "none",
-                },
+                ".MuiChartsAxis-left .MuiChartsAxis-line": { display: "none" },
+                ".MuiChartsAxis-left .MuiChartsAxis-tick": { display: "none" },
                 ".MuiChartsAxis-left .MuiChartsAxis-tickLabel": {
                   fontWeight: "800",
                   fill: "#023859",
@@ -264,18 +212,17 @@ export default function Estatisticas() {
         </div>
 
         {/* gráfico 5 */}
-        <div className="grid border-2 rounded-2xl">
-          <h2 className="mt-4 flex justify-center font-bold text-darkBlue-500 text-3xl">
+        <div className="border-2 rounded-2xl p-4">
+          <h2 className="mt-4 font-bold text-darkBlue-500 text-2xl md:text-3xl text-center">
             Sexo
           </h2>
-
-          <Box sx={{ width: "100%", height: "100%" }}>
+          <div className="flex justify-center">
             <PieChart
               series={[
                 {
                   data: sexoEstatistica,
-                  innerRadius: 80,
-                  outerRadius: 120,
+                  innerRadius: 40,
+                  outerRadius: 75,
                   arcLabelMinAngle: 45,
                 },
               ]}
@@ -283,13 +230,12 @@ export default function Estatisticas() {
                 "--ChartsLegend-rootSpacing": "10px",
                 "--ChartsLegend-itemWidth": "100px",
               }}
-              width={400}
-              height={400}
-              margin={{ top: 10, bottom: 100, left: 30, right: 30 }}
+              width={getChartWidth(560)}
+              height={300}
               slotProps={{
                 legend: {
                   direction: "column",
-                  position: { vertical: "bottom", horizontal: "left" },
+                  position: { vertical: "middle", horizontal: "right" },
                   padding: 20,
                   labelStyle: {
                     fontWeight: "bold",
@@ -298,64 +244,61 @@ export default function Estatisticas() {
                 },
               }}
             />
-          </Box>
+          </div>
         </div>
       </div>
 
-      {/* div principal 3 */}
-      <div className="w-full h-full mt-10 flex justify-between">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-10">
         {/* gráfico 6 */}
-        <div className="grid border-2 rounded-2xl">
-          <h2 className="mt-4 flex justify-center font-bold text-darkBlue-500 text-3xl">
+        <div className="border-2 rounded-2xl p-4">
+          <h2 className="mt-4 font-bold text-darkBlue-500 text-2xl md:text-3xl text-center">
             Escolaridade
           </h2>
-
-          <Box sx={{ width: "00", height: "100" }}>
+          <div className="flex justify-center ">
             <PieChart
               series={[
                 {
                   data: escolaridade,
-                  innerRadius: 60,
-                  outerRadius: 100,
+                  innerRadius: 40,
+                  outerRadius: 75,
                   arcLabelMinAngle: 45,
+                  
                 },
               ]}
               sx={{
                 "--ChartsLegend-rootSpacing": "10px",
                 "--ChartsLegend-itemWidth": "100px",
               }}
-              width={500}
+              width={getChartWidth(560)}
               height={300}
               slotProps={{
                 legend: {
+                  padding: -30,
                   direction: "column",
                   position: { vertical: "middle", horizontal: "right" },
-
                   labelStyle: {
                     fontWeight: "bold",
                     fill: "#023859",
                   },
                 },
               }}
-              margin={{ top: 10, bottom: 10, left: 0, right: 200 }}
             />
-          </Box>
+          </div>
         </div>
 
         {/* gráfico 7 */}
-        <div className="w-[48%] h-96 border-2 rounded-2xl text-center">
-        <h2 className="mt-4 font-bold text-darkBlue-500 text-3xl">
+        <div className="border-2 rounded-2xl p-4">
+          <h2 className="mt-4 font-bold text-darkBlue-500 text-2xl md:text-3xl text-center">
             Acessos por idade
           </h2>
-
-
-          <div className="align-middle justify-center flex ">
+          <div className="flex justify-center">
             <BarChart
               borderRadius={8}
-              width={500}
-              height={330}
-              series={[{ data: [200, 350, 250, 250]}]}
-              
+              width={getChartWidth(400)}
+              height={300}
+              series={acessosIdade.map((idade) => ({
+                data: idade.data,
+              }))}
               xAxis={[
                 {
                   data: ["6+", "11+", "14+", "18+"],
@@ -364,135 +307,114 @@ export default function Estatisticas() {
                     type: 'ordinal',
                     colors: ['#B5EE88', '#CA8DFB', '#8995FA', '#003A7E']
                   }
-                  
                 },
               ]}
-              
               sx={{
-                ".MuiChartsAxis-bottom .MuiChartsAxis-line": {
-                  display: "none",
-                },
-                ".MuiChartsAxis-bottom .MuiChartsAxis-tick": {
-                  display: "none",
-                },
+                ".MuiChartsAxis-bottom .MuiChartsAxis-line": { display: "none" },
+                ".MuiChartsAxis-bottom .MuiChartsAxis-tick": { display: "none" },
                 ".MuiChartsAxis-bottom .MuiChartsAxis-tickLabel": {
                   fontWeight: "800",
-                  fill:"#023859"
+                  fill: "#023859"
                 },
-                ".MuiChartsAxis-left .MuiChartsAxis-line": {
-                  display: "none",
-                },
-                ".MuiChartsAxis-left .MuiChartsAxis-tick": {
-                  display: "none",
-                },
+                ".MuiChartsAxis-left .MuiChartsAxis-line": { display: "none" },
+                ".MuiChartsAxis-left .MuiChartsAxis-tick": { display: "none" },
                 ".MuiChartsAxis-left .MuiChartsAxis-tickLabel": {
                   fontWeight: "800",
-                  fill:"#023859"
+                  fill: "#023859"
                 },
-                
               }}
-
               margin={{ top: 50, bottom: 30, left: 50, right: 10 }}
             />
           </div>
         </div>
       </div>
 
-      {/* div principal 4 */}
-      <div className="w-full h-full mt-10 flex justify-between">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-10">
         {/* gráfico 8 */}
-        <div className="w-96 h-80 rounded-2xl border-2">
-          <div className="align-middle text-center">
-            <h2 className="mt-10 font-bold text-darkBlue-500 text-2xl">
-              Acessos por estado
-            </h2>
-
-            <div className="max-w-md mx-auto p-8 py-6">
-              <ol className="list-none space-y-3">
-                {estados.map((estado, index) => (
-                  <li
-                    key={index}
-                    className="flex items-center justify-between rounded-lg"
-                  >
-                    <span className="flex items-center">
-                      <span className="text-lg font-bold text-[#0A305A] mr-4">
-                        {index + 1}.
-                      </span>
-                      <span className="text-lg font-bold text-[#0A305A]">
-                        {estado.nomeEstado}
-                      </span>
+        <div className="rounded-2xl border-2 p-4">
+          <h2 className="mt-4 font-bold text-darkBlue-500 text-2xl text-center">
+            Acessos por estado
+          </h2>
+          <div className="max-w-md mx-auto p-4">
+            <ol className="list-none space-y-3">
+              {estados.map((estado, index) => (
+                <li
+                  key={index}
+                  className="flex items-center justify-between rounded-lg"
+                >
+                  <span className="flex items-center">
+                    <span className="text-sm md:text-lg font-bold text-[#0A305A] mr-2 md:mr-4">
+                      {index + 1}.
                     </span>
-                    <span className="text-lg font-bold text-[#0A305A]">
-                      {estado.valorEstado}
+                    <span className="text-sm md:text-lg font-bold text-[#0A305A]">
+                      {estado.nomeEstado}
                     </span>
-                  </li>
-                ))}
-              </ol>
-            </div>
+                  </span>
+                  <span className="text-sm md:text-lg font-bold text-[#0A305A]">
+                    {estado.valorEstado}
+                  </span>
+                </li>
+              ))}
+            </ol>
+          
           </div>
         </div>
 
         {/* gráfico 9 */}
-        <div className="w-96 h-80 rounded-2xl border-2">
-          <div className="align-middle text-center">
-            <h2 className="mt-10 font-bold text-darkBlue-500 text-2xl">
-              Acessos por cidade
-            </h2>
-
-            <div className="max-w-md mx-auto p-8 py-6">
-              <ol className="list-none space-y-3">
-                {cidades.map((cidade, index) => (
-                  <li
-                    key={index}
-                    className="flex items-center justify-between rounded-lg"
-                  >
-                    <span className="flex items-center">
-                      <span className="text-lg font-bold text-[#0A305A] mr-4">
-                        {index + 1}.
-                      </span>
-                      <span className="text-lg font-bold text-[#0A305A]">
-                        {cidade.nomeCidade}
-                      </span>
+        <div className="rounded-2xl border-2 p-4">
+          <h2 className="mt-4 font-bold text-darkBlue-500 text-2xl text-center">
+            Acessos por cidade
+          </h2>
+          <div className="max-w-md mx-auto p-4">
+            <ol className="list-none space-y-3">
+              {cidades.map((cidade, index) => (
+                <li
+                  key={index}
+                  className="flex items-center justify-between rounded-lg"
+                >
+                  <span className="flex items-center">
+                    <span className="text-sm md:text-lg font-bold text-[#0A305A] mr-2 md:mr-4">
+                      {index + 1}.
                     </span>
-                    <span className="text-lg font-bold text-[#0A305A]">
-                      {cidade.valorCidade}
+                    <span className="text-sm md:text-lg font-bold text-[#0A305A]">
+                      {cidade.nomeCidade}
                     </span>
-                  </li>
-                ))}
-              </ol>
-            </div>
+                  </span>
+                  <span className="text-sm md:text-lg font-bold text-[#0A305A]">
+                    {cidade.valorCidade}
+                  </span>
+                </li>
+              ))}
+            </ol>
           </div>
         </div>
 
         {/* gráfico 10 */}
-        <div className="w-96 h-80 rounded-2xl border-2">
-          <div className="align-middle text-center">
-            <h2 className="mt-10 font-bold text-darkBlue-500 text-2xl">
-              Acessos por bairro
-            </h2>
-
-            <div className="max-w-md mx-auto p-8 py-6">
-              <ol className="list-none space-y-3">
-                {bairros.map((bairro, index) => (
-                  <li
-                    key={index}
-                    className="flex items-center justify-between rounded-lg"
-                  >
-                    <span className="flex items-center">
-                      <span className="text-lg font-bold text-[#0A305A] mr-4">
-                        {index + 1}.
-                      </span>
-                      <span className="text-lg font-bold text-[#0A305A]">
-                        {bairro.nomeBairro}
-                      </span>
+        <div className="rounded-2xl border-2 p-4">
+          <h2 className="mt-4 font-bold text-darkBlue-500 text-2xl text-center">
+            Acessos por bairro
+          </h2>
+          <div className="max-w-md mx-auto p-4">
+            <ol className="list-none space-y-3">
+              {bairros.map((bairro, index) => (
+                <li
+                  key={index}
+                  className="flex items-center justify-between rounded-lg"
+                >
+                  <span className="flex items-center">
+                    <span className="text-sm md:text-lg font-bold text-[#0A305A] mr-2 md:mr-4">
+                      {index + 1}.
                     </span>
-                    <span className="text-lg font-bold text-[#0A305A]">
-                      {bairro.valorBairro}
+                    <span className="text-sm md:text-lg font-bold text-[#0A305A]">
+                      {bairro.nomeBairro}
                     </span>
-                  </li>
-                ))}
-              </ol>
-            </div>
+                  </span>
+                  <span className="text-sm md:text-lg font-bold text-[#0A305A]">
+                    {bairro.valorBairro}
+                  </span>
+                </li>
+              ))}
+            </ol>
           </div>
         </div>
       </div>

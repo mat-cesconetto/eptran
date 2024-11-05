@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="jogo_da_memoria.css">
+    <title>Jogo da Memória</title>
+</head>
+
+
+<body>
+    <main>
+        <h1>JOGO DA MEMÓRIA</h1>
+        <div id="cartas-container">
+            <div id="popup" class="popup">
+                <div class="popup-conteudo">
+                    <h2>Vitória!</h2>
+                    <p>Você ganhou!</p>
+                    <button onclick="jogoDaMemoria.fecharPopup()">Fechar</button>
+                </div>
+            </div>
+        </div>
+        <button id="iniciar">Iniciar ▶</button>
+        <button id="reiniciar">Reiniciar ⟳</button>
+    </main>
+    <script src="jogo_da_memoria.js"></script>
+    <script>
+        jogoDaMemoria = new JogoDaMemoria(10);
+    </script>
+</body>
+</html>

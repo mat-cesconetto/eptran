@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo Verdadeiro ou Falso - Trânsito</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-image: url(PapelParede.png);
+            color: #333;
+            margin: 0;
+            width: 100%;
+            padding: 20px;
+            height: 100vh;
+            background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+        }
+        h1 {
+            color: #000000;
+            font-size: 2.5em;
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 2px #333;
+        }
+        .question-counter {
+            font-size: 1.5em;
+            color: #000000;
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 2px #333;
+        }
+        .question-box {
+            background-color: #ffeb3b;
+            border: 4px solid #f57f17;
+            border-radius: 15px;
+            padding: 30px;
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+            font-size: 1.4em;
+            color: #333;
+        }
+        .buttons {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        .btn {
+            background-color: #f57f17;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 15px 25px;
+            cursor: pointer;
+            font-size: 1.2em;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .btn:hover {
+            background-color: #e65100;
+            transform: scale(1.05);
+        }
+        .score, .feedback {
+            font-size: 1.5em;
+            margin-top: 10px;
+        }
+        .feedback.correct {
+            color: #388e3c;
+        }
+        .feedback.incorrect {
+            color: #d32f2f;
+        }
+        .feedback::before {
+            font-size: 1.5em;
+            margin-right: 10px;
+        }
+        .feedback.correct::before {
+            content: "✔️";
+        }
+        .feedback.incorrect::before {
+            content: "❌";
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Jogo de Verdadeiro ou Falso - Trânsito</h1>
+    <div class="score-box">
+        <div class="question-counter" id="question-counter"></div>
+        <p class="score" id="score"></p>
+    </div>
+    <div class="question-box" id="question-box">
+        <p id="question"></p>
+        <div class="buttons">
+            <button class="btn" onclick="answer(true)">Verdadeiro</button>
+            <button class="btn" onclick="answer(false)">Falso</button>
+        </div>
+    </div>
+    <p class="feedback" id="feedback"></p>
+
+    <script>
+        const questions = [
+            { text: "A legislação de trânsito no Brasil é regulada pelo Código de Trânsito Brasileiro (CTB).", answer: true },
+            { text: "É permitido estacionar em áreas de calçada desde que o motorista permaneça no veículo.", answer: false },
+            { text: "Condutores de motocicletas são obrigados a usar capacete, com viseira ou óculos de proteção.", answer: true },
+            { text: "O uso de cinto de segurança é obrigatório apenas para o condutor e o passageiro da frente.", answer: false },
+            { text: "Avançar o sinal vermelho é uma infração grave no Código de Trânsito Brasileiro.", answer: true },
+            { text: "Ultrapassar outro veículo em local proibido pela sinalização é uma infração média.", answer: false },
+            { text: "O pedestre possui prioridade de passagem na faixa de pedestres, mesmo sem semáforo.", answer: true },
+            { text: "O uso de celular enquanto dirige é considerado infração gravíssima.", answer: true },
+            { text: "É permitido ao condutor transitar em calçadas e passeios para desviar de um engarrafamento.", answer: false },
+            { text: "A direção defensiva é obrigatória no treinamento de novos condutores.", answer: true },
+            { text: "Dirigir sob a influência de álcool é uma infração administrativa que não implica em multa.", answer: false },
+            { text: "A legislação de trânsito prevê limites diferentes de velocidade para vias urbanas e rurais.", answer: true },
+            { text: "A buzina deve ser usada constantemente para evitar acidentes.", answer: false },
+            { text: "Motoristas podem estacionar nas vagas reservadas para deficientes físicos, desde que seja por pouco tempo.", answer: false },
+            { text: "A infração de excesso de velocidade tem três níveis de gravidade, dependendo do excesso cometido.", answer: true },
+            { text: "Conduzir veículo sem a devida habilitação é uma infração de trânsito leve.", answer: false },
+            { text: "O uso de faróis baixos durante o dia é obrigatório em rodovias.", answer: true },
+            { text: "As crianças com menos de 10 anos devem ser transportadas no banco traseiro, com uso de cadeirinha adequada.", answer: true },
+            { text: "Em caso de acidente sem vítimas, o condutor deve acionar imediatamente o serviço de emergência.", answer: false },
+            { text: "É permitido estacionar em frente a garagens particulares desde que seja fora do horário comercial.", answer: false },
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        function loadQuestion() {
+            if (currentQuestion < questions.length) {
+                document.getElementById("question").textContent = questions[currentQuestion].text;
+                document.getElementById("feedback").textContent = "";
+                document.getElementById("score").textContent = `Pontuação: ${score}`;
+                document.getElementById("question-counter").textContent = `Questão ${currentQuestion + 1} / ${questions.length}`;
+            } else {
+                document.getElementById("question-box").innerHTML = `<h2>Fim do Jogo!</h2><p>Pontuação final: ${score} de ${questions.length}</p>`;
+                document.getElementById("feedback").textContent = "";
+                document.getElementById("score").textContent = "";
+                document.getElementById("question-counter").textContent = "";
+            }
+        }
+
+        function answer(userAnswer) {
+            const feedbackElement = document.getElementById("feedback");
+            if (userAnswer === questions[currentQuestion].answer) {
+                score++;
+                feedbackElement.textContent = "Parabéns! Você acertou!";
+                feedbackElement.className = "feedback correct";
+            } else {
+                feedbackElement.textContent = "Ops! Você errou. Tente novamente!";
+                feedbackElement.className = "feedback incorrect";
+            }
+            currentQuestion++;
+            setTimeout(loadQuestion, 1500);
+        }
+
+        loadQuestion();
+    </script>
+</body>
+</html>

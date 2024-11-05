@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foca</title>
+</head>
+<body>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Press Start 2P", system-ui;
+
+        }
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: rgb(116, 105, 85);
+        }
+        .teste{
+            color: white;
+            z-index: 0;
+            display: flex;
+            position: relative;
+        }
+
+        #telaCinza{
+            z-index: 3;
+            display: none;
+            flex-flow: column;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(128, 128, 128, 0.63);
+            backdrop-filter: blur(2px);
+        }
+
+        #Perdeu{
+            display: none;
+            margin: auto;     
+            text-align: center;     
+            align-items: center;
+            z-index: 4;
+            height: 30%;
+            font-size: 60px;
+        }
+
+        .resultados {
+            width: 100%;
+            height: 70%;
+            display: flex;
+            flex-flow: row wrap;
+            /* background-color: black; */
+        }
+
+        .pont {
+            display: flex;
+            flex-flow: row wrap;
+            align-items: center;
+            justify-content: space-around;
+            background-color: cadetblue;
+            width: 100%; /* Ajusta o tamanho da área */
+            height: 40%;
+            color: white; /* Muda a cor da fonte */
+            font-size: 20px;
+        }
+
+        .bot {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%; /* Ajusta o tamanho da área */
+            height: 60%;
+        }
+
+        #pontuacao{
+            display: none;
+            z-index: 4;
+           
+        }
+        #maiorLevel{
+            display: none;
+            /* border: 1px solid black; */
+            z-index: 4;
+        }
+
+        #botao_recomecar{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 4;
+            width: 500px;
+            height: 120px;
+            border: 2px solid black;
+            border-radius: 15px;
+            border-bottom: 6px solid black;
+            transition: 0.  ease;
+            font-size: 30px;
+        }
+
+        #botao_recomecar:active {
+
+            border: 3px solid black;
+        }
+        
+
+        .teste canvas {
+            z-index: 1;
+        }
+
+        #qntMoedas {
+            z-index: 4;
+            position: absolute;
+            margin: 15px;
+        }
+
+        #Level {
+            z-index: 4;
+            position: absolute;
+            right: 0;
+            margin: 15px;
+        }
+
+        .tela_jogo {
+            position: absolute;
+            width: 1280px;
+            height: 820px;
+            background: url(img/tela_inicial.png);
+            background-position: center;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-color: black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 5;
+        }
+       .botao_iniciar{
+            width: 300px;
+            border-radius: 100%;
+            height: 300px;
+            cursor: pointer;
+            margin-top: 170px;
+            margin-right: 15px;
+            background-color: #04aa6d00;
+            border: 0;
+        }
+        
+    </style>
+
+    <div class="teste">
+        <DIV id = "tela_inicial" class="tela_jogo">
+            <button id="botao_iniciar" class="botao_iniciar"></button>
+        </DIV>
+        <h2 id="qntMoedas">MOEDAS: 0</h2>
+        <h2 id="Level">Level 1</h2>
+
+        <div id="telaCinza">
+            <h1 id="Perdeu">VOCE PERDEU</h1>
+            <div class="resultados">
+                <div class="pont">
+                    <h2 id="pontuacao">Pontos: 0</h2>
+                    <h2 id="maiorLevel">Maior Level:1</h2>
+                </div>
+                <div class="bot">
+                    <button id="botao_recomecar" onclick="location.reload();">Recomeçar</button>
+                </div>
+            </div>
+        </div>
+        
+
+        <canvas id="canvas" width="1280" height="820"> </canvas>
+    </div>
+
+    <script>
+        var canvas, ctx, width, height, key = {};
+        var jogoAtivo = true; // Variável para controlar o estado do jogo
+        var velocidadeLimite = 6
+        var nivel = 1
+        var nivel_maximo = 0
+
+        
+        canvas = document.getElementById("canvas");
+        width = canvas.width;
+        
+        // IMAGENS DO JOGO
+
+        var focaimg = new Image();
+        focaimg.src = 'img/foca.png'; 
+
+        var carroimg = new Image();
+        carroimg.src = 'img/carro1.png'; 
+        var carroimg2 = new Image();
+        carroimg2.src = 'img/carro2.png'; 
+        var carroimg3 = new Image();
+        carroimg3.src = 'img/carro3.png'; 
+
+        var tiposCarros = [carroimg, carroimg2, carroimg3];
+
+        // imagem rua
+        var ruaimg = new Image();
+        ruaimg.src = 'img/rua.png'; 
+
+        // imagem faixa
+        var faixaimg = new Image();
+        faixaimg.src = 'img/Faixa.png'; 
+
+        // imagem moeda
+        var moedaimg = new Image();
+        moedaimg.src = 'img/Moeda.png'; 
+
+        // imagem grama
+        var gramaimg = new Image();
+        gramaimg.src = 'img/grama.png'; 
+        var gramaPattern
+
+        // imagem SAIDA
+        var saidaimg = new Image();
+        saidaimg.src = 'img/saida.png'; 
+
+        
+
+        // tiposCarros[Math.floor(Math.random() * tiposCarros.length)]
+
+        var foca = {
+            position: { x: 590, y: 760 },
+            position2: { x: 590 + ((590 / 2 )/ 2) , y: 760 + ((760 / 2) /2)  },
+            width1:20,
+            height1:30,
+            width: 40,
+            height: 60,
+            color: "pink",
+            velocidade: { x: 0, y: 0 },
+            direcao: 1 // 1 para direita, -1 para esquerda
+        };
+
+
+        // Carros para rua 1
+        var carrosRua1 = [
+            { position: { x: -100, y: 500 }, width: 100, height: 60,img: tiposCarros[Math.floor(Math.random() * tiposCarros.length)], color: "red", velocidade: (Math.floor((Math.random()* 6)+1)) },
+            { position: { x: -300, y: 570 }, width: 100, height: 60,img: tiposCarros[Math.floor(Math.random() * tiposCarros.length)], color: "green", velocidade: (Math.floor((Math.random()* 6)+1))},
+            { position: { x: -500, y: 500 }, width: 100, height: 60,img: tiposCarros[Math.floor(Math.random() * tiposCarros.length)], color: "red", velocidade: (Math.floor((Math.random()* 6)+1)) },
+            { position: { x: -600, y: 570 }, width: 100, height: 60,img: tiposCarros[Math.floor(Math.random() * tiposCarros.length)], color: "green", velocidade: (Math.floor((Math.random()* 6)+1))},   
+            { position: { x: -100, y: 500 }, width: 100, height: 60,img: tiposCarros[Math.floor(Math.random() * tiposCarros.length)], color: "red", velocidade: (Math.floor((Math.random()* 6)+1)) },
+        ];
+
+        // Carros para rua 2
+        var carrosRua2 = [
+            { position: { x: canvas.width + 100 , y: 160 }, width: 100, height: 60,img: tiposCarros[Math.floor(Math.random() * tiposCarros.length)], color: "red", velocidade: (Math.floor((Math.random()* 6)+1)) },
+            { position: { x: canvas.width + 300, y: 250 }, width: 100, height: 60,img: tiposCarros[Math.floor(Math.random() * tiposCarros.length)], color: "green", velocidade: (Math.floor((Math.random()* 6)+1))},
+            { position: { x: canvas.width + 500, y: 160 }, width: 100, height: 60,img: tiposCarros[Math.floor(Math.random() * tiposCarros.length)], color: "red", velocidade: (Math.floor((Math.random()* 6)+1)) },
+            { position: { x: canvas.width + 600, y: 250 }, width: 100, height: 60,img: tiposCarros[Math.floor(Math.random() * tiposCarros.length)], color: "green", velocidade: (Math.floor((Math.random()* 6)+1))},   
+            { position: { x: canvas.width + 100, y: 160 }, width: 100, height: 60,img: tiposCarros[Math.floor(Math.random() * tiposCarros.length)], color: "red", velocidade: (Math.floor((Math.random()* 6)+1)) },
+        ];
+
+        var rua = {
+            width: 1280,
+            height: 180,
+            position: { x: 0, y: 480},
+            position2: { x: 0, y: 150}
+        }
+
+        var faixa = {
+            width: 100,
+            height: 180,
+            position: { x: 100, y: 150},
+            position2: { x: 800, y: 480}
+        }
+
+        var saida = {
+            position: { 
+                x: (1280 / 2) - 60,
+                y: 0, 
+            },
+            width: 100,
+            height: 80
+        };
+
+
+
+       var moedas = {
+            width: 32.5,
+            height: 32.5,
+            color: "yellow",
+            position: { x: 400, y: 390 },  // Primeira moeda em uma posição fixa
+        };
+
+        var posicoesYmoedas = [390, 700, 80];
+
+        var listaMoedas = [moedas];  // Lista de moedas (inicialmente com uma moeda)
+        var quantidadeMoedas = 1;
+        var aumentarMoedas = 2;
+
+        function recomecarJogo() {
+
+        }
+
+        function adicionarMoeda() {
+            for (let i = 0; i < aumentarMoedas; i++) {  // Adiciona a quantidade desejada de moedas
+                var novaMoeda = {
+                    width: 32.5,
+                    height: 32.5,
+                    color: "yellow",
+                    position: { 
+                        x: Math.floor(Math.random() * (canvas.width - 20)),  // Posição X aleatória
+                        y: posicoesYmoedas[Math.floor(Math.random() * posicoesYmoedas.length)]  // Posição Y aleatória entre as opções  
+                    },
+                };
+                listaMoedas.push(novaMoeda);  // Adiciona a nova moeda à lista de moedas
+            }
+            if (aumentarMoedas < 15 ) { aumentarMoedas++ }
+            console.log(aumentarMoedas)
+        }
+
+        function verificarColisaoComMoeda(moeda) {
+            return (
+                foca.position.x < moeda.position.x + moeda.width &&
+                foca.position.x + foca.width > moeda.position.x &&
+                foca.position.y < moeda.position.y + moeda.height &&
+                foca.position.y + foca.height > moeda.position.y
+            );
+        }
+
+        function verificarColetaMoedas() {
+            listaMoedas = listaMoedas.filter(moeda => {
+                if (verificarColisaoComMoeda(moeda)) {
+                    console.log("Moeda coletada!");
+                    document.getElementById("qntMoedas").innerHTML = "MOEDAS: " + quantidadeMoedas;
+                    document.getElementById("pontuacao").innerHTML = "Pontos: " + quantidadeMoedas;
+                    quantidadeMoedas++
+                    return false;  // Moeda será removida da lista
+                }
+                return true;  // Moeda permanece na lista
+            });
+        }
+
+        function passarDeFase() {
+            // Aumenta a quantidade de moedas a serem adicionadas
+            if (aumentarMoedas < 15) {  // Mantém o limite máximo de 15
+                aumentarMoedas++;
+            }
+            
+            // Reseta as moedas antigas
+            listaMoedas = [];
+            
+            // Adiciona novas moedas para a nova fase
+            adicionarMoeda();
+
+            console.log("Fase passada! Nova quantidade de moedas: " + aumentarMoedas);
+        }
+
+        function trocarFaixas() {
+            faixa.position.x = Math.floor(Math.random() * (width - 200)) + 100;
+            faixa.position2.x = Math.floor(Math.random() * (width - 200)) + 100;
+        }
+
+        function atualizarMoedas() {
+            moedas.position.x = (Math.floor((Math.random()* width - 100)+ 1))
+        }
+
+        function aumentarVelocidade() {
+            velocidadeLimite++ 
+        }
+
+
+        function main() {
+            canvas = document.getElementById("canvas");
+            ctx = canvas.getContext("2d");
+            width = canvas.width;
+            height = canvas.height;
+
+            window.addEventListener('keydown', function (e) {
+                key[e.code] = true;
+            });
+
+            window.addEventListener('keyup', function (e) {
+                key[e.code] = false;
+            });
+
+            requestAnimationFrame(loop);
+        }
+
+        function update() {
+            if (!jogoAtivo) return; // Se o jogo não está ativo, não atualiza
+
+            // Movimentação da foca
+            if (key["KeyW"] || key["ArrowUp"]) {
+                foca.velocidade.y = -5; 
+            } else if (key["KeyS"] || key["ArrowDown"]) {
+                foca.velocidade.y = 5; 
+            } else {
+                foca.velocidade.y = 0;
+            }
+
+            if (key["KeyA"] || key["ArrowLeft"]) {
+                foca.velocidade.x = -5;
+                foca.direcao = -1; // Define a direção como esquerda
+            } else if (key["KeyD"] || key["ArrowRight"]) {
+                foca.velocidade.x = 5;
+                foca.direcao = 1; // Define a direção como direita
+            } else {
+                foca.velocidade.x = 0;
+            }
+
+            // Atualiza a posição do foca
+            foca.position.x += foca.velocidade.x;
+            foca.position.y += foca.velocidade.y;
+            foca.position2.x = (foca.position.x + ((foca.width / 2) /2))
+            foca.position2.y = (foca.position.y + ((foca.height / 2) /2))
+
+            // Impede que a foca saia dos limites do canvas
+            if (foca.position.x < 0) foca.position.x = 0;
+            if (foca.position.x + foca.width > width) foca.position.x = width - foca.width;
+            if (foca.position.y < 0) foca.position.y = 0;
+            if (foca.position.y + foca.height > height) foca.position.y = height - foca.height;
+
+            // Atualiza a posição dos carros da rua 1
+            carrosRua1.forEach(carro => {
+                carro.position.x += carro.velocidade;
+                if (carro.position.x > width) {
+                    carro.position.x = -carro.width;
+                    carro.img = tiposCarros[Math.floor(Math.random() * tiposCarros.length)]
+                    carro.velocidade = (Math.floor((Math.random()* velocidadeLimite)+1))
+                }
+            });
+
+            // Atualiza a posição dos carros da rua 2
+            carrosRua2.forEach(carro => {
+                carro.position.x -= carro.velocidade;
+                if (carro.position.x < -carro.width ) {
+                    carro.position.x = canvas.width + carro.width;
+                    carro.img = tiposCarros[Math.floor(Math.random() * tiposCarros.length)]
+                    carro.velocidade = (Math.floor((Math.random()* velocidadeLimite)+1))
+                }
+            });
+        }
+
+        function draw() {
+            if (!jogoAtivo) {
+                
+                if(nivel_maximo < nivel) {
+                    nivel_maximo = nivel
+                }
+
+                document.getElementById("maiorLevel").innerHTML = "Maior Level: " + nivel_maximo;
+                
+
+                document.getElementById("Perdeu").style.display = "flex";
+                document.getElementById("telaCinza").style.display = "flex";
+                document.getElementById("pontuacao").style.display = "flex";
+                document.getElementById("maiorLevel").style.display = "flex";
+
+                document.getElementById("Level").style.display = "none";
+                document.getElementById("qntMoedas").style.display = "none";
+                return; // Não desenha mais nada se o jogo não está ativo
+            }
+
+            // Desenha o fundo
+            let scaleGrama = 1; // Ajuste conforme necessário
+            let scaledGramaImg = document.createElement('canvas');
+            scaledGramaImg.width = gramaimg.width * scaleGrama;
+            scaledGramaImg.height = gramaimg.height * scaleGrama;
+            let scaledGramaCtx = scaledGramaImg.getContext('2d');
+            scaledGramaCtx.drawImage(gramaimg, 0, 0, scaledGramaImg.width, scaledGramaImg.height);
+            gramaPattern = ctx.createPattern(scaledGramaImg, 'repeat');
+
+            ctx.fillStyle = gramaPattern;
+            ctx.fillRect(0, 0, width, height);
+
+            // rua 1
+            ctx.drawImage(ruaimg,rua.position.x, rua.position.y , rua.width, rua.height);
+
+            // rua 2
+            ctx.drawImage(ruaimg, rua.position2.x, rua.position2.y , rua.width, rua.height);
+
+            // saida
+            ctx.drawImage(saidaimg, saida.position.x, saida.position.y , saida.width, saida.height);
+            // ctx.fillStyle = "black";
+            // ctx.fillRect(saida.position.x, saida.position.y , saida.width,saida.height);
+
+            saidaimg
+
+            // ctx.fillRect(width / 2 / 2, 0 , width / 2, 50);
+
+            // faixa pedestre 
+            
+            ctx.drawImage(faixaimg, faixa.position.x, faixa.position.y , faixa.width, faixa.height);
+
+            ctx.fillStyle = "white";
+            // ctx.fillRect(faixa.position.x, faixa.position.y , faixa.width, faixa.height);
+            
+
+            // faixa pedestre 2  
+            ctx.drawImage(faixaimg, faixa.position2.x, faixa.position2.y , faixa.width, faixa.height);
+
+            // desenha a moeda
+            listaMoedas.forEach(moeda => {
+                ctx.drawImage(moedaimg, moeda.position.x, moeda.position.y, moeda.width, moeda.height);
+            });
+
+             // hitbox foca imagem
+             ctx.fillStyle = "blue";
+            // ctx.fillRect(foca.position.x,foca.position.y, foca.width, foca.height);
+            // hitbox foca
+            // ctx.fillStyle = "red";
+            // ctx.fillRect((foca.position2.x),(foca.position2.y) , foca.width1, foca.height1);
+                
+            // Desenha a foca
+            ctx.save(); // Salva o estado atual do canvas
+            ctx.translate(foca.position.x + foca.width / 2, foca.position.y + foca.height / 2); // Move o canvas para o centro da foca
+            ctx.scale(foca.direcao, 1); // Aplica a escala com base na direção
+            ctx.drawImage(focaimg, -foca.width / 2, -foca.height / 2, foca.width, foca.height); // Desenha a foca centrada
+            ctx.restore(); // Restaura o estado anterior do canvas
+
+           
+
+            
+
+
+            // Desenha os carros da rua 1
+            carrosRua1.forEach(carro => {
+                ctx.drawImage(carro.img, carro.position.x, carro.position.y, carro.width, carro.height);
+            });
+
+            // Desenha os carros da rua 2
+            carrosRua2.forEach(carro => {
+                ctx.save(); // Salva o estado atual do canvas
+                ctx.translate(carro.position.x + carro.width, carro.position.y); // Move o canvas para a posição correta do carro
+                ctx.scale(-1, 1); // Aplica a escala para inverter a imagem horizontalmente
+                ctx.drawImage(carro.img, 0, 0, carro.width, carro.height); // Desenha o carro na nova posição
+                ctx.restore(); // Restaura o estado anterior do canvas
+            });
+            
+            
+        }
+
+        
+        function detectarColisoes() {
+
+            verificarColetaMoedas();
+
+            var estafaixa = false; // Inicializa a variável para indicar se está na faixa
+            var timerId; // ID do temporizador
+
+            // Verifica se a foca está na faixa de pedestres 1
+            var estaNaFaixa1 = foca.position2.x < faixa.position.x + faixa.width &&
+                foca.position2.x + foca.width1 > faixa.position.x &&
+                foca.position2.y < faixa.position.y + faixa.height &&
+                foca.position2.y + foca.height1 > faixa.position.y;
+
+            // Verifica se a foca está na faixa de pedestres 2
+            var estaNaFaixa2 = foca.position2.x < faixa.position2.x + faixa.width &&
+                foca.position2.x + foca.width1 > faixa.position2.x &&
+                foca.position2.y < faixa.position2.y + faixa.height &&
+                foca.position2.y + foca.height1 > faixa.position2.y;
+
+            // Atualiza a variável se estiver em qualquer das faixas
+            if (estaNaFaixa1 || estaNaFaixa2) {
+                estafaixa = true;
+            }
+
+            // Detecta colisões com os carros
+            carrosRua1.concat(carrosRua2).forEach(carro => {
+                if (
+                    carro.position.x < foca.position2.x + foca.width1 &&
+                    carro.position.x + carro.width > foca.position2.x &&
+                    carro.position.y < foca.position2.y + foca.height1 &&
+                    carro.position.y + carro.height > foca.position2.y
+                ) {
+                    
+                    jogoAtivo = false; // Para o jogo
+                    clearTimeout(timerId); // Cancela o temporizador se uma colisão for detectada
+                }
+            });
+
+            // Detecta se a foca está na rua e não na faixa
+            if (
+                (rua.position.x < foca.position2.x + foca.width1 &&
+                rua.position.x + rua.width > foca.position2.x &&
+                rua.position.y < foca.position2.y + foca.height1 &&
+                rua.position.y + rua.height > foca.position2.y &&
+                !estafaixa) || // Verifica se não está na faixa
+                (rua.position2.x < foca.position2.x + foca.width1 &&
+                rua.position2.x + rua.width > foca.position2.x &&
+                rua.position2.y < foca.position2.y + foca.height1 &&
+                rua.position2.y + rua.height > foca.position2.y &&
+                !estafaixa) // Verifica se não está na faixa
+            ) {
+                jogoAtivo = false; // Para o jogo
+            }
+
+            
+
+
+            // Detecta caso Jogador chegue a saida
+            if (
+                foca.position2.x < saida.position.x + saida.width &&
+                foca.position2.x + foca.width1 > saida.position.x &&
+                foca.position2.y < saida.position.y + saida.height &&
+                foca.position2.y + foca.height1 > saida.position.y
+            ) {
+                console.log("A foca atingiu a saída!");
+                trocarFaixas()
+                aumentarVelocidade()
+                adicionarMoeda()
+                console.log(quantidadeMoedas)
+                passarDeFase()
+                nivel++
+                document.getElementById("Level").innerHTML = "Level " + nivel;
+                foca.position.y = height
+
+                
+            }
+        }
+
+
+        function loop() {
+            update();
+            draw();
+            detectarColisoes();
+            requestAnimationFrame(loop);
+        }
+
+        document.getElementById("botao_iniciar").addEventListener("click", function() {
+            telaInicial = document.getElementById("tela_inicial")
+            tela_inicial.style.display = "none"
+            main(); // Chama a função main() ao clicar no botão
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo da Forca - Trânsito</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Jogo da Forca - Trânsito</h1>
+    <div class="game-container">
+        <canvas id="roadCanvas" width="600" height="200"></canvas>
+        <div class="word-container">
+            <p id="wordDisplay"></p>
+        </div>
+        <div class="letters-container">
+            <p id="message"></p>
+            <div id="letters"></div>
+        </div>
+    </div>
+    <button id="startButton">Começar Jogo</button>
+    <button id="nextButton" style="display:none;">Próxima Palavra</button>
+    <button id="restartButton" style="display:none;">Reiniciar</button>
+    <script src="script.js"></script>
+</body>
+</html>
