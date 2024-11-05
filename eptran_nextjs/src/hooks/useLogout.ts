@@ -1,3 +1,4 @@
+// src/hooks/useLogout.ts
 import { useState } from 'react';
 
 export const useLogout = () => {
@@ -11,34 +12,24 @@ export const useLogout = () => {
     try {
       const response = await fetch('http://localhost:3333/auth/logout', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        },
-        credentials: 'include',
+        credentials: 'include', // Inclui cookies de autenticação
       });
 
-      console.log('Status da resposta:', response.status);
-
       if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.error || 'Erro ao realizar logout');
+        const errorText = await response.text();
+        throw new Error(`Erro de logout: ${errorText}`);
       }
 
+      setIsLoading(false);
       return true;
     } catch (err) {
       console.error('Erro completo:', err);
       const errorMessage = err instanceof Error ? err.message : 'Erro desconhecido ao realizar logout';
       setError(new Error(errorMessage));
-      throw new Error(errorMessage);
-    } finally {
       setIsLoading(false);
+      throw new Error(errorMessage);
     }
   };
 
-  return {
-    logoutUser,
-    isLoading,
-    error,
-  };
+  return { logoutUser, isLoading, error };
 };

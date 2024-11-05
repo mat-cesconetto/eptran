@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import React, { useState } from "react";
 import Image from "next/image";
@@ -18,11 +18,22 @@ import { Menu, X } from "lucide-react";
 interface UserDropdownProps {
   onLogout: () => void;
 }
+
 const NavBar: React.FC = () => {
   const { isAuthenticated, isAdmin } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { logoutUser, isLoading, error } = useLogout();
 
+  // Função de logout
+  const handleLogout = async () => {
+    try {
+      await logoutUser();
+      console.log('Logout realizado com sucesso');
+    } catch (err) {
+      console.error('Erro ao realizar logout:', err);
+      alert(`Erro ao fazer logout: `);
+    }
+  };
   return (
     <>
       <div className="relative w-full bg-[#023859] flex items-center justify-between shadow-2xl px-4 sm:px-10 py-4 md:h-32">
@@ -47,7 +58,6 @@ const NavBar: React.FC = () => {
             />
           </Link>
         </div>
-        
 
         <div className="hidden md:flex justify-center items-center flex-grow text-white font-bold text-lg">
           <NavLink href="/atividades">Atividades</NavLink>
@@ -58,9 +68,7 @@ const NavBar: React.FC = () => {
 
         <div className="flex-shrink-0">
           {isAuthenticated ? (
-            <UserDropdown onLogout={function (): void {
-              throw new Error("Function not implemented.");
-            } } />
+            <UserDropdown onLogout={handleLogout} />
           ) : (
             <div className="md:hidden">
               <Image
@@ -114,8 +122,6 @@ const NavBar: React.FC = () => {
   );
 };
 
-
-
 interface NavLinkProps {
   href: string;
   children: React.ReactNode;
@@ -156,15 +162,15 @@ const UserDropdown: React.FC<UserDropdownProps> = ({ onLogout }) => (
           </h1>
         </div>
       </DropdownItem>
-        <DropdownItem key="conta" className="text-[#000000] text-sm mt-2">  ,
-          Minha Conta
-        </DropdownItem>
+      <DropdownItem key="conta" className="text-[#000000] text-sm mt-2">
+        Minha Conta
+      </DropdownItem>
       <DropdownItem key="divider1" className="py-0">
         <hr className="my-2 border-[#023859]" />
       </DropdownItem>
-        <DropdownItem key="account" className="text-[#023859] text-sm">
-          Dados pessoais
-        </DropdownItem>
+      <DropdownItem key="account" className="text-[#023859] text-sm">
+        Dados pessoais
+      </DropdownItem>
       <DropdownItem key="privacy" className="text-[#023859] text-sm">
         Privacidade
       </DropdownItem>
