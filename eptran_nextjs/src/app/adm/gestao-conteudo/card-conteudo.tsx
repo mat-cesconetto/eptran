@@ -1,12 +1,13 @@
+"use client";
+
 import Image from "next/image";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Copy, Link } from "lucide-react";
+import { MoreHorizontal, Trash, SquarePen } from "lucide-react";
 import {
   Dialog,
   DialogClose,
   DialogContent,
-  DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -19,14 +20,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { MoreHorizontal, Trash, SquarePen, Search } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
@@ -42,6 +40,15 @@ interface CardProps {
 }
 
 const Card: React.FC<CardProps> = ({ src, alt, conteudo, data, paginas, nivel, tamanho }) => {
+  const [editOpen, setEditOpen] = useState(false);
+  const [deleteOpen, setDeleteOpen] = useState(false);
+
+  const handleDelete = () => {
+    // Lógica de exclusão
+    console.log("Conteúdo excluído!");
+    setDeleteOpen(false);
+  };
+
   return (
     <div className="rounded-xl w-48 bg-darkBlue-500">
       <Image
@@ -71,6 +78,7 @@ const Card: React.FC<CardProps> = ({ src, alt, conteudo, data, paginas, nivel, t
           {tamanho}
         </p>
       </div>
+
       <div className="flex">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -86,116 +94,139 @@ const Card: React.FC<CardProps> = ({ src, alt, conteudo, data, paginas, nivel, t
             align="start"
             className="text-darkBlue-500 font-bold"
           >
-            <DropdownMenuItem>
+            <DropdownMenuItem onSelect={() => setEditOpen(true)}>
               <SquarePen className="mr-2 h-4 w-4" />
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button variant="ghost" className="p-0">
-                    Editar Usuário
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className="sm:max-w-[600px] w-full">
-                  <DialogHeader>
-                    <DialogTitle className="text-[40px] font-bold text-darkBlue-500">
-                      Adicionar Conteúdo
-                    </DialogTitle>
-                  </DialogHeader>
-                  <div className="grid gap-4 py-4">
-                    <div className="grid">
-                      <Label
-                        htmlFor="link"
-                        className="text-xs font-bold text-darkBlue-600"
-                      >
-                        LINK DO CONTEÚDO
-                      </Label>
-                      <Input
-                        id="link"
-                        className="border-darkBlue-400"
-                        placeholder="http://sia.com.br"
-                      />
-                    </div>
-                    <div className="grid">
-                      <Label
-                        htmlFor="name"
-                        className="text-xs font-bold text-darkBlue-600"
-                      >
-                        NOME DO CONTEÚDO
-                      </Label>
-                      <Input
-                        id="name"
-                        className="border-darkBlue-400"
-                        placeholder="Nome conteúdo EPTRAN"
-                      />
-                    </div>
-                    <div className="grid">
-                      <Label
-                        htmlFor="description"
-                        className="text-xs font-bold text-darkBlue-600"
-                      >
-                        DESCRIÇÃO DO CONTEÚDO
-                      </Label>
-                      <Textarea
-                        id="description"
-                        placeholder="Descrição conteúdo EPTRAN"
-                        className="border-darkBlue-400"
-                      />
-                    </div>
-                  </div>
-                  <div className="flex items-end justify-between">
-                    <div className="w-[45%]">
-                      <Label
-                        htmlFor="classification"
-                        className="text-xs font-bold text-darkBlue-600 block"
-                      >
-                        CLASSIFICAÇÃO
-                      </Label>
-                      <Select>
-                        <SelectTrigger className="border-darkBlue-400 w-full">
-                          <SelectValue placeholder="Selecionar" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="high-school">
-                            Ensino Médio
-                          </SelectItem>
-                          <SelectItem value="elementary">
-                            Ensino Fundamental
-                          </SelectItem>
-                          <SelectItem value="early-grades">
-                            Séries Iniciais
-                          </SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    <div className="w-[45%] flex justify-end space-x-2">
-                      <DialogClose asChild>
-                        <Button
-                          variant="outline"
-                          className="w-full border-darkBlue-400 font-bold text-xs hover:bg-slate-200"
-                        >
-                          CANCELAR
-                        </Button>
-                      </DialogClose>
-                      <Button
-                        type="submit"
-                        className="w-full bg-darkBlue-500 text-white font-bold text-xs"
-                      >
-                        ENVIAR
-                      </Button>
-                    </div>
-                  </div>
-                </DialogContent>
-              </Dialog>
+              Editar Conteúdo
             </DropdownMenuItem>
-            <DropdownMenuItem>
+            <DropdownMenuItem onSelect={() => setDeleteOpen(true)}>
               <Trash className="mr-2 h-4 w-4" />
-
-              <Button variant="ghost" className="p-0">
-                Excluir Usuário
-              </Button>
+              Excluir Conteúdo
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
+
+      {/* Edit Dialog */}
+      <Dialog open={editOpen} onOpenChange={setEditOpen}>
+        <DialogContent className="sm:max-w-[600px] w-full">
+          <DialogHeader>
+            <DialogTitle className="text-[40px] font-bold text-darkBlue-500">
+              Editar Conteúdo
+            </DialogTitle>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="grid">
+              <Label
+                htmlFor="link"
+                className="text-xs font-bold text-darkBlue-600"
+              >
+                LINK DO CONTEÚDO
+              </Label>
+              <Input
+                id="link"
+                className="border-darkBlue-400"
+                placeholder="http://sia.com.br"
+              />
+            </div>
+            <div className="grid">
+              <Label
+                htmlFor="name"
+                className="text-xs font-bold text-darkBlue-600"
+              >
+                NOME DO CONTEÚDO
+              </Label>
+              <Input
+                id="name"
+                className="border-darkBlue-400"
+                placeholder="Nome conteúdo EPTRAN"
+              />
+            </div>
+            <div className="grid">
+              <Label
+                htmlFor="description"
+                className="text-xs font-bold text-darkBlue-600"
+              >
+                DESCRIÇÃO DO CONTEÚDO
+              </Label>
+              <Textarea
+                id="description"
+                placeholder="Descrição conteúdo EPTRAN"
+                className="border-darkBlue-400"
+              />
+            </div>
+          </div>
+          <div className="flex items-end justify-between">
+            <div className="w-[45%]">
+              <Label
+                htmlFor="classification"
+                className="text-xs font-bold text-darkBlue-600 block"
+              >
+                CLASSIFICAÇÃO
+              </Label>
+              <Select>
+                <SelectTrigger className="border-darkBlue-400 w-full">
+                  <SelectValue placeholder="Selecionar" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="high-school">Ensino Médio</SelectItem>
+                  <SelectItem value="elementary">Ensino Fundamental</SelectItem>
+                  <SelectItem value="early-grades">Séries Iniciais</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="w-[45%] flex justify-end space-x-2">
+              <DialogClose asChild>
+                <Button
+                  variant="outline"
+                  className="w-full border-darkBlue-400 font-bold text-xs hover:bg-slate-200"
+                  onClick={() => setEditOpen(false)}
+                >
+                  CANCELAR
+                </Button>
+              </DialogClose>
+              <Button
+                type="submit"
+                className="w-full bg-darkBlue-500 text-white font-bold text-xs"
+              >
+                ENVIAR
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Delete Dialog */}
+      <Dialog open={deleteOpen} onOpenChange={setDeleteOpen}>
+        <DialogContent className="sm:max-w-[400px] w-full">
+          <DialogHeader>
+            <DialogTitle className="text-[24px] font-bold text-darkBlue-500">
+              Excluir Conteúdo
+            </DialogTitle>
+          </DialogHeader>
+          <div className="py-4">
+            <p className="text-sm text-darkBlue-600">
+              Tem certeza de que deseja excluir este conteúdo? Esta ação não pode ser desfeita.
+            </p>
+          </div>
+          <div className="flex justify-end space-x-2">
+            <DialogClose asChild>
+              <Button
+                variant="outline"
+                className="border-darkBlue-400 font-bold text-xs hover:bg-slate-200"
+                onClick={() => setDeleteOpen(false)}
+              >
+                CANCELAR
+              </Button>
+            </DialogClose>
+            <Button
+              className="bg-red-500 text-white font-bold text-xs"
+              onClick={handleDelete}
+            > 
+              EXCLUIR
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

@@ -1,0 +1,121 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Comic Sans MS', cursive, sans-serif; /* Fonte divertida */
+    background-image: url('images/transito.jpg'); /* Imagem de fundo */
+    background-size: cover; /* A imagem cobrirá toda a tela */
+    background-position: center; /* Centraliza a imagem */
+    background-repeat: no-repeat; /* Evita que a imagem se repita */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+
+.game-container {
+    background-color: rgba(255, 255, 255, 0.8); /* Fundo branco translúcido */
+    padding: 30px; /* Aumenta o espaçamento interno */
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 500px; /* Aumenta a largura do container */
+    border: 3px solid #ff6f61; /* Borda colorida */
+}
+
+h1 {
+    margin-bottom: 20px;
+    color: #ff6f61;
+    font-size: 40px; /* Aumenta o tamanho do título */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.game-info {
+    margin-bottom: 20px;
+}
+
+.game-info p {
+    font-size: 22px; /* Aumenta o tamanho da fonte */
+    color: #333;
+    background-color: #ffeb3b;
+    padding: 10px;
+    border-radius: 10px;
+    display: inline-block;
+    margin: 5px;
+}
+
+.image-container {
+    margin-bottom: 20px;
+}
+
+.image-container img {
+    width: 250px; /* Aumenta o tamanho da imagem */
+    height: 250px;
+    border-radius: 20px;
+    border: 4px solid #4caf50;
+    background-color: #e0f7fa;
+}
+
+.input-container {
+    margin-bottom: 20px;
+}
+
+input {
+    padding: 12px;
+    font-size: 20px; /* Aumenta o tamanho da fonte do input */
+    width: 75%; /* Aumenta a largura do input */
+    margin-bottom: 15px;
+    border-radius: 10px;
+    border: 2px solid #ff6f61;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+button {
+    padding: 12px 25px; /* Aumenta o tamanho do botão */
+    font-size: 22px; /* Aumenta o tamanho da fonte */
+    background-color: #ff6f61;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 15px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+button:hover {
+    background-color: #ff3d33;
+    transform: scale(1.05); /* Pequeno efeito de zoom ao passar o mouse */
+}
+
+#feedback {
+    font-size: 24px; /* Aumenta o tamanho da fonte */
+    margin-top: 10px;
+    color: red;
+    font-weight: bold;
+    visibility: hidden; /* Esconde a mensagem por padrão */
+}
+
+#feedback.green {
+    color: green;
+}
+
+#restart-btn {
+    background-color: #2196f3; /* Azul chamativo */
+    display: none; /* Esconde o botão por padrão */
+    margin-top: 20px;
+}
+
+#restart-btn:hover {
+    background-color: #1e88e5;
+}
+
+#final-score {
+    font-size: 24px;
+    color: #000;
+    margin-top: 20px;
+    display: none; /* Esconde a pontuação final até o fim do jogo */
+}
