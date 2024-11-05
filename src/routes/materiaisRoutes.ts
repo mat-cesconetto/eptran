@@ -2,7 +2,7 @@ import { FastifyInstance, FastifyPluginOptions } from 'fastify';
 import { createMaterial, deleteMaterial, getAllMateriais, getMateriaisByEscolaridade, updateMaterial } from '../controllers/materiaisController';
 import { authMiddleware } from '../middlewares/authMiddleware';
 import { adminMiddleware } from '../middlewares/adminMiddleware';
-import { Materiais, EscolaridadeEnum } from '@prisma/client';
+import { EscolaridadeEnum } from '@prisma/client';
 
 // Definindo as interfaces para os tipos das requisições
 interface CreateMaterialBody {
