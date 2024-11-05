@@ -1,14 +1,11 @@
 "use client";
 
-import { Material } from "@/@types/Material"
-
-import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { Copy, Link } from "lucide-react";
 import {
   Dialog,
   DialogClose,
   DialogContent,
+
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -20,40 +17,16 @@ import Image from "next/image";
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
-
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+
 import { Search } from "lucide-react";
 import Card from "./card-conteudo";
 
 export default function Conteudo() {
-  const { materiais, loading, error } = useMateriais();
-  const [escolaridade, setEscolaridade] = useState("");
-  const [titulo, setTitulo] = useState("");
-  const [descricao, setDescricao] = useState("");
-  const [materialLink, setMaterialLink] = useState("");
-  const { addMaterial } = useAddMaterial();
-
-  const handleAddMaterial = () => {
-    const newMaterial: Material = {
-      escolaridade,
-      titulo,
-      descricao,
-      materialLink,
-    };
-    console.log(newMaterial)
-
-    addMaterial(newMaterial);
-
-    // Limpar os campos do diálogo
-    setEscolaridade("");
-    setTitulo("");
-    setDescricao("");
-    setMaterialLink("");
-  };
-
   return (
     <main className="px-4 sm:px-6 lg:px-8">
       <div className="flex flex-col sm:flex-row items-center sm:items-start mb-8 sm:mb-0">
@@ -70,7 +43,7 @@ export default function Conteudo() {
       </div>
 
       <div className="mt-8 sm:mt-12">
-        <div className=" flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-6">
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-6">
           <div className="relative w-full sm:w-[28vw] max-w-md">
             <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
               <Search className="w-4 h-4 text-darkBlue-500" />
@@ -83,7 +56,7 @@ export default function Conteudo() {
             />
           </div>
 
-          <div className="xl:pl-48 flex flex-col sm:flex-row gap-4 sm:gap-6 w-full sm:w-auto">
+          <div className="flex xl:pl-44 flex-col sm:flex-row gap-4 sm:gap-6 w-full sm:w-auto">
             <Select>
               <SelectTrigger className="border-gray-300 border w-full sm:w-52 h-10 text-darkBlue-500 font-bold text-md">
                 <SelectValue placeholder="Selecionar" />
@@ -118,7 +91,7 @@ export default function Conteudo() {
             </Select>
           </div>
 
-          <div className="lg:pr-14 w-full sm:w-auto">
+          <div className="xl:pr-14 w-full sm:w-auto">
             <Dialog>
               <DialogTrigger asChild>
                 <Button
@@ -150,8 +123,6 @@ export default function Conteudo() {
                       id="link"
                       className="border-darkBlue-400"
                       placeholder="http://sia.com.br"
-                      value={materialLink}
-                      onChange={(e) => setMaterialLink(e.target.value)}
                     />
                   </div>
                   <div className="grid">
@@ -162,8 +133,6 @@ export default function Conteudo() {
                       id="name"
                       className="border-darkBlue-400"
                       placeholder="Nome conteúdo EPTRAN"
-                      value={titulo}
-                      onChange={(e) => setTitulo(e.target.value)}
                     />
                   </div>
                   <div className="grid">
@@ -174,8 +143,6 @@ export default function Conteudo() {
                       id="description"
                       placeholder="Descrição conteúdo EPTRAN"
                       className="border-darkBlue-400"
-                      value={descricao}
-                      onChange={(e) => setDescricao(e.target.value)}
                     />
                   </div>
                 </div>
@@ -187,10 +154,7 @@ export default function Conteudo() {
                     >
                       CLASSIFICAÇÃO
                     </Label>
-                    <Select
-                      value={escolaridade}
-                      onValueChange={setEscolaridade}
-                    >
+                    <Select>
                       <SelectTrigger className="border-darkBlue-400 w-full">
                         <SelectValue placeholder="Selecionar" />
                       </SelectTrigger>
@@ -213,7 +177,6 @@ export default function Conteudo() {
                     <Button
                       type="submit"
                       className="w-full sm:w-auto bg-darkBlue-500 text-white font-bold text-xs"
-                      onClick={handleAddMaterial}
                     >
                       ENVIAR
                     </Button>
