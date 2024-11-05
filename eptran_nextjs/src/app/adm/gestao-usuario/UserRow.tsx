@@ -8,8 +8,16 @@ import {
 import { Button } from "@/components/ui/button";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { MoreHorizontal, Trash, SquarePen } from "lucide-react";
+import { useDeleteUser } from "@/hooks/useDeleteUser";
+import { useState } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
-// Definindo a interface User
 interface User {
   id: string;
   name: string;
@@ -22,7 +30,19 @@ interface User {
 }
 
 const UserRow = ({ user }: { user: User }) => {
-    return (
+  const { deleteUser, isDeleting } = useDeleteUser();
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const handleDelete = async () => {
+    const success = await deleteUser(user.id);
+    if (success) {
+      setIsDialogOpen(false);
+      // Adicione uma ação para atualizar a lista de usuários, se necessário
+    }
+  };
+
+  return (
+    <>
       <TableRow key={user.id}>
         <TableCell className="font-medium">{user.id}</TableCell>
         <TableCell>
@@ -49,11 +69,10 @@ const UserRow = ({ user }: { user: User }) => {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="text-darkBlue-500 font-bold">
-              <DropdownMenuItem>
-                <SquarePen className="mr-2 h-4 w-4" />
-                <span>Editar Usuário</span>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
+              <DropdownMenuItem
+                className="cursor-pointer"
+                onClick={() => setIsDialogOpen(true)}
+              >
                 <Trash className="mr-2 h-4 w-4" />
                 <span>Excluir Usuário</span>
               </DropdownMenuItem>
@@ -61,7 +80,26 @@ const UserRow = ({ user }: { user: User }) => {
           </DropdownMenu>
         </TableCell>
       </TableRow>
-    );
-  };
+
+      {/* Popup de confirmação de exclusão */}
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Confirmação de Exclusão</DialogTitle>
+          </DialogHeader>
+          <p>Tem certeza de que deseja excluir o usuário {user.name}?</p>
+          <DialogFooter>
+            <Button onClick={() => setIsDialogOpen(false)} variant="secondary">
+              Cancelar
+            </Button>
+            <Button onClick={handleDelete} disabled={isDeleting} variant="destructive">
+              {isDeleting ? "Excluindo..." : "Excluir"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </>
+  );
+};
 
 export default UserRow;
