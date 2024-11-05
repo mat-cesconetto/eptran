@@ -36,10 +36,17 @@ export default function Gerenciamento() {
 
   const { users, isLoading, isLoggedOut } = useUsers();
 
-  const filteredUsers = users.filter(user => 
-    user.nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    user.email.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // Filtro de busca e gênero
+  const filteredUsers = users.filter((user) => {
+    const matchesSearchTerm =
+      user.nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      user.email.toLowerCase().includes(searchTerm.toLowerCase());
+
+    const matchesGender =
+      userFilter === "all" || user.sexo.toLowerCase() === userFilter;
+
+    return matchesSearchTerm && matchesGender;
+  });
 
   if (isLoading) return <div>Loading...</div>;
   if (isLoggedOut) return <div>Você não está autenticado.</div>;
@@ -71,8 +78,8 @@ export default function Gerenciamento() {
           </SelectTrigger>
           <SelectContent className="text-darkBlue-500 font-bold">
             <SelectItem value="all">Todos os Usuários</SelectItem>
-            <SelectItem value="active">Usuários Ativos</SelectItem>
-            <SelectItem value="inactive">Usuários Inativos</SelectItem>
+            <SelectItem value="masculino">Masculino</SelectItem>
+            <SelectItem value="feminino">Feminino</SelectItem>
           </SelectContent>
         </Select>
       </div>
