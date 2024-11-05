@@ -1,0 +1,367 @@
+/* * {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+} */
+
+
+body {
+    background-image: url('PapelParede.png');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    position: relative;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    min-height: 100vh;
+}
+
+
+
+
+body {
+    font-size: 16px;
+}
+
+
+
+
+@media (max-width: 768px) {
+    .main-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+
+    #crossword td {
+        width: 30px;
+        height: 30px;
+        font-size: 16px;
+    }
+
+
+    button {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+
+
+    .word-list-container {
+        /* width: 100%; */
+        padding: 15px;
+    }
+
+
+    #word-list li {
+        font-size: 14px;
+    }
+
+
+    .game-header h1 {
+        font-size: 24px;
+    }
+
+
+    .message {
+        font-size: 16px;
+    }
+
+
+    .instructions-container {
+        width: 100%;
+        padding: 20px;
+    }
+
+
+    .instructions-content p,
+    .instructions-content li {
+        font-size: 14px;
+    }
+
+
+   
+}
+
+
+@media (max-width: 400px) {
+    #crossword td {
+        width: 25px;
+        height: 25px;
+        font-size: 14px;
+    }
+
+
+    #titulo {
+        font-size: 20px;
+    }
+
+
+    button {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+}
+
+
+
+
+
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: -1;
+}
+
+
+#initial-screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: white;
+}
+
+
+#game-screen {
+    padding: 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+.game-header {
+    text-align: center;
+    margin-bottom: 30px;
+    /* position: relative; */
+    color: white;
+}
+
+
+.main-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 40px;
+    margin: 0 auto;
+    max-width: 1200px;
+}
+
+
+.grid-container {
+    flex: 0 0 auto;
+}
+
+
+#crossword {
+    border-collapse: collapse;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+#crossword td {
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    border: 1px solid #ccc;
+    font-size: 20px;
+    cursor: pointer;
+    user-select: none;
+}
+
+
+td.selected {
+    background-color: #b3e0ff;
+}
+
+
+.selected {
+    background-color: yellow;
+}
+
+
+td.found {
+    background-color: #90EE90;
+}
+
+
+.word-list-container {
+    flex: 0 0 300px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+.word-list-container h2 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+
+#word-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+
+#instructions-screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+
+.instructions-container {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    width: 90%;
+}
+
+
+.instructions-content {
+    margin: 20px 0;
+}
+
+
+.instructions-content p {
+    margin: 10px 0;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+
+.instructions-content ul {
+    list-style-type: none;
+    padding-left: 20px;
+    margin: 10px 0;
+}
+
+
+.instructions-content li {
+    margin: 5px 0;
+    font-size: 16px;
+}
+
+
+h2 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+
+#word-list li {
+    padding: 8px 12px;
+    margin-bottom: 8px;
+    background: #f5f5f5;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+
+#word-list li.found-word {
+    text-decoration: line-through;
+    color: #666;
+    background: #e0e0e0;
+}
+
+
+.message {
+    text-align: center;
+    margin-top: 20px;
+    padding: 10px;
+    background: transparent;
+    border-radius: 4px;
+    color: white;
+    font-size: 18px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+
+#voltar {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+
+#voltar img {
+    width: 30px;
+    height: auto;
+}
+
+
+#reiniciar {
+    position: absolute;
+    top: 60px;
+    left: 31px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+
+#reiniciar img {
+    width: 24px;
+    background: none;
+    height: auto;
+}
+
+
+#reiniciar:hover img {
+    width: 28px;
+}
+
+
+#reiniciar:active img {
+    width: 22px;
+}
+
+
+.hidden {
+    display: none !important;
+}
+
+
+button {
+    padding: 10px 20px;
+    margin: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+}
+
+
+button:hover {
+    background: #45a049;
+}
+.bt1{
+    width: 200px;
+    height: 70px;
+}

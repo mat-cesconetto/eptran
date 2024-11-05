@@ -1,0 +1,131 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-image: url("../grama.png");
+    background-image: url(../Muretagame.PNG);
+    background-size: cover;
+} 
+.fundo {
+    background-image: url("../Rua.png");
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    height: 800px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+#gameArea {
+    width: 700px;
+    height: 780px;
+    /* border: 2px solid black; */
+    overflow: hidden;
+    position: relative;
+    /* background-color: aqua; */
+    /* background-image: url("../Rua2.png");
+    background-size: cover; */
+}
+
+#dino {
+    width: 50px;
+    height: 100px;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#gameOverMessage {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+    color: rgb(233, 47, 47);
+    display: none;
+
+}
+
+button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#restartButton {
+    display: none;
+}
+
+.Voltar:hover {
+    background-color: goldenrod;
+}
+
+.square {
+    position: absolute;
+    background-color: blue;
+}
+
+
+.Score{
+    position: absolute; 
+    top: 20px; 
+    left: 84%; 
+    transform: translateX(-50%); 
+    padding: 10px 10px;
+    background-color: #0056b3;
+    border-radius: 5px;
+    font-weight: bold;
+    border: none;
+}
+
+#scoreDisplay {
+    left: 85%; /* Alinhado à direita */
+}  
+
+#timeDisplay {
+    left: 80%; /* Ajuste para a posição à direita do score */
+    transform: translateX(-100%); 
+}
+
+.Voltar {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: gold;
+    color: black;
+    text-decoration: none;
+    padding: 10px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+}
+
+#startButton{
+color: black;
+background-color: gold;
+border-radius: 5px ;
+width: 150px;
+}
+#startButton:hover {
+    background-color: goldenrod;
+}
+
+
+#restartButton{
+    color: black;
+    background-color: gold;
+    border-radius: 5px ;
+    width: 150px;
+    }
+#restartButton:hover {
+        background-color: goldenrod;
+    }

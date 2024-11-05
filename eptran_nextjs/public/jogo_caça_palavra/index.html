@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caça-Palavras</title>    
+    <link rel="stylesheet" href="style.css"> 
+</head>
+
+<body>
+    <div id="initial-screen">
+        <h1 id="titulo">CAÇA-PALAVRAS</h1>
+        <button class="bt1" id="start-game">Iniciar</button>
+        <button class="bt1" id="settings-button">Instruções</button>
+    </div>
+
+    <div id="game-screen" class="hidden">
+        <div class="game-header">
+            <button id="voltar">
+                <img src="setavoltar.png" alt="Voltar">
+            </button>
+            <button id="reiniciar" onclick="reiniciarJogo()">
+                <img src="resetar.png" alt="Reiniciar">
+            </button>
+            <h1>Caça-Palavras</h1>
+        </div>
+
+        <div class="main-container">
+            <div class="grid-container">
+                <table id="crossword"></table>
+            </div>
+
+            <div class="word-list-container">
+                <h2>Palavras a serem encontradas:</h2>
+                <ul id="word-list"></ul>
+            </div>
+        </div>
+
+        <div class="message" id="message">
+            Selecione as palavras na grade!
+        </div>
+    </div>
+
+    <div id="instructions-screen" class="hidden">
+        <div class="instructions-container">
+            <h2>Como Jogar</h2>
+            <div class="instructions-content">
+                <p>1. Use o mouse para selecionar as palavras que encontrar</p>
+                <p>2. As palavras podem estar em qualquer direção:</p>
+                <ul>
+                    <li>Horizontal (→ ←)</li>
+                    <li>Vertical (↑ ↓)</li>
+                    <li>Diagonal (↘ ↙ ↗ ↖)</li>
+                </ul>
+                <p>3. Quando encontrar uma palavra, ela será destacada em verde</p>
+                <p>4. Encontre todas as palavras para vencer!</p>
+            </div>
+            <button id="back-to-menu">Voltar</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
