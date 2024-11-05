@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { Material } from "@/@types/Material"
+
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import {
@@ -14,12 +16,42 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import Card from "./card-conteudo"; // Certifique-se de que o caminho está correto
 import useMateriais from "@/hooks/useMateriais"; // Ajuste o caminho conforme necessário
+import useAddMaterial from "@/hooks/useAddMaterial";
 
 export default function Conteudo() {
   const { materiais, loading, error } = useMateriais();
+  const [escolaridade, setEscolaridade] = useState("");
+  const [titulo, setTitulo] = useState("");
+  const [descricao, setDescricao] = useState("");
+  const [materialLink, setMaterialLink] = useState("");
+  const { addMaterial } = useAddMaterial();
+
+  const handleAddMaterial = () => {
+    const newMaterial: Material = {
+      escolaridade,
+      titulo,
+      descricao,
+      materialLink,
+    };
+    console.log(newMaterial)
+
+    addMaterial(newMaterial);
+
+    // Limpar os campos do diálogo
+    setEscolaridade("");
+    setTitulo("");
+    setDescricao("");
+    setMaterialLink("");
+  };
 
   return (
     <main>
@@ -99,6 +131,8 @@ export default function Conteudo() {
                       id="link"
                       className="border-darkBlue-400"
                       placeholder="http://sia.com.br"
+                      value={materialLink}
+                      onChange={(e) => setMaterialLink(e.target.value)}
                     />
                   </div>
                   <div className="grid">
@@ -112,6 +146,8 @@ export default function Conteudo() {
                       id="name"
                       className="border-darkBlue-400"
                       placeholder="Nome conteúdo EPTRAN"
+                      value={titulo}
+                      onChange={(e) => setTitulo(e.target.value)}
                     />
                   </div>
                   <div className="grid">
@@ -125,6 +161,8 @@ export default function Conteudo() {
                       id="description"
                       placeholder="Descrição conteúdo EPTRAN"
                       className="border-darkBlue-400"
+                      value={descricao}
+                      onChange={(e) => setDescricao(e.target.value)}
                     />
                   </div>
                 </div>
@@ -136,14 +174,21 @@ export default function Conteudo() {
                     >
                       CLASSIFICAÇÃO
                     </Label>
-                    <Select>
+                    <Select
+                      value={escolaridade}
+                      onValueChange={setEscolaridade}
+                    >
                       <SelectTrigger className="border-darkBlue-400 w-full">
                         <SelectValue placeholder="Selecionar" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="high-school">Ensino Médio</SelectItem>
-                        <SelectItem value="elementary">Ensino Fundamental</SelectItem>
-                        <SelectItem value="early-grades">Séries Iniciais</SelectItem>
+                        <SelectItem value="FUNDAMENTAL">
+                          Ensino Fundamental
+                        </SelectItem>
+                        <SelectItem value="MEDIO">Ensino Médio</SelectItem>
+                        <SelectItem value="SUPERIOR">
+                          Ensino Superior
+                        </SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -159,6 +204,7 @@ export default function Conteudo() {
                     <Button
                       type="submit"
                       className="w-full bg-darkBlue-500 text-white font-bold text-xs"
+                      onClick={handleAddMaterial}
                     >
                       ENVIAR
                     </Button>
@@ -172,18 +218,20 @@ export default function Conteudo() {
         <div className="w-full rounded-xl mt-16 flex flex-wrap lg:gap-[70px]">
           {loading && <p>Carregando materiais...</p>}
           {error && <p>Erro: {error}</p>}
-          {!loading && !error && materiais.map((material) => (
-            <Card
-              key={material.id}
-              src={"/Image/mat1.svg"} // Use uma imagem específica se necessário
-              alt={"imagem"}
-              conteudo={material.titulo}
-              data={new Date().toLocaleDateString()} // Adapte conforme necessário
-              paginas={"27 PG"} // Adapte conforme necessário
-              nivel={material.escolaridade}
-              tamanho={"207 MB"} // Adapte conforme necessário
-            />
-          ))}
+          {!loading &&
+            !error &&
+            materiais.map((material) => (
+              <Card
+                key={material.id}
+                src={"/Image/mat1.svg"} // Use uma imagem específica se necessário
+                alt={"imagem"}
+                conteudo={material.titulo}
+                data={new Date().toLocaleDateString()} // Adapte conforme necessário
+                paginas={"27 PG"} // Adapte conforme necessário
+                nivel={material.escolaridade}
+                tamanho={"207 MB"} // Adapte conforme necessário
+              />
+            ))}
         </div>
       </div>
     </main>
