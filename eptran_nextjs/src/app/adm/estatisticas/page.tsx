@@ -169,7 +169,7 @@ export default function Estatisticas() {
             <BarChart
               borderRadius={8}
               width={getChartWidth(700)}
-              height={330}
+              height={320}
               series={acessosSemanais.map((serie) => ({
                 data: serie.data,
                 label: serie.label,
@@ -185,7 +185,7 @@ export default function Estatisticas() {
                 legend: {
                   direction: "row",
                   position: { vertical: "top", horizontal: "middle" },
-                  padding: -2,
+                  padding: -7,
                   labelStyle: {
                     fill: "#023859",
                     fontWeight: "Bold",
