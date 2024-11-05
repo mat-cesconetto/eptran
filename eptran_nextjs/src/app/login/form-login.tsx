@@ -8,26 +8,28 @@ import { useRouter } from 'next/navigation';
 
 const FormularioLogin: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const { loginUser } = useLogin();
-  const router = useRouter(); // Certifique-se de que useRouter está sendo usado aqui corretamente
+  const router = useRouter();
 
-
-  const handleLogin = async(e: React.FormEvent<HTMLFormElement>) => {
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsLoading(true); // Ativa o estado de carregamento
 
     const formData = new FormData(e.currentTarget);
-
     const email = formData.get("email")?.toString() || "";
     const senha = formData.get("senha")?.toString() || "";
 
     try {
       await loginUser(email, senha);
-      console.log('tudo tranquilo');
-      router.push("/")
+      console.log('Login bem-sucedido');
+      router.push("/");
     } catch (error: any) {
       setError(error.message || 'Houve um erro ao logar o usuário');
+    } finally {
+      setIsLoading(false); // Desativa o estado de carregamento
     }
-  }
+  };
 
   return (
     <form onSubmit={handleLogin} className="grid grid-cols-1 gap-4 w-full">
@@ -44,8 +46,9 @@ const FormularioLogin: React.FC = () => {
       <button
         type="submit"
         className="bg-[#003966] text-white w-full h-12 rounded-md font-bold text-lg col-span-full mb-3"
+        disabled={isLoading} // Desativa o botão enquanto carrega
       >
-        Entrar
+        {isLoading ? 'Carregando...' : 'Entrar'}
       </button>
 
       {error && <p className="text-red-500 text-sm text-center">{error}</p>}

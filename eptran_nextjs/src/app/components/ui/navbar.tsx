@@ -1,7 +1,9 @@
-'use client'
+'use client';
 
 import React, { useState } from "react";
 import Image from "next/image";
+import { useLogout } from '@/hooks/useLogout';
+
 import Link from "next/link";
 import { useAuth } from "@/hooks/useAuth";
 import {
@@ -13,10 +15,25 @@ import {
 } from "@nextui-org/react";
 import { Menu, X } from "lucide-react";
 
+interface UserDropdownProps {
+  onLogout: () => void;
+}
+
 const NavBar: React.FC = () => {
   const { isAuthenticated, isAdmin } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { logoutUser, isLoading, error } = useLogout();
 
+  // Função de logout
+  const handleLogout = async () => {
+    try {
+      await logoutUser();
+      console.log('Logout realizado com sucesso');
+    } catch (err) {
+      console.error('Erro ao realizar logout:', err);
+      alert(`Erro ao fazer logout: `);
+    }
+  };
   return (
     <>
       <div className="relative w-full bg-[#023859] flex items-center justify-between shadow-2xl px-4 sm:px-10 py-4 md:h-32">
@@ -44,7 +61,6 @@ const NavBar: React.FC = () => {
 
         <div className="hidden md:flex justify-center items-center flex-grow text-white font-bold text-lg">
           <NavLink href="/atividades">Atividades</NavLink>
-          <NavLink href="/conquistas">Conquistas</NavLink>
           <NavLink href="/sobre">Sobre nós</NavLink>
           <NavLink href="/fale-conosco">Fale Conosco</NavLink>
           {isAdmin && <NavLink href="/adm/gestao-conteudo">Administrador</NavLink>}
@@ -52,7 +68,7 @@ const NavBar: React.FC = () => {
 
         <div className="flex-shrink-0">
           {isAuthenticated ? (
-            <UserDropdown />
+            <UserDropdown onLogout={handleLogout} />
           ) : (
             <div className="md:hidden">
               <Image
@@ -83,7 +99,6 @@ const NavBar: React.FC = () => {
           </button>
           <div className="flex flex-col items-center py-4 text-white space-y-4">
             <NavLink href="/atividades" mobile>Atividades</NavLink>
-            <NavLink href="/conquistas" mobile>Conquistas</NavLink>
             <NavLink href="/sobre" mobile>Sobre nós</NavLink>
             <NavLink href="/fale-conosco" mobile>Fale Conosco</NavLink>
           </div>
@@ -107,8 +122,6 @@ const NavBar: React.FC = () => {
   );
 };
 
-
-
 interface NavLinkProps {
   href: string;
   children: React.ReactNode;
@@ -129,7 +142,7 @@ const NavLink: React.FC<NavLinkProps> = ({
   </Link>
 );
 
-const UserDropdown: React.FC = () => (
+const UserDropdown: React.FC<UserDropdownProps> = ({ onLogout }) => (
   <Dropdown>
     <DropdownTrigger>
       <Image
@@ -149,16 +162,15 @@ const UserDropdown: React.FC = () => (
           </h1>
         </div>
       </DropdownItem>
-        <DropdownItem key="conta" className="text-[#000000] text-sm mt-2">  ,
-          
-          Minha Conta
-        </DropdownItem>
+      <DropdownItem key="conta" className="text-[#000000] text-sm mt-2">
+        Minha Conta
+      </DropdownItem>
       <DropdownItem key="divider1" className="py-0">
         <hr className="my-2 border-[#023859]" />
       </DropdownItem>
-        <DropdownItem key="account" className="text-[#023859] text-sm">
-          Dados pessoais
-        </DropdownItem>
+      <DropdownItem key="account" className="text-[#023859] text-sm">
+        Dados pessoais
+      </DropdownItem>
       <DropdownItem key="privacy" className="text-[#023859] text-sm">
         Privacidade
       </DropdownItem>
@@ -174,7 +186,7 @@ const UserDropdown: React.FC = () => (
       <DropdownItem key="accessibility" className="text-[#023859] text-sm">
         Acessibilidade
       </DropdownItem>
-      <DropdownItem key="logout" className="text-danger text-sm" color="danger">
+      <DropdownItem key="logout" className="text-danger text-sm" color="danger" onClick={onLogout}>
         Sair da conta
       </DropdownItem>
     </DropdownMenu>
