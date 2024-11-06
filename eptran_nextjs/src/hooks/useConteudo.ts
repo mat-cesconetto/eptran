@@ -1,6 +1,17 @@
-// useConteudos.ts
-import useSWR from "swr";
-import { useUser } from "./useUserData";
+// src/hooks/useMateriais.ts
+'use client'
+import useSWR from 'swr';
+import { useUser } from './useUserData';
+
+interface Material {
+  id: number;
+  titulo: string;
+  descricao: string;
+  materialLink: string;
+  escolaridade: string;
+  createdAt: string;
+  updatedAt: string;
+}
 
 const fetcher = async (url: string) => {
   const res = await fetch(url, {
@@ -8,24 +19,22 @@ const fetcher = async (url: string) => {
   });
 
   if (!res.ok) {
-    throw new Error("Failed to fetch data.");
+    throw new Error("Erro ao buscar materiais");
   }
 
   return res.json();
 };
 
-export const useConteudos = () => {
+export const useMateriais = () => {
   const { userEscolaridade } = useUser();
-
-  // Construir o endpoint com base na escolaridade do usuário
   const { data, error } = useSWR(
     userEscolaridade ? `http://localhost:3333/materiais/${userEscolaridade}` : null,
     fetcher
   );
 
   return {
-    conteudos: data?.materiais || [],
+    materiais: data?.materiais as Material[] || [],
     isLoading: !error && !data,
-    isError: error,
+    isError: error
   };
 };
