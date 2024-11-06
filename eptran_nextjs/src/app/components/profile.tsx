@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,7 +12,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useUser } from "@/hooks/useUserData";
 import { User, Shield, LogOut } from "lucide-react";
-import { redirect } from "next/navigation"; // Importa redirect
+import { redirect } from "next/navigation";
 
 interface UserDropdownProps {
   onLogout: () => void;
@@ -19,17 +20,19 @@ interface UserDropdownProps {
 
 const Profile: React.FC<UserDropdownProps> = ({ onLogout }) => {
   const { userName, userEmail } = useUser();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleLogout = () => {
-    onLogout();
-    redirect("/login"); // Redireciona para a página de login
+    setIsMenuOpen(false);
+    onLogout();          
+    redirect("/teste"); 
   };
 
   return (
-    <DropdownMenu>
+    <DropdownMenu open={isMenuOpen} onOpenChange={setIsMenuOpen}>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="relative h-10 w-10 rounded-full">
-          <Avatar className="h-10 w-10">
+        <Button variant="ghost" className="relative h-12 w-12 rounded-full">
+          <Avatar className="h-12 w-12">
             <AvatarImage src="/placeholder.svg?height=32&width=32" alt={userName} />
             <AvatarFallback>{userName.charAt(0)}</AvatarFallback>
           </Avatar>
