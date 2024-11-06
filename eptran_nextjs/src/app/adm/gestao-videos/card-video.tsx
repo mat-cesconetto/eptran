@@ -34,12 +34,12 @@ interface CardProps {
   alt: string;
   conteudo: string;
   data: string;
-  paginas: string;
+  duracao: string;
   nivel: string;
   tamanho: string;
 }
 
-const Card: React.FC<CardProps> = ({ src, alt, conteudo, data, paginas, nivel, tamanho }) => {
+const VideoCard: React.FC<CardProps> = ({ src, alt, conteudo, data, duracao, nivel, tamanho }) => {
   const [editOpen, setEditOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
 
@@ -50,17 +50,17 @@ const Card: React.FC<CardProps> = ({ src, alt, conteudo, data, paginas, nivel, t
   };
 
   return (
-    <div className="rounded-xl w-48 bg-darkBlue-500">
+    <div className=" rounded-xl w-64 bg-darkBlue-500">
       <Image
         className="border rounded-t-xl"
         src={src}
         alt={alt}
-        width={192}
+        width={256}
         height={192}
       />
 
       <div className="flex justify-between">
-        <p className="text-[8px] text-white text-center ml-3 mt-2 border rounded-md w-20 h-6 pt-1">
+        <p className="text-[8px] text-white text-center ml-3 mt-2 border rounded-md w-36 h-6 pt-1">
           {conteudo}
         </p>
         <p className="text-[8px] text-white text-center ml-4 mr-8 mt-2 border rounded-md w-14 h-6 p-1">
@@ -69,7 +69,7 @@ const Card: React.FC<CardProps> = ({ src, alt, conteudo, data, paginas, nivel, t
       </div>
       <div className="flex justify-start">
         <p className="text-[8px] text-white text-center ml-3 mt-2 border rounded-md w-9 h-6 p-1">
-          {paginas}
+          {duracao}
         </p>
         <p className="text-[8px] text-white text-center ml-2 mt-2 border rounded-md w-8 h-6 p-1">
           {nivel}
@@ -96,11 +96,11 @@ const Card: React.FC<CardProps> = ({ src, alt, conteudo, data, paginas, nivel, t
           >
             <DropdownMenuItem onSelect={() => setEditOpen(true)}>
               <SquarePen className="mr-2 h-4 w-4" />
-              Editar Conteúdo
+              Editar Vídeo
             </DropdownMenuItem>
             <DropdownMenuItem onSelect={() => setDeleteOpen(true)}>
               <Trash className="mr-2 h-4 w-4" />
-              Excluir Conteúdo
+              Excluir Vídeo
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -111,7 +111,7 @@ const Card: React.FC<CardProps> = ({ src, alt, conteudo, data, paginas, nivel, t
         <DialogContent className="sm:max-w-[600px] w-full">
           <DialogHeader>
             <DialogTitle className="text-[40px] font-bold text-darkBlue-500">
-              Editar Conteúdo
+              Editar Vídeo
             </DialogTitle>
           </DialogHeader>
           <div className="grid gap-4 py-4">
@@ -120,7 +120,7 @@ const Card: React.FC<CardProps> = ({ src, alt, conteudo, data, paginas, nivel, t
                 htmlFor="link"
                 className="text-xs font-bold text-darkBlue-600"
               >
-                LINK DO CONTEÚDO
+                LINK DO VÍDEO
               </Label>
               <Input
                 id="link"
@@ -133,12 +133,12 @@ const Card: React.FC<CardProps> = ({ src, alt, conteudo, data, paginas, nivel, t
                 htmlFor="name"
                 className="text-xs font-bold text-darkBlue-600"
               >
-                NOME DO CONTEÚDO
+                NOME DO VÍDEO
               </Label>
               <Input
                 id="name"
                 className="border-darkBlue-400"
-                placeholder="Nome conteúdo EPTRAN"
+                placeholder="Nome vídeo EPTRAN"
               />
             </div>
             <div className="grid">
@@ -146,11 +146,11 @@ const Card: React.FC<CardProps> = ({ src, alt, conteudo, data, paginas, nivel, t
                 htmlFor="description"
                 className="text-xs font-bold text-darkBlue-600"
               >
-                DESCRIÇÃO DO CONTEÚDO
+                DESCRIÇÃO DO VÍDEO
               </Label>
               <Textarea
                 id="description"
-                placeholder="Descrição conteúdo EPTRAN"
+                placeholder="Descrição vídeo EPTRAN"
                 className="border-darkBlue-400"
               />
             </div>
@@ -200,12 +200,12 @@ const Card: React.FC<CardProps> = ({ src, alt, conteudo, data, paginas, nivel, t
         <DialogContent className="sm:max-w-[400px] w-full">
           <DialogHeader>
             <DialogTitle className="text-[24px] font-bold text-darkBlue-500">
-              Excluir Conteúdo
+              Excluir Vídeo
             </DialogTitle>
           </DialogHeader>
           <div className="py-4">
             <p className="text-sm text-darkBlue-600">
-              Tem certeza de que deseja excluir este conteúdo? Esta ação não pode ser desfeita.
+              Tem certeza de que deseja excluir este vídeo? Esta ação não pode ser desfeita.
             </p>
           </div>
           <div className="flex justify-end space-x-2">
@@ -221,7 +221,7 @@ const Card: React.FC<CardProps> = ({ src, alt, conteudo, data, paginas, nivel, t
             <Button
               className="bg-red-500 text-white font-bold text-xs"
               onClick={handleDelete}
-            > 
+            >
               EXCLUIR
             </Button>
           </div>
@@ -231,4 +231,4 @@ const Card: React.FC<CardProps> = ({ src, alt, conteudo, data, paginas, nivel, t
   );
 };
 
-export default Card;
+export default VideoCard;
