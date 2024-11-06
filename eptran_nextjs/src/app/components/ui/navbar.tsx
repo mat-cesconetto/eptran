@@ -1,19 +1,15 @@
+// NAVBAR - Atualizado
+
 'use client';
 
 import React, { useState } from "react";
 import Image from "next/image";
 import { useLogout } from '@/hooks/useLogout';
-
 import Link from "next/link";
 import { useAuth } from "@/hooks/useAuth";
-import {
-  Button,
-  Dropdown,
-  DropdownTrigger,
-  DropdownMenu,
-  DropdownItem,
-} from "@nextui-org/react";
+import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
+import Profile from "../profile";  // Importe o componente Profile
 
 interface UserDropdownProps {
   onLogout: () => void;
@@ -34,6 +30,7 @@ const NavBar: React.FC = () => {
       alert(`Erro ao fazer logout: `);
     }
   };
+
   return (
     <>
       <div className="relative w-full bg-[#023859] flex items-center justify-between shadow-2xl px-4 sm:px-10 py-4 md:h-32">
@@ -68,7 +65,8 @@ const NavBar: React.FC = () => {
 
         <div className="flex-shrink-0">
           {isAuthenticated ? (
-            <UserDropdown onLogout={handleLogout} />
+            // Aqui você insere o novo componente Profile
+            <Profile onLogout={handleLogout} />
           ) : (
             <div className="md:hidden">
               <Image
@@ -128,11 +126,7 @@ interface NavLinkProps {
   mobile?: boolean;
 }
 
-const NavLink: React.FC<NavLinkProps> = ({
-  href,
-  children,
-  mobile = false,
-}) => (
+const NavLink: React.FC<NavLinkProps> = ({ href, children, mobile = false }) => (
   <Link
     href={href}
     className={`relative group ${mobile ? "text-2xl py-2" : "mx-4"}`}
@@ -140,57 +134,6 @@ const NavLink: React.FC<NavLinkProps> = ({
     {children}
     <div className="absolute left-0 bottom-[-6px] w-full h-[3px] bg-white scale-x-0 origin-right transition-transform duration-500 group-hover:scale-x-100"></div>
   </Link>
-);
-
-const UserDropdown: React.FC<UserDropdownProps> = ({ onLogout }) => (
-  <Dropdown>
-    <DropdownTrigger>
-      <Image
-        src="/user.svg"
-        width={40}
-        height={40}
-        alt="User avatar"
-        className="rounded-full cursor-pointer"
-      />
-    </DropdownTrigger>
-    <DropdownMenu aria-label="User Settings" className="p-4 w-64 rounded-lg">
-      <DropdownItem key="greeting" className="font-semibold text-[#023859]">
-        <div>
-          <h1 className="text-[#000000] text-lg">Olá,</h1>
-          <h1 className="text-[#023859] text-lg max-w-full whitespace-normal">
-            João Pedro Espindola Sezerino
-          </h1>
-        </div>
-      </DropdownItem>
-      <DropdownItem key="conta" className="text-[#000000] text-sm mt-2">
-        Minha Conta
-      </DropdownItem>
-      <DropdownItem key="divider1" className="py-0">
-        <hr className="my-2 border-[#023859]" />
-      </DropdownItem>
-      <DropdownItem key="account" className="text-[#023859] text-sm">
-        Dados pessoais
-      </DropdownItem>
-      <DropdownItem key="privacy" className="text-[#023859] text-sm">
-        Privacidade
-      </DropdownItem>
-      <DropdownItem key="achievements" className="text-[#023859] text-sm">
-        Minhas Conquistas
-      </DropdownItem>
-      <DropdownItem key="serviços" className="text-[#000000] text-sm">
-        Serviços
-      </DropdownItem>
-      <DropdownItem key="divider2" className="py-0">
-        <hr className="my-2 border-[#023859]" />
-      </DropdownItem>
-      <DropdownItem key="accessibility" className="text-[#023859] text-sm">
-        Acessibilidade
-      </DropdownItem>
-      <DropdownItem key="logout" className="text-danger text-sm" color="danger" onClick={onLogout}>
-        Sair da conta
-      </DropdownItem>
-    </DropdownMenu>
-  </Dropdown>
 );
 
 const AuthButtons: React.FC = () => (
