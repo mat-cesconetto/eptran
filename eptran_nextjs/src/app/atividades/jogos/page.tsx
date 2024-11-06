@@ -31,7 +31,7 @@ export default function Home() {
         </div>
         <div className="px-4 lg:pl-24 w-full flex flex-wrap justify-center lg:justify-start">
           <Game imageUrl="/quiz.png" title="Quiz Eptran I" href={"./jogos/QuizzI"} />
-          <Game imageUrl="/quiz.png" title="Quiz Eptran II" href={"./jogos/QuizzII"} />
+          <Game imageUrl="/quiz2.png" title="Quiz Eptran II" href={"./jogos/QuizzII"} />
           <Game imageUrl="/travessia.png" title="Jogo da Travessia" href={"./jogos/travessia"} />
           <Game imageUrl="/forca.png" title="Jogo da Forca" href={"./jogos/forca"} />
           <Game imageUrl="/desvio.png" title="Jogo do Desvio" href={"./jogos/TransitoMaluco"} />
