@@ -1,9 +1,10 @@
-import useSWR from "swr";
+// src/hooks/useUserData.ts
+'use client'
+import useSWR from 'swr';
 
-// Função para buscar dados da API
 const fetcher = async (url: string) => {
   const res = await fetch(url, {
-    credentials: "include", // Inclui cookies/credenciais na requisição
+    credentials: "include",
   });
 
   if (!res.ok) {
