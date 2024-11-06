@@ -218,7 +218,7 @@ const Card: React.FC<CardProps> = ({ src, alt, conteudo, data, paginas, nivel, t
                 CANCELAR
               </Button>
             </DialogClose>
-            <Button
+            <Button variant="destructive"
               className="bg-red-500 text-white font-bold text-xs"
               onClick={handleDelete}
             > 

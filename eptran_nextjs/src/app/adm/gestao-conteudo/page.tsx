@@ -99,7 +99,7 @@ export default function Conteudo() {
                   className="font-semibold w-full sm:w-52 h-10 shadow-xl flex items-center justify-center bg-darkBlue-500 text-white px-5 rounded-md text-lg"
                 >
                   <Image
-                    className="w-7 mr-2"
+                    className="w-7"
                     src="/Image/circulo.svg"
                     alt="Adicionar"
                     width={28}
