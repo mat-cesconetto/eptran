@@ -4,7 +4,7 @@ const respostacontainer = document.querySelector(".Resposta-container");
 const questaotexto = document.querySelector(".questao");
 const proximapergunta = document.querySelector(".proxima_pergunta");
 const instrucaoQuizz = document.querySelector(".instrucao-quizz");
-const conquistasQuizz = document.querySelector(".conquistas-quizz");
+// const conquistasQuizz = document.querySelector(".conquistas-quizz");
 const tituloQuizz = document.querySelector(".titulo");
 
 comecarjogo.addEventListener("click", Iniciarjogo);
@@ -27,7 +27,7 @@ function Iniciarjogo() {
 function esconderElementosInicio() {
     comecarjogo.classList.add("hide");
     instrucaoQuizz.classList.add("hide");
-    conquistasQuizz.classList.add("hide");
+    // conquistasQuizz.classList.add("hide");
     tituloQuizz.classList.add("hide");
 }
 
@@ -72,7 +72,7 @@ function mostrarInstrucoes() {
 function mostrarElementosInicio() {
     comecarjogo.classList.remove("hide");
     instrucaoQuizz.classList.remove("hide");
-    conquistasQuizz.classList.remove("hide");
+    // conquistasQuizz.classList.remove("hide");
     tituloQuizz.classList.remove("hide");
 }
 
