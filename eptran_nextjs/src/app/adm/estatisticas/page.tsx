@@ -173,7 +173,7 @@ export default function Estatisticas() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-10">
         {/* gráfico 4 */}
-        <div className="lg:col-span-2 border-2 rounded-md p-4">
+        <div className="lg:col-span-2 border-2 rounded-xl p-3">
           <h2 className="mt-4 font-bold text-darkBlue-500 text-2xl md:text-3xl text-center">
             Acessos semanais
           </h2>
@@ -197,10 +197,11 @@ export default function Estatisticas() {
                 legend: {
                   direction: "row",
                   position: { vertical: "top", horizontal: "middle" },
-                  padding: -7,
+                  padding: -5,
                   labelStyle: {
                     fill: "#023859",
                     fontWeight: "Bold",
+                    fontSize: 12,
                   },
                 },
               }}
@@ -246,16 +247,17 @@ export default function Estatisticas() {
                 "--ChartsLegend-rootSpacing": "10px",
                 "--ChartsLegend-itemWidth": "100px",
               }}
-              width={getChartWidth(560)}
+              width={getChartWidth(500)}
               height={300}
               slotProps={{
                 legend: {
                   direction: "column",
                   position: { vertical: "middle", horizontal: "right" },
-                  padding: 20,
+                
                   labelStyle: {
-                    fontWeight: "bold",
+                    fontWeight: "Bold",
                     fill: "#023859",
+                    fontSize: 14,
                   },
                 },
               }}
@@ -292,8 +294,9 @@ export default function Estatisticas() {
                   direction: "column",
                   position: { vertical: "middle", horizontal: "right" },
                   labelStyle: {
-                    fontWeight: "bold",
+                    fontWeight: "Bold",
                     fill: "#023859",
+                    fontSize: 14,
                   },
                 },
               }}
