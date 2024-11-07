@@ -23,9 +23,9 @@ const Profile: React.FC<UserDropdownProps> = ({ onLogout }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleLogout = () => {
+    onLogout();   
     setIsMenuOpen(false);
-    onLogout();          
-    redirect("/teste"); 
+    redirect("/login"); 
   };
 
   return (
