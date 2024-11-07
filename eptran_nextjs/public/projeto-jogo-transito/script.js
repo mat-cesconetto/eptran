@@ -1,14 +1,11 @@
 // Lista de objetos e suas respectivas imagens
 const images = {
-    "Ônibus": "images/Ônibus.png",
-    "Semáforo": "images/semaforo.png",
-    "Rua": "images/Rua.png",
-    "Placa Pare": "images/Placa.png",
-    "Carro": "images/carro.png"
-    
-    
+    "ÔNIBUS": "images/Ônibus.png",   // Palavras já em caixa alta
+    "SEMÁFORO": "images/semaforo.png",
+    "RUA": "images/Rua.png",
+    "PLACA DE PARE": "images/Placa.png",
+    "CARRO": "images/carro.png"
 };
-
 
 let score = 0;
 let attempts = 3;
@@ -48,10 +45,11 @@ function updateImage() {
 
 // Função para verificar a resposta
 function checkAnswer() {
-    const userAnswer = answerInput.value.trim(); // Mantém a caixa alta e acentos
+    const userAnswer = answerInput.value.trim().toUpperCase(); // Converte para caixa alta
 
-    if (userAnswer === currentObject) {
-        score++;
+    // Verifica se a resposta do usuário corresponde à imagem atual, também em caixa alta
+    if (userAnswer === currentObject.toUpperCase()) {
+        score++; // Incrementa o score
         feedbackElement.textContent = "Correto!";
         feedbackElement.classList.add("green");
         feedbackElement.style.visibility = "visible"; // Exibe a mensagem de acerto
@@ -59,9 +57,12 @@ function checkAnswer() {
         // Remove a imagem atual da lista de imagens restantes
         delete remainingImages[currentObject];
 
+        // Atualiza o placar
+        scoreElement.textContent = `Pontos: ${score}`;
+
         setTimeout(updateImage, 1000); // Muda a imagem após 1 segundo
     } else {
-        attempts--;
+        attempts--; // Decrementa as tentativas
         feedbackElement.textContent = "Errado! Tente novamente.";
         feedbackElement.classList.remove("green");
         feedbackElement.style.visibility = "visible"; // Exibe a mensagem de erro
