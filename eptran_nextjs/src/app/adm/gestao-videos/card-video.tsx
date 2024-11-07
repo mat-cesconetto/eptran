@@ -45,7 +45,7 @@ const VideoCard: React.FC<CardProps> = ({ src, alt, conteudo, data, duracao, niv
 
   const handleDelete = () => {
     // Lógica de exclusão
-    console.log("Conteúdo excluído!");
+    console.log("Vídeo excluído!");
     setDeleteOpen(false);
   };
 
