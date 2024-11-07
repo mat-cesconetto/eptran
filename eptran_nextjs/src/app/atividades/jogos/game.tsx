@@ -20,5 +20,4 @@ const Game: React.FC<GameProps> = ({ imageUrl, title, href }) => {
     </a>
   );
 };
-
 export default Game;

@@ -6,16 +6,32 @@
 
 body {
     font-family: 'Comic Sans MS', cursive, sans-serif; /* Fonte divertida */
-    background-image: url('images/transito.jpg'); /* Imagem de fundo */
-    background-size: cover; /* A imagem cobrirá toda a tela */
-    background-position: center; /* Centraliza a imagem */
-    background-repeat: no-repeat; /* Evita que a imagem se repita */
+    background-color: #f2f2f2; /* Fundo da página */
+    background-image: url('images/transito.jpg'); /* Caminho da imagem de fundo */
+    background-size: cover; /* Faz a imagem cobrir toda a área da tela */
+    background-position: center; /* Centraliza a imagem no fundo */
+    background-attachment: fixed; /* Fixa a imagem de fundo ao rolar a página */
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 100vh; /* Garante que a altura do body ocupe toda a altura da janela */
+    margin: 0; /* Remove qualquer margem do body */
+    position: relative; /* Para a camada de fundo poder ficar por trás */
 }
 
+
+.background-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url(fundo\ atividade.png); /* Imagem de fundo lateral */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: -1; /* Fica atrás da div principal */
+}
 
 .game-container {
     background-color: rgba(255, 255, 255, 0.8); /* Fundo branco translúcido */
@@ -111,6 +127,13 @@ button:hover {
 
 #restart-btn:hover {
     background-color: #1e88e5;
+}
+
+.accent-warning {
+    font-size: 18px;
+    color: #ff9800; /* Cor laranja para destaque */
+    margin-top: 10px;
+    font-weight: bold;
 }
 
 #final-score {

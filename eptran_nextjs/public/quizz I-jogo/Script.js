@@ -192,12 +192,12 @@ const questoes = [
     ]
     },
     {
-    questao: "Qual é a velocidade máxima permitida em uma zona de chuva?",
+    questao: "Qual é a velocidade máxima permitida em uma rodovia em dias de chuva?",
     imagem: "Imagens-EPTRAN/imagem 19.jpg",
     respostas: [
-        { text: "90 km", correct: true },
+        { text: "90 km", correct: false },
         { text: "80 km", correct: false },
-        { text: "60 km", correct: false },
+        { text: "60 km", correct: true },
         { text: "100 km", correct: false }
     ]
     },
@@ -227,7 +227,7 @@ const questoes = [
         respostas: [
             { text: "1 segundo", correct: false },
             { text: "2 segundos", correct: true },
-            { text: "5 metro", correct: false },
+            { text: "5 segundos", correct: false },
             { text: "10 segundos", correct: false }
         ]
     },

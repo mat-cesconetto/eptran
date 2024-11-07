@@ -20,18 +20,18 @@ document.getElementById("char4").addEventListener("click", function() {
     selectCharacter("char4");
 });
 
+
 // Função para destacar o personagem selecionado
 function selectCharacter(characterId) {
+    // Se já houver um personagem selecionado, remova a borda branca
+    if (selectedCharacter) {
+        document.getElementById(selectedCharacter).classList.remove('selected');
+    }
+
+    // Destacar o personagem selecionado com borda branca
     selectedCharacter = characterId;
-    
-    // Resetar todas as bordas
-    document.getElementById("char1").style.border = "3px solid transparent";
-    document.getElementById("char2").style.border = "3px solid transparent";
-    document.getElementById("char3").style.border = "3px solid transparent";
-    
-    // Destacar o personagem selecionado
-    document.getElementById(characterId).style.border = "3px solid #61dafb";
-    
+    document.getElementById(characterId).classList.add('selected');
+
     // Mostrar o botão de confirmar após a seleção do personagem
     document.getElementById("confirmButton").style.display = "block";
 }
@@ -44,4 +44,21 @@ document.getElementById("confirmButton").addEventListener("click", function() {
     } else {
         alert("Por favor, selecione um personagem!");
     }
+});
+
+
+
+
+
+
+// Opcional: se quiser adicionar mais controle ou animações
+const infoIcon = document.getElementById("infoIcon");
+const infoWidget = document.getElementById("infoWidget");
+
+infoIcon.addEventListener("mouseover", () => {
+    infoWidget.style.display = "block";  // Exibe o widget
+});
+
+infoIcon.addEventListener("mouseout", () => {
+    infoWidget.style.display = "none";   // Esconde o widget
 });
