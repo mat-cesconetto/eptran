@@ -1,4 +1,7 @@
+'use client'
+
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,20 +15,25 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useUser } from "@/hooks/useUserData";
 import { User, Shield, LogOut } from "lucide-react";
-import { redirect } from "next/navigation";
 
 interface UserDropdownProps {
   onLogout: () => void;
 }
 
-const Profile: React.FC<UserDropdownProps> = ({ onLogout }) => {
+export default function Profile({ onLogout }: UserDropdownProps) {
   const { userName, userEmail } = useUser();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const router = useRouter();
 
-  const handleLogout = () => {
-    onLogout();   
-    setIsMenuOpen(false);
-    redirect("/login"); 
+  const handleLogout = async () => {
+    try {
+      await onLogout();
+      setIsMenuOpen(false);
+      router.push("/login");
+    } catch (error) {
+      console.error("Erro ao fazer logout:", error);
+      // Aqui você pode adicionar uma notificação de erro para o usuário
+    }
   };
 
   return (
@@ -63,13 +71,11 @@ const Profile: React.FC<UserDropdownProps> = ({ onLogout }) => {
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={handleLogout}>
+        <DropdownMenuItem onSelect={handleLogout}>
           <LogOut className="mr-2 h-4 w-4" />
           <span>Sair da conta</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
-};
-
-export default Profile;
+}

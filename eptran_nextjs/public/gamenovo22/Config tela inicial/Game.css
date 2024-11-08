@@ -42,15 +42,21 @@ body {
     transform: translate(-50%, -50%);
 }
 
+/* O estilo do "Game Over" já está correto, não precisamos mudar nada aqui */
 #gameOverMessage {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 24px;
-    color: rgb(233, 47, 47);
-    display: none;
-
+    font-size: 60px;
+    color: rgb(180, 22, 22);
+    display: none;  /* Inicialmente oculto */
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px; /* Bordas arredondadas */
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5); /* Sombra para dar destaque */
+    z-index: 1000; /* Fica acima do overlay */
 }
 
 button {
