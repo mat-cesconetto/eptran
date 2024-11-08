@@ -21,7 +21,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import VideoCard from "./card-video";
+import VideoCard from "./card-video"; // Assuming the updated VideoCard is saved here
 import useVideos from "@/hooks/useVideos";
 import useAddVideo from "@/hooks/useManageVideos";
 import { Video } from "@/@types/Video";
@@ -52,7 +52,7 @@ export default function VideoManagement() {
 
     addVideo(newVideo);
 
-    // Limpar os campos do diálogo
+    // Clear dialog fields
     setTitulo("");
     setDescricao("");
     setEscolaridade("");
@@ -72,10 +72,6 @@ export default function VideoManagement() {
         <h1 className="text-darkBlue-500 font-bold text-3xl sm:text-4xl lg:text-5xl text-center sm:text-left">
           Gestão de Vídeos
         </h1>
-      </div>
-
-      <div className="mt-8 sm:mt-12">
-        {/* Filtros e Botão de Adicionar Vídeo */}
       </div>
 
       <div className="w-full rounded-xl mt-8 sm:mt-16 flex flex-wrap justify-center sm:justify-center gap-4 sm:gap-6 lg:gap-[70px]">
