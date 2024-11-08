@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo de Trânsito</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <h1>Jogo de Trânsito</h1>
+        <div class="game-info">
+            <p id="score">Pontos: 0</p>
+            <p id="attempts">Tentativas: 3</p>
+        </div>
+        <div class="image-container">
+            <img id="traffic-image" src="images/carro.png" alt="Imagem de Trânsito">
+        </div>
+        <div class="input-container">
+            <p>Digite o nome da imagem:</p>
+            <input type="text" id="answer" placeholder="Exemplo: carro">
+            <button id="submit-btn">Enviar</button>
+        </div>
+        <p id="feedback"></p>
+        <button id="restart-btn" style="display: none;">Reiniciar</button> <!-- Botão de reiniciar -->
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

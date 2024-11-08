@@ -1,48 +1,26 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { Copy, Link } from "lucide-react";
 import {
   Dialog,
   DialogClose,
   DialogContent,
-  DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-
 import { Input } from "@/components/ui/input";
-
 import { Label } from "@/components/ui/label";
-
 import { Textarea } from "@/components/ui/textarea";
-
-import Image from "next/image";
-
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-
-import { MoreHorizontal, Trash, SquarePen, Search } from "lucide-react";
-import Card from "./card-conteudo";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import Card from "./card-conteudo"; // Certifique-se de que o caminho está correto
+import useMateriais from "@/hooks/useMateriais"; // Ajuste o caminho conforme necessário
 
 export default function Conteudo() {
+  const { materiais, loading, error } = useMateriais();
+
   return (
     <main>
       <div className="flex">
@@ -84,60 +62,6 @@ export default function Conteudo() {
               className="font-semibold block items-center h-10 ps-10 min-w-72 w-full text-sm bg-white rounded-lg border-gray-300 border-1 placeholder-darkBlue-300"
               placeholder="Procurar"
             />
-          </div>
-
-          <div className="flex justify-between mr-[30%]">
-            <div className="mx-8">
-              <Select>
-                <SelectTrigger className="border-gray-300 border-1 w-52 h-10 text-darkBlue-500 font-bold text-md">
-                  <SelectValue placeholder="Selecionar" />
-                </SelectTrigger>
-                <SelectContent className="shadow-xl">
-                  <SelectItem
-                    className="text-darkBlue-500 font-semibold "
-                    value="high-school"
-                  >
-                    Ensino Médio
-                  </SelectItem>
-                  <SelectItem
-                    className="text-darkBlue-500 font-semibold "
-                    value="elementary"
-                  >
-                    Ensino Fundamental
-                  </SelectItem>
-                  <SelectItem
-                    className="text-darkBlue-500 font-semibold "
-                    value="early-grades"
-                  >
-                    Séries Iniciais
-                  </SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div>
-              <Select>
-                <SelectTrigger className="border-gray-300 border-1 w-48 h-10 text-darkBlue-500 font-bold text-md">
-                  <SelectValue placeholder="Selecionar" />
-                </SelectTrigger>
-                <SelectContent className="shadow-xl">
-                  <SelectGroup>
-                    <SelectItem
-                      className="text-darkBlue-500 font-semibold "
-                      value="recent"
-                    >
-                      Mais Recentes
-                    </SelectItem>
-                    <SelectItem
-                      className="text-darkBlue-500 font-semibold "
-                      value="older"
-                    >
-                      Mais Antigos
-                    </SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-            </div>
           </div>
 
           <div className="">
@@ -217,15 +141,9 @@ export default function Conteudo() {
                         <SelectValue placeholder="Selecionar" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="high-school">
-                          Ensino Médio
-                        </SelectItem>
-                        <SelectItem value="elementary">
-                          Ensino Fundamental
-                        </SelectItem>
-                        <SelectItem value="early-grades">
-                          Séries Iniciais
-                        </SelectItem>
+                        <SelectItem value="high-school">Ensino Médio</SelectItem>
+                        <SelectItem value="elementary">Ensino Fundamental</SelectItem>
+                        <SelectItem value="early-grades">Séries Iniciais</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -252,19 +170,20 @@ export default function Conteudo() {
         </div>
 
         <div className="w-full rounded-xl mt-16 flex flex-wrap lg:gap-[70px]">
-            <Card src={"/Image/mat1.svg"} alt={"imagem"} conteudo={"Conteúdo Eptran"} data={"21/07/2024"} paginas={"27 PG"} nivel={"EM"} tamanho={"207 MB"} />
-            <Card src={"/Image/mat1.svg"} alt={"imagem"} conteudo={"Conteúdo Eptran"} data={"21/07/2024"} paginas={"27 PG"} nivel={"EM"} tamanho={"207 MB"} />
-            <Card src={"/Image/mat1.svg"} alt={"imagem"} conteudo={"Conteúdo Eptran"} data={"21/07/2024"} paginas={"27 PG"} nivel={"EM"} tamanho={"207 MB"} />
-            <Card src={"/Image/mat1.svg"} alt={"imagem"} conteudo={"Conteúdo Eptran"} data={"21/07/2024"} paginas={"27 PG"} nivel={"EM"} tamanho={"207 MB"} />
-            <Card src={"/Image/mat1.svg"} alt={"imagem"} conteudo={"Conteúdo Eptran"} data={"21/07/2024"} paginas={"27 PG"} nivel={"EM"} tamanho={"207 MB"} />
-            <Card src={"/Image/mat1.svg"} alt={"imagem"} conteudo={"Conteúdo Eptran"} data={"21/07/2024"} paginas={"27 PG"} nivel={"EM"} tamanho={"207 MB"} />
-            <Card src={"/Image/mat1.svg"} alt={"imagem"} conteudo={"Conteúdo Eptran"} data={"21/07/2024"} paginas={"27 PG"} nivel={"EM"} tamanho={"207 MB"} />
-            <Card src={"/Image/mat1.svg"} alt={"imagem"} conteudo={"Conteúdo Eptran"} data={"21/07/2024"} paginas={"27 PG"} nivel={"EM"} tamanho={"207 MB"} />
-            <Card src={"/Image/mat1.svg"} alt={"imagem"} conteudo={"Conteúdo Eptran"} data={"21/07/2024"} paginas={"27 PG"} nivel={"EM"} tamanho={"207 MB"} />
-            <Card src={"/Image/mat1.svg"} alt={"imagem"} conteudo={"Conteúdo Eptran"} data={"21/07/2024"} paginas={"27 PG"} nivel={"EM"} tamanho={"207 MB"} />
-            <Card src={"/Image/mat1.svg"} alt={"imagem"} conteudo={"Conteúdo Eptran"} data={"21/07/2024"} paginas={"27 PG"} nivel={"EM"} tamanho={"207 MB"} />
-            <Card src={"/Image/mat1.svg"} alt={"imagem"} conteudo={"Conteúdo Eptran"} data={"21/07/2024"} paginas={"27 PG"} nivel={"EM"} tamanho={"207 MB"} />
-
+          {loading && <p>Carregando materiais...</p>}
+          {error && <p>Erro: {error}</p>}
+          {!loading && !error && materiais.map((material) => (
+            <Card
+              key={material.id}
+              src={"/Image/mat1.svg"} // Use uma imagem específica se necessário
+              alt={"imagem"}
+              conteudo={material.titulo}
+              data={new Date().toLocaleDateString()} // Adapte conforme necessário
+              paginas={"27 PG"} // Adapte conforme necessário
+              nivel={material.escolaridade}
+              tamanho={"207 MB"} // Adapte conforme necessário
+            />
+          ))}
         </div>
       </div>
     </main>
