@@ -9,7 +9,7 @@ import Link from "next/link";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
-import Profile from "../profile";  // Importe o componente Profile
+import Profile from "./profile";  // Importe o componente Profile
 
 interface UserDropdownProps {
   onLogout: () => void;
