@@ -90,7 +90,9 @@ export default function Estatisticas() {
             height={50}
             alt="perfil"
           />
-          <h1 className="text-darkBlue-500 text-2xl md:text-4xl font-bold">Gestão de Gráficos</h1>
+          <h1 className="text-darkBlue-500 text-2xl md:text-4xl font-bold">
+            Gestão de Gráficos
+          </h1>
         </div>
         {/* Select de filtro */}
       <div className="w-full md:w-auto">
@@ -204,23 +206,33 @@ export default function Estatisticas() {
                   scaleType: "band",
                   data: ["S", "SU", "CO", "N", "NO"],
                   colorMap: {
-                    type: 'ordinal',
-                    colors: ['#ED8598', '#B5EE88', '#CA8DFB', '#8995FA', '#003A7E']
-                  }
+                    type: "ordinal",
+                    colors: [
+                      "#ED8598",
+                      "#B5EE88",
+                      "#CA8DFB",
+                      "#8995FA",
+                      "#003A7E",
+                    ],
+                  },
                 },
               ]}
               sx={{
-                ".MuiChartsAxis-bottom .MuiChartsAxis-line": { display: "none" },
-                ".MuiChartsAxis-bottom .MuiChartsAxis-tick": { display: "none" },
+                ".MuiChartsAxis-bottom .MuiChartsAxis-line": {
+                  display: "none",
+                },
+                ".MuiChartsAxis-bottom .MuiChartsAxis-tick": {
+                  display: "none",
+                },
                 ".MuiChartsAxis-bottom .MuiChartsAxis-tickLabel": {
                   fontWeight: "800",
-                  fill: "#023859"
+                  fill: "#023859",
                 },
                 ".MuiChartsAxis-left .MuiChartsAxis-line": { display: "none" },
                 ".MuiChartsAxis-left .MuiChartsAxis-tick": { display: "none" },
                 ".MuiChartsAxis-left .MuiChartsAxis-tickLabel": {
                   fontWeight: "800",
-                  fill: "#023859"
+                  fill: "#023859",
                 },
               }}
               margin={{ top: 50, bottom: 30, left: 50, right: 10 }}
@@ -231,7 +243,7 @@ export default function Estatisticas() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-10">
         {/* gráfico 4 */}
-        <div className="lg:col-span-2 border-2 rounded-md p-4">
+        <div className="lg:col-span-2 border-2 rounded-xl p-3">
           <h2 className="mt-4 font-bold text-darkBlue-500 text-2xl md:text-3xl text-center">
             Acessos semanais
           </h2>
@@ -255,16 +267,21 @@ export default function Estatisticas() {
                 legend: {
                   direction: "row",
                   position: { vertical: "top", horizontal: "middle" },
-                  padding: -7,
+                  padding: -5,
                   labelStyle: {
                     fill: "#023859",
                     fontWeight: "Bold",
+                    fontSize: 12,
                   },
                 },
               }}
               sx={{
-                ".MuiChartsAxis-bottom .MuiChartsAxis-line": { display: "none" },
-                ".MuiChartsAxis-bottom .MuiChartsAxis-tick": { display: "none" },
+                ".MuiChartsAxis-bottom .MuiChartsAxis-line": {
+                  display: "none",
+                },
+                ".MuiChartsAxis-bottom .MuiChartsAxis-tick": {
+                  display: "none",
+                },
                 ".MuiChartsAxis-bottom .MuiChartsAxis-tickLabel": {
                   fontWeight: "800",
                   fill: "#023859",
@@ -303,16 +320,17 @@ export default function Estatisticas() {
                 "--ChartsLegend-rootSpacing": "10px",
                 "--ChartsLegend-itemWidth": "100px",
               }}
-              width={getChartWidth(560)}
+              width={getChartWidth(500)}
               height={300}
               slotProps={{
                 legend: {
                   direction: "column",
                   position: { vertical: "middle", horizontal: "right" },
-                  padding: 20,
+                
                   labelStyle: {
-                    fontWeight: "bold",
+                    fontWeight: "Bold",
                     fill: "#023859",
+                    fontSize: 14,
                   },
                 },
               }}
@@ -334,7 +352,6 @@ export default function Estatisticas() {
                   innerRadius: 40,
                   outerRadius: 75,
                   arcLabelMinAngle: 45,
-                  
                 },
               ]}
               sx={{
@@ -349,8 +366,9 @@ export default function Estatisticas() {
                   direction: "column",
                   position: { vertical: "middle", horizontal: "right" },
                   labelStyle: {
-                    fontWeight: "bold",
+                    fontWeight: "Bold",
                     fill: "#023859",
+                    fontSize: 14,
                   },
                 },
               }}
@@ -376,23 +394,27 @@ export default function Estatisticas() {
                   data: ["6+", "11+", "14+", "18+"],
                   scaleType: "band",
                   colorMap: {
-                    type: 'ordinal',
-                    colors: ['#B5EE88', '#CA8DFB', '#8995FA', '#003A7E']
-                  }
+                    type: "ordinal",
+                    colors: ["#B5EE88", "#CA8DFB", "#8995FA", "#003A7E"],
+                  },
                 },
               ]}
               sx={{
-                ".MuiChartsAxis-bottom .MuiChartsAxis-line": { display: "none" },
-                ".MuiChartsAxis-bottom .MuiChartsAxis-tick": { display: "none" },
+                ".MuiChartsAxis-bottom .MuiChartsAxis-line": {
+                  display: "none",
+                },
+                ".MuiChartsAxis-bottom .MuiChartsAxis-tick": {
+                  display: "none",
+                },
                 ".MuiChartsAxis-bottom .MuiChartsAxis-tickLabel": {
                   fontWeight: "800",
-                  fill: "#023859"
+                  fill: "#023859",
                 },
                 ".MuiChartsAxis-left .MuiChartsAxis-line": { display: "none" },
                 ".MuiChartsAxis-left .MuiChartsAxis-tick": { display: "none" },
                 ".MuiChartsAxis-left .MuiChartsAxis-tickLabel": {
                   fontWeight: "800",
-                  fill: "#023859"
+                  fill: "#023859",
                 },
               }}
               margin={{ top: 50, bottom: 30, left: 50, right: 10 }}
@@ -428,7 +450,6 @@ export default function Estatisticas() {
                 </li>
               ))}
             </ol>
-          
           </div>
         </div>
 

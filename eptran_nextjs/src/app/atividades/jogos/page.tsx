@@ -4,10 +4,12 @@ import { Micro_5 } from "next/font/google";
 import Link from "next/link";
 import Game from "./game";
 
+
 const micro5 = Micro_5({
   weight: "400",
   subsets: ["latin"],
 });
+
 
 export default function Home() {
   return (
@@ -28,13 +30,14 @@ export default function Home() {
           </h1>
         </div>
         <div className="px-4 lg:pl-24 w-full flex flex-wrap justify-center lg:justify-start">
-          <Game imageUrl="/quiz.png" title="Quiz Eptran" href={""} />
-          <Game imageUrl="/travessia.png" title="Jogo da Travessia" href={""} />
-          <Game imageUrl="/forca.png" title="Jogo da Forca" href={""} />
-          <Game imageUrl="/desvio.png" title="Jogo do Desvio" href={""} />
-          <Game imageUrl="/memoria.png" title="Jogo da Memória" href={""} />
-          <Game imageUrl="/1cruzada.png" title="Palavras Cruzadas" href={""} />
-          <Game imageUrl="/caca.png" title="Caça Palavras" href={"./jogos/caca"} />
+          <Game imageUrl="/quizzI.webp" title="Quiz Eptran I" href={"./jogos/QuizzI"} />
+          <Game imageUrl="/quizzII.png" title="Quiz Eptran II" href={"./jogos/QuizzII"} />
+          <Game imageUrl="/travessia.png" title="Jogo da Travessia" href={"./jogos/travessia"} />
+          <Game imageUrl="/forca.png" title="Jogo da Forca" href={"./jogos/forca"} />
+          <Game imageUrl="/desvio.png" title="Jogo do Desvio" href={"./jogos/TransitoMaluco"} />
+          <Game imageUrl="/memoria.png" title="Jogo da Memória" href={"./jogos/jogoDaMemoria"} />
+          <Game imageUrl="/jogoDescrever.png" title="Descreva a Imagem" href={"./jogos/jogoTransito"} />
+          <Game imageUrl="/caca.png" title="Caça Palavras" href={"./jogos/cacaPalavras"} />
         </div>
       </div>
       <Footer />

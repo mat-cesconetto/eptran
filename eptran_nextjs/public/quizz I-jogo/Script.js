@@ -4,7 +4,7 @@ const respostacontainer = document.querySelector(".Resposta-container");
 const questaotexto = document.querySelector(".questao");
 const proximapergunta = document.querySelector(".proxima_pergunta");
 const instrucaoQuizz = document.querySelector(".instrucao-quizz");
-const conquistasQuizz = document.querySelector(".conquistas-quizz");
+// const conquistasQuizz = document.querySelector(".conquistas-quizz");
 const tituloQuizz = document.querySelector(".titulo");
 
 comecarjogo.addEventListener("click", Iniciarjogo);
@@ -27,7 +27,7 @@ function Iniciarjogo() {
 function esconderElementosInicio() {
     comecarjogo.classList.add("hide");
     instrucaoQuizz.classList.add("hide");
-    conquistasQuizz.classList.add("hide");
+    // conquistasQuizz.classList.add("hide");
     tituloQuizz.classList.add("hide");
 }
 
@@ -72,7 +72,7 @@ function mostrarInstrucoes() {
 function mostrarElementosInicio() {
     comecarjogo.classList.remove("hide");
     instrucaoQuizz.classList.remove("hide");
-    conquistasQuizz.classList.remove("hide");
+    // conquistasQuizz.classList.remove("hide");
     tituloQuizz.classList.remove("hide");
 }
 
@@ -192,12 +192,12 @@ const questoes = [
     ]
     },
     {
-    questao: "Qual é a velocidade máxima permitida em uma zona de chuva?",
+    questao: "Qual é a velocidade máxima permitida em uma rodovia em dias de chuva?",
     imagem: "Imagens-EPTRAN/imagem 19.jpg",
     respostas: [
-        { text: "90 km", correct: true },
+        { text: "90 km", correct: false },
         { text: "80 km", correct: false },
-        { text: "60 km", correct: false },
+        { text: "60 km", correct: true },
         { text: "100 km", correct: false }
     ]
     },
@@ -227,7 +227,7 @@ const questoes = [
         respostas: [
             { text: "1 segundo", correct: false },
             { text: "2 segundos", correct: true },
-            { text: "5 metro", correct: false },
+            { text: "5 segundos", correct: false },
             { text: "10 segundos", correct: false }
         ]
     },

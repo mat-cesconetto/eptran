@@ -1,456 +1,211 @@
-import { Link } from "lucide-react";
+"use client";
+
 import Image from "next/image";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import VideoCard from "./card-video"; // Assuming the updated VideoCard is saved here
+import useVideos from "@/hooks/useVideos";
+import useAddVideo from "@/hooks/useManageVideos";
+import { Video } from "@/@types/Video";
 
-export default function Conteudo() {
-    return (
-        <main>
-            <div className="flex">
-                <Image
-                    className="bg-darkBlue-500 rounded-lg h-14 w-16 ml-80 mt-40"
-                    src="/Image/film-camera-svgrepo-com.svg"
-                    alt="Livro"
-                    width={56}
-                    height={56}
-                />
-                <h1 className="text-darkBlue-500 font-bold text-5xl pl-4 pt-40 -mb-96">
-                    Gestão de Vídeos
-                </h1>
+interface VideoType {
+  titulo: string;
+  descricao: string;
+  escolaridade: string;
+  video: string;
+}
+
+export default function VideoManagement() {
+  const { videos, loading, error } = useVideos();
+  const { addVideo } = useAddVideo();
+
+  const [titulo, setTitulo] = useState("");
+  const [descricao, setDescricao] = useState("");
+  const [escolaridade, setEscolaridade] = useState("");
+  const [videoLink, setVideoLink] = useState("");
+
+  const handleAddVideo = () => {
+    const newVideo: VideoType = {
+      titulo,
+      descricao,
+      escolaridade,
+      video: videoLink,
+    };
+
+    addVideo(newVideo);
+
+    // Clear dialog fields
+    setTitulo("");
+    setDescricao("");
+    setEscolaridade("");
+    setVideoLink("");
+  };
+
+  return (
+    <main className="px-4 sm:px-6 lg:px-8">
+      <div className="flex flex-col sm:flex-row items-center sm:items-start mb-8 sm:mb-0">
+        <Image
+          className="bg-darkBlue-500 rounded-lg h-14 w-14 mb-4 sm:mb-0 sm:mr-4"
+          src="/Image/film-camera-svgrepo-com.svg"
+          alt="Video Camera"
+          width="56"
+          height="56"
+        />
+        <h1 className="text-darkBlue-500 font-bold text-3xl sm:text-4xl lg:text-5xl text-center sm:text-left">
+          Gestão de Vídeos
+        </h1>
+      </div>
+
+      <div className="w-full rounded-xl mt-8 sm:mt-16 flex flex-wrap justify-center sm:justify-center gap-4 sm:gap-6 lg:gap-[70px]">
+        {loading && <p>Carregando vídeos...</p>}
+        {error && <p>Erro: {error}</p>}
+        {!loading &&
+          !error &&
+          videos.map((video) => (
+            <VideoCard
+              key={video.id}
+              src="/image/carros.png"
+              alt="Video Thumbnail"
+              conteudo={video.titulo}
+              data={new Date().toLocaleDateString()}
+              duracao="3:02"
+              nivel={video.escolaridade}
+              tamanho="207 MB"
+            />
+          ))}
+      </div>
+
+      <Dialog>
+        <DialogTrigger asChild>
+          <Button
+            variant="default"
+            className="font-semibold w-full sm:w-52 h-10 shadow-xl flex items-center justify-center bg-darkBlue-500 text-white px-5 rounded-md text-lg"
+          >
+            <Image
+              className="w-7"
+              src="/Image/circulo.svg"
+              alt="Adicionar"
+              width={28}
+              height={28}
+            />
+            Adicionar Vídeo
+          </Button>
+        </DialogTrigger>
+        <DialogContent className="sm:max-w-[600px] w-full">
+          <DialogHeader>
+            <DialogTitle className="text-[40px] font-bold text-darkBlue-500">
+              Adicionar Vídeo
+            </DialogTitle>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="grid">
+              <Label
+                htmlFor="link"
+                className="text-xs font-bold text-darkBlue-600"
+              >
+                LINK DO VÍDEO
+              </Label>
+              <Input
+                id="link"
+                className="border-darkBlue-400"
+                placeholder="http://sia.com.br"
+                value={videoLink}
+                onChange={(e) => setVideoLink(e.target.value)}
+              />
             </div>
-
-            <div className="ml-72 pt-0.5 p-8">
-                <div className="w-full flex space-x-8 mt-10 justify-between">
-                    <div className="relative">
-                        <div className="absolute flex items-center ps-3 pointer-events-none">
-                            <svg
-                                className="w-4 h-4 mt-2.5 text-darkBlue-500"
-                                aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 20 20"
-                            >
-                                <path
-                                    stroke="currentColor"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="2"
-                                    d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                                />
-                            </svg>
-                        </div>
-                        <input
-                            type="text"
-                            id="procurar"
-                            className="font-bold block items-center p-2 ps-10 w-80 text-sm bg-gray-100 shadow-md rounded-lg"
-                            placeholder="Procurar"
-                        />
-                    </div>
-
-                    <div className="grid grid-cols-7">
-                        <div>
-                            <select
-                                className="text-darkBlue-500 block font-semibold p-2 text-sm bg-gray-100 shadow-md rounded-lg mb-6 cursor-pointer"
-                                name="selecionar"
-                            >
-                                <option
-                                    className="text-darkBlue-500 font-bold"
-                                    value="selecionar"
-                                    defaultValue={"selecionar"}
-                                >
-                                    Ensino Médio
-                                </option>
-                                <option
-                                    className="text-darkBlue-500 font-bold"
-                                    value=""
-                                >
-                                    Ensino Fundamental
-                                </option>
-                                <option
-                                    className="text-darkBlue-500 font-bold"
-                                    value=""
-                                >
-                                    Séries Iniciais
-                                </option>
-                            </select>
-                        </div>
-
-                        <div>
-                            <select
-                                className="text-darkBlue-500 block font-semibold p-2 text-sm bg-gray-100 shadow-md rounded-lg mb-6 cursor-pointer ml-14"
-                                name="selecionar"
-                            >
-                                <option
-                                    className="text-darkBlue-500 font-bold"
-                                    value="selecionar"
-                                    defaultValue={'selecionar'}
-                                >
-                                    Mais recentes
-                                </option>
-                                <option
-                                    className="text-darkBlue-500 font-bold"
-                                    value=""
-                                >
-                                    Mais antigos
-                                </option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div className="w-72">
-                        <button className="font-semibold w-56 h-10 mt-1 shadow-xl flex items-center bg-darkBlue-500 text-white px-5 rounded-md">
-                            <Image
-                                className="w-7 mr-3"
-                                src="/Image/circulo.svg"
-                                alt="Adicionar"
-                                width={28}
-                                height={28}
-                            />
-                            Adicionar Vídeo
-                        </button>
-                    </div>
-                </div>
-
-                <div className="w-full rounded-xl mt-16">
-                    <div className="flex justify-between">
-
-
-                        {/* Primeira Div */}
-                        <div className="rounded-xl w-72 bg-darkBlue-500">
-                            <Image
-                                className="border rounded-t-xl w-full"
-                                src="/Image/carros.png"
-                                alt="Material 1"
-                                width={192}
-                                height={192}
-                            />
-                            <div className="flex justify-between">
-                                <p className="text-[8px] text-white text-center ml-3 mt-2 border rounded-md w-32 h-6 pt-1">
-                                    Vídeo Educativo Eptran
-                                </p>
-                                <p className="text-[8px] text-white text-center ml-4 mr-8 mt-2 border rounded-md w-24 h-6 p-1">
-                                    21/07/2024
-                                </p>
-                            </div>
-                            <div className="flex justify-start">
-                                <p className="text-[8px] text-white text-center ml-3 mt-2 border rounded-md w-8 h-6 p-1">
-                                    3:02
-                                </p>
-                                <p className="text-[8px] text-white text-center ml-2 mt-2 border rounded-md w-8 h-6 p-1">
-                                    EM
-                                </p>
-                                <p className="text-[8px] text-white text-center ml-2 mt-2 border rounded-md w-10 h-6 p-1">
-                                    207 MB
-                                </p>
-                            </div>
-                            <div className="flex">
-                                <button className="cursor-pointer">
-                                    <Image
-                                        className="w-8 mt-2 ml-3"
-                                        src="/Image/pontinhos.svg"
-                                        alt="Opções"
-                                        width={32}
-                                        height={32}
-                                    />
-                                </button>
-                            </div>
-                        </div>
-
-                        {/* Segunda Div */}
-                        <div className="rounded-xl w-72 bg-darkBlue-500">
-                            <Image
-                                className="border rounded-t-xl w-full"
-                                src="/Image/carros.png"
-                                alt="Material 1"
-                                width={192}
-                                height={192}
-                            />
-                            <div className="flex justify-between">
-                                <p className="text-[8px] text-white text-center ml-3 mt-2 border rounded-md w-32 h-6 pt-1">
-                                    Vídeo Educativo Eptran
-                                </p>
-                                <p className="text-[8px] text-white text-center ml-4 mr-8 mt-2 border rounded-md w-24 h-6 p-1">
-                                    21/07/2024
-                                </p>
-                            </div>
-                            <div className="flex justify-start">
-                                <p className="text-[8px] text-white text-center ml-3 mt-2 border rounded-md w-8 h-6 p-1">
-                                    3:02
-                                </p>
-                                <p className="text-[8px] text-white text-center ml-2 mt-2 border rounded-md w-8 h-6 p-1">
-                                    EM
-                                </p>
-                                <p className="text-[8px] text-white text-center ml-2 mt-2 border rounded-md w-10 h-6 p-1">
-                                    207 MB
-                                </p>
-                            </div>
-                            <div className="flex">
-                                <button className="cursor-pointer">
-                                    <Image
-                                        className="w-8 mt-2 ml-3"
-                                        src="/Image/pontinhos.svg"
-                                        alt="Opções"
-                                        width={32}
-                                        height={32}
-                                    />
-                                </button>
-                            </div>
-                        </div>
-
-                        {/* Terceira Div */}
-                        <div className="rounded-xl w-72 bg-darkBlue-500">
-                            <Image
-                                className="border rounded-t-xl w-full"
-                                src="/Image/carros.png"
-                                alt="Material 1"
-                                width={192}
-                                height={192}
-                            />
-                            <div className="flex justify-between">
-                                <p className="text-[8px] text-white text-center ml-3 mt-2 border rounded-md w-32 h-6 pt-1">
-                                    Vídeo Educativo Eptran
-                                </p>
-                                <p className="text-[8px] text-white text-center ml-4 mr-8 mt-2 border rounded-md w-24 h-6 p-1">
-                                    21/07/2024
-                                </p>
-                            </div>
-                            <div className="flex justify-start">
-                                <p className="text-[8px] text-white text-center ml-3 mt-2 border rounded-md w-8 h-6 p-1">
-                                    3:02
-                                </p>
-                                <p className="text-[8px] text-white text-center ml-2 mt-2 border rounded-md w-8 h-6 p-1">
-                                    EM
-                                </p>
-                                <p className="text-[8px] text-white text-center ml-2 mt-2 border rounded-md w-10 h-6 p-1">
-                                    207 MB
-                                </p>
-                            </div>
-                            <div className="flex">
-                                <button className="cursor-pointer">
-                                    <Image
-                                        className="w-8 mt-2 ml-3"
-                                        src="/Image/pontinhos.svg"
-                                        alt="Opções"
-                                        width={32}
-                                        height={32}
-                                    />
-                                </button>
-                            </div>
-                        </div>
-
-                        {/* Quarta Div */}
-                        <div className="rounded-xl w-72 bg-darkBlue-500">
-                            <Image
-                                className="border rounded-t-xl w-full"
-                                src="/Image/carros.png"
-                                alt="Material 1"
-                                width={192}
-                                height={192}
-                            />
-                            <div className="flex justify-between">
-                                <p className="text-[8px] text-white text-center ml-3 mt-2 border rounded-md w-32 h-6 pt-1">
-                                    Vídeo Educativo Eptran
-                                </p>
-                                <p className="text-[8px] text-white text-center ml-4 mr-8 mt-2 border rounded-md w-24 h-6 p-1">
-                                    21/07/2024
-                                </p>
-                            </div>
-                            <div className="flex justify-start">
-                                <p className="text-[8px] text-white text-center ml-3 mt-2 border rounded-md w-8 h-6 p-1">
-                                    3:02
-                                </p>
-                                <p className="text-[8px] text-white text-center ml-2 mt-2 border rounded-md w-8 h-6 p-1">
-                                    EM
-                                </p>
-                                <p className="text-[8px] text-white text-center ml-2 mt-2 border rounded-md w-10 h-6 p-1">
-                                    207 MB
-                                </p>
-                            </div>
-                            <div className="flex">
-                                <button className="cursor-pointer">
-                                    <Image
-                                        className="w-8 mt-2 ml-3"
-                                        src="/Image/pontinhos.svg"
-                                        alt="Opções"
-                                        width={32}
-                                        height={32}
-                                    />
-                                </button>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-                <div className="w-full rounded-xl mt-16">
-                    <div className="flex justify-between">
-
-
-                        {/* Primeira Div */}
-                        <div className="rounded-xl w-72 bg-darkBlue-500">
-                            <Image
-                                className="border rounded-t-xl w-full"
-                                src="/Image/carros.png"
-                                alt="Material 1"
-                                width={192}
-                                height={192}
-                            />
-                            <div className="flex justify-between">
-                                <p className="text-[8px] text-white text-center ml-3 mt-2 border rounded-md w-32 h-6 pt-1">
-                                    Vídeo Educativo Eptran
-                                </p>
-                                <p className="text-[8px] text-white text-center ml-4 mr-8 mt-2 border rounded-md w-24 h-6 p-1">
-                                    21/07/2024
-                                </p>
-                            </div>
-                            <div className="flex justify-start">
-                                <p className="text-[8px] text-white text-center ml-3 mt-2 border rounded-md w-8 h-6 p-1">
-                                    3:02
-                                </p>
-                                <p className="text-[8px] text-white text-center ml-2 mt-2 border rounded-md w-8 h-6 p-1">
-                                    EM
-                                </p>
-                                <p className="text-[8px] text-white text-center ml-2 mt-2 border rounded-md w-10 h-6 p-1">
-                                    207 MB
-                                </p>
-                            </div>
-                            <div className="flex">
-                                <button className="cursor-pointer">
-                                    <Image
-                                        className="w-8 mt-2 ml-3"
-                                        src="/Image/pontinhos.svg"
-                                        alt="Opções"
-                                        width={32}
-                                        height={32}
-                                    />
-                                </button>
-                            </div>
-                        </div>
-
-                        {/* Segunda Div */}
-                        <div className="rounded-xl w-72 bg-darkBlue-500">
-                            <Image
-                                className="border rounded-t-xl w-full"
-                                src="/Image/carros.png"
-                                alt="Material 1"
-                                width={192}
-                                height={192}
-                            />
-                            <div className="flex justify-between">
-                                <p className="text-[8px] text-white text-center ml-3 mt-2 border rounded-md w-32 h-6 pt-1">
-                                    Vídeo Educativo Eptran
-                                </p>
-                                <p className="text-[8px] text-white text-center ml-4 mr-8 mt-2 border rounded-md w-24 h-6 p-1">
-                                    21/07/2024
-                                </p>
-                            </div>
-                            <div className="flex justify-start">
-                                <p className="text-[8px] text-white text-center ml-3 mt-2 border rounded-md w-8 h-6 p-1">
-                                    3:02
-                                </p>
-                                <p className="text-[8px] text-white text-center ml-2 mt-2 border rounded-md w-8 h-6 p-1">
-                                    EM
-                                </p>
-                                <p className="text-[8px] text-white text-center ml-2 mt-2 border rounded-md w-10 h-6 p-1">
-                                    207 MB
-                                </p>
-                            </div>
-                            <div className="flex">
-                                <button className="cursor-pointer">
-                                    <Image
-                                        className="w-8 mt-2 ml-3"
-                                        src="/Image/pontinhos.svg"
-                                        alt="Opções"
-                                        width={32}
-                                        height={32}
-                                    />
-                                </button>
-                            </div>
-                        </div>
-
-                        {/* Terceira Div */}
-                        <div className="rounded-xl w-72 bg-darkBlue-500">
-                            <Image
-                                className="border rounded-t-xl w-full"
-                                src="/Image/carros.png"
-                                alt="Material 1"
-                                width={192}
-                                height={192}
-                            />
-                            <div className="flex justify-between">
-                                <p className="text-[8px] text-white text-center ml-3 mt-2 border rounded-md w-32 h-6 pt-1">
-                                    Vídeo Educativo Eptran
-                                </p>
-                                <p className="text-[8px] text-white text-center ml-4 mr-8 mt-2 border rounded-md w-24 h-6 p-1">
-                                    21/07/2024
-                                </p>
-                            </div>
-                            <div className="flex justify-start">
-                                <p className="text-[8px] text-white text-center ml-3 mt-2 border rounded-md w-8 h-6 p-1">
-                                    3:02
-                                </p>
-                                <p className="text-[8px] text-white text-center ml-2 mt-2 border rounded-md w-8 h-6 p-1">
-                                    EM
-                                </p>
-                                <p className="text-[8px] text-white text-center ml-2 mt-2 border rounded-md w-10 h-6 p-1">
-                                    207 MB
-                                </p>
-                            </div>
-                            <div className="flex">
-                                <button className="cursor-pointer">
-                                    <Image
-                                        className="w-8 mt-2 ml-3"
-                                        src="/Image/pontinhos.svg"
-                                        alt="Opções"
-                                        width={32}
-                                        height={32}
-                                    />
-                                </button>
-                            </div>
-                        </div>
-
-                        {/* Quarta Div */}
-                        <div className="rounded-xl w-72 bg-darkBlue-500">
-                            <Image
-                                className="border rounded-t-xl w-full"
-                                src="/Image/carros.png"
-                                alt="Material 1"
-                                width={192}
-                                height={192}
-                            />
-                            <div className="flex justify-between">
-                                <p className="text-[8px] text-white text-center ml-3 mt-2 border rounded-md w-32 h-6 pt-1">
-                                    Vídeo Educativo Eptran
-                                </p>
-                                <p className="text-[8px] text-white text-center ml-4 mr-8 mt-2 border rounded-md w-24 h-6 p-1">
-                                    21/07/2024
-                                </p>
-                            </div>
-                            <div className="flex justify-start">
-                                <p className="text-[8px] text-white text-center ml-3 mt-2 border rounded-md w-8 h-6 p-1">
-                                    3:02
-                                </p>
-                                <p className="text-[8px] text-white text-center ml-2 mt-2 border rounded-md w-8 h-6 p-1">
-                                    EM
-                                </p>
-                                <p className="text-[8px] text-white text-center ml-2 mt-2 border rounded-md w-10 h-6 p-1">
-                                    207 MB
-                                </p>
-                            </div>
-                            <div className="flex">
-                                <button className="cursor-pointer">
-                                    <Image
-                                        className="w-8 mt-2 ml-3"
-                                        src="/Image/pontinhos.svg"
-                                        alt="Opções"
-                                        width={32}
-                                        height={32}
-                                    />
-                                </button>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
+            <div className="grid">
+              <Label
+                htmlFor="name"
+                className="text-xs font-bold text-darkBlue-600"
+              >
+                NOME DO VÍDEO
+              </Label>
+              <Input
+                id="name"
+                className="border-darkBlue-400"
+                placeholder="Nome vídeo EPTRAN"
+                value={titulo}
+                onChange={(e) => setTitulo(e.target.value)}
+              />
             </div>
-        </main>
-    );
+            <div className="grid">
+              <Label
+                htmlFor="description"
+                className="text-xs font-bold text-darkBlue-600"
+              >
+                DESCRIÇÃO DO VÍDEO
+              </Label>
+              <Textarea
+                id="description"
+                placeholder="Descrição vídeo EPTRAN"
+                className="border-darkBlue-400"
+                value={descricao}
+                onChange={(e) => setDescricao(e.target.value)}
+              />
+            </div>
+          </div>
+          <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4">
+            <div className="w-full sm:w-[45%]">
+              <Label
+                htmlFor="classification"
+                className="text-xs font-bold text-darkBlue-600 block"
+              >
+                CLASSIFICAÇÃO
+              </Label>
+              <Select
+                value={escolaridade}
+                onValueChange={setEscolaridade}
+              >
+                <SelectTrigger className="border-darkBlue-400 w-full">
+                  <SelectValue placeholder="Selecionar" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="ENSINO_MEDIO">Ensino Médio</SelectItem>
+                  <SelectItem value="ENSINO_FUNDAMENTAL">
+                    Ensino Fundamental
+                  </SelectItem>
+                  <SelectItem value="SERIES_INICIAIS">Séries Iniciais</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="w-full sm:w-[45%] flex flex-col sm:flex-row justify-end gap-2">
+              <DialogClose asChild>
+                <Button
+                  variant="outline"
+                  className="w-full sm:w-auto border-darkBlue-400 font-bold text-xs hover:bg-slate-200"
+                >
+                  CANCELAR
+                </Button>
+              </DialogClose>
+              <Button
+                type="submit"
+                className="w-full sm:w-auto bg-darkBlue-500 text-white font-bold text-xs"
+                onClick={handleAddVideo}
+              >
+                ENVIAR
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+    </main>
+  );
 }

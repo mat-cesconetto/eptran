@@ -4,6 +4,7 @@ let restartButton = document.getElementById("restartButton");
 let gameOverMessage = document.getElementById("gameOverMessage");
 let scoreDisplay = document.getElementById("scoreDisplay");
 
+const bgMusic = document.getElementById('bgMusic');  // Pegue o elemento de áudio no DOM
 
 let isMovingRight = false;
 let isMovingLeft = false;
@@ -12,8 +13,6 @@ let gameInterval;
 let cactusInterval;
 let cactusSpeedFactor = 3;
 let score = 0;
-
-
 
 let cactuses = [];
 const MAX_CACTUSES = 8;
@@ -31,6 +30,7 @@ window.onload = function() {
     dino.style.backgroundRepeat = "no-repeat";
 };
 
+// Funções de controle de movimento do Dino
 document.addEventListener("keydown", function(event) {
     if (event.key === "ArrowRight") {
         isMovingRight = true;
@@ -47,6 +47,17 @@ document.addEventListener("keyup", function(event) {
     }
 });
 
+// Funções para controlar a música de fundo
+function playMusic() {
+    bgMusic.play();  // Inicia a música
+}
+
+function stopMusic() {
+    bgMusic.pause();  // Pausa a música
+    bgMusic.currentTime = 0;  // Reseta a música
+}
+
+// Função que cria os cactos
 function createCactus() {
     if (cactuses.length >= MAX_CACTUSES) return;
 
@@ -100,6 +111,7 @@ const cactusImages = [
     '../f1vermelha.png',
 ];
 
+// Função para criar as moedas
 function createPoint() {
     if (point || !gameIsActive) return;
 
@@ -143,6 +155,7 @@ function createPoint() {
     }, 20);
 }
 
+// Função para mover os cactos
 function moveCactuses() {
     cactusInterval = setInterval(() => {
         cactuses.forEach((cactus, index) => {
@@ -175,14 +188,16 @@ function moveCactuses() {
     }, 20);
 }
 
+// Função para aumentar a velocidade dos cactos
 function increaseCactusSpeed() {
     setInterval(() => {
         if (gameIsActive) {
             cactusSpeedFactor += 0.5; // Aumenta a velocidade dos cactos
         }
-    }, 30000); // Aumenta a velocidade a cada 10 segundos
+    }, 30000); // Aumenta a velocidade a cada 30 segundos
 }
 
+// Função para mover o Dino
 function moveDino() {
     if (isMovingRight && dinoPosition < 100) {
         dinoPosition += 1.3;
@@ -192,6 +207,7 @@ function moveDino() {
     dino.style.left = dinoPosition + "%";
 }
 
+// Função para iniciar o jogo
 function startGame() {
     gameIsActive = true; // Ativa o jogo
     startButton.style.display = "none";
@@ -212,8 +228,11 @@ function startGame() {
     increaseCactusSpeed(); // Inicia o aumento da velocidade
     gameInterval = setInterval(moveDino, 20);
     createPoint();
+    
+    playMusic();  // Inicia a música de fundo
 }
 
+// Função para finalizar o jogo
 function gameOver() {
     gameIsActive = false; // Desativa o jogo
     clearInterval(gameInterval);
@@ -221,6 +240,8 @@ function gameOver() {
     clearInterval(pointInterval);
     gameOverMessage.style.display = "block";
     restartButton.style.display = "block";
+
+    stopMusic();  // Para a música de fundo quando o jogo acabar
     
     if (point) {
         point.remove();
@@ -228,6 +249,7 @@ function gameOver() {
     }
 }
 
+// Função para reiniciar o jogo
 function restartGame() {
     dinoPosition = 50;
     startGame();
@@ -235,6 +257,7 @@ function restartGame() {
 
 startButton.addEventListener("click", startGame);
 restartButton.addEventListener("click", restartGame);
+
 
 function getSelectedCharacter() {
     const urlParams = new URLSearchParams(window.location.search);
@@ -260,3 +283,21 @@ window.onload = function() {
     dino.style.backgroundPosition = "center";
 };
 
+
+
+// Pega o elemento de áudio e o botão de mutar/desmutar
+var audio = document.getElementById("bgMusic");
+var muteButton = document.getElementById("muteButton");
+var muteImage = document.getElementById("muteImage");
+
+// Função para alternar entre mutar e desmutar o áudio
+function toggleMute() {
+    if (audio.muted) {
+        audio.muted = false;  // Desmutar o áudio
+    } else {
+        audio.muted = true;  // Mudar para mudo
+    }
+}
+
+// Adiciona o evento de clique ao botão
+muteButton.onclick = toggleMute;

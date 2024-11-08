@@ -12,17 +12,17 @@ interface CardProps {
   alt: string; // Texto alternativo da imagem
   conteudo: string; // Conteúdo do card
   data: string; // Data associada
-  paginas: string; // Número de páginas
+  duracao: string; // Duração do vídeo
   nivel: string; // Nível de escolaridade
-  tamanho: string; // Tamanho do material
+  tamanho: string; // Tamanho do vídeo
 }
 
-const Card: React.FC<CardProps> = ({
+const VideoCard: React.FC<CardProps> = ({
   src,
   alt,
   conteudo,
   data,
-  paginas,
+  duracao,
   nivel,
   tamanho,
 }) => {
@@ -36,16 +36,16 @@ const Card: React.FC<CardProps> = ({
       <div className="p-4">
         <h2 className="font-bold text-lg">{conteudo}</h2>
         <p className="text-sm text-gray-600">{data}</p>
-        <p className="text-sm text-gray-600">{paginas}</p>
+        <p className="text-sm text-gray-600">{duracao}</p>
         <p className="text-sm text-gray-600">{nivel}</p>
         <p className="text-sm text-gray-600">{tamanho}</p>
       </div>
-      {/* Dropdown com os três pontos */}
+      {/* Dropdown with options */}
       <div className="absolute bottom-2 right-2">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <button className="bg-transparent text-gray-600 hover:text-gray-800 focus:outline-none text-lg">
-              <MoreHorizontal /> {/* Ícone de três pontos */}
+              <MoreHorizontal /> {/* Three-dot icon */}
             </button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
@@ -64,4 +64,4 @@ const Card: React.FC<CardProps> = ({
   );
 };
 
-export default Card;
+export default VideoCard;

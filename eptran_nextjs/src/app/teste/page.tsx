@@ -26,7 +26,7 @@ const EditDeleteComponent = () => {
       {/* Botão para abrir o diálogo de edição */}
       <Dialog open={editOpen} onOpenChange={setEditOpen}>
         <DialogTrigger asChild>
-          <Button variant="ghost" className="p-0" onClick={() => setEditOpen(true)}>Editar Usuário</Button>
+          <Button variant="ghost" className="p-0" onClick={() => setEditOpen(true)}>Editar Conteúdo</Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[600px] w-full">
           <DialogHeader>
