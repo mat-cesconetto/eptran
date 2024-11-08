@@ -139,10 +139,10 @@ const NavLink: React.FC<NavLinkProps> = ({ href, children, mobile = false }) => 
 const AuthButtons: React.FC = () => (
   <>
     <Link href="/login">
-      <Button className="bg-white text-[#023859] text-sm px-8 py-2 mr-4 rounded">Login</Button>
+      <Button variant="testando" className="bg-white text-[#023859] text-sm px-8 py-2 mr-4 rounded">Login</Button>
     </Link>
     <Link href="/cadastro">
-      <Button className="border-white border-2 bg-transparent text-sm text-white px-5 py-2 rounded">
+      <Button variant="testando2" className="border-white border-2 bg-transparent text-sm text-white px-5 py-2 rounded">
         Cadastro
       </Button>
     </Link>
