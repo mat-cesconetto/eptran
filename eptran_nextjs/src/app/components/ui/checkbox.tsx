@@ -13,12 +13,14 @@ interface CustomCheckboxProps {
   label: string;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   className?: string;
+  isForLogin?: boolean;
 }
 
 const CustomCheckbox = ({
   label,
   onChange,
   className,
+  isForLogin = false,
 }: CustomCheckboxProps) => {
   const [isChecked, setIsChecked] = useState<boolean>(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -41,10 +43,9 @@ const CustomCheckbox = ({
           checked={isChecked}
           onChange={handleCheckboxChange}
           className="appearance-none w-5 h-5 border-2 border-[#003966] rounded-md cursor-pointer peer"
-          required
         />
         <div
-          className={`absolute top-0 left-0 w-5 h-5 flex items-center justify-center pointer-events-none ${
+          className={`absolute top-0 left-0 w-5 h-5 flex rounded-md items-center justify-center pointer-events-none ${
             isChecked ? "bg-[#003966] border-[#003966]" : "border-[#003966]"
           }`}
         >
@@ -63,117 +64,50 @@ const CustomCheckbox = ({
           </svg>
         </div>
       </div>
-      <span className="text-[#003966] text-sm md:text-base">
-        Concordo com os
-        <a
-          onClick={onOpen}
-          className="text-[#003966] ml-1 underline cursor-pointer"
-        >
-          termos de serviço
-        </a>
-      </span>
+      {isForLogin ? (
+        <span className="text-[#003966] text-sm md:text-base">{label}</span>
+      ) : (
+        <span className="text-[#003966] text-sm md:text-base">
+          Concordo com os
+          <a
+            onClick={onOpen}
+            className="text-[#003966] ml-1 underline cursor-pointer"
+          >
+            termos de serviço
+          </a>
+        </span>
+      )}
 
-      <Modal
-        isOpen={isOpen}
-        onOpenChange={onClose}
-        scrollBehavior="inside"
-        size="2xl"
-        placement="center"
-      >
-        <ModalContent>
-          {() => (
-            <>
-              <ModalHeader className="flex flex-col gap-1">
-                Termos de Serviço
-              </ModalHeader>
-              <ModalBody>
-              <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Nullam pulvinar risus non risus hendrerit venenatis.
-                  Pellentesque sit amet hendrerit risus, sed porttitor quam.
-                </p>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Nullam pulvinar risus non risus hendrerit venenatis.
-                  Pellentesque sit amet hendrerit risus, sed porttitor quam.
-                </p>
-                <p>
-                  Magna exercitation reprehenderit magna aute tempor cupidatat
-                  consequat elit dolor adipisicing. Mollit dolor eiusmod sunt ex
-                  incididunt cillum quis. Velit duis sit officia eiusmod Lorem
-                  aliqua enim laboris do dolor eiusmod. Et mollit incididunt
-                  nisi consectetur esse laborum eiusmod pariatur proident Lorem
-                  eiusmod et. Culpa deserunt nostrud ad veniam.
-                </p>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Nullam pulvinar risus non risus hendrerit venenatis.
-                  Pellentesque sit amet hendrerit risus, sed porttitor quam.
-                  Magna exercitation reprehenderit magna aute tempor cupidatat
-                  consequat elit dolor adipisicing. Mollit dolor eiusmod sunt ex
-                  incididunt cillum quis. Velit duis sit officia eiusmod Lorem
-                  aliqua enim laboris do dolor eiusmod. Et mollit incididunt
-                  nisi consectetur esse laborum eiusmod pariatur proident Lorem
-                  eiusmod et. Culpa deserunt nostrud ad veniam.
-                </p>
-                <p>
-                  Mollit dolor eiusmod sunt ex incididunt cillum quis. Velit
-                  duis sit officia eiusmod Lorem aliqua enim laboris do dolor
-                  eiusmod. Et mollit incididunt nisi consectetur esse laborum
-                  eiusmod pariatur proident Lorem eiusmod et. Culpa deserunt
-                  nostrud ad veniam. Lorem ipsum dolor sit amet, consectetur
-                  adipiscing elit. Nullam pulvinar risus non risus hendrerit
-                  venenatis. Pellentesque sit amet hendrerit risus, sed
-                  porttitor quam. Magna exercitation reprehenderit magna aute
-                  tempor cupidatat consequat elit dolor adipisicing. Mollit
-                  dolor eiusmod sunt ex incididunt cillum quis. Velit duis sit
-                  officia eiusmod Lorem aliqua enim laboris do dolor eiusmod. Et
-                  mollit incididunt nisi consectetur esse laborum eiusmod
-                  pariatur proident Lorem eiusmod et. Culpa deserunt nostrud ad
-                  veniam.
-                </p>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Nullam pulvinar risus non risus hendrerit venenatis.
-                  Pellentesque sit amet hendrerit risus, sed porttitor quam.
-                </p>
-                <p>
-                  Magna exercitation reprehenderit magna aute tempor cupidatat
-                  consequat elit dolor adipisicing. Mollit dolor eiusmod sunt ex
-                  incididunt cillum quis. Velit duis sit officia eiusmod Lorem
-                  aliqua enim laboris do dolor eiusmod. Et mollit incididunt
-                  nisi consectetur esse laborum eiusmod pariatur proident Lorem
-                  eiusmod et. Culpa deserunt nostrud ad veniam.
-                </p>
-                <p>
-                  Mollit dolor eiusmod sunt ex incididunt cillum quis. Velit
-                  duis sit officia eiusmod Lorem aliqua enim laboris do dolor
-                  eiusmod. Et mollit incididunt nisi consectetur esse laborum
-                  eiusmod pariatur proident Lorem eiusmod et. Culpa deserunt
-                  nostrud ad veniam. Lorem ipsum dolor sit amet, consectetur
-                  adipiscing elit. Nullam pulvinar risus non risus hendrerit
-                  venenatis. Pellentesque sit amet hendrerit risus, sed
-                  porttitor quam. Magna exercitation reprehenderit magna aute
-                  tempor cupidatat consequat elit dolor adipisicing. Mollit
-                  dolor eiusmod sunt ex incididunt cillum quis. Velit duis sit
-                  officia eiusmod Lorem aliqua enim laboris do dolor eiusmod. Et
-                  mollit incididunt nisi consectetur esse laborum eiusmod
-                  pariatur proident Lorem eiusmod et. Culpa deserunt nostrud ad
-                  veniam.
-                </p>
-              </ModalBody>
-              <ModalFooter>
-                <Button color="danger" variant="light" onPress={onClose}>
-                  Fechar
-                </Button>
-                <Button color="primary" onPress={handleAccept}>
-                  Aceitar
-                </Button>
-              </ModalFooter>
-            </>
-          )}
-        </ModalContent>
-      </Modal>
+      {!isForLogin && (
+        <Modal
+          isOpen={isOpen}
+          onOpenChange={onClose}
+          scrollBehavior="inside"
+          size="2xl"
+          placement="center"
+        >
+          <ModalContent>
+            {() => (
+              <>
+                <ModalHeader className="flex flex-col gap-1">
+                  Termos de Serviço
+                </ModalHeader>
+                <ModalBody>
+                  {/* Conteúdo dos termos de serviço */}
+                </ModalBody>
+                <ModalFooter>
+                  <Button color="danger" variant="light" onPress={onClose}>
+                    Fechar
+                  </Button>
+                  <Button color="primary" onPress={handleAccept}>
+                    Aceitar
+                  </Button>
+                </ModalFooter>
+              </>
+            )}
+          </ModalContent>
+        </Modal>
+      )}
     </div>
   );
 };

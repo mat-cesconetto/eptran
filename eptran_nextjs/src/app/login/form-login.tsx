@@ -12,6 +12,11 @@ const FormularioLogin: React.FC = () => {
   const { loginUser } = useLogin();
   const router = useRouter();
 
+  const handleRememberMe = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Lógica para lidar com o estado de "lembrar-me"
+    console.log("Lembrar-me:", e.target.checked);
+  };
+
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true); // Ativa o estado de carregamento
@@ -37,7 +42,7 @@ const FormularioLogin: React.FC = () => {
       <FormField label="Senha" type="password" id="senha" name="senha" />
 
       <div className="w-full flex justify-between items-center mb-4">
-        <CustomCheckbox label="Lembrar" />
+        <CustomCheckbox label="Lembrar" onChange={handleRememberMe} isForLogin />
         <Link href={"./forgot-password"}>
           <p className="text-[#003966] text-sm md:text-base">
             Esqueceu sua senha?
