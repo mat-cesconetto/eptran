@@ -70,20 +70,8 @@ export default function Estatisticas() {
             alt="perfil"
           />
           <h1 className="text-darkBlue-500 text-2xl md:text-4xl font-bold">
-            Gestão de Gráficos
+            Estatísitcas
           </h1>
-        </div>
-        <div className="w-full md:w-auto">
-          <Select value={userFilter} onValueChange={setUserFilter}>
-            <SelectTrigger className="text-darkBlue-500 font-bold w-full md:w-auto">
-              <SelectValue placeholder="Selecione" />
-            </SelectTrigger>
-            <SelectContent className="text-darkBlue-500 font-bold">
-              <SelectItem value="all">Masculino</SelectItem>
-              <SelectItem value="active">Feminino</SelectItem>
-              <SelectItem value="inactive">Não declarado</SelectItem>
-            </SelectContent>
-          </Select>
         </div>
       </div>
 
