@@ -178,11 +178,11 @@ export default function VideoManagement() {
                   <SelectValue placeholder="Selecionar" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="ENSINO_MEDIO">Ensino Médio</SelectItem>
+                  <SelectItem value="ENSINO_MEDIO">Séries Iniciais</SelectItem>
                   <SelectItem value="ENSINO_FUNDAMENTAL">
-                    Ensino Fundamental
+                  Séries Finais
                   </SelectItem>
-                  <SelectItem value="SERIES_INICIAIS">Séries Iniciais</SelectItem>
+                  <SelectItem value="SERIES_INICIAIS">Ensino Médio</SelectItem>
                 </SelectContent>
               </Select>
             </div>
