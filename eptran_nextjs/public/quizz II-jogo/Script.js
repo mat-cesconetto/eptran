@@ -252,7 +252,7 @@ const questoes = [
         ]
     },
     {
-        questao: "Placa 'Limite de Velocidade' em áreas urbanas vs. rodovias?",
+        questao: "Diferença das placas de 'Limite de Velocidade' em áreas urbanas vs. rodovias?",
         imagem: "imagens-perguntas/velocidades.jpg",
         respostas: [
             { text: "Protege pedestres na cidade; regula tráfego em rodovias.", correct: true },
@@ -352,16 +352,6 @@ const questoes = [
         ]
     },
     {
-        questao: "Placas de trânsito e acessibilidade?",
-        imagem: "imagens-perguntas/acessibilidade.jpg",
-        respostas: [
-            { text: "Não consideram acessibilidade.", correct: false },
-            { text: "Incluem braille e alto-relevo.", correct: true },
-            { text: "Feitas apenas em tamanhos grandes.", correct: false },
-            { text: "Somente para motoristas.", correct: false }
-        ]
-    },
-    {
         questao: "Significado da placa de 'Proibido Reverter'?",
         imagem: "imagens-perguntas/proibido reverter.png",
         respostas: [
@@ -371,14 +361,4 @@ const questoes = [
             { text: "Só se aplica a veículos comerciais.", correct: false }
         ]
     },
-    {
-        questao: "Legislação de trânsito sobre 'Via de Pedestre' em outros países?",
-        imagem: "imagens-perguntas/pedestres.png",
-        respostas: [
-            { text: "É uniforme em todos os países.", correct: false },
-            { text: "Varia em símbolos, cores e regras.", correct: true },
-            { text: "Difere apenas em países em desenvolvimento.", correct: false },
-            { text: "Não é regulada por lei.", correct: false }
-        ]
-    }
 ]
