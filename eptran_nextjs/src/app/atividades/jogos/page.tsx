@@ -34,7 +34,7 @@ export default function Home() {
           <Game imageUrl="/quizzII.png" title="Quiz Eptran II" href={"./jogos/QuizzII"} />
           <Game imageUrl="/travessia.png" title="Jogo da Travessia" href={"./jogos/travessia"} />
           <Game imageUrl="/Forca.png" title="Jogo da Forca" href={"./jogos/forca"} />
-          <Game imageUrl="/transito_maluco.png" title="Jogo do Desvio" href={"./jogos/TransitoMaluco"} />
+          <Game imageUrl="/transito_maluco.png" title="Trânsito Maluco" href={"./jogos/TransitoMaluco"} />
           <Game imageUrl="/memoria.png" title="Jogo da Memória" href={"./jogos/jogoDaMemoria"} />
           <Game imageUrl="/jogoDescrever.png" title="Descreva a Imagem" href={"./jogos/jogoTransito"} />
           <Game imageUrl="/caca.png" title="Caça Palavras" href={"./jogos/cacaPalavras"} />
