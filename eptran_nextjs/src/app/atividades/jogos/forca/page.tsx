@@ -22,7 +22,7 @@ export default function GamePage() {
     <div className="relative w-full h-screen">
      
       <iframe
-        src="/forca/index.html"
+        src="/ForcaOnibus/index.html"
         className="w-full h-full border-none"
         title="Jogo em JavaScript"
       />
