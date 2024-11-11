@@ -1,15 +1,31 @@
-'use client'
+"use client"
 
-import Footer from "@/app/components/ui/footer";
-import GamePage from "./forca";
 
-export default function Home() {
+import React, { useEffect, useState } from 'react'
+
+
+export default function GamePage() {
+  const [isMounted, setIsMounted] = useState(false)
+
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
+
+
+  if (!isMounted) {
+    return null // ou um componente de carregamento
+  }
+
+
   return (
-    <div className="min-h-screen flex flex-col">
-      <main className="flex-grow">
-        <GamePage />
-      </main>
-      <Footer />
+    <div className="relative w-full h-screen">
+     
+      <iframe
+        src="/forca/index.html"
+        className="w-full h-full border-none"
+        title="Jogo em JavaScript"
+      />
     </div>
-  );
+  )
 }
