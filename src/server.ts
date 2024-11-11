@@ -73,6 +73,14 @@ app.register(fastifyCookie, {
   }
 });
 
+app.decorate('authenticate', async function(request: FastifyRequest, reply: FastifyReply) {
+  try {
+      await request.jwtVerify();
+  } catch (err) {
+      reply.send(err);
+  }
+});
+
 // Registra o plugin multipart com opções
 app.register(multipart, {
   limits: {
@@ -105,7 +113,7 @@ app.register(authRoutes, { prefix: '/auth' });
 app.register(resetRoutes, { prefix: '/reset' });
 app.register(locationRoutes, { prefix: '/location' });
 app.register(statsRoutes, { prefix: '/stats', preHandler: authMiddleware });
-app.register(videoRoutes, { prefix: '/videos', preHandler: authMiddleware });
+app.register(videoRoutes, { prefix: '/videos' });
 app.register(materiaisRoutes, { prefix: '/materiais', preHandler: adminMiddleware });
 app.register(escolaRoutes, { prefix: '/escolas' });
 
