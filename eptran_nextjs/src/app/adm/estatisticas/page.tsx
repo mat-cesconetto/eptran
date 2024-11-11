@@ -61,30 +61,16 @@ export default function Estatisticas() {
 
   return (
     <main className="min-h-screen p-4 md:p-8 pt-24 text-black">
-      <div className="flex gap-5">
-        <div>
-          <Image
+      <div className="flex space-x-2">
+      <Image
             src="/alert-square-filled-svgrepo-com.svg"
             width={50}
             height={50}
             alt="perfil"
           />
           <h1 className="text-darkBlue-500 text-2xl md:text-4xl font-bold">
-            Gestão de Gráficos
-          </h1>
-        </div>
-        <div className="w-full md:w-auto">
-          <Select value={userFilter} onValueChange={setUserFilter}>
-            <SelectTrigger className="text-darkBlue-500 font-bold w-full md:w-auto">
-              <SelectValue placeholder="Selecione" />
-            </SelectTrigger>
-            <SelectContent className="text-darkBlue-500 font-bold">
-              <SelectItem value="all">Masculino</SelectItem>
-              <SelectItem value="active">Feminino</SelectItem>
-              <SelectItem value="inactive">Não declarado</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
+          Estaítsticas
+        </h1>
       </div>
 
       {/* Select de filtro */}

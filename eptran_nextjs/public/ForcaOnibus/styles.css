@@ -1,0 +1,168 @@
+/* Corpo da página */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;  /* Centraliza horizontalmente */
+    align-items: center;     /* Centraliza verticalmente */
+    height: 100vh;           /* 100% da altura da tela */
+    box-sizing: border-box;
+    flex-direction: column;
+}
+
+/* Container principal do jogo */
+.game-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;  /* Garante que tudo fique alinhado */
+    align-items: center;
+    text-align: center;
+    max-width: 700px;         /* Limita a largura máxima */
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Título */
+h1 {
+    color: #333;
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+/* Canvas da estrada */
+canvas {
+    background-color: #e0e0e0;
+    border: 2px solid #333;
+    margin-bottom: 20px;
+    display: block;
+    width: 100%;   /* Faz o canvas ocupar a largura disponível */
+    max-width: 600px; /* Limita a largura máxima do canvas */
+}
+
+/* Exibição da palavra */
+.word-container {
+    margin-bottom: 10px;
+}
+
+/* Estilo da palavra */
+#wordDisplay {
+    font-size: 2rem;        /* Aumenta o tamanho da fonte para visibilidade */
+    letter-spacing: 10px;
+}
+
+/* Contêiner das letras */
+#letters {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr); /* Organiza as letras em 7 colunas */
+    gap: 10px; /* Espaçamento entre as letras */
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+/* Estilo das letras clicáveis */
+.letter {
+    background-color: #fff;
+    border: 1px solid #333;
+    border-radius: 5px;
+    width: 50px;    /* Aumenta o tamanho dos botões das letras */
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.letter:hover {
+    background-color: #d3d3d3;
+}
+
+.letter.disabled {
+    background-color: #999;
+    cursor: not-allowed;
+}
+
+/* Container dos botões (iniciar, reiniciar, próxima palavra) */
+.buttons-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+/* Estilos dos botões */
+button {
+    padding: 15px 30px;
+    font-size: 1.2rem;   /* Tamanho do texto do botão */
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #e70000;
+    color: white;
+    transition: background-color 0.3s;
+    width: 200px;    /* Tamanho fixo para os botões */
+}
+
+button:hover {
+    background-color: #2b0000;
+}
+
+button:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+}
+
+/* Container das instruções */
+.instructions-container {
+    margin-top: 20px;
+    font-size: 1rem;
+    color: #555;
+    text-align: center;
+    padding: 0 20px;
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 600px) {
+    /* Ajusta o layout para telas pequenas */
+    #roadCanvas {
+        width: 90%;   /* Reduz a largura do canvas */
+    }
+
+    #wordDisplay {
+        font-size: 1.5rem;  /* Diminui o tamanho da palavra */
+        letter-spacing: 5px;
+    }
+
+    /* Ajusta o tamanho das letras */
+    .letter {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+    }
+
+    /* Ajusta o grid das letras para caber bem em telas menores */
+    #letters {
+        grid-template-columns: repeat(5, 1fr);  /* Ajusta para 5 colunas */
+    }
+
+    /* Ajusta o tamanho dos botões */
+    button {
+        font-size: 1rem;
+        padding: 12px 25px;
+    }
+}
+
+
+/* Seção de dicas para dispositivos móveis */
+@media (max-width: 600px) {
+    .dica-container {
+        font-size: 1rem;  /* Diminui o tamanho da fonte em telas pequenas */
+        padding: 8px 0;
+    }
+}
