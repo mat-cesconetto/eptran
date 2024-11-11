@@ -10,7 +10,7 @@ const ConteudoCard: React.FC<ConteudoProps> = ({ title, text, link }) => {
       href={link}
       target="_blank"
       rel="noopener noreferrer"
-      className="w-80 border rounded-xl hover:shadow-lg transition-shadow duration-200" // Adicione efeitos de hover, se desejar
+      className="w-80 border rounded-xl transition-transform transform hover:scale-105 hover:shadow-2xl duration-300 ease-in-out" // Efeito de hover no link
     >
       <div className="bg-[url('/Image/mat1.svg')] bg-cover w-full h-96 rounded-t-xl"></div>
       <div className="bg-[#023859] h-36 rounded-b-xl">
