@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { useCadastro } from "@/hooks/useCadastro";
 import { useCidade } from "@/hooks/useCidades";
 import { useCep } from "@/hooks/useCep"; // Importando o hook para o CEP
-import CustomCheckbox from "./checkbox";
+import CustomCheckbox from "../components/ui/checkbox";
 
 import Router from "next/router";
 import { maskCEP } from "../components/mask/mask";

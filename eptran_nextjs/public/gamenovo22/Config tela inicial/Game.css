@@ -42,15 +42,21 @@ body {
     transform: translate(-50%, -50%);
 }
 
+/* O estilo do "Game Over" já está correto, não precisamos mudar nada aqui */
 #gameOverMessage {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 24px;
-    color: rgb(233, 47, 47);
-    display: none;
-
+    font-size: 60px;
+    color: rgb(180, 22, 22);
+    display: none;  /* Inicialmente oculto */
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px; /* Bordas arredondadas */
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5); /* Sombra para dar destaque */
+    z-index: 1000; /* Fica acima do overlay */
 }
 
 button {
@@ -129,3 +135,27 @@ width: 150px;
 #restartButton:hover {
         background-color: goldenrod;
     }
+
+
+
+
+#muteButton {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    position: fixed;   /* Fixa a posição do botão em relação à janela */
+    bottom: -170px;      /* Distância do fundo da tela */
+    right: -50px;       /* Distância da borda direita da tela */
+    z-index: 1000; /* Para garantir que o botão fique visível */
+}
+    
+/* Estilos para a imagem dentro do botão */
+#muteButton img {
+    width: 300px; /* Ajuste o tamanho conforme necessário */
+    height: 300px; /* Ajuste o tamanho conforme necessário */
+}
+
+/* Remover borda ao clicar no botão */
+#muteButton:focus {
+    outline: none;        /* Remove a borda de foco */
+}

@@ -22,7 +22,7 @@ export default function GamePage() {
     <div className="relative w-full h-screen">
      
       <iframe
-        src="/TrânsitoMaluco 2.0/gamenovo22/Config tela inicial/Tela.html"
+        src="/gamenovo22/Config tela inicial/Tela.html"
         className="w-full h-full border-none"
         title="Jogo em JavaScript"
       />

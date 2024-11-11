@@ -32,11 +32,12 @@
             font-size: 1.5em;
             color: #000000;
             margin-bottom: 15px;
+            font-weight: 550;
             text-shadow: 1px 1px 2px #333;
         }
         .question-box {
-            background-color: #ffeb3b;
-            border: 4px solid #f57f17;
+            background-color: #ffffff;
+            border: 4px solid #c22828;
             border-radius: 15px;
             padding: 30px;
             width: 90%;
@@ -53,7 +54,7 @@
             margin-top: 20px;
         }
         .btn {
-            background-color: #f57f17;
+            background-color: #49c745;
             color: white;
             border: none;
             border-radius: 10px;
@@ -63,10 +64,34 @@
             transition: background-color 0.3s, transform 0.2s;
         }
         .btn:hover {
-            background-color: #e65100;
+            background-color: #054705;
             transform: scale(1.05);
         }
-        .score, .feedback {
+        .btn2 {
+            background-color: #cf3a3a;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 15px 25px;
+            cursor: pointer;
+            font-size: 1.2em;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .btn2:hover {
+            background-color: #700a0a;
+            transform: scale(1.05);
+        }
+        .score {
+            background-color: #f0681a;
+            border-radius: 10px;
+            font-size: 16pt;
+            margin-top: 10px;
+            color: #ffffff;
+            text-align: center;
+            padding: 4px;
+            border: 1px solid #ffffff;
+        }
+        .feedback {
             font-size: 1.5em;
             margin-top: 10px;
         }
@@ -99,7 +124,7 @@
         <p id="question"></p>
         <div class="buttons">
             <button class="btn" onclick="answer(true)">Verdadeiro</button>
-            <button class="btn" onclick="answer(false)">Falso</button>
+            <button class="btn2" onclick="answer(false)">Falso</button>
         </div>
     </div>
     <p class="feedback" id="feedback"></p>

@@ -1,4 +1,7 @@
+'use client'
+
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,20 +15,25 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useUser } from "@/hooks/useUserData";
 import { User, Shield, LogOut } from "lucide-react";
-import { redirect } from "next/navigation";
 
 interface UserDropdownProps {
   onLogout: () => void;
 }
 
-const Profile: React.FC<UserDropdownProps> = ({ onLogout }) => {
+export default function Profile({ onLogout }: UserDropdownProps) {
   const { userName, userEmail } = useUser();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const router = useRouter();
 
-  const handleLogout = () => {
-    onLogout();   
-    setIsMenuOpen(false);
-    redirect("/login"); 
+  const handleLogout = async () => {
+    try {
+      await onLogout();
+      setIsMenuOpen(false);
+      router.push("/login");
+    } catch (error) {
+      console.error("Erro ao fazer logout:", error);
+      // Aqui você pode adicionar uma notificação de erro para o usuário
+    }
   };
 
   return (
@@ -38,7 +46,6 @@ const Profile: React.FC<UserDropdownProps> = ({ onLogout }) => {
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
-
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
@@ -49,27 +56,36 @@ const Profile: React.FC<UserDropdownProps> = ({ onLogout }) => {
         <DropdownMenuSeparator />
         <DropdownMenuLabel>Minha conta</DropdownMenuLabel>
         <DropdownMenuGroup>
-          <DropdownMenuItem asChild>
+          <DropdownMenuItem
+            asChild
+            className="cursor-pointer hover:bg-neutral-300 hover:bg-opacity-65 hover:text-gray-800 transition duration-150 rounded-md"
+          >
             <a href="/configuracao/dados">
               <User className="mr-2 h-4 w-4" />
               <span>Dados pessoais</span>
             </a>
           </DropdownMenuItem>
-          <DropdownMenuItem asChild>
+          <DropdownMenuItem
+            asChild
+            className="cursor-pointer hover:bg-neutral-300 hover:bg-opacity-65 hover:text-gray-800 transition duration-150 rounded-md"
+          >
             <a href="/configuracao/privacidade">
               <Shield className="mr-2 h-4 w-4" />
               <span>Privacidade</span>
             </a>
           </DropdownMenuItem>
         </DropdownMenuGroup>
+        
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={handleLogout}>
+        <hr className="mb-1 -mt-1 border-neutral-400 opacity-50 mx-2"/>
+        <DropdownMenuItem
+          onSelect={handleLogout}
+          className="cursor-pointer hover:bg-red-500 hover:bg-opacity-75 hover:text-gray-800 transition duration-150 rounded-md"
+        >
           <LogOut className="mr-2 h-4 w-4" />
           <span>Sair da conta</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
-};
-
-export default Profile;
+}

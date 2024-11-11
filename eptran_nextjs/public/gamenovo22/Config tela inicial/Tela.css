@@ -66,6 +66,13 @@ h1 {
     border: 3px solid black;
 }
 
+
+/* Borda branca para o personagem selecionado */
+.selected {
+    border: 3px solid #ffffff; /* Borda branca */
+}
+
+
 #startButton {
     width: 600px;
     height: 65px;
@@ -86,11 +93,6 @@ h1 {
 }
 
 
-/* #confirmButton:hover {
-    background-color:goldenrod;
-} */
-
-
 .arrow-container {
     position: fixed;
     bottom: 20px; /* Ajuste a posição vertical conforme necessário */
@@ -104,3 +106,45 @@ h1 {
     height: auto; /* Mantém a proporção da imagem */
 }
 
+
+
+/* Estilos gerais do container */
+.container {
+    position: relative;
+    /* Outros estilos da sua página */
+}
+
+/* Estilo da imagem de ponto de interrogação */
+.info-widget-container {
+    position: fixed;  /* Fixa o widget na tela */
+    top: 20px;        /* Distância do topo da tela */
+    left: 10px;       /* Distância do lado esquerdo da tela */
+    z-index: 1000;    /* Para garantir que o ícone fique sobre os outros elementos */
+}
+
+.info-icon {
+    width: 100px;  /* Tamanho da imagem */
+    height: 100px; /* Tamanho da imagem */
+    cursor: pointer; /* Alterar o cursor para pointer ao passar o mouse */
+}
+
+/* Estilo da caixa de informações (widget) */
+.info-widget {
+    display: none; /* Inicialmente oculto */
+    position: absolute;
+    top: 100px;      /* Distância do topo da imagem de ponto de interrogação */
+    left: 140px;    /* Ajuste a posição para alinhamento */
+    padding: 10px;
+    background-color: #333;  /* Cor de fundo */
+    color: white;  /* Cor do texto */
+    border-radius: 5px;
+    width: 130px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* Exibe o widget quando o mouse passar em cima do ícone */
+.info-widget-container:hover #infoWidget {
+    display: block;  /* Exibe a caixa de informações */
+}
