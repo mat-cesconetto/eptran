@@ -30,8 +30,8 @@ export default function Home() {
           </h1>
         </div>
         <div className="px-4 lg:pl-24 w-full flex flex-wrap justify-center lg:justify-start">
-          <Game imageUrl="/quizzI.webp" title="Quiz Eptran I" href={"./jogos/QuizzI"} />
-          <Game imageUrl="/quizzII.png" title="Quiz Eptran II" href={"./jogos/QuizzII"} />
+          <Game imageUrl="/quizzI.webp" title="Quiz Geral" href={"./jogos/QuizzI"} />
+          <Game imageUrl="/quizzII.png" title="Quiz das Placas" href={"./jogos/QuizzII"} />
           <Game imageUrl="/travessia.png" title="Jogo da Travessia" href={"./jogos/travessia"} />
           <Game imageUrl="/Forca.png" title="Jogo da Forca" href={"./jogos/forca"} />
           <Game imageUrl="/transito_maluco.png" title="Trânsito Maluco" href={"./jogos/TransitoMaluco"} />
