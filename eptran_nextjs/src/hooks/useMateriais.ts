@@ -1,45 +1,24 @@
-import { useEffect, useState } from "react";
+import { useApiBase } from './useApiBase';
+import { MateriaisResponse, Material } from '@/@types/Material';
 
-interface Material {
-  id: number;
-  titulo: string;
-  descricao: string;
-  escolaridade: string;
-  material: string;
-}
-
-interface MateriaisResponse {
-  materiaisInfo: Material[];
-  totalMateriais: number;
+interface UseMateriaisReturn {
+  materiais: Material[];
   totalPages: number;
-  currentPage: number;
+  isLoading: boolean;
+  isError: boolean | null;
+  mutate: () => void;
 }
 
-const useMateriais = () => {
-  const [materiais, setMateriais] = useState<Material[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+export function useMateriais(page: number = 1): UseMateriaisReturn {
+  const { data, error, mutate, isLoading, isValidating } = useApiBase<MateriaisResponse>(
+    `materiais/list?page=${page}`
+  );
 
-  useEffect(() => {
-    const fetchMateriais = async () => {
-      try {
-        const response = await fetch("http://localhost:3333/materiais/list");
-        if (!response.ok) {
-          throw new Error("Erro ao buscar materiais");
-        }
-        const data: MateriaisResponse = await response.json();
-        setMateriais(data.materiaisInfo);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "Erro desconhecido");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchMateriais();
-  }, []);
-
-  return { materiais, loading, error };
-};
-
-export default useMateriais;
+  return {
+    materiais: data?.materiaisInfo || [],
+    totalPages: data ? data.totalPages : 0,
+    isLoading,
+    isError: error,
+    mutate,
+  };
+}

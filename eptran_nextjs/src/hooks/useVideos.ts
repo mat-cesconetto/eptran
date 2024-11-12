@@ -1,45 +1,18 @@
-import { useEffect, useState } from "react";
+// useVideos.ts (exportação com `default`)
+import { useApiBase } from './useApiBase';
+import { VideosResponse, UseListVideosReturn } from '@/@types/Video';
 
-interface Video {
-  id: number;
-  titulo: string;
-  descricao: string;
-  escolaridade: string;
-  video: string;
+export default function useVideos(page: number = 1): UseListVideosReturn {
+  const { data, error, mutate, isLoading, isValidating } = useApiBase<VideosResponse>(
+    `videos/list?page=${page}`
+  );
+
+  return {
+    videos: data?.videosInfo || [],
+    totalPages: data ? data.totalPages : 0,
+    isLoading,
+    isError: error,
+    mutate,
+    isValidating
+  };
 }
-
-interface VideosResponse {
-  videosInfo: Video[];
-  totalVideos: number;
-  totalPages: number;
-  currentPage: number;
-}
-
-const useVideos = () => {
-  const [videos, setVideos] = useState<Video[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchVideos = async () => {
-      try {
-        const response = await fetch("http://localhost:3333/videos/list");
-        if (!response.ok) {
-          throw new Error("Erro ao buscar vídeos");
-        }
-        const data: VideosResponse = await response.json();
-        setVideos(data.videosInfo);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "Erro desconhecido");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchVideos();
-  }, []);
-
-  return { videos, loading, error };
-};
-
-export default useVideos;

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CustomCheckbox from "../components/ui/checkbox";
 import Link from "next/link";
 import { useLogin } from "@/hooks/useLogin";
@@ -10,6 +10,7 @@ import { useAuth } from "@/hooks/useAuth";
 const FormularioLogin: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false); // Novo estado para verificar login
   const { loginUser } = useLogin();
   const router = useRouter();
   const { login } = useAuth();
@@ -29,7 +30,6 @@ const FormularioLogin: React.FC = () => {
     try {
       const userData = await loginUser(email, senha);
       console.log("Login bem-sucedido");
-      login(userData.adm === true); // Atualiza o estado de autenticação e admin no contexto
       router.push("/");
     } catch (error: any) {
       setError(error.message || "Houve um erro ao logar o usuário");
@@ -37,6 +37,12 @@ const FormularioLogin: React.FC = () => {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      router.push("/");
+    }
+  }, [isLoggedIn, router]); // useEffect para redirecionar após login
 
   return (
     <form onSubmit={handleLogin} className="grid grid-cols-1 gap-4 w-full">
