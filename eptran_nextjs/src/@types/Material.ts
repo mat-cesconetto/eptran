@@ -1,4 +1,5 @@
 export interface Material {
+    id: number;
     escolaridade: string;
     titulo: string;
     descricao: string;

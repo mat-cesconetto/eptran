@@ -11,7 +11,7 @@ interface UseMateriaisReturn {
 
 export function useMateriais(page: number = 1): UseMateriaisReturn {
   const { data, error, mutate, isLoading, isValidating } = useApiBase<MateriaisResponse>(
-    `/materiais/list?page=${page}`
+    `materiais/list?page=${page}`
   );
 
   return {

@@ -1,7 +1,6 @@
-"use client";
-
+'use client'
 import { useState } from "react";
-import { Material } from "@/@types/Material"
+import { Material } from "@/@types/Material";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import {
@@ -17,11 +16,11 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import Card from "./card-conteudo"; // Certifique-se de que o caminho está correto
-import useMateriais from "@/hooks/useMateriais"; // Ajuste o caminho conforme necessário
+import { useMateriais } from "@/hooks/useMateriais"; // Ajuste o caminho conforme necessário
 import useAddMaterial from "@/hooks/useAddMaterial";
 
 export default function Conteudo() {
-  const { materiais, loading, error } = useMateriais();
+  const { materiais, isLoading, isError } = useMateriais();
   const [escolaridade, setEscolaridade] = useState("");
   const [titulo, setTitulo] = useState("");
   const [descricao, setDescricao] = useState("");
@@ -29,12 +28,13 @@ export default function Conteudo() {
   const { addMaterial } = useAddMaterial();
   const handleAddMaterial = () => {
     const newMaterial: Material = {
+      id: 0,  // Assumindo que o ID será gerado no backend ou pelo serviço de adição
       escolaridade,
       titulo,
       descricao,
       materialLink,
     };
-    console.log(newMaterial)
+    console.log(newMaterial);
     addMaterial(newMaterial);
     // Limpar os campos do diálogo
     setEscolaridade("");
@@ -206,10 +206,10 @@ export default function Conteudo() {
         </div>
 
         <div className="w-full rounded-xl mt-16 flex flex-wrap lg:gap-[70px]">
-          {loading && <p>Carregando materiais...</p>}
-          {error && <p>Erro: {error}</p>}
-          {!loading &&
-            !error &&
+          {isLoading && <p>Carregando materiais...</p>}
+          {isError && <p>Erro ao carregar os materiais. Tente novamente.</p>}
+          {!isLoading &&
+            !isError &&
             materiais.map((material) => (
               <Card
                 key={material.id}
