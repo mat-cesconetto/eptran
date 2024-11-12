@@ -22,14 +22,17 @@ export const useAuth = (): AuthData => {
         const data = await response.json();
 
         if (response.ok && data?.data) {
+          console.log("login feito")
           setAuthData({
             isAuthenticated: true,
             isAdmin: data.data.adm === true,
           });
         } else if (data.error === "Token não fornecido") {
+          console.log("login assa")
           setAuthData({ isAuthenticated: false, isAdmin: false });
         }
       } catch (error) {
+                 console.log("login feito")
         console.error("Erro ao verificar autenticação:", error);
         setAuthData({ isAuthenticated: false, isAdmin: false });
       }
