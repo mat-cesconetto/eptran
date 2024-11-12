@@ -1,29 +1,23 @@
-// NAVBAR - Atualizado
-
 'use client';
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { useLogout } from '@/hooks/useLogout';
 import Link from "next/link";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
-import Profile from "./profile";  // Importe o componente Profile
-
-interface UserDropdownProps {
-  onLogout: () => void;
-}
+import Profile from "./profile";
 
 const NavBar: React.FC = () => {
-  const { isAuthenticated, isAdmin } = useAuth();
+  const { isAuthenticated, isAdmin, logout } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { logoutUser, isLoading, error } = useLogout();
 
-  // Função de logout
   const handleLogout = async () => {
     try {
       await logoutUser();
+      logout(); // Atualiza o estado de autenticação no contexto
       console.log('Logout realizado com sucesso');
     } catch (err) {
       console.error('Erro ao realizar logout:', err);
@@ -65,7 +59,6 @@ const NavBar: React.FC = () => {
 
         <div className="flex-shrink-0">
           {isAuthenticated ? (
-            // Aqui você insere o novo componente Profile
             <Profile onLogout={handleLogout} />
           ) : (
             <div className="md:hidden">
@@ -99,6 +92,7 @@ const NavBar: React.FC = () => {
             <NavLink href="/atividades" mobile>Atividades</NavLink>
             <NavLink href="/sobre" mobile>Sobre nós</NavLink>
             <NavLink href="/fale-conosco" mobile>Fale Conosco</NavLink>
+            {isAdmin && <NavLink href="/adm/gestao-conteudo" mobile>Administrador</NavLink>}
           </div>
           {!isAuthenticated && (
             <div className="mt-8 flex flex-col space-y-4">
