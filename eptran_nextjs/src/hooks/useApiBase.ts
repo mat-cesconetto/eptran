@@ -2,7 +2,7 @@ import useSWR, { SWRConfiguration } from 'swr';
 import { useRouter } from 'next/navigation';
 import { ApiError } from '@/@types/apiErros';
 
-const API_URL = 'http://0.0.0.0:3333/';
+const API_URL = 'http://localhost:3333/';
 
 async function fetcher(url: string) {
   const res = await fetch(url, {

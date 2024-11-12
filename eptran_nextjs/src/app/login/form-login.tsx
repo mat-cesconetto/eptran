@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CustomCheckbox from "../components/ui/checkbox";
 import Link from "next/link";
 import { useLogin } from "@/hooks/useLogin";
@@ -9,17 +9,17 @@ import { useRouter } from "next/navigation";
 const FormularioLogin: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false); // Novo estado para verificar login
   const { loginUser } = useLogin();
   const router = useRouter();
 
   const handleRememberMe = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // Lógica para lidar com o estado de "lembrar-me"
     console.log("Lembrar-me:", e.target.checked);
   };
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsLoading(true); // Ativa o estado de carregamento
+    setIsLoading(true);
 
     const formData = new FormData(e.currentTarget);
     const email = formData.get("email")?.toString() || "";
@@ -28,13 +28,19 @@ const FormularioLogin: React.FC = () => {
     try {
       await loginUser(email, senha);
       console.log("Login bem-sucedido");
-      router.push("/");
+      setIsLoggedIn(true); // Define o estado como logado após o login
     } catch (error: any) {
       setError(error.message || "Houve um erro ao logar o usuário");
     } finally {
-      setIsLoading(false); // Desativa o estado de carregamento
+      setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      router.push("/");
+    }
+  }, [isLoggedIn, router]); // useEffect para redirecionar após login
 
   return (
     <form onSubmit={handleLogin} className="grid grid-cols-1 gap-4 w-full">
@@ -53,7 +59,7 @@ const FormularioLogin: React.FC = () => {
       <button
         type="submit"
         className="bg-[#003966] text-white w-full h-12 rounded-md font-bold text-lg col-span-full mb-3"
-        disabled={isLoading} // Desativa o botão enquanto carrega
+        disabled={isLoading}
       >
         {isLoading ? "Carregando..." : "Entrar"}
       </button>
