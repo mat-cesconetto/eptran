@@ -233,22 +233,12 @@ const questoes = [
     },
     {
         questao: "Como deve ser a sinalização ao mudar de faixa?",
-        imagem: "Imagens-EPTRAN/imagem 16.jpg",
+        imagem: "Imagens-EPTRAN/imagem 16.png",
         respostas: [
             { text: "Usar a seta com antecedência", correct: true },
             { text: "Sem necessidade de sinalizar", correct: false },
             { text: "Apenas olhar no retrovisor", correct: false },
             { text: "Não sinalizar ", correct: false }
-        ]
-    },
-    {
-        questao: "O que significa uma luz vermelha intermitente?",
-        imagem: "Imagens-EPTRAN/imagem 15.jfif",
-        respostas: [
-            { text: "Permissão para passar", correct: false },
-            { text: "Pare e olhe", correct: false },
-            { text: "Proibido passar", correct: true },
-            { text: "Passe com velocidade", correct: false }
         ]
     },
     {
@@ -353,7 +343,7 @@ const questoes = [
     },
     {
         questao: " O que é obrigatório ao conduzir à noite?",
-        imagem: "Imagens-EPTRAN/imagem 5.jfif",
+        imagem: "Imagens-EPTRAN/imagem 5.jpg",
         respostas: [
             { text: "Faróis baixos e altos quando necessário", correct: true },
             { text: "Apenas os faróis baixos", correct: false },
