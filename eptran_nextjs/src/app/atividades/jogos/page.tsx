@@ -38,9 +38,12 @@ export default function Home() {
           <Game imageUrl="/memoria.png" title="Jogo da Memória" href={"./jogos/jogoDaMemoria"} />
           <Game imageUrl="/jogoDescrever.png" title="Descreva a Imagem" href={"./jogos/jogoTransito"} />
           <Game imageUrl="/caca.png" title="Caça Palavras" href={"./jogos/cacaPalavras"} />
+          <Game imageUrl="/VouF.png" title="Verdadeiro ou Falso" href={"./jogos/verdadeiroOuFalso"} />
         </div>
       </div>
-      <Footer />
+      <div className="mt-[400px]">
+        <Footer />
+      </div>
     </div>
   );
 }
