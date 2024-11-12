@@ -43,6 +43,7 @@ const NavBar: React.FC = () => {
             <Menu className="h-6 w-6" />
           </button>
         </div>
+        
 
         <div className="flex-shrink-0">
           <Link href={"../"}>
