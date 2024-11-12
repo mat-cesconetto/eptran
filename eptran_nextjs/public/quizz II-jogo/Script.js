@@ -46,7 +46,7 @@ function mostrarInstrucoes() {
 
     const textoInstrucoes = document.createElement("p");
     textoInstrucoes.classList.add("instrucoes-texto");
-    textoInstrucoes.textContent = "Este quiz contém 20 questões desafiadoras sobre regras de trânsito, com foco em sinalização e condutas. Teste seus conhecimentos e se divirta enquanto aprende! Concentre-se para obter uma boa pontuação e, se precisar, jogue novamente quantas vezes quiser para melhorar seu desempenho.";
+    textoInstrucoes.textContent = "Este quiz contém 18 questões desafiadoras sobre regras de trânsito, com foco em sinalização e condutas. Teste seus conhecimentos e se divirta enquanto aprende! Concentre-se para obter uma boa pontuação e, se precisar, jogue novamente quantas vezes quiser para melhorar seu desempenho.";
 
     const botaoVoltar = document.createElement("button");
     botaoVoltar.classList.add("voltar", "button");
