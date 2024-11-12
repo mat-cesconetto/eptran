@@ -35,10 +35,11 @@ export default function Home() {
           <Game imageUrl="/travessia.png" title="Jogo da Travessia" href={"./jogos/travessia"} />
           <Game imageUrl="/Forca.png" title="Jogo da Forca" href={"./jogos/forca"} />
           <Game imageUrl="/transito_maluco.png" title="Trânsito Maluco" href={"./jogos/TransitoMaluco"} />
-          <Game imageUrl="/memoria.png" title="Jogo da Memória" href={"./jogos/jogoDaMemoria"} />
-          <Game imageUrl="/jogoDescrever.png" title="Descreva a Imagem" href={"./jogos/jogoTransito"} />
-          <Game imageUrl="/caca.png" title="Caça Palavras" href={"./jogos/cacaPalavras"} />
+          <Game imageUrl="/memoria.png" title="Jogo da Memória" href={"./jogos/jogoDaMemoria"} />        
           <Game imageUrl="/VouF.png" title="Verdadeiro ou Falso" href={"./jogos/verdadeiroOuFalso"} />
+          <Game imageUrl="/caca.png" title="Caça Palavras" href={"./jogos/cacaPalavras"} />
+          <Game imageUrl="/jogoDescrever.png" title="Descreva a Imagem" href={"./jogos/jogoTransito"} />
+          <Game imageUrl="/sem_freio.png" title="Sem Freio" href={"./jogos/verdadeiroOuFalso"} />
         </div>
       </div>
       <div className="mt-[400px]">
