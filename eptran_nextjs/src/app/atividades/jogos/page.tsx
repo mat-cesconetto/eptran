@@ -13,8 +13,8 @@ const micro5 = Micro_5({
 
 export default function Home() {
   return (
-    <div className="min-h-screen flex flex-col">
-      <div className="w-full flex-grow bg-left lg:bg-bottom bg-[url('/fundo-jogos.png')] bg-cover lg:flex-row justify-between h-auto lg:h-screen">
+    <div className="min-h-screen flex flex-col bg-[url('/fundo-jogos.png')] bg-cover">
+      <div className="w-full flex-grow bg-left lg:bg-bottom  lg:flex-row justify-between h-auto lg:h-screen">
         <div className="bg-white w-full lg:w-[18%] rounded-r-xl h-24 mt-4 lg:mt-10 flex items-center">
           <div className="bg-[#023859] w-12 lg:w-[22%] h-12 lg:h-3/4 mt-0  ml-4 lg:ml-10 rounded-xl flex items-center justify-center">
             <Image
