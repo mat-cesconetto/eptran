@@ -19,12 +19,14 @@ export default function TicketDetails() {
             try {
                 if (params.id) {
                     setIsLoading(true);
-                    const ticket = await getTicketById(Number(params.id)); // Await the call
-
-                    if (!ticket) {
+                    const { data, error } = await getTicketById(Number(params.id)); // Await the call
+        
+                    if (error) {
                         setError('Ticket não encontrado');
+                    } else if (data) {
+                        setTicket(data);
                     } else {
-                        setTicket(ticket);
+                        setError('Erro ao carregar o ticket');
                     }
                 }
             } catch (err) {
