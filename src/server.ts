@@ -108,7 +108,7 @@ registerErrorHandler(app);
 
 // Rotas
 app.register(userRoutes, { prefix: '/user', preHandler: authMiddleware });
-app.register(ticketRoutes, { prefix: '/ticket' });
+app.register(ticketRoutes, { prefix: '/ticket', preHandler: authMiddleware });
 app.register(authRoutes, { prefix: '/auth' });
 app.register(resetRoutes, { prefix: '/reset' });
 app.register(locationRoutes, { prefix: '/location' });
