@@ -1,21 +1,21 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import CustomCheckbox from "../components/ui/checkbox";
 import Link from "next/link";
 import { useLogin } from "@/hooks/useLogin";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth"; // Importe o hook useAuth
 
 const FormularioLogin: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false); // Novo estado para verificar login
   const { loginUser } = useLogin();
   const router = useRouter();
-  const { login } = useAuth();
+  const { login } = useAuth(); // Use o hook useAuth para obter a função login
 
   const handleRememberMe = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Lógica para lidar com o estado de "lembrar-me"
     console.log("Lembrar-me:", e.target.checked);
   };
 
@@ -28,8 +28,9 @@ const FormularioLogin: React.FC = () => {
     const senha = formData.get("senha")?.toString() || "";
 
     try {
-      const userData = await loginUser(email, senha);
+      await loginUser(email, senha);
       console.log("Login bem-sucedido");
+      login(); // Atualiza o estado de autenticação no contexto
       router.push("/");
     } catch (error: any) {
       setError(error.message || "Houve um erro ao logar o usuário");
@@ -37,12 +38,6 @@ const FormularioLogin: React.FC = () => {
       setIsLoading(false);
     }
   };
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      router.push("/");
-    }
-  }, [isLoggedIn, router]); // useEffect para redirecionar após login
 
   return (
     <form onSubmit={handleLogin} className="grid grid-cols-1 gap-4 w-full">
