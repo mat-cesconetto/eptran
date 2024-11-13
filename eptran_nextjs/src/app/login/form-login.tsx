@@ -5,34 +5,37 @@ import CustomCheckbox from "../components/ui/checkbox";
 import Link from "next/link";
 import { useLogin } from "@/hooks/useLogin";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/hooks/useAuth";
 
 const FormularioLogin: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { loginUser } = useLogin();
   const router = useRouter();
+  const { login, checkAuthStatus } = useAuth();
 
   const handleRememberMe = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // Lógica para lidar com o estado de "lembrar-me"
     console.log("Lembrar-me:", e.target.checked);
   };
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsLoading(true); // Ativa o estado de carregamento
+    setIsLoading(true);
 
     const formData = new FormData(e.currentTarget);
     const email = formData.get("email")?.toString() || "";
     const senha = formData.get("senha")?.toString() || "";
 
     try {
-      await loginUser(email, senha);
-      console.log("Login bem-sucedido");
+      const userData = await loginUser(email, senha);
+      console.log("Login bem-sucedido", userData);
+      login(userData.adm === true);
+      await checkAuthStatus(); // Force an immediate check of auth status
       router.push("/");
     } catch (error: any) {
       setError(error.message || "Houve um erro ao logar o usuário");
     } finally {
-      setIsLoading(false); // Desativa o estado de carregamento
+      setIsLoading(false);
     }
   };
 
@@ -53,7 +56,7 @@ const FormularioLogin: React.FC = () => {
       <button
         type="submit"
         className="bg-[#003966] text-white w-full h-12 rounded-md font-bold text-lg col-span-full mb-3"
-        disabled={isLoading} // Desativa o botão enquanto carrega
+        disabled={isLoading}
       >
         {isLoading ? "Carregando..." : "Entrar"}
       </button>

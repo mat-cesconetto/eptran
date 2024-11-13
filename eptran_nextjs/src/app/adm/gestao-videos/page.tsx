@@ -60,18 +60,164 @@ export default function VideoManagement() {
   };
 
   return (
-    <main className="px-4 sm:px-6 lg:px-8">
-      <div className="flex flex-col sm:flex-row items-center sm:items-start mb-8 sm:mb-0">
+    <main className="">
+      <div className="flex">
         <Image
-          className="bg-darkBlue-500 rounded-lg h-14 w-14 mb-4 sm:mb-0 sm:mr-4"
-          src="/Image/film-camera-svgrepo-com.svg"
-          alt="Video Camera"
+          className="bg-darkBlue-500 rounded-lg h-14 w-14 ml-14 mt-10"
+          src="/Image/livro.svg"
+          alt="Livro"
           width="56"
           height="56"
         />
-        <h1 className="text-darkBlue-500 font-bold text-3xl sm:text-4xl lg:text-5xl text-center sm:text-left">
-          Gestão de Vídeos
+        <h1 className="text-darkBlue-500 font-bold text-5xl pl-4 pt-10 -mb-96">
+          Gestão de Videos
         </h1>
+      </div>
+
+      <div className="ml-6 pt-0.5 p-8">
+        <div className="w-full flex mt-10 justify-between">
+          <div className="relative w-[28vw]">
+            <div className="absolute flex items-center ps-3 pointer-events-none">
+              <svg
+                className="w-4 h-4 mt-3 text-darkBlue-500"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                />
+              </svg>
+            </div>
+            <input
+              type="text"
+              id="procurar"
+              className="font-semibold block items-center h-10 ps-10 min-w-72 w-full text-sm bg-white rounded-lg border-gray-300 border-1 placeholder-darkBlue-300"
+              placeholder="Procurar"
+            />
+          </div>
+
+          <div className="">
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button
+                  variant="default"
+                  className=" font-semibold w-56 h-10 mt-1 shadow-xl flex items-center bg-darkBlue-500 text-white px-5 rounded-md text-lg"
+                >
+                  <Image
+                    className="w-7 mr-1"
+                    src="/Image/circulo.svg"
+                    alt="Adicionar"
+                    width={28}
+                    height={28}
+                  />
+                  Adicionar Material
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[600px] w-full">
+                <DialogHeader>
+                  <DialogTitle className="text-[40px] font-bold text-darkBlue-500">
+                    Adicionar Conteúdo
+                  </DialogTitle>
+                </DialogHeader>
+                <div className="grid gap-4 py-4">
+                  <div className="grid">
+                    <Label
+                      htmlFor="link"
+                      className="text-xs font-bold text-darkBlue-600"
+                    >
+                      LINK DO CONTEÚDO
+                    </Label>
+                    <Input
+                      id="link"
+                      className="border-darkBlue-400"
+                      placeholder="http://sia.com.br"
+                      value={videoLink}
+                      onChange={(e) => setVideoLink(e.target.value)}
+                    />
+                  </div>
+                  <div className="grid">
+                    <Label
+                      htmlFor="name"
+                      className="text-xs font-bold text-darkBlue-600"
+                    >
+                      NOME DO CONTEÚDO
+                    </Label>
+                    <Input
+                      id="name"
+                      className="border-darkBlue-400"
+                      placeholder="Nome conteúdo EPTRAN"
+                      value={titulo}
+                      onChange={(e) => setTitulo(e.target.value)}
+                    />
+                  </div>
+                  <div className="grid">
+                    <Label
+                      htmlFor="description"
+                      className="text-xs font-bold text-darkBlue-600"
+                    >
+                      DESCRIÇÃO DO CONTEÚDO
+                    </Label>
+                    <Textarea
+                      id="description"
+                      placeholder="Descrição conteúdo EPTRAN"
+                      className="border-darkBlue-400"
+                      value={descricao}
+                      onChange={(e) => setDescricao(e.target.value)}
+                    />
+                  </div>
+                </div>
+                <div className="flex items-end justify-between">
+                  <div className="w-[45%]">
+                    <Label
+                      htmlFor="classification"
+                      className="text-xs font-bold text-darkBlue-600 block"
+                    >
+                      CLASSIFICAÇÃO
+                    </Label>
+                    <Select
+                      value={escolaridade}
+                      onValueChange={setEscolaridade}
+                    >
+                      <SelectTrigger className="border-darkBlue-400 w-full">
+                        <SelectValue placeholder="Selecionar" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="FUNDAMENTAL">
+                          Séries Iniciais
+                        </SelectItem>
+                        <SelectItem value="MEDIO">Séries Finais</SelectItem>
+                        <SelectItem value="SUPERIOR">Ensino Médio</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="w-[45%] flex justify-end space-x-2">
+                    <DialogClose asChild>
+                      <Button
+                        variant="outline"
+                        className="w-full border-darkBlue-400 font-bold text-xs hover:bg-slate-200"
+                      >
+                        CANCELAR
+                      </Button>
+                    </DialogClose>
+                    <Button
+                      type="submit"
+                      className="w-full bg-darkBlue-500 text-white font-bold text-xs"
+                      onClick={handleAddVideo}
+                    >
+                      ENVIAR
+                    </Button>
+                  </div>
+                </div>
+              </DialogContent>
+            </Dialog>
+          </div>
+        </div>
       </div>
 
       <div className="w-full rounded-xl mt-8 sm:mt-16 flex flex-wrap justify-center sm:justify-center gap-4 sm:gap-6 lg:gap-[70px]">
@@ -92,120 +238,6 @@ export default function VideoManagement() {
             />
           ))}
       </div>
-
-      <Dialog>
-        <DialogTrigger asChild>
-          <Button
-            variant="default"
-            className="font-semibold w-full sm:w-52 h-10 shadow-xl flex items-center justify-center bg-darkBlue-500 text-white px-5 rounded-md text-lg"
-          >
-            <Image
-              className="w-7"
-              src="/Image/circulo.svg"
-              alt="Adicionar"
-              width={28}
-              height={28}
-            />
-            Adicionar Vídeo
-          </Button>
-        </DialogTrigger>
-        <DialogContent className="sm:max-w-[600px] w-full">
-          <DialogHeader>
-            <DialogTitle className="text-[40px] font-bold text-darkBlue-500">
-              Adicionar Vídeo
-            </DialogTitle>
-          </DialogHeader>
-          <div className="grid gap-4 py-4">
-            <div className="grid">
-              <Label
-                htmlFor="link"
-                className="text-xs font-bold text-darkBlue-600"
-              >
-                LINK DO VÍDEO
-              </Label>
-              <Input
-                id="link"
-                className="border-darkBlue-400"
-                placeholder="http://sia.com.br"
-                value={videoLink}
-                onChange={(e) => setVideoLink(e.target.value)}
-              />
-            </div>
-            <div className="grid">
-              <Label
-                htmlFor="name"
-                className="text-xs font-bold text-darkBlue-600"
-              >
-                NOME DO VÍDEO
-              </Label>
-              <Input
-                id="name"
-                className="border-darkBlue-400"
-                placeholder="Nome vídeo EPTRAN"
-                value={titulo}
-                onChange={(e) => setTitulo(e.target.value)}
-              />
-            </div>
-            <div className="grid">
-              <Label
-                htmlFor="description"
-                className="text-xs font-bold text-darkBlue-600"
-              >
-                DESCRIÇÃO DO VÍDEO
-              </Label>
-              <Textarea
-                id="description"
-                placeholder="Descrição vídeo EPTRAN"
-                className="border-darkBlue-400"
-                value={descricao}
-                onChange={(e) => setDescricao(e.target.value)}
-              />
-            </div>
-          </div>
-          <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4">
-            <div className="w-full sm:w-[45%]">
-              <Label
-                htmlFor="classification"
-                className="text-xs font-bold text-darkBlue-600 block"
-              >
-                CLASSIFICAÇÃO
-              </Label>
-              <Select
-                value={escolaridade}
-                onValueChange={setEscolaridade}
-              >
-                <SelectTrigger className="border-darkBlue-400 w-full">
-                  <SelectValue placeholder="Selecionar" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="ENSINO_MEDIO">Ensino Médio</SelectItem>
-                  <SelectItem value="ENSINO_FUNDAMENTAL">
-                    Ensino Fundamental
-                  </SelectItem>
-                  <SelectItem value="SERIES_INICIAIS">Séries Iniciais</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="w-full sm:w-[45%] flex flex-col sm:flex-row justify-end gap-2">
-              <DialogClose asChild>
-                <Button
-                  variant="outline"
-                  className="w-full sm:w-auto border-darkBlue-400 font-bold text-xs hover:bg-slate-200"
-                >
-                  CANCELAR
-                </Button>
-              </DialogClose>
-              <Button
-                type="submit"
-                className="w-full sm:w-auto bg-darkBlue-500 text-white font-bold text-xs"
-                onClick={handleAddVideo}
-              >
-                ENVIAR
-              </Button>
-            </div>
-          </div>
-        </DialogContent>
-      </Dialog>
     </main>
   );
 }
