@@ -5,9 +5,8 @@ import React, { createContext, useState, useContext, useEffect } from 'react';
 interface AuthContextType {
   isAuthenticated: boolean;
   isAdmin: boolean;
-  login: (isAdmin: boolean) => void;
+  login: () => void;
   logout: () => void;
-  setAdminStatus: (isAdmin: boolean) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -45,20 +44,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     checkAuth();
   }, []);
 
-  const login = (isAdmin: boolean) => {
-    setAuthState({ isAuthenticated: true, isAdmin });
+  const login = () => {
+    setAuthState({ isAuthenticated: true, isAdmin: false });
   };
 
   const logout = () => {
     setAuthState({ isAuthenticated: false, isAdmin: false });
   };
 
-  const setAdminStatus = (isAdmin: boolean) => {
-    setAuthState(prev => ({ ...prev, isAdmin }));
-  };
-
   return (
-    <AuthContext.Provider value={{ ...authState, login, logout, setAdminStatus }}>
+    <AuthContext.Provider value={{ ...authState, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
