@@ -1,30 +1,29 @@
-import bcrypt from 'bcrypt'; // Importando bcrypt para criptografar a senha
-import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify'; // Importando FastifyInstance para o uso do JWT
+import bcrypt from 'bcrypt';
+import fastify, { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 import { User } from "../../types/User";
 import { UserRepository } from "../repositories/userRepository";
 import { AuthRepository } from '../repositories/authRepository';
 import { BadRequestError, NotFoundError, UnauthorizedError } from '../helpers/apiErrors';
 import { RefreshTokenRepository } from '../repositories/refreshTokenRepository';
 import { BlacklistTokenRepository } from '../repositories/blackListedTokenRepository';
-import { AccessRepository } from '../repositories/accessRepository'; // Importando AccessRepository
+import { AccessRepository } from '../repositories/accessRepository';
 
 class AuthController {
     private blacklistedTokenRepository: BlacklistTokenRepository;
     private refreshTokenRepository: RefreshTokenRepository;
     private authRepository: AuthRepository;
     private userRepository: UserRepository;
-    private accessRepository: AccessRepository; // Adicionando AccessRepository
-    private fastify: FastifyInstance; // Instância do Fastify para usar o JWT
+    private accessRepository: AccessRepository;
+    private fastify: FastifyInstance;
 
     constructor(fastify: FastifyInstance) {
         this.blacklistedTokenRepository = new BlacklistTokenRepository();
         this.refreshTokenRepository = new RefreshTokenRepository();
         this.userRepository = new UserRepository();
         this.authRepository = new AuthRepository();
-        this.accessRepository = new AccessRepository(); // Instanciando AccessRepository
-        this.fastify = fastify; // Injetando a instância do Fastify
+        this.accessRepository = new AccessRepository();
+        this.fastify = fastify;
     }
-
     // Função de registro do usuário
     // Função de registro do usuário
     async register({ nome, email, senha, cep, rua, cidade, bairro, estado, escola, data_nasc, escolaridade, sexo }: User): Promise<{ message: string }> {
@@ -144,6 +143,7 @@ class AuthController {
             throw new UnauthorizedError("Houve uma falha ao fazer login");
         }
     }
+
 
     // Função de logout
     async logout(request: FastifyRequest, reply: FastifyReply) {

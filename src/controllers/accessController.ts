@@ -18,6 +18,7 @@ class AccessController {
             return reply.status(500).send({ message: "Erro ao obter acessos semanais por escolaridade" });
         }
     }
+    
 
     async getAccessesByAgeGroupAndGender(request: FastifyRequest, reply: FastifyReply) {
         try {

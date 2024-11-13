@@ -44,16 +44,12 @@ app.register(fastifyCors, {
     // Generate error for other origins
     cb(new Error("Not allowed by CORS"), false);
   },
-  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-  allowedHeaders: [
-    "Content-Type",
-    "Authorization",
-    "X-Requested-With",
-    "Accept",
-  ],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
 
   origin: true, // Permitir todas as origens, ou você pode especificar uma lista de origens
-  methods: ["GET", "POST", "PATCH", "PUT", "DELETE"], // Métodos permitidos
+  methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE'], // Métodos permitidos
+
   credentials: true,
   maxAge: 86400, // 24 hours
   preflight: true,
@@ -79,6 +75,22 @@ app.register(fastifyCookie, {
     sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax",
     path: "/",
   },
+});
+
+app.decorate('authenticate', async function(request: FastifyRequest, reply: FastifyReply) {
+  try {
+      await request.jwtVerify();
+  } catch (err) {
+      reply.send(err);
+  }
+});
+
+app.decorate('authenticate', async function(request: FastifyRequest, reply: FastifyReply) {
+  try {
+      await request.jwtVerify();
+  } catch (err) {
+      reply.send(err);
+  }
 });
 
 // Registra o plugin multipart com opções
@@ -107,18 +119,15 @@ app.register(fastifyStatic, {
 registerErrorHandler(app);
 
 // Rotas
-app.register(userRoutes, { prefix: "/user", preHandler: authMiddleware });
-app.register(ticketRoutes, { prefix: "/ticket" });
-app.register(authRoutes, { prefix: "/auth" });
-app.register(resetRoutes, { prefix: "/reset" });
-app.register(locationRoutes, { prefix: "/location" });
-app.register(statsRoutes, { prefix: "/stats", preHandler: authMiddleware });
-app.register(videoRoutes, { prefix: "/videos", preHandler: authMiddleware });
-app.register(materiaisRoutes, {
-  prefix: "/materiais",
-  preHandler: adminMiddleware,
-});
-app.register(escolaRoutes, { prefix: "/escolas" });
+app.register(userRoutes, { prefix: '/user', preHandler: authMiddleware });
+app.register(ticketRoutes, { prefix: '/ticket', preHandler: authMiddleware });
+app.register(authRoutes, { prefix: '/auth' });
+app.register(resetRoutes, { prefix: '/reset' });
+app.register(locationRoutes, { prefix: '/location' });
+app.register(statsRoutes, { prefix: '/stats', preHandler: authMiddleware });
+app.register(videoRoutes, { prefix: '/videos' });
+app.register(materiaisRoutes, { prefix: '/materiais', preHandler: adminMiddleware });
+app.register(escolaRoutes, { prefix: '/escolas' });
 
 // Inicia o servidor
 const start = async () => {
