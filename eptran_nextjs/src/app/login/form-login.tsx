@@ -5,17 +5,16 @@ import CustomCheckbox from "../components/ui/checkbox";
 import Link from "next/link";
 import { useLogin } from "@/hooks/useLogin";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/hooks/useAuth"; // Importe o hook useAuth
+import { useAuth } from "@/hooks/useAuth";
 
 const FormularioLogin: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { loginUser } = useLogin();
   const router = useRouter();
-  const { login } = useAuth(); // Use o hook useAuth para obter a função login
+  const { login, checkAuthStatus } = useAuth();
 
   const handleRememberMe = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // Lógica para lidar com o estado de "lembrar-me"
     console.log("Lembrar-me:", e.target.checked);
   };
 
@@ -28,9 +27,10 @@ const FormularioLogin: React.FC = () => {
     const senha = formData.get("senha")?.toString() || "";
 
     try {
-      await loginUser(email, senha);
-      console.log("Login bem-sucedido");
-      login(); // Atualiza o estado de autenticação no contexto
+      const userData = await loginUser(email, senha);
+      console.log("Login bem-sucedido", userData);
+      login(userData.adm === true);
+      await checkAuthStatus(); // Force an immediate check of auth status
       router.push("/");
     } catch (error: any) {
       setError(error.message || "Houve um erro ao logar o usuário");

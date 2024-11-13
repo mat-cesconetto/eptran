@@ -1,29 +1,41 @@
 'use client';
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { useLogout } from '@/hooks/useLogout';
 import Link from "next/link";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
+import { Menu, X } from 'lucide-react';
 import Profile from "./profile";
 
 const NavBar: React.FC = () => {
-  const { isAuthenticated, isAdmin, logout } = useAuth();
+  const { isAuthenticated, isAdmin, logout, checkAuthStatus } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { logoutUser, isLoading, error } = useLogout();
 
-  const handleLogout = async () => {
+  useEffect(() => {
+    console.log("NavBar: Auth state changed", { isAuthenticated, isAdmin });
+  }, [isAuthenticated, isAdmin]);
+
+  const handleLogout = useCallback(async () => {
     try {
       await logoutUser();
-      logout(); // Atualiza o estado de autenticação no contexto
+      logout();
       console.log('Logout realizado com sucesso');
     } catch (err) {
       console.error('Erro ao realizar logout:', err);
       alert(`Erro ao fazer logout: `);
     }
-  };
+  }, [logoutUser, logout]);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      checkAuthStatus();
+    }, 5000); // Check every 5 seconds
+
+    return () => clearInterval(intervalId);
+  }, [checkAuthStatus]);
 
   return (
     <>
@@ -37,7 +49,6 @@ const NavBar: React.FC = () => {
             <Menu className="h-6 w-6" />
           </button>
         </div>
-        
 
         <div className="flex-shrink-0">
           <Link href={"../"}>
@@ -55,7 +66,7 @@ const NavBar: React.FC = () => {
           <NavLink href="/atividades">Atividades</NavLink>
           <NavLink href="/sobre">Sobre nós</NavLink>
           <NavLink href="/fale-conosco">Fale Conosco</NavLink>
-          {isAdmin && <NavLink href="/adm/gestao-conteudo">Administrador</NavLink>}
+          {isAuthenticated && isAdmin && <NavLink href="/adm/gestao-conteudo">Administrador</NavLink>}
         </div>
 
         <div className="flex-shrink-0">
@@ -64,7 +75,7 @@ const NavBar: React.FC = () => {
           ) : (
             <div className="md:hidden">
               <Image
-                src="/user.svg"
+                src="/placeholder.svg?height=40&width=40"
                 width={40}
                 height={40}
                 alt="User icon"
@@ -93,7 +104,7 @@ const NavBar: React.FC = () => {
             <NavLink href="/atividades" mobile>Atividades</NavLink>
             <NavLink href="/sobre" mobile>Sobre nós</NavLink>
             <NavLink href="/fale-conosco" mobile>Fale Conosco</NavLink>
-            {isAdmin && <NavLink href="/adm/gestao-conteudo" mobile>Administrador</NavLink>}
+            {isAuthenticated && isAdmin && <NavLink href="/adm/gestao-conteudo" mobile>Administrador</NavLink>}
           </div>
           {!isAuthenticated && (
             <div className="mt-8 flex flex-col space-y-4">
@@ -134,10 +145,10 @@ const NavLink: React.FC<NavLinkProps> = ({ href, children, mobile = false }) => 
 const AuthButtons: React.FC = () => (
   <>
     <Link href="/login">
-      <Button variant="testando" className="bg-white text-[#023859] text-sm px-8 py-2 mr-4 rounded">Login</Button>
+      <Button variant="secondary" className="bg-white text-[#023859] text-sm px-8 py-2 mr-4 rounded">Login</Button>
     </Link>
     <Link href="/cadastro">
-      <Button variant="testando2" className="border-white border-2 bg-transparent text-sm text-white px-5 py-2 rounded">
+      <Button variant="outline" className="border-white border-2 bg-transparent text-sm text-white px-5 py-2 rounded">
         Cadastro
       </Button>
     </Link>
