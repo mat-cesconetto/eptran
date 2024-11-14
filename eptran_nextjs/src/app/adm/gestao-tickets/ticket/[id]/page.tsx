@@ -1,84 +1,144 @@
 'use client';
 
-import { useSearchParams, useParams, useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useParams, useRouter } from 'next/navigation';
+import { useState, useCallback, useEffect } from 'react';
 import { useTickets } from '@/hooks/useTicket';
 import type { Ticket, ResponderTicket } from '@/@types/Tickets';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Textarea } from "@/components/ui/textarea"
+import { Loader2 } from 'lucide-react'
 
 export default function TicketDetails() {
-    const params = useParams();
-    const router = useRouter();
-    const { getTicketById, respondToTicket } = useTickets();
-    const [ticket, setTicket] = useState<Ticket | null>(null);
-    const [responseText, setResponseText] = useState('');
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
+  const params = useParams();
+  const router = useRouter();
+  const { getTicketById, respondToTicket, ticketsLoading, ticketsError } = useTickets();
+  const [ticket, setTicket] = useState<Ticket | null>(null);
+  const [responseText, setResponseText] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-    useEffect(() => {
-        async function fetchTicket() {
-            try {
-                if (params.id) {
-                    setIsLoading(true);
-                    const { data, error } = await getTicketById(Number(params.id)); // Await the call
-        
-                    if (error) {
-                        setError('Ticket não encontrado');
-                    } else if (data) {
-                        setTicket(data);
-                    } else {
-                        setError('Erro ao carregar o ticket');
-                    }
-                }
-            } catch (err) {
-                setError('Erro ao carregar o ticket');
-                console.error('Erro:', err);
-            } finally {
-                setIsLoading(false);
-            }
+  const fetchTicket = useCallback(async () => {
+    try {
+      if (params.id) {
+        setIsLoading(true);
+        const { data, error } = await getTicketById(Number(params.id));
+
+        if (error) {
+          setError('Ticket não encontrado');
+        } else if (data) {
+          setTicket(data);
+        } else {
+          setError('Erro ao carregar o ticket');
         }
+      }
+    } catch (err) {
+      setError('Erro ao carregar o ticket');
+      console.error('Erro:', err);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [getTicketById, params.id]);
 
-        fetchTicket();
-    }, [params.id, getTicketById]);
+  const handleResponse = async () => {
+    if (!ticket) return;
 
-    const handleResponse = async () => {
-        if (!ticket) return;
+    try {
+      const resposta: ResponderTicket = { resposta: responseText };
+      await respondToTicket(ticket.id, resposta);
+      alert('Resposta enviada com sucesso!');
+      router.push('/adm/gestao-tickets');
+      router.refresh();
+    } catch (err) {
+      console.error('Erro ao enviar resposta:', err);
+      alert('Erro ao enviar resposta. Tente novamente.');
+    }
+  };
 
-        try {
-            const resposta: ResponderTicket = { resposta: responseText };
-            await respondToTicket(ticket.id, resposta);
-            alert('Resposta enviada com sucesso!');
-            router.push('/adm/gestao-tickets');
-            router.refresh();
-        } catch (err) {
-            console.error('Erro ao enviar resposta:', err);
-            alert('Erro ao enviar resposta. Tente novamente.');
-        }
-    };
+  useEffect(() => {
+    fetchTicket();
+  }, [fetchTicket]);
 
-    if (isLoading) return <div className="p-4">Carregando...</div>;
-    if (error) return <div className="p-4 text-red-500">{error}</div>;
-    if (!ticket) return <div className="p-4">Ticket não encontrado</div>;
-
+  if (isLoading || ticketsLoading) {
     return (
-        <main className="p-4">
-            <h1 className="text-2xl font-bold mb-4">{ticket.descricao}</h1>
-            <p className="mb-6">{ticket.descricao}</p>
-            <div className="space-y-4">
-                <h2 className="text-xl font-semibold">Resposta</h2>
-                <textarea
-                    value={responseText}
-                    onChange={(e) => setResponseText(e.target.value)}
-                    placeholder="Insira sua resposta"
-                    className="w-full p-2 border rounded-md min-h-[100px]"
-                />
-                <button
-                    onClick={handleResponse}
-                    className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-                    disabled={!responseText.trim()}
-                >
-                    Enviar Resposta
-                </button>
-            </div>
-        </main>
+      <div className="flex justify-center items-center h-screen">
+        <Loader2 className="h-8 w-8 animate-spin" />
+      </div>
     );
+  }
+
+  if (error || ticketsError) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Card className="w-full max-w-md">
+          <CardHeader>
+            <CardTitle className="text-red-500">Erro</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p>{error || ticketsError.message}</p>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  if (!ticket) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Card className="w-full max-w-md">
+          <CardHeader>
+            <CardTitle>Ticket não encontrado</CardTitle>
+          </CardHeader>
+        </Card>
+      </div>
+    );
+  }
+
+  return (
+    <main className="container mx-auto p-4">
+      <Card className="w-full max-w-2xl mx-auto">
+        <CardHeader>
+          <CardTitle>Detalhes do Ticket</CardTitle>
+          <CardDescription>ID do Ticket: {ticket.id}</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <h3 className="font-semibold">Nome</h3>
+              <p>{ticket.usuario.nome}</p>
+            </div>
+            <div>
+              <h3 className="font-semibold">Email</h3>
+              <p>{ticket.usuario.email}</p>
+            </div>
+          </div>
+          <div>
+            <h3 className="font-semibold">Descrição</h3>
+            <p className="mt-1">{ticket.descricao}</p>
+          </div>
+          <div>
+            <h3 className="font-semibold mb-2">Resposta</h3>
+            <Textarea
+              value={responseText}
+              onChange={(e) => setResponseText(e.target.value)}
+              placeholder="Escreva sua resposta aqui..."
+              className="min-h-[100px]"
+            />
+          </div>
+        </CardContent>
+        <CardFooter>
+          <Button onClick={handleResponse} disabled={isLoading} className="w-full">
+            {isLoading ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Enviando...
+              </>
+            ) : (
+              'Enviar Resposta'
+            )}
+          </Button>
+        </CardFooter>
+      </Card>
+    </main>
+  );
 }

@@ -15,7 +15,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import Card from "./card-conteudo";
+import Card from "./card-conteudo"; 
 import { useMateriais } from "@/hooks/useMateriais";
 import useAddMaterial from "@/hooks/useAddMaterial";
 import useEditMaterial from "@/hooks/useEditMaterial";
@@ -83,7 +83,7 @@ export default function Conteudo() {
       setDialogOpen(false); // Fechar o diálogo após editar
     }
   };
-
+  
   return (
     <main>
       <div className="flex">

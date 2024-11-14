@@ -1,5 +1,4 @@
-"use client";
-
+'use client'
 import Image from "next/image";
 import { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -33,8 +32,9 @@ import UserRow from "./UserRow";
 export default function Gerenciamento() {
   const [searchTerm, setSearchTerm] = useState("");
   const [userFilter, setUserFilter] = useState("all");
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const { users, isLoading, isLoggedOut } = useUsers();
+  const { users, isLoading, isLoggedOut, totalPages } = useUsers(currentPage);
 
   // Filtro de busca e gênero
   const filteredUsers = users.filter((user) => {
@@ -72,6 +72,18 @@ export default function Gerenciamento() {
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
+        <div className="flex space-x-4">
+        <Select value={userFilter} onValueChange={setUserFilter}>
+          <SelectTrigger className="text-darkBlue-500 font-bold w-full md:w-auto ">
+            <SelectValue placeholder="Todos os Usuários" />
+          </SelectTrigger>
+          <SelectContent className="text-darkBlue-500 font-bold">
+            <SelectItem value="all">Todas as Series</SelectItem>
+            <SelectItem value="masculino">Séries Iniciais</SelectItem>
+            <SelectItem value="feminino">Séries Fianis</SelectItem>
+            <SelectItem value="feminino">Ensino Médio</SelectItem>
+          </SelectContent>
+        </Select>
         <Select value={userFilter} onValueChange={setUserFilter}>
           <SelectTrigger className="text-darkBlue-500 font-bold w-full md:w-auto ">
             <SelectValue placeholder="Todos os Usuários" />
@@ -82,6 +94,7 @@ export default function Gerenciamento() {
             <SelectItem value="feminino">Feminino</SelectItem>
           </SelectContent>
         </Select>
+        </div>
       </div>
 
       <div className="rounded-lg border shadow-md">
@@ -117,6 +130,23 @@ export default function Gerenciamento() {
             ))}
           </TableBody>
         </Table>
+      </div>
+
+      {/* Paginação */}
+      <div className="flex justify-between items-center mt-4">
+        <Button
+          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+          disabled={currentPage === 1}
+        >
+          Anterior
+        </Button>
+        <span>Página {currentPage} de {totalPages}</span>
+        <Button
+          onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+          disabled={currentPage === totalPages}
+        >
+          Próxima
+        </Button>
       </div>
     </main>
   );
