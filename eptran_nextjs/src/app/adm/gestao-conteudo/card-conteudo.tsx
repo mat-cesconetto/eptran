@@ -1,4 +1,5 @@
 import React from "react";
+import { Material } from "@/@types/Material";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,37 +9,22 @@ import {
 import { MoreHorizontal, SquarePen, Trash } from "lucide-react";
 
 interface CardProps {
-  src: string; // URL da imagem
-  alt: string; // Texto alternativo da imagem
-  conteudo: string; // Conteúdo do card
-  data: string; // Data associada
-  paginas: string; // Número de páginas
-  nivel: string; // Nível de escolaridade
-  tamanho: string; // Tamanho do material
+  material: Material; // A propriedade 'material' agora está tipada
+  onEdit: () => void;
 }
 
-const Card: React.FC<CardProps> = ({
-  src,
-  alt,
-  conteudo,
-  data,
-  paginas,
-  nivel,
-  tamanho,
-}) => {
+const Card: React.FC<CardProps> = ({ material, onEdit }) => {
   return (
     <div className="relative border rounded-lg shadow-lg p-4 m-4 bg-white">
       <img
-        src={src}
-        alt={alt}
+        src={material.materialLink} // Você pode usar o link do material aqui
+        alt={material.titulo}
         className="w-full h-48 object-cover rounded-t-lg"
       />
       <div className="p-4">
-        <h2 className="font-bold text-lg">{conteudo}</h2>
-        <p className="text-sm text-gray-600">{data}</p>
-        <p className="text-sm text-gray-600">{paginas}</p>
-        <p className="text-sm text-gray-600">{nivel}</p>
-        <p className="text-sm text-gray-600">{tamanho}</p>
+        <h2 className="font-bold text-lg">{material.titulo}</h2>
+        <p className="text-sm text-gray-600">{material.descricao}</p>
+        <p className="text-sm text-gray-600">Nível: {material.escolaridade}</p>
       </div>
       {/* Dropdown com os três pontos */}
       <div className="absolute bottom-2 right-2">
@@ -49,7 +35,7 @@ const Card: React.FC<CardProps> = ({
             </button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={onEdit}>
               <SquarePen className="mr-2" />
               Editar
             </DropdownMenuItem>

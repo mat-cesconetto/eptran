@@ -1,5 +1,5 @@
 'use client'
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Material } from "@/@types/Material";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
@@ -15,9 +15,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import Card from "./card-conteudo"; // Certifique-se de que o caminho está correto
-import { useMateriais } from "@/hooks/useMateriais"; // Ajuste o caminho conforme necessário
+import Card from "./card-conteudo";
+import { useMateriais } from "@/hooks/useMateriais";
 import useAddMaterial from "@/hooks/useAddMaterial";
+import useEditMaterial from "@/hooks/useEditMaterial";
 
 export default function Conteudo() {
   const { materiais, isLoading, isError } = useMateriais();
@@ -26,21 +27,61 @@ export default function Conteudo() {
   const [descricao, setDescricao] = useState("");
   const [materialLink, setMaterialLink] = useState("");
   const { addMaterial } = useAddMaterial();
+  const { editMaterial } = useEditMaterial();
+  const [editingMaterial, setEditingMaterial] = useState<Material | null>(null);
+  const [dialogOpen, setDialogOpen] = useState(false);  // Controle de abertura do popup
+
+  // Use useEffect to set the values for editing when editingMaterial changes
+  useEffect(() => {
+    if (editingMaterial) {
+      setEscolaridade(editingMaterial.escolaridade);
+      setTitulo(editingMaterial.titulo);
+      setDescricao(editingMaterial.descricao);
+      setMaterialLink(editingMaterial.materialLink);
+      setDialogOpen(true);  // Abrir o diálogo automaticamente quando for editar
+    } else {
+      setEscolaridade("");
+      setTitulo("");
+      setDescricao("");
+      setMaterialLink("");
+    }
+  }, [editingMaterial]);
+
+  // Limpar todos os campos do formulário
+  const resetForm = () => {
+    setEscolaridade("");
+    setTitulo("");
+    setDescricao("");
+    setMaterialLink("");
+    setEditingMaterial(null);
+  };
+
   const handleAddMaterial = () => {
     const newMaterial: Material = {
-      id: 0,  // Assumindo que o ID será gerado no backend ou pelo serviço de adição
+      id: 0,  // ID gerado no backend
       escolaridade,
       titulo,
       descricao,
       materialLink,
     };
-    console.log(newMaterial);
     addMaterial(newMaterial);
-    // Limpar os campos do diálogo
-    setEscolaridade("");
-    setTitulo("");
-    setDescricao("");
-    setMaterialLink("");
+    resetForm(); // Limpar os campos após adicionar
+    setDialogOpen(false); // Fechar o diálogo após adicionar
+  };
+
+  const handleEditMaterial = () => {
+    if (editingMaterial) {
+      const updatedMaterial: Material = {
+        ...editingMaterial,
+        escolaridade,
+        titulo,
+        descricao,
+        materialLink,
+      };
+      editMaterial(updatedMaterial);
+      resetForm(); // Limpar após editar
+      setDialogOpen(false); // Fechar o diálogo após editar
+    }
   };
 
   return (
@@ -87,7 +128,12 @@ export default function Conteudo() {
           </div>
 
           <div className="">
-            <Dialog>
+            <Dialog open={dialogOpen} onOpenChange={(open) => {
+              setDialogOpen(open);
+              if (!open) {
+                resetForm(); // Limpar os campos quando o popup for fechado sem salvar
+              }
+            }}>
               <DialogTrigger asChild>
                 <Button
                   variant="default"
@@ -106,7 +152,7 @@ export default function Conteudo() {
               <DialogContent className="sm:max-w-[600px] w-full">
                 <DialogHeader>
                   <DialogTitle className="text-[40px] font-bold text-darkBlue-500">
-                    Adicionar Conteúdo
+                    {editingMaterial ? "Editar Conteúdo" : "Adicionar Conteúdo"}
                   </DialogTitle>
                 </DialogHeader>
                 <div className="grid gap-4 py-4">
@@ -155,73 +201,52 @@ export default function Conteudo() {
                       onChange={(e) => setDescricao(e.target.value)}
                     />
                   </div>
-                </div>
-                <div className="flex items-end justify-between">
-                  <div className="w-[45%]">
+                  <div className="grid">
                     <Label
-                      htmlFor="classification"
-                      className="text-xs font-bold text-darkBlue-600 block"
+                      htmlFor="escolaridade"
+                      className="text-xs font-bold text-darkBlue-600"
                     >
-                      CLASSIFICAÇÃO
+                      NÍVEL ESCOLAR
                     </Label>
                     <Select
-                      value={escolaridade}
                       onValueChange={setEscolaridade}
+                      value={escolaridade}
                     >
-                      <SelectTrigger className="border-darkBlue-400 w-full">
-                        <SelectValue placeholder="Selecionar" />
+                      <SelectTrigger className="w-[180px] text-xs">
+                        <SelectValue placeholder="Escolaridade" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="FUNDAMENTAL">
-                          Séries Iniciais
-                        </SelectItem>
-                        <SelectItem value="MEDIO">Séries Finais</SelectItem>
-                        <SelectItem value="SUPERIOR">
-                          Ensino Médio
-                        </SelectItem>
+                        <SelectItem value="Séries Iniciais">Séries Iniciais</SelectItem>
+                        <SelectItem value="Ensino Fundamental">Ensino Fundamental</SelectItem>
+                        <SelectItem value="Ensino Médio">Ensino Médio</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
-                  <div className="w-[45%] flex justify-end space-x-2">
-                    <DialogClose asChild>
-                      <Button
-                        variant="outline"
-                        className="w-full border-darkBlue-400 font-bold text-xs hover:bg-slate-200"
-                      >
-                        CANCELAR
-                      </Button>
-                    </DialogClose>
-                    <Button
-                      type="submit"
-                      className="w-full bg-darkBlue-500 text-white font-bold text-xs"
-                      onClick={handleAddMaterial}
-                    >
-                      ENVIAR
-                    </Button>
-                  </div>
+                </div>
+                <div className="flex justify-end">
+                  <Button
+                    className="w-[180px] h-10 bg-darkBlue-500 text-white"
+                    onClick={editingMaterial ? handleEditMaterial : handleAddMaterial}
+                  >
+                    {editingMaterial ? "Salvar Edição" : "Adicionar"}
+                  </Button>
                 </div>
               </DialogContent>
             </Dialog>
           </div>
         </div>
 
-        <div className="w-full rounded-xl mt-16 flex flex-wrap lg:gap-[70px]">
-          {isLoading && <p>Carregando materiais...</p>}
-          {isError && <p>Erro ao carregar os materiais. Tente novamente.</p>}
-          {!isLoading &&
-            !isError &&
-            materiais.map((material) => (
-              <Card
-                key={material.id}
-                src={"/Image/mat1.svg"} // Use uma imagem específica se necessário
-                alt={"imagem"}
-                conteudo={material.titulo}
-                data={new Date().toLocaleDateString()} // Adapte conforme necessário
-                paginas={"27 PG"} // Adapte conforme necessário
-                nivel={material.escolaridade}
-                tamanho={"207 MB"} // Adapte conforme necessário
-              />
-            ))}
+        {isLoading && <p>Carregando...</p>}
+        {isError && <p>Ocorreu um erro ao carregar os materiais.</p>}
+
+        <div className="grid grid-cols-3 gap-5">
+          {materiais.map((material) => (
+            <Card
+              key={material.id}
+              material={material}
+              onEdit={() => setEditingMaterial(material)}  // Chama a função de editar
+            />
+          ))}
         </div>
       </div>
     </main>

@@ -51,7 +51,7 @@ export default function Component() {
 
         <div className="flex flex-col md:flex-row gap-16">
           <div className="w-full md:w-2/3">
-            <div className="bg-gray-900 aspect-video rounded-[20px] mb-4">
+            <div className="aspect-video rounded-[20px] mb-4">
               {mainVideo.videoLink ? (
                 <iframe
                   src={formatVideoLink(mainVideo.videoLink)}
@@ -79,11 +79,6 @@ export default function Component() {
           <div className="w-full h-[470px] md:w-1/2 space-y-4 overflow-y-scroll">
             {sidebarVideos.map((video, index) => {
               const sidebarIndex = index >= mainVideoIndex ? index + 1 : index;
-              const videoEscolaridadeLabel = {
-                "SERIES_INICIAIS": "Séries Iniciais",
-                "ENSINO_FUNDAMENTAL": "Ensino Fundamental",
-                "ENSINO_MEDIO": "Ensino Médio"
-              }[video.escolaridade] || "Escolaridade Desconhecida";
 
               return (
                 <div
@@ -92,7 +87,7 @@ export default function Component() {
                   onClick={() => handleVideoClick(sidebarIndex)}
                 >
                   <div className="w-[270px] relative">
-                    <div className="bg-gray-900 aspect-video rounded-[20px] mb-2 overflow-hidden group">
+                    <div className="aspect-video rounded-[20px] mb-2 overflow-hidden group">
                       {video.videoLink ? (
                         <>
                           <img
@@ -112,9 +107,6 @@ export default function Component() {
                     </div>
                   </div>
                   <div className="w-3/5">
-                    <div className="text-base text-darkBlue-400 mb-1 font-bold">
-                      {videoEscolaridadeLabel}
-                    </div>
                     <div className="text-[20px] font-bold text-darkBlue-500 transition-colors duration-300 group-hover:text-blue-700">
                       {video.titulo}
                     </div>
