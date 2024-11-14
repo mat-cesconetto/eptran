@@ -4,11 +4,12 @@ interface GameProps {
   imageUrl: string;
   title: string;
   href: string;
+  escolaridade: string; // New prop for filtering
 }
 
-const Game: React.FC<GameProps> = ({ imageUrl, title, href }) => {
+const Game: React.FC<Omit<GameProps, 'escolaridade'>> = ({ imageUrl, title, href }) => {
   return (
-   <a href={href} target="_blank" rel="noopener noreferrer" className="m-20 my-16">
+    <a href={href} target="_blank" rel="noopener noreferrer" className="m-20 my-16">
       <div
         className={`w-[140px] sm:w-[260px] rounded-xl h-[140px] sm:h-[260px] bg-cover flex flex-col justify-end transition-transform duration-300 ease-in-out hover:scale-110 hover:translate-y-[-10px] object-contain cursor-pointer mb-4`}
         style={{ backgroundImage: `url(${imageUrl})` }}
@@ -20,4 +21,5 @@ const Game: React.FC<GameProps> = ({ imageUrl, title, href }) => {
     </a>
   );
 };
+
 export default Game;

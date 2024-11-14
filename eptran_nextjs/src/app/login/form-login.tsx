@@ -1,17 +1,18 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import CustomCheckbox from "../components/ui/checkbox";
 import Link from "next/link";
 import { useLogin } from "@/hooks/useLogin";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/hooks/useAuth";
 
 const FormularioLogin: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false); // Novo estado para verificar login
   const { loginUser } = useLogin();
   const router = useRouter();
+  const { login, checkAuthStatus } = useAuth();
 
   const handleRememberMe = (e: React.ChangeEvent<HTMLInputElement>) => {
     console.log("Lembrar-me:", e.target.checked);
@@ -26,21 +27,17 @@ const FormularioLogin: React.FC = () => {
     const senha = formData.get("senha")?.toString() || "";
 
     try {
-      await loginUser(email, senha);
-      console.log("Login bem-sucedido");
-      setIsLoggedIn(true); // Define o estado como logado após o login
+      const userData = await loginUser(email, senha);
+      console.log("Login bem-sucedido", userData);
+      login(userData.adm === true);
+      await checkAuthStatus(); // Force an immediate check of auth status
+      router.push("/");
     } catch (error: any) {
       setError(error.message || "Houve um erro ao logar o usuário");
     } finally {
       setIsLoading(false);
     }
   };
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      router.push("/");
-    }
-  }, [isLoggedIn, router]); // useEffect para redirecionar após login
 
   return (
     <form onSubmit={handleLogin} className="grid grid-cols-1 gap-4 w-full">
