@@ -11,7 +11,7 @@ async function routes(fastify: FastifyInstance, options: FastifyPluginOptions) {
 
   fastify.post(
     "/open",
-    { preHandler: [authMiddleware] },
+    // { preHandler: [authMiddleware] },
     ticketController.createTicket.bind(ticketController)
   );
   fastify.get(
@@ -21,17 +21,17 @@ async function routes(fastify: FastifyInstance, options: FastifyPluginOptions) {
   );
   fastify.post(
     "/:ticketId/responder",
-    { preHandler: adminMiddleware},
+    { preHandler: [authMiddleware]},
     ticketController.addResposta.bind(ticketController)
   );
   fastify.get(
     "/:id",
-    { preHandler: adminMiddleware },
+    // { preHandler: adminMiddleware },
     ticketController.getTicketById.bind(ticketController)
   );
   fastify.patch(
     "/:id/finalizar",
-    { preHandler: [authMiddleware, adminMiddleware] },
+    // { preHandler: [authMiddleware, adminMiddleware] },
     ticketController.finalizarTicket.bind(ticketController)
   );
   // fastify.post('/:id/respostas', { preHandler: authMiddleware }, ticketController.addResposta.bind(ticketController));
