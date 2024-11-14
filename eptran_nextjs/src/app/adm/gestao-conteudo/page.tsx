@@ -1,5 +1,4 @@
-'use client'
-import { useState } from "react";
+import React, { useState } from "react";
 import { Material } from "@/@types/Material";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
@@ -15,8 +14,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import Card from "./card-conteudo"; // Certifique-se de que o caminho está correto
-import { useMateriais } from "@/hooks/useMateriais"; // Ajuste o caminho conforme necessário
+import Card from "./card-conteudo"; 
+import { useMateriais } from "@/hooks/useMateriais";
 import useAddMaterial from "@/hooks/useAddMaterial";
 
 export default function Conteudo() {
@@ -26,23 +25,23 @@ export default function Conteudo() {
   const [descricao, setDescricao] = useState("");
   const [materialLink, setMaterialLink] = useState("");
   const { addMaterial } = useAddMaterial();
+
   const handleAddMaterial = () => {
     const newMaterial: Material = {
-      id: 0,  // Assumindo que o ID será gerado no backend ou pelo serviço de adição
+      id: 0,
       escolaridade,
       titulo,
       descricao,
       materialLink,
     };
-    console.log(newMaterial);
+    console.log("Material a ser adicionado:", newMaterial);
     addMaterial(newMaterial);
-    // Limpar os campos do diálogo
     setEscolaridade("");
     setTitulo("");
     setDescricao("");
     setMaterialLink("");
   };
-
+  
   return (
     <main>
       <div className="flex">
@@ -172,11 +171,12 @@ export default function Conteudo() {
                         <SelectValue placeholder="Selecionar" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="FUNDAMENTAL">
+                        <SelectItem value="ENSINO_FUNDAMENTAL_I">
                           Séries Iniciais
                         </SelectItem>
-                        <SelectItem value="MEDIO">Séries Finais</SelectItem>
-                        <SelectItem value="SUPERIOR">
+                        <SelectItem value="ENSINO_FUNDAMENTAL_II">
+                          Séries Finais</SelectItem>
+                        <SelectItem value="ENSINO_MEDIO">
                           Ensino Médio
                         </SelectItem>
                       </SelectContent>

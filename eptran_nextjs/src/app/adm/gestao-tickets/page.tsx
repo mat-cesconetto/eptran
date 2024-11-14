@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { useTickets } from '@/hooks/useTicket'; // adjust path as needed
+import { useTickets } from '@/hooks/useTicket';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -31,14 +31,16 @@ import { MoreHorizontal, Trash, SquarePen, Search } from "lucide-react";
 import { Status } from "@/@types/Status";
 import { useRouter } from "next/navigation";
 
-const priorityColors = {
+const ITEMS_PER_PAGE = 10; // Número de itens por página
+
+const priorityColors: { [key: string]: string } = {
   'Alta': "bg-red-200 text-red-600",
   'Média': "bg-yellow-200 text-yellow-600",
   'Baixa': "bg-blue-200 text-blue-700",
   'Nenhuma': "bg-gray-300 text-gray-800",
 };
 
-const statusColors = {
+const statusColors: { [key: string]: string } = {
   'Em andamento': "bg-orange-200 text-orange-500",
   'Em aberto': "bg-green-200 text-green-600",
   'Resolvido': "bg-blue-200 text-blue-700",
@@ -48,12 +50,13 @@ const statusColors = {
 export default function Gerenciamento() {
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
+  const [currentPage, setCurrentPage] = useState(1); // Estado para a página atual
 
   const router = useRouter();
 
-const handleOpenTicket = (ticketId: number) => {
-  router.push(`/adm/gestao-tickets/ticket/${ticketId}`); // Redireciona para a página do ticket com o ID correspondente
-};
+  const handleOpenTicket = (ticketId: number) => {
+    router.push(`/adm/gestao-tickets/ticket/${ticketId}`);
+  };
   
   const {
     tickets,
@@ -69,13 +72,8 @@ const handleOpenTicket = (ticketId: number) => {
     return <div>Loading...</div>;
   }
 
-  const getPriorityColor = (priority: string) => {
-    return priorityColors[priority as keyof typeof priorityColors] || "bg-gray-300 text-gray-800";
-  };
-
-  const getStatusColor = (status: string) => {
-    return statusColors[status as keyof typeof statusColors] || "bg-gray-300 text-gray-800";
-  };
+  const getPriorityColor = (priority: string) => priorityColors[priority] || "bg-gray-300 text-gray-800";
+  const getStatusColor = (status: string) => statusColors[status] || "bg-gray-300 text-gray-800";
 
   const filteredTickets = tickets.filter(ticket => {
     const matchesStatus = 
@@ -87,6 +85,13 @@ const handleOpenTicket = (ticketId: number) => {
     return matchesStatus;
   });
 
+  // Paginação
+  const totalPages = Math.ceil(filteredTickets.length / ITEMS_PER_PAGE);
+  const paginatedTickets = filteredTickets.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  );
+
   const handleDeleteTicket = async (ticketId: number) => {
     try {
       await finalizarTicket(ticketId);
@@ -94,6 +99,9 @@ const handleOpenTicket = (ticketId: number) => {
       console.error('Failed to delete ticket:', error);
     }
   };
+
+  const handleNextPage = () => setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+  const handlePreviousPage = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
 
   return (
     <main className="min-h-screen p-4 md:p-8 pt-24 text-black">
@@ -149,7 +157,7 @@ const handleOpenTicket = (ticketId: number) => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {filteredTickets.map((ticket) => (
+            {paginatedTickets.map((ticket) => (
               <TableRow key={ticket.id}>
                 <TableCell className="font-medium">{ticket.id}</TableCell>
                 <TableCell>
@@ -184,10 +192,10 @@ const handleOpenTicket = (ticketId: number) => {
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
-                    <DropdownMenuItem onClick={() => handleOpenTicket(ticket.id)}>
-  <SquarePen className="mr-2 h-4 w-4" />
-  <Button variant="ghost" className="p-0">Abrir Ticket</Button>
-</DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => handleOpenTicket(ticket.id)}>
+                        <SquarePen className="mr-2 h-4 w-4" />
+                        <Button variant="ghost" className="p-0">Abrir Ticket</Button>
+                      </DropdownMenuItem>
                       <DropdownMenuItem onClick={() => handleDeleteTicket(ticket.id)}>
                         <Trash className="mr-2 h-4 w-4" />
                         <Button variant="ghost" className="p-0">Excluir</Button>
@@ -199,6 +207,18 @@ const handleOpenTicket = (ticketId: number) => {
             ))}
           </TableBody>
         </Table>
+      </div>
+
+      <div className="flex justify-between items-center mt-4">
+        <Button disabled={currentPage === 1} onClick={handlePreviousPage}>
+          Página Anterior
+        </Button>
+        <span>
+          Página {currentPage} de {totalPages}
+        </span>
+        <Button disabled={currentPage === totalPages} onClick={handleNextPage}>
+          Próxima Página
+        </Button>
       </div>
     </main>
   );
