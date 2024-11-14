@@ -5,14 +5,14 @@ import { useCadastro } from "@/hooks/useCadastro";
 import { useCidade } from "@/hooks/useCidades";
 import { useCep } from "@/hooks/useCep"; // Importando o hook para o CEP
 import CustomCheckbox from "../components/ui/checkbox";
-
-import Router from "next/router";
+import { useRouter } from "next/navigation";
 import { maskCEP } from "../components/mask/mask";
 
 // Interfaces
 
 const Formulario: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
   const { registerUser } = useCadastro();
   const [crudCEP, setCEP] = useState("");
   const [estadoSelecionado, setEstadoSelecionado] = useState<string>("");
@@ -65,7 +65,7 @@ const Formulario: React.FC = () => {
         sexo
       );
       console.log("Deu tudo certo");
-      Router.push("/");
+      router.push("/login");
     } catch (error: any) {
       setError(error.message || "Houve um erro ao cadastrar o usuário");
     }
