@@ -92,7 +92,7 @@ export default function Estatisticas() {
         {/* gráfico 2 */}
         <div className="rounded-2xl border-2 p-4">
           <h2 className="mt-4 font-bold text-darkBlue-500 text-2xl text-center">
-            Principais escolas
+            Quantidade de alunos por Escola
           </h2>
           <div className="max-w-md mx-auto p-4">
             <ol className="list-none space-y-3">
@@ -121,7 +121,7 @@ export default function Estatisticas() {
         {/* gráfico 3 */}
         <div className="rounded-2xl border-2 p-4">
           <h2 className="mt-4 font-bold text-darkBlue-500 text-2xl md:text-3xl text-center">
-            Acessos por região
+            Quantidade de alunos por Região
           </h2>
           <div className="flex justify-center">
             <BarChart
@@ -231,7 +231,7 @@ export default function Estatisticas() {
         {/* gráfico 5 */}
         <div className="border-2 rounded-2xl p-4">
           <h2 className="mt-4 font-bold text-darkBlue-500 text-2xl md:text-3xl text-center">
-            Sexo
+            Quantidade de alunos por Gêneros
           </h2>
           <div className="flex justify-center">
             <PieChart
@@ -253,7 +253,7 @@ export default function Estatisticas() {
                 legend: {
                   direction: "column",
                   position: { vertical: "middle", horizontal: "right" },
-                
+
                   labelStyle: {
                     fontWeight: "Bold",
                     fill: "#023859",
@@ -307,7 +307,7 @@ export default function Estatisticas() {
         {/* gráfico 7 */}
         <div className="border-2 rounded-2xl p-4">
           <h2 className="mt-4 font-bold text-darkBlue-500 text-2xl md:text-3xl text-center">
-            Acessos por idade
+            Quantidade de alunos por Idade
           </h2>
           <div className="flex justify-center">
             <BarChart
@@ -355,7 +355,7 @@ export default function Estatisticas() {
         {/* gráfico 8 */}
         <div className="rounded-2xl border-2 p-4">
           <h2 className="mt-4 font-bold text-darkBlue-500 text-2xl text-center">
-            Acessos por estado
+            Quantidade de alunos por Estado
           </h2>
           <div className="max-w-md mx-auto p-4">
             <ol className="list-none space-y-3">
@@ -384,7 +384,7 @@ export default function Estatisticas() {
         {/* gráfico 9 */}
         <div className="rounded-2xl border-2 p-4">
           <h2 className="mt-4 font-bold text-darkBlue-500 text-2xl text-center">
-            Acessos por cidade
+            Quantidade de alunos por Cidade
           </h2>
           <div className="max-w-md mx-auto p-4">
             <ol className="list-none space-y-3">
@@ -413,7 +413,7 @@ export default function Estatisticas() {
         {/* gráfico 10 */}
         <div className="rounded-2xl border-2 p-4">
           <h2 className="mt-4 font-bold text-darkBlue-500 text-2xl text-center">
-            Acessos por bairro
+            Quantidade de alunos por Bairro
           </h2>
           <div className="max-w-md mx-auto p-4">
             <ol className="list-none space-y-3">
