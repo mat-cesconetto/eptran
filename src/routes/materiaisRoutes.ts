@@ -34,7 +34,7 @@ async function materiaisRoutes(fastify: FastifyInstance, options: FastifyPluginO
   fastify.post<{
     Body: CreateMaterialBody
   }>('/create', {
-    preHandler: [authMiddleware, adminMiddleware],
+    preHandler: [authMiddleware],
     handler: createMaterial
   });
 
