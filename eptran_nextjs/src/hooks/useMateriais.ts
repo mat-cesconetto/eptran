@@ -10,15 +10,15 @@ interface UseMateriaisReturn {
 }
 
 export function useMateriais(page: number = 1): UseMateriaisReturn {
-  const { data, error, mutate, isLoading, isValidating } = useApiBase<MateriaisResponse>(
+  const { data, error, mutate, isLoading } = useApiBase<MateriaisResponse>(
     `materiais/list?page=${page}`
   );
 
   return {
     materiais: data?.materiaisInfo || [],
     totalPages: data ? data.totalPages : 0,
-    isLoading,
-    isError: error,
+    isLoading: isLoading,
+    isError: !!error,
     mutate,
   };
 }

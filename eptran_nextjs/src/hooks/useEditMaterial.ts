@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 interface EditMaterialType {
-  id: number; // ID do material que será editado
+  id: number;
   escolaridade: string;
   titulo: string;
   descricao: string;
@@ -17,24 +17,23 @@ const useEditMaterial = () => {
     setError(null);
 
     try {
-      // Alterei de 'PUT' para 'PATCH' para refletir o método correto
       const response = await fetch(`http://localhost:3333/materiais/update/${material.id}`, {
-        method: 'PATCH', // Usando PATCH para atualizar parcialmente os dados
-        credentials: 'include',
+        method: "PATCH", // Usando PATCH para atualizar parcialmente os dados
+        credentials: "include",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(material), // Passando os dados no corpo da requisição
+        body: JSON.stringify(material),
       });
 
       if (!response.ok) {
-        throw new Error('Erro ao editar o material');
+        throw new Error("Erro ao editar o material");
       }
 
       const data = await response.json();
-      console.log('Material editado:', data);  // Aqui você pode realizar outras ações com o material editado
+      console.log("Material editado:", data);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Erro desconhecido');
+      setError(err instanceof Error ? err.message : "Erro desconhecido");
     } finally {
       setLoading(false);
     }

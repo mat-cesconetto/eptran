@@ -1,4 +1,5 @@
 'use client'
+
 import { useState, useEffect } from "react";
 import { Material } from "@/@types/Material";
 import Image from "next/image";
@@ -10,6 +11,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  DialogFooter
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -19,35 +21,34 @@ import Card from "./card-conteudo";
 import { useMateriais } from "@/hooks/useMateriais";
 import useAddMaterial from "@/hooks/useAddMaterial";
 import useEditMaterial from "@/hooks/useEditMaterial";
+import useDeleteMaterial from "@/hooks/useDeleteMaterial";
 
 export default function Conteudo() {
   const { materiais, isLoading, isError } = useMateriais();
-  const [escolaridade, setEscolaridade] = useState("");
-  const [titulo, setTitulo] = useState("");
-  const [descricao, setDescricao] = useState("");
-  const [materialLink, setMaterialLink] = useState("");
+  const [escolaridade, setEscolaridade] = useState<string>("");
+  const [titulo, setTitulo] = useState<string>("");
+  const [descricao, setDescricao] = useState<string>("");
+  const [materialLink, setMaterialLink] = useState<string>("");
   const { addMaterial } = useAddMaterial();
   const { editMaterial } = useEditMaterial();
+  const { deleteMaterial } = useDeleteMaterial();
   const [editingMaterial, setEditingMaterial] = useState<Material | null>(null);
-  const [dialogOpen, setDialogOpen] = useState(false);  // Controle de abertura do popup
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [confirmDeleteMaterial, setConfirmDeleteMaterial] = useState<Material | null>(null);
+  const [searchTerm, setSearchTerm] = useState<string>("");
 
-  // Use useEffect to set the values for editing when editingMaterial changes
   useEffect(() => {
     if (editingMaterial) {
-      setEscolaridade(editingMaterial.escolaridade);
-      setTitulo(editingMaterial.titulo);
-      setDescricao(editingMaterial.descricao);
-      setMaterialLink(editingMaterial.materialLink);
-      setDialogOpen(true);  // Abrir o diálogo automaticamente quando for editar
+      setEscolaridade(editingMaterial.escolaridade || "");
+      setTitulo(editingMaterial.titulo || "");
+      setDescricao(editingMaterial.descricao || "");
+      setMaterialLink(editingMaterial.materialLink || "");
+      setDialogOpen(true);
     } else {
-      setEscolaridade("");
-      setTitulo("");
-      setDescricao("");
-      setMaterialLink("");
+      resetForm();
     }
   }, [editingMaterial]);
 
-  // Limpar todos os campos do formulário
   const resetForm = () => {
     setEscolaridade("");
     setTitulo("");
@@ -58,15 +59,15 @@ export default function Conteudo() {
 
   const handleAddMaterial = () => {
     const newMaterial: Material = {
-      id: 0,  // ID gerado no backend
+      id: 0,
       escolaridade,
       titulo,
       descricao,
       materialLink,
     };
     addMaterial(newMaterial);
-    resetForm(); // Limpar os campos após adicionar
-    setDialogOpen(false); // Fechar o diálogo após adicionar
+    resetForm();
+    setDialogOpen(false);
   };
 
   const handleEditMaterial = () => {
@@ -79,11 +80,22 @@ export default function Conteudo() {
         materialLink,
       };
       editMaterial(updatedMaterial);
-      resetForm(); // Limpar após editar
-      setDialogOpen(false); // Fechar o diálogo após editar
+      resetForm();
+      setDialogOpen(false);
     }
   };
-  
+
+  const handleConfirmDelete = () => {
+    if (confirmDeleteMaterial) {
+      deleteMaterial(confirmDeleteMaterial.id);
+      setConfirmDeleteMaterial(null);
+    }
+  };
+
+  const filteredMateriais = materiais.filter((material) =>
+    material.titulo.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <main>
       <div className="flex">
@@ -124,6 +136,8 @@ export default function Conteudo() {
               id="procurar"
               className="font-semibold block items-center h-10 ps-10 min-w-72 w-full text-sm bg-white rounded-lg border-gray-300 border-1 placeholder-darkBlue-300"
               placeholder="Procurar"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
 
@@ -131,13 +145,13 @@ export default function Conteudo() {
             <Dialog open={dialogOpen} onOpenChange={(open) => {
               setDialogOpen(open);
               if (!open) {
-                resetForm(); // Limpar os campos quando o popup for fechado sem salvar
+                resetForm();
               }
             }}>
               <DialogTrigger asChild>
                 <Button
                   variant="default"
-                  className=" font-semibold w-56 h-10 mt-1 shadow-xl flex items-center bg-darkBlue-500 text-white px-5 rounded-md text-lg"
+                  className="font-semibold w-56 h-10 mt-1 shadow-xl flex items-center bg-darkBlue-500 text-white px-5 rounded-md text-lg"
                 >
                   <Image
                     className="w-7 mr-1"
@@ -166,7 +180,7 @@ export default function Conteudo() {
                     <Input
                       id="link"
                       className="border-darkBlue-400"
-                      placeholder="http://sia.com.br"
+                      placeholder="Link do conteúdo"
                       value={materialLink}
                       onChange={(e) => setMaterialLink(e.target.value)}
                     />
@@ -216,9 +230,9 @@ export default function Conteudo() {
                         <SelectValue placeholder="Escolaridade" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="Séries Iniciais">Séries Iniciais</SelectItem>
-                        <SelectItem value="Ensino Fundamental">Ensino Fundamental</SelectItem>
-                        <SelectItem value="Ensino Médio">Ensino Médio</SelectItem>
+                        <SelectItem value="ENSINO_FUNDAMENTAL_I">Séries Iniciais</SelectItem>
+                        <SelectItem value="ENSINO_FUNDAMENTAL_II">Ensino Fundamental</SelectItem>
+                        <SelectItem value="ENSINO_MEDIO">Ensino Médio</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -228,7 +242,7 @@ export default function Conteudo() {
                     className="w-[180px] h-10 bg-darkBlue-500 text-white"
                     onClick={editingMaterial ? handleEditMaterial : handleAddMaterial}
                   >
-                    {editingMaterial ? "Salvar Edição" : "Adicionar"}
+                    {editingMaterial ? "Salvar Alterações" : "Adicionar"}
                   </Button>
                 </div>
               </DialogContent>
@@ -236,18 +250,39 @@ export default function Conteudo() {
           </div>
         </div>
 
-        {isLoading && <p>Carregando...</p>}
-        {isError && <p>Ocorreu um erro ao carregar os materiais.</p>}
-
-        <div className="grid grid-cols-3 gap-5">
-          {materiais.map((material) => (
-            <Card
-              key={material.id}
-              material={material}
-              onEdit={() => setEditingMaterial(material)}  // Chama a função de editar
-            />
-          ))}
+        {/* Aqui começam os materiais */}
+        <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+        {!isLoading && !isError ? (
+            filteredMateriais.map((material) => (
+              <Card
+                key={material.id}
+                material={material}
+                onEdit={() => setEditingMaterial(material)}
+                onDelete={() => setConfirmDeleteMaterial(material)}
+              />
+            ))
+          ) : (
+            <p className="text-darkBlue-500">Carregando...</p>
+          )}
         </div>
+
+        {confirmDeleteMaterial && (
+          <Dialog open={true} onOpenChange={() => setConfirmDeleteMaterial(null)}>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Tem certeza que deseja excluir?</DialogTitle>
+              </DialogHeader>
+              <DialogFooter>
+                <Button variant="outline" onClick={() => setConfirmDeleteMaterial(null)}>
+                  Cancelar
+                </Button>
+                <Button className="bg-red-500 text-white" onClick={handleConfirmDelete}>
+                  Excluir
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+        )}
       </div>
     </main>
   );

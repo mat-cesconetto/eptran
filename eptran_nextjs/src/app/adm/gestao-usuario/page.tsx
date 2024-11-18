@@ -80,8 +80,8 @@ export default function Gerenciamento() {
           <SelectContent className="text-darkBlue-500 font-bold">
             <SelectItem value="all">Todas as Series</SelectItem>
             <SelectItem value="masculino">Séries Iniciais</SelectItem>
-            <SelectItem value="feminino">Séries Fianis</SelectItem>
-            <SelectItem value="feminino">Ensino Médio</SelectItem>
+            <SelectItem value="feminino">Séries Finais</SelectItem>
+            <SelectItem value="ENSINO_MEDIO">Ensino Médio</SelectItem>
           </SelectContent>
         </Select>
         <Select value={userFilter} onValueChange={setUserFilter}>
