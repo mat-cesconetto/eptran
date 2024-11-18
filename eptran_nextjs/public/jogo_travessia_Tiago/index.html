@@ -4,233 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Foca</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: "Press Start 2P", system-ui;
-        }
-
-
-        body {
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background-color: rgb(116, 105, 85);
-            overflow: hidden;
-        }
-
-
-        .game-container {
-            position: relative;
-            width: 100%;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-
-        #canvas {
-            position: absolute;
-            max-width: 100%;
-            max-height: 100%;
-            width: auto;
-            height: auto;
-        }
-
-
-        #telaCinza {
-            z-index: 3;
-            display: none;
-            flex-flow: column;
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(128, 128, 128, 0.63);
-            backdrop-filter: blur(2px);
-        }
-
-
-        #Perdeu {
-            display: none;
-            margin: auto;    
-            text-align: center;    
-            align-items: center;
-            z-index: 4;
-            height: 30%;
-            font-size: 5vw;
-        }
-
-
-        .resultados {
-            width: 100%;
-            height: 70%;
-            display: flex;
-            flex-flow: row wrap;
-        }
-
-
-        .pont {
-            display: flex;
-            flex-flow: row wrap;
-            align-items: center;
-            justify-content: space-around;
-            background-color: cadetblue;
-            width: 100%;
-            height: 40%;
-            color: white;
-            font-size: 2vw;
-        }
-
-
-        .bot {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            height: 60%;
-        }
-
-
-        #botao_recomecar {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 4;
-            width: 80%;
-            max-width: 500px;
-            height: 120px;
-            border: 2px solid black;
-            border-radius: 15px;
-            border-bottom: 6px solid black;
-            transition: 0.1s ease;
-            font-size: 3vw;
-        }
-
-
-        #botao_recomecar:active {
-            border: 3px solid black;
-        }
-
-
-        #qntMoedas, #Level {
-            z-index: 4;
-            position: absolute;
-            margin: 15px;
-            font-size: 2vw;
-        }
-
-
-        #qntMoedas {
-            top: 0;
-            left: 0;
-        }
-
-
-        #Level {
-            top: 0;
-            right: 0;
-        }
-
-
-        .tela_jogo {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: url(img/tela_inicial.png);
-            background-position: center;
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-color: black;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 5;
-        }
-
-
-        .botao_iniciar {
-            width: 30%;
-            max-width: 300px;
-            aspect-ratio: 1 / 1;
-            border-radius: 50%;
-            cursor: pointer;
-            margin-top: 17%;
-            margin-right: 1.5%;
-            background-color: #04aa6d00;
-            border: 0;
-        }
-
-
-        /* Updated styles for movement buttons */
-        .movement_buttons {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: none;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            z-index: 10;
-        }
-
-
-        .movement-button {
-            width: 60px;
-            height: 60px;
-            background-color: rgba(255, 255, 255, 0.5);
-            border: 2px solid #000;
-            border-radius: 50%;
-            font-size: 24px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            user-select: none;
-            touch-action: manipulation;
-        }
-
-
-        .movement-button:active {
-            background-color: rgba(255, 255, 255, 0.8);
-        }
-    </style>
+    <link rel="stylesheet" href="./style.css">
 </head>
 <body>
     <div class="game-container">
-        <div id="tela_inicial" class="tela_jogo">
-            <button id="botao_iniciar" class="botao_iniciar"></button>
+        <div id="tela_inicial" class="tela_jogo flex">
+            <div class="botoesPrincipais">
+                <button id="botao_iniciar" class="botao_iniciar" onclick="iniciarJogo()"></button>
+                <button id="botao_instrucao" class="botao_comoJogar"></button>
+            </div>
         </div>
-        <h2 id="qntMoedas">MOEDAS: 0</h2>
-        <h2 id="Level">Level 1</h2>
+       <div class="dados">
+           <h2 id="qntMoedas" class="invisivel">MOEDAS: 0</h2>
+           <h2 id="level" class="invisivel">Level 1</h2>      
+        </div>
+           <button id="voltar" class="invisivel" onclick="resetarJogo(1)">Voltar</button>
 
-
-        <div id="telaCinza">
+        <div id="telaCinza" class="invisivel">
             <h1 id="Perdeu">VOCE PERDEU</h1>
             <div class="resultados">
                 <div class="pont">
                     <h2 id="pontuacao">Pontos: 0</h2>
-                    <h2 id="maiorLevel">Maior Level:1</h2>
+                    <h2 id="maiorLevel">Maior Level: 1</h2>
                 </div>
                 <div class="bot">
-                    <button id="botao_recomecar" onclick="location.reload();">Recomeçar</button>
+                    <button id="botao_recomecar" onclick="resetarJogo()">Recomeçar</button>
                 </div>
             </div>
         </div>
-
+        <div id="popup_instrucao" class="invisivel">
+            <div class="instrucao">
+                <h1>Como jogar</h1>
+                <p>tiago ramos, faz as instrucoes de merda ai</p>
+                <button class="fechar-popup" onclick="fecharPopup()">X</button>
+            </div>
+        </div>
 
         <canvas id="canvas" width="1280" height="820"></canvas>
 
-
-        <!-- Updated movement buttons -->
-        <div class="movement_buttons" id="movement_buttons">
+        <div class="movement_buttons invisivel" id="movement_buttons">
             <div></div>
             <button class="movement-button" id="button-up" aria-label="Move Up">▲</button>
             <div></div>
@@ -240,14 +52,67 @@
         </div>
     </div>
 
-
     <script>
+        var requestID = 0;
+
+
+        document.getElementById("botao_instrucao").addEventListener("click", function() {
+            const tela_instrucao = document.getElementById("popup_instrucao");
+            tela_instrucao.classList.remove('invisivel');
+        });
+       
+        function fecharPopup(){
+            const tela = document.getElementById("popup_instrucao");
+            tela.classList.add("invisivel");
+        }
+
+        document.addEventListener("click", function(event) {
+            const tela_instrucao = document.getElementById("popup_instrucao");
+            const instrucaoContent = document.querySelector("#popup_instrucao .instrucao");
+            const botao_instrucao = document.getElementById("botao_instrucao");
+
+            if (!tela_instrucao.classList.contains('invisivel') &&
+                !instrucaoContent.contains(event.target) &&
+                event.target !== botao_instrucao) {
+                tela_instrucao.classList.add('invisivel');
+            }
+        });
+
+        function resetarJogo(voltar) {
+            velocidadeLimite = 5;
+            pontuacao = 0;
+            nivel = 1;
+            quantidadeMoedas = 0;
+            listaMoedas = [];
+            foca.position = { x: 590, y: 760 };
+            foca.velocidade = { x: 0, y: 0 };
+            jogoAtivo = true;
+            nivel_maximo = 0;
+           
+            if(voltar){
+                document.getElementById("voltar").classList.add("invisivel");
+                document.getElementById("tela_inicial").classList.add("flex");
+                document.getElementById("tela_inicial").classList.remove("invisivel");
+            }else{
+                requestID = 1;
+                document.getElementById("telaCinza").classList.add("invisivel");
+                document.getElementById("level").classList.remove("invisivel");
+                document.getElementById("qntMoedas").classList.remove("invisivel");
+            }
+           
+            document.getElementById("qntMoedas").innerHTML = "MOEDAS: " + quantidadeMoedas;
+            document.getElementById("level").innerHTML = "level: " + 1;
+            document.getElementById("maiorLevel").innerHTML = "Maior Level: " + nivel_maximo;
+            document.getElementById("pontuacao").innerHTML = "Pontos: " + quantidadeMoedas;
+
+
+            cancelAnimationFrame(requestID);
+        }
         var canvas, ctx, width, height, key = {};
         var jogoAtivo = true;
         var velocidadeLimite = 6;
         var nivel = 1;
         var nivel_maximo = 0;
-
 
         canvas = document.getElementById("canvas");
         width = canvas.width;
@@ -265,29 +130,27 @@
         carroimg3.src = 'img/carro3.png';
 
 
+
+
         var tiposCarros = [carroimg, carroimg2, carroimg3];
+
 
 
         var ruaimg = new Image();
         ruaimg.src = 'img/rua.png';
 
-
         var faixaimg = new Image();
         faixaimg.src = 'img/Faixa.png';
 
-
         var moedaimg = new Image();
         moedaimg.src = 'img/Moeda.png';
-
 
         var gramaimg = new Image();
         gramaimg.src = 'img/grama.png';
         var gramaPattern;
 
-
         var saidaimg = new Image();
         saidaimg.src = 'img/saida.png';
-
 
         var foca = {
             position: { x: 590, y: 760 },
@@ -301,7 +164,6 @@
             direcao: 1
         };
 
-
         var carrosRua1 = [
             { position: { x: -100, y: 500 }, width: 100, height: 60,img: tiposCarros[Math.floor(Math.random() * tiposCarros.length)], color: "red", velocidade: (Math.floor((Math.random()* 6)+1)) },
             { position: { x: -300, y: 570 }, width: 100, height: 60,img: tiposCarros[Math.floor(Math.random() * tiposCarros.length)], color: "green", velocidade: (Math.floor((Math.random()* 6)+1))},
@@ -309,7 +171,6 @@
             { position: { x: -600, y: 570 }, width: 100, height: 60,img: tiposCarros[Math.floor(Math.random() * tiposCarros.length)], color: "green", velocidade: (Math.floor((Math.random()* 6)+1))},  
             { position: { x: -100, y: 500 }, width: 100, height: 60,img: tiposCarros[Math.floor(Math.random() * tiposCarros.length)], color: "red", velocidade: (Math.floor((Math.random()* 6)+1)) },
         ];
-
 
         var carrosRua2 = [
             { position: { x: canvas.width + 100 , y: 160 }, width: 100, height: 60,img: tiposCarros[Math.floor(Math.random() * tiposCarros.length)], color: "red", velocidade: (Math.floor((Math.random()* 6)+1)) },
@@ -319,7 +180,6 @@
             { position: { x: canvas.width + 100, y: 160 }, width: 100, height: 60,img: tiposCarros[Math.floor(Math.random() * tiposCarros.length)], color: "red", velocidade: (Math.floor((Math.random()* 6)+1)) },
         ];
 
-
         var rua = {
             width: 1280,
             height: 180,
@@ -327,14 +187,12 @@
             position2: { x: 0, y: 150}
         }
 
-
         var faixa = {
             width: 100,
             height: 180,
             position: { x: 100, y: 150},
             position2: { x: 800, y: 480}
         }
-
 
         var saida = {
             position: {
@@ -345,7 +203,6 @@
             height: 80
         };
 
-
         var moedas = {
             width: 32.5,
             height: 32.5,
@@ -353,20 +210,16 @@
             position: { x: 400, y: 390 },
         };
 
-
         var posicoesYmoedas = [390, 700, 80];
-
-
         var listaMoedas = [moedas];
         var quantidadeMoedas = 1;
         var aumentarMoedas = 2;
-
         var backgroundMusic;
         var isMusicPlaying = false;
 
         // Add this function to initialize and play the background music
         function initializeMusic() {
-            backgroundMusic = new Audio('Audio/AudioJogo.mp3');
+            backgroundMusic = new Audio('Audio/AudioJogo.mp3')
             backgroundMusic.loop = true;
             backgroundMusic.volume = 0.5; // Adjust volume as needed
         }
@@ -381,7 +234,6 @@
                 isMusicPlaying = true;
             }
         }
-
 
         function resizeGame() {
             var gameContainer = document.querySelector('.game-container');
@@ -404,10 +256,8 @@
             gameContainer.style.fontSize = (newWidth / 1280) + 'em';
         }
 
-
         window.addEventListener('resize', resizeGame);
         window.addEventListener('load', resizeGame);
-
 
         function adicionarMoeda() {
             for (let i = 0; i < aumentarMoedas; i++) {
@@ -425,7 +275,6 @@
             if (aumentarMoedas < 15 ) { aumentarMoedas++ }
         }
 
-
         function verificarColisaoComMoeda(moeda) {
             return (
                 foca.position.x < moeda.position.x + moeda.width &&
@@ -434,7 +283,6 @@
                 foca.position.y + foca.height > moeda.position.y
             );
         }
-
 
         function verificarColetaMoedas() {
             listaMoedas = listaMoedas.filter(moeda => {
@@ -448,7 +296,6 @@
             });
         }
 
-
         function passarDeFase() {
             if (aumentarMoedas < 15) {
                 aumentarMoedas++;
@@ -459,17 +306,14 @@
             adicionarMoeda();
         }
 
-
         function trocarFaixas() {
             faixa.position.x = Math.floor(Math.random() * (width - 200)) + 100;
             faixa.position2.x = Math.floor(Math.random() * (width - 200)) + 100;
         }
 
-
         function aumentarVelocidade() {
             velocidadeLimite++
         }
-
 
         function main() {
             canvas = document.getElementById("canvas");
@@ -484,16 +328,13 @@
                 }
             });
 
-
             window.addEventListener('keydown', function (e) {
                 key[e.code] = true;
             });
 
-
             window.addEventListener('keyup', function (e) {
                 key[e.code] = false;
             });
-
 
             // Updated touch events for movement buttons
             var buttons = document.querySelectorAll('.movement-button');
@@ -504,7 +345,7 @@
                     key[keyName] = true;
                     console.log(`touchstart: ${keyName} ativado`); // Log de depuração
                 });
-                
+               
                 button.addEventListener('touchend', function(e) {
                     e.preventDefault();
                     var keyName = this.id.replace('button-', 'Key').toUpperCase();
@@ -533,15 +374,13 @@
                 });
             });
 
-
             resizeGame();
-            requestAnimationFrame(loop);
+            requestID = requestAnimationFrame(loop);
         }
 
 
         function update() {
             if (!jogoAtivo) return;
-
 
             if (key["KeyW"] || key["KEYUP"]) {
                 foca.velocidade.y = -5;
@@ -550,7 +389,6 @@
             } else {
                 foca.velocidade.y = 0;
             }
-
 
             if (key["KeyA"] || key["KEYLEFT"]) {
                 foca.velocidade.x = -5;
@@ -562,11 +400,11 @@
                 foca.velocidade.x = 0;
             }
 
-
             foca.position.x += foca.velocidade.x;
             foca.position.y += foca.velocidade.y;
             foca.position2.x = (foca.position.x + ((foca.width / 2) /2))
             foca.position2.y = (foca.position.y + ((foca.height / 2) /2))
+
 
 
             if (foca.position.x < 0) foca.position.x = 0;
@@ -596,6 +434,7 @@
         }
 
 
+
         function draw() {
             if (!jogoAtivo) {
                 if(nivel_maximo < nivel) {
@@ -603,13 +442,11 @@
                 }
 
 
+
                 document.getElementById("maiorLevel").innerHTML = "Maior Level: " + nivel_maximo;
-                document.getElementById("Perdeu").style.display = "flex";
-                document.getElementById("telaCinza").style.display = "flex";
-                document.getElementById("pontuacao").style.display = "flex";
-                document.getElementById("maiorLevel").style.display = "flex";
-                document.getElementById("Level").style.display = "none";
-                document.getElementById("qntMoedas").style.display = "none";
+                document.getElementById("telaCinza").classList.remove("invisivel");
+                document.getElementById("level").classList.add("invisivel");
+                document.getElementById("qntMoedas").classList.add("invisivel");
                 return;
             }
 
@@ -623,6 +460,7 @@
             gramaPattern = ctx.createPattern(scaledGramaImg, 'repeat');
 
 
+
             ctx.fillStyle = gramaPattern;
             ctx.fillRect(0, 0, width, height);
 
@@ -634,9 +472,12 @@
             ctx.drawImage(faixaimg, faixa.position2.x, faixa.position2.y , faixa.width, faixa.height);
 
 
+
             listaMoedas.forEach(moeda => {
                 ctx.drawImage(moedaimg, moeda.position.x, moeda.position.y, moeda.width, moeda.height);
             });
+
+
 
 
             ctx.save();
@@ -644,6 +485,8 @@
             ctx.scale(foca.direcao, 1);
             ctx.drawImage(focaimg, -foca.width / 2, -foca.height / 2, foca.width, foca.height);
             ctx.restore();
+
+
 
 
             carrosRua1.forEach(carro => {
@@ -660,7 +503,6 @@
             });
         }
 
-
         function detectarColisoes() {
             verificarColetaMoedas();
 
@@ -668,23 +510,19 @@
             var estafaixa = false;
             var timerId;
 
-
             var estaNaFaixa1 = foca.position2.x < faixa.position.x + faixa.width &&
                 foca.position2.x + foca.width1 > faixa.position.x &&
                 foca.position2.y < faixa.position.y + faixa.height &&
                 foca.position2.y + foca.height1 > faixa.position.y;
-
 
             var estaNaFaixa2 = foca.position2.x < faixa.position2.x + faixa.width &&
                 foca.position2.x + foca.width1 > faixa.position2.x &&
                 foca.position2.y < faixa.position2.y + faixa.height &&
                 foca.position2.y + foca.height1 > faixa.position2.y;
 
-
             if (estaNaFaixa1 || estaNaFaixa2) {
                 estafaixa = true;
             }
-
 
             carrosRua1.concat(carrosRua2).forEach(carro => {
                 if (
@@ -700,7 +538,6 @@
                     clearTimeout(timerId);
                 }
             });
-
 
             if (
                 (rua.position.x < foca.position2.x + foca.width1 &&
@@ -720,7 +557,6 @@
                 }
             }
 
-
             if (
                 foca.position2.x < saida.position.x + saida.width &&
                 foca.position2.x + foca.width1 > saida.position.x &&
@@ -732,31 +568,32 @@
                 adicionarMoeda()
                 passarDeFase()
                 nivel++
-                document.getElementById("Level").innerHTML = "Level " + nivel;
+                document.getElementById("level").innerHTML = "level " + nivel;
                 foca.position.y = height
             }
         }
-
 
         function loop() {
             update();
             draw();
             detectarColisoes();
-            requestAnimationFrame(loop);
+            requestID = requestAnimationFrame(loop);
         }
 
-
-        document.getElementById("botao_iniciar").addEventListener("click", function() {
-            var telaInicial = document.getElementById("tela_inicial");
+        function iniciarJogo(){
+            document.getElementById("tela_inicial").classList.remove("flex");
+            document.getElementById("voltar").classList.remove("invisivel");
+            document.getElementById("tela_inicial").classList.add("invisivel");
             var movement_buttons = document.getElementById("movement_buttons");
-            telaInicial.style.display = "none";
+            document.getElementById("qntMoedas").classList.remove("invisivel");
+            document.getElementById("level").classList.remove("invisivel");;
+           
             movement_buttons.style.display = "grid";
-
             main();
             resizeGame();
-            toggleMusic(); // Start playing music when the game starts
-        });
+            toggleMusic();
+        }
+       
     </script>
 </body>
 </html>
-
