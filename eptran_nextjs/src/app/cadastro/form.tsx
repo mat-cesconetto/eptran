@@ -3,98 +3,163 @@
 import React, { useState, useEffect } from "react";
 import { useCadastro } from "@/hooks/useCadastro";
 import { useCidade } from "@/hooks/useCidades";
-import { useCep } from "@/hooks/useCep"; // Importando o hook para o CEP
+import { useCep } from "@/hooks/useCep";
 import CustomCheckbox from "../components/ui/checkbox";
 import { useRouter } from "next/navigation";
 import { maskCEP } from "../components/mask/mask";
 
-// Interfaces
+const estados = [
+  { sigla: "AC", nome: "Acre" },
+  { sigla: "AL", nome: "Alagoas" },
+  { sigla: "AP", nome: "Amapá" },
+  { sigla: "AM", nome: "Amazonas" },
+  { sigla: "BA", nome: "Bahia" },
+  { sigla: "CE", nome: "Ceará" },
+  { sigla: "DF", nome: "Distrito Federal" },
+  { sigla: "ES", nome: "Espírito Santo" },
+  { sigla: "GO", nome: "Goiás" },
+  { sigla: "MA", nome: "Maranhão" },
+  { sigla: "MT", nome: "Mato Grosso" },
+  { sigla: "MS", nome: "Mato Grosso do Sul" },
+  { sigla: "MG", nome: "Minas Gerais" },
+  { sigla: "PA", nome: "Pará" },
+  { sigla: "PB", nome: "Paraíba" },
+  { sigla: "PR", nome: "Paraná" },
+  { sigla: "PE", nome: "Pernambuco" },
+  { sigla: "PI", nome: "Piauí" },
+  { sigla: "RJ", nome: "Rio de Janeiro" },
+  { sigla: "RN", nome: "Rio Grande do Norte" },
+  { sigla: "RS", nome: "Rio Grande do Sul" },
+  { sigla: "RO", nome: "Rondônia" },
+  { sigla: "RR", nome: "Roraima" },
+  { sigla: "SC", nome: "Santa Catarina" },
+  { sigla: "SP", nome: "São Paulo" },
+  { sigla: "SE", nome: "Sergipe" },
+  { sigla: "TO", nome: "Tocantins" }
+];
 
 const Formulario: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
   const { registerUser } = useCadastro();
-  const [crudCEP, setCEP] = useState("");
-  const [estadoSelecionado, setEstadoSelecionado] = useState<string>("");
-  const { cityNames, isLoading: isLoadingCities } =
-    useCidade(estadoSelecionado);
-  const { cepData, isLoading: isLoadingCep } = useCep(crudCEP.replace("-", ""));
-
-  const [rua, setRua] = useState("");
-  const [bairro, setBairro] = useState("");
-  const [cidade, setCidade] = useState("");
+  const [formData, setFormData] = useState({
+    nome: "",
+    email: "",
+    senha: "",
+    cep: "",
+    estado: "",
+    cidade: "",
+    bairro: "",
+    rua: "",
+    escola: "",
+    data_nasc: "",
+    escolaridade: "",
+    sexo: ""
+  });
+  const { cityNames, isLoading: isLoadingCities } = useCidade(formData.estado);
+  const { cepData, isLoading: isLoadingCep, error: cepError } = useCep(formData.cep.replace(/\D/g, ""));
 
   useEffect(() => {
     if (cepData) {
-      console.log("Dados recebidos do CEP:", cepData); // Log para verificar o retorno do hook useCep
-      setCidade(cepData.cidade);
-      setBairro(cepData.bairro);
-      setRua(cepData.rua);
-      setEstadoSelecionado(cepData.estado);
+      console.log("Dados recebidos do CEP:", cepData);
+      setFormData(prev => ({
+        ...prev,
+        cidade: cepData.localidade,
+        bairro: cepData.bairro,
+        rua: cepData.logradouro,
+        estado: cepData.uf
+      }));
     }
   }, [cepData]);
 
+  useEffect(() => {
+    if (cepError) {
+      setError(cepError);
+    } else {
+      setError(null);
+    }
+  }, [cepError]);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleCEPChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    setFormData(prev => ({ ...prev, cep: maskCEP(value) }));
+  };
+
   const handleFormulario = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const nome = formData.get("nome")?.toString() || "";
-    const email = formData.get("email")?.toString() || "";
-    const senha = formData.get("senha")?.toString() || "";
-    const cep = formData.get("cep")?.toString() || "";
-    const rua = formData.get("rua")?.toString() || "";
-    const bairro = formData.get("bairro")?.toString() || "";
-    const cidade = formData.get("cidade")?.toString() || "";
-    const estado = formData.get("estado")?.toString() || "";
-    const escola = formData.get("escola")?.toString() || "";
-    const data_nasc = formData.get("data_nasc")?.toString() || "";
-    const escolaridade = formData.get("escolaridade")?.toString() || "";
-    const sexo = formData.get("sexo")?.toString() || "";
     try {
       await registerUser(
-        nome,
-        email,
-        senha,
-        cep,
-        rua,
-        bairro,
-        cidade,
-        estado,
-        escola,
-        data_nasc,
-        escolaridade,
-        sexo
+        formData.nome,
+        formData.email,
+        formData.senha,
+        formData.cep,
+        formData.rua,
+        formData.bairro,
+        formData.cidade,
+        formData.estado,
+        formData.escola,
+        formData.data_nasc,
+        formData.escolaridade,
+        formData.sexo
       );
-      console.log("Deu tudo certo");
+      console.log("Cadastro realizado com sucesso");
       router.push("/login");
     } catch (error: any) {
       setError(error.message || "Houve um erro ao cadastrar o usuário");
     }
   };
 
-  function handleChangeMaskCEP(event: any) {
-    const { value } = event.target;
-    console.log("CEP atualizado:", value); // Log para verificar a mudança do CEP
-    setCEP(maskCEP(value));
-  }
-
   return (
     <form
       onSubmit={handleFormulario}
       className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 w-full"
     >
-      <FormField label="Nome completo" type="text" id="nome" name="nome" />
+      <FormField 
+        label="Nome completo" 
+        type="text" 
+        id="nome" 
+        name="nome" 
+        value={formData.nome}
+        onChange={handleInputChange}
+      />
       <FormField
         label="Data de nascimento"
         type="date"
         id="data_nasc"
         name="data_nasc"
+        value={formData.data_nasc}
+        onChange={handleInputChange}
       />
-      <FormField label="Email" type="email" id="email" name="email" />
-      <FormField label="Senha" type="password" id="senha" name="senha" />
-      <FormField label="Sexo" type="select" id="sexo" name="sexo">
-        <option value="" disabled>
-          Selecione
-        </option>
+      <FormField 
+        label="Email" 
+        type="email" 
+        id="email" 
+        name="email"
+        value={formData.email}
+        onChange={handleInputChange}
+      />
+      <FormField 
+        label="Senha" 
+        type="password" 
+        id="senha" 
+        name="senha"
+        value={formData.senha}
+        onChange={handleInputChange}
+      />
+      <FormField 
+        label="Sexo" 
+        type="select" 
+        id="sexo" 
+        name="sexo"
+        value={formData.sexo}
+        onChange={handleInputChange}
+      >
+        <option value="" disabled>Selecione</option>
         <option value="MASCULINO">Masculino</option>
         <option value="FEMININO">Feminino</option>
         <option value="NAO_DECLARAR">Prefiro Não Dizer</option>
@@ -104,8 +169,9 @@ const Formulario: React.FC = () => {
         type="text"
         id="cep"
         name="cep"
-        defaultValue={crudCEP}
-        onChange={handleChangeMaskCEP}
+        value={formData.cep}
+        onChange={handleInputChange}
+        onChangeCEP={handleCEPChange}
         maxLength={9}
       />
       <FormField
@@ -113,63 +179,31 @@ const Formulario: React.FC = () => {
         type="select"
         id="estado"
         name="estado"
-        defaultValue={estadoSelecionado}
-        onChange={(e) => {
-          setEstadoSelecionado(e.target.value);
-          console.log("Estado selecionado:", e.target.value); // Log para verificar o estado selecionado
-        }}
+        value={formData.estado}
+        onChange={handleInputChange}
       >
-        <option value="" disabled>
-          Selecione
-        </option>
-        <option value="AC">Acre</option>
-        <option value="AL">Alagoas</option>
-        <option value="AP">Amapá</option>
-        <option value="AM">Amazonas</option>
-        <option value="BA">Bahia</option>
-        <option value="CE">Ceará</option>
-        <option value="DF">Distrito Federal</option>
-        <option value="ES">Espírito Santo</option>
-        <option value="GO">Goiás</option>
-        <option value="MA">Maranhão</option>
-        <option value="MT">Mato Grosso</option>
-        <option value="MS">Mato Grosso do Sul</option>
-        <option value="MG">Minas Gerais</option>
-        <option value="PA">Pará</option>
-        <option value="PB">Paraíba</option>
-        <option value="PR">Paraná</option>
-        <option value="PE">Pernambuco</option>
-        <option value="PI">Piauí</option>
-        <option value="RJ">Rio de Janeiro</option>
-        <option value="RN">Rio Grande do Norte</option>
-        <option value="RS">Rio Grande do Sul</option>
-        <option value="RO">Rondônia</option>
-        <option value="RR">Roraima</option>
-        <option value="SC">Santa Catarina</option>
-        <option value="SP">São Paulo</option>
-        <option value="SE">Sergipe</option>
-        <option value="TO">Tocantins</option>
+        <option value="">Selecione um estado</option>
+        {estados.map((estado) => (
+          <option key={estado.sigla} value={estado.sigla}>
+            {estado.nome}
+          </option>
+        ))}
       </FormField>
-
       <FormField
         label="Cidade"
         type="select"
         id="cidade"
         name="cidade"
-        defaultValue={cidade}
-        onChange={(e) => {
-          setCidade(e.target.value);
-          console.log("Cidade selecionada:", e.target.value); // Log para verificar a cidade selecionada
-        }}
+        value={formData.cidade}
+        onChange={handleInputChange}
       >
+        <option value="">Selecione uma cidade</option>
         {isLoadingCities ? (
-          <option value="" disabled>
-            Carregando cidades...
-          </option>
+          <option value="" disabled>Carregando cidades...</option>
         ) : (
-          cityNames.map((cidade) => (
-            <option key={cidade} value={cidade}>
-              {cidade}
+          cityNames.map((cidadeNome) => (
+            <option key={cidadeNome} value={cidadeNome}>
+              {cidadeNome}
             </option>
           ))
         )}
@@ -179,37 +213,46 @@ const Formulario: React.FC = () => {
         type="text"
         id="bairro"
         name="bairro"
-        defaultValue={bairro}
+        value={formData.bairro}
+        onChange={handleInputChange}
       />
       <FormField
         label="Rua"
         type="text"
         id="rua"
         name="rua"
-        defaultValue={rua}
+        value={formData.rua}
+        onChange={handleInputChange}
       />
-
-      <FormField label="Escola" type="text" id="escola" name="escola" />
-
+      <FormField 
+        label="Escola" 
+        type="text" 
+        id="escola" 
+        name="escola"
+        value={formData.escola}
+        onChange={handleInputChange}
+      />
       <FormField
         label="Escolaridade"
         type="select"
         id="escolaridade"
         name="escolaridade"
+        value={formData.escolaridade}
+        onChange={handleInputChange}
       >
-        <option value="" disabled>
-          Selecione
-        </option>
+        <option value="" disabled>Selecione</option>
         <option value="ENSINO_FUNDAMENTAL_I">Ensino Fundamental 1</option>
         <option value="ENSINO_FUNDAMENTAL_II">Ensino Fundamental 2</option>
         <option value="ENSINO_MEDIO">Ensino Médio</option>
       </FormField>
       <CustomCheckbox label="Concordo com os termos de serviço" />
+      {error && <div className="text-red-500 col-span-full">{error}</div>}
       <button
         type="submit"
         className="bg-[#003966] text-white w-full h-12 rounded-md font-bold text-lg col-span-full disabled:opacity-50"
+        disabled={isLoadingCep}
       >
-        Cadastrar
+        {isLoadingCep ? "Carregando..." : "Cadastrar"}
       </button>
     </form>
   );
@@ -220,10 +263,9 @@ interface FormFieldProps {
   type: string;
   id: string;
   name: string;
-  defaultValue?: string;
-  onChange?: (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => void;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
+  onChangeCEP?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   maxLength?: number;
   children?: React.ReactNode;
 }
@@ -233,20 +275,21 @@ const FormField: React.FC<FormFieldProps> = ({
   type,
   id,
   name,
-  defaultValue,
+  value,
   onChange,
+  onChangeCEP,
   maxLength,
   children,
 }) => (
   <div className="flex flex-col">
-    <label className="text-base text-[#003966] font-bold mb-1">{label}</label>
+    <label htmlFor={id} className="text-base text-[#003966] font-bold mb-1">{label}</label>
     {type === "select" ? (
       <select
         id={id}
         name={name}
         className="border-2 border-[#003966] border-opacity-30 rounded-md p-2 text-black w-full"
         onChange={onChange}
-        defaultValue={defaultValue} // Apenas defaultValue
+        value={value}
       >
         {children}
       </select>
@@ -255,8 +298,8 @@ const FormField: React.FC<FormFieldProps> = ({
         type={type}
         id={id}
         name={name}
-        defaultValue={defaultValue} // Apenas defaultValue para manter o campo não controlado
-        onChange={onChange}
+        value={value}
+        onChange={onChangeCEP || onChange}
         maxLength={maxLength}
         className="border-2 border-[#003966] border-opacity-30 rounded-md p-1 text-black w-full"
       />
@@ -265,3 +308,4 @@ const FormField: React.FC<FormFieldProps> = ({
 );
 
 export default Formulario;
+

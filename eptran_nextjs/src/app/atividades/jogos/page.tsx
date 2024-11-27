@@ -28,7 +28,7 @@ const gamesData: GameData[] = [
   { imageUrl: "/VouF.png", title: "Verdadeiro ou Falso", href: "./jogos/verdadeiroOuFalso", escolaridade: "ENSINO_MEDIO" },
   { imageUrl: "/caca.png", title: "Caça Palavras", href: "./jogos/cacaPalavras", escolaridade: "ENSINO_MEDIO" },
   { imageUrl: "/jogoDescrever.png", title: "Descreva a Imagem", href: "./jogos/jogoTransito", escolaridade: "ENSINO_MEDIO" },
-  { imageUrl: "/sem_freio.png", title: "Sem Freio", href: "./jogos/semFreio", escolaridade: "ENSINO_MEDIO" },
+  { imageUrl: "/sem_freio.png", title: "Sem Freio", href: "./jogos/corrida", escolaridade: "ENSINO_MEDIO" },
 ];
 
 export default function Home() {

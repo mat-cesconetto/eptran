@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game</title>
+    <style>
+        body {
+            background-color: black;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        #gameContainer {
+            position: relative;
+            width: 100vw; /* Tamanho relativo ao viewport */
+            aspect-ratio: 16/8;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #gameOverScreen {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            font-size: 2rem;
+            z-index: 10;
+        }
+        
+        /* Definindo o estilo do canvas */
+        #canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+            background-color: #444; /* Cor temporária para ver o canvas */
+        }
+
+        /* Estilos gerais para as telas sobrepostas */
+        .screen {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            color: #fff;
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #gameMenuScreen {
+            display: flex;
+            flex-direction: row;
+            gap: 20px; /* Espaço entre texto e imagem */
+        }
+
+        .menu-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            max-width: 50%;
+        }
+
+        .menu-content .gameMenu{
+            align-items: flex-start; /* Texto alinhado à esquerda */
+        }
+
+        .menu-content h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .menu-content .gameOver{
+            display: flex;
+            text-align: center;
+            align-items: center;
+        }
+
+        .menu-content button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: 0.3s;
+            border-radius: 5px;
+        }
+
+        .menu-content button:hover {
+            background-color: #45a049;
+        }
+
+        .menu-content button:active {
+            transform: scale(0.98);
+        }
+
+        /* Estilo do ícone decorativo */
+        #menuIcon {
+            width: 30%; /* Aumenta um pouco o tamanho */
+            image-rendering: pixelated; /* Remove o anti-aliasing */
+            object-fit: contain;
+            opacity: 0.9; /* Transparência mais leve */
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="gameContainer">
+        <canvas id="canvas"></canvas>
+
+        <!-- Tela inicial -->
+        <div id="gameMenuScreen" class="screen">
+            <div class="menu-content gameMenu">
+                <h1>Bem-vindo ao Jogo!</h1>
+                <button onclick="startGame()">Iniciar Jogo</button>
+            </div>
+            <img id="menuIcon" src="img/capa.png" alt="Animal decorativo">
+        </div>
+
+        <!-- Tela de Game Over -->
+        <div id="gameOverScreen" class="screen">
+            <div class="menu-content gameOver">
+                <h1>Game Over</h1>
+                <button onclick="startGame()">Jogar Novamente</button>
+            </div>
+        </div>
+    </div>
+
+    
+    <script src="js/math-extentions.js"></script>
+    <script src="js/classes/screen.js"></script>
+    <script src="js/classes/loader.js"></script>
+    <script src="js/classes/abstract/state-machine/state-machine.js"></script>
+    <script src="js/classes/abstract/state-machine/state.js"></script>
+    <script>
+        tela = new Screen("#canvas");
+        </script>
+    <script src="js/classes/world.js"></script>
+    <script src="js/classes/abstract/object.js"></script>
+    <script src="js/classes/abstract/component.js"></script>
+    <script src="js/classes/sprite.js"></script>
+    <script src="js/classes/animation.js"></script>
+    <script src="js/classes/components/collider.js"></script>
+    <script src="js/classes/components/animator.js"></script>
+    <script src="js/classes/components/outsideOfScreen.js"></script>
+    <script src="js/classes/transform.js"></script>
+    <script src="js/classes/objects/road.js"></script>
+    <script src="js/classes/objects/car.js"></script>
+    <script src="js/classes/objects/obstacle.js"></script>
+    <script src="js/classes/objects/animal.js"></script>
+    <script src="js/classes/objects/steamroller.js"></script>
+    <script src="js/classes/objects/background.js"></script>
+    <script src="js/classes/objects/labels/label.js"></script>
+    <script src="js/classes/objects/labels/animal-label.js"></script>
+    <script src="js/classes/objects/labels/spine-label.js"></script>
+    <script src="js/classes/objects/spine.js"></script>
+    <script src="js/classes/objects/miscellaneous.js"></script>
+    <script src="js/classes/events/obstacle-event.js"></script>
+    <script src="js/classes/events/animal-event.js"></script>
+    <script src="js/classes/events/miscellaneous-spawner.js"></script>
+    <script src="js/classes/events/maintenance-event.js"></script>
+    <script src="js/classes/events/curve-event.js"></script>
+    <script src="js/classes/events/curve-event-state-machine.js"></script>
+    <script src="js/classes/events/event-state-machine.js"></script>
+    <script src="js/classes/scene.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

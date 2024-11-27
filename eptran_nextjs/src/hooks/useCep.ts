@@ -1,41 +1,54 @@
-// src/hooks/useCep.ts
-
 import { useState, useEffect } from "react";
 import axios from "axios";
 
 interface CepData {
-  cidade: string;
+  cep: string;
+  logradouro: string;
+  complemento: string;
   bairro: string;
-  rua: string;
-  estado: string;
+  localidade: string;
+  uf: string;
+  ibge: string;
+  gia: string;
+  ddd: string;
+  siafi: string;
 }
 
 export function useCep(cep: string) {
   const [cepData, setCepData] = useState<CepData | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (cep.length === 8) { // O CEP deve ter 8 dígitos sem o hífen
-      setIsLoading(true);
-      
-      axios
-        .get(`http://localhost:3333/location/${cep}`)
-        .then((response) => {
-          const { localidade, bairro, logradouro, uf } = response.data;
-          setCepData({
-            cidade: localidade,
-            bairro: bairro,
-            rua: logradouro,
-            estado: uf,
-          });
-        })
-        .catch((error) => {
+    const fetchCep = async () => {
+      if (cep.length === 8) {
+        setIsLoading(true);
+        setError(null);
+        
+        try {
+          const response = await axios.get<CepData>(`https://viacep.com.br/ws/${cep}/json/`);
+          
+          if ("erro" in response.data) {
+            throw new Error("CEP não encontrado");
+          }
+
+          setCepData(response.data);
+        } catch (error) {
           console.error("Erro ao buscar dados do CEP:", error);
+          setError("Erro ao buscar o CEP. Por favor, tente novamente.");
           setCepData(null);
-        })
-        .finally(() => setIsLoading(false));
-    }
+        } finally {
+          setIsLoading(false);
+        }
+      } else {
+        setCepData(null);
+        setError(null);
+      }
+    };
+
+    fetchCep();
   }, [cep]);
 
-  return { cepData, isLoading };
+  return { cepData, isLoading, error };
 }
+

@@ -1,31 +1,37 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
-export function useCidade(state: string) {
+export function useCidade(estado: string) {
   const [cityNames, setCityNames] = useState<string[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (state) {
-      setIsLoading(true);
+    const fetchCities = async () => {
+      if (estado) {
+        setIsLoading(true);
+        setError(null);
+        try {
+          console.log(`Buscando cidades para o estado: ${estado}`);
+          const response = await axios.get(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${estado}/municipios`);
+          const cities = response.data.map((city: any) => city.nome);
+          console.log(`Cidades encontradas: ${cities.length}`);
+          setCityNames(cities);
+        } catch (error) {
+          console.error('Erro ao buscar cidades:', error);
+          setError('Erro ao carregar as cidades. Por favor, tente novamente.');
+          setCityNames([]);
+        } finally {
+          setIsLoading(false);
+        }
+      } else {
+        setCityNames([]);
+      }
+    };
 
-      const url = `http://localhost:3333/location/cidades/${state}`;
-      console.log("Fetching cities from URL:", url);
+    fetchCities();
+  }, [estado]);
 
-      fetch(url)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error(`Failed to fetch cities: ${response.statusText}`);
-          }
-          return response.json();
-        })
-        .then((data) => {
-          const cityNamesArray = data.map((city: { nome: string }) => city.nome);
-          setCityNames(cityNamesArray);
-        })
-        .catch((error) => console.error("Error fetching cities:", error))
-        .finally(() => setIsLoading(false));
-    }
-  }, [state]);
-
-  return { cityNames, isLoading };
+  return { cityNames, isLoading, error };
 }
+
